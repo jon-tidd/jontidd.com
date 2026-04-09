@@ -452,6 +452,7 @@ function rs(){W=c.width=innerWidth;H=c.height=innerHeight}
 rs();addEventListener('resize',rs);
 for(let i=0;i<120;i++)stars.push({x:Math.random()*3e3,y:Math.random()*3e3,r:Math.random()*1.2+.3,vx:(Math.random()-.5)*.12,vy:(Math.random()-.5)*.12,a:Math.random()*.4+.15,p:Math.random()*6.28});
 document.addEventListener('mousemove',e=>{mx=(e.clientX/W-.5)*2;my=(e.clientY/H-.5)*2});
+window.addEventListener('deviceorientation',e=>{if(e.gamma!=null){mx=(e.gamma/45);my=(e.beta-45)/45}});
 (function draw(){ctx.clearRect(0,0,W,H);const t=Date.now()*.001;for(const s of stars){s.x+=s.vx-mx*.2*s.r;s.y+=s.vy-my*.2*s.r;if(s.x<0)s.x+=W;if(s.x>W)s.x-=W;if(s.y<0)s.y+=H;if(s.y>H)s.y-=H;ctx.beginPath();ctx.arc(s.x%W,s.y%H,s.r,0,6.28);ctx.fillStyle=`rgba(255,255,255,${s.a*(.6+.4*Math.sin(t+s.p))})`;ctx.fill()}requestAnimationFrame(draw)})();
 
 // ── 3D Tilt + Metallic Sheen ──
