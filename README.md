@@ -1,51 +1,36 @@
 # jontidd.com
 
-Personal project portfolio for Jon Tidd — a place to park and showcase projects, seen by friends, family, and professionals.
+Personal portfolio for [Jon Tidd](https://jontidd.com) — AI developer building tools at the intersection of technology, classical wisdom, and human flourishing.
 
-## Aspiration
+**Live at [jontidd.com](https://jontidd.com)**
 
-A polished, modern personal site that conveys: software engineer, father, builder of meaningful tools at the intersection of technology and classical wisdom. Not a resume — a living portfolio that grows as new projects launch. Should feel premium, interesting, and slightly unexpected. The kind of site that makes someone want to click around.
+## About
 
-## Current Concept
+A single-page dark-themed portfolio featuring:
 
-Single-page dark-themed landing (`index.html`) with:
+- Animated star field with mouse parallax
+- 3D perspective tilt on project cards with cursor-following metallic sheen
+- Live typing demo recreating the Bedtime Virtues AI Story Forge
+- Embedded video demo of the Rudyard Library's RoboRudyard AI
+- Collapsible contact form via FormSubmit.co
+- Scroll-reveal animations via IntersectionObserver
+- Fully responsive across mobile, tablet, and desktop
 
-- **Dark ambient aesthetic** — near-black background with floating gradient orbs and subtle grid overlay
-- **Frosted glass navigation** — sticky nav with backdrop blur and green "Available" status pulse
-- **Shimmer gradient headline** — "I build tools for human flourishing" with animated color sweep
-- **3D project cards** — glassmorphism cards with CSS perspective tilt on hover and cursor-following glow effect. Two projects: Bedtime Virtues (LIVE) and The Rudyard Collection (COMING SOON)
-- **Featured project spotlight** — deeper showcase of Bedtime Virtues with hero image
-- **About section** — short bio with highlighted keywords
-- **Connect grid** — GitHub, LinkedIn, Email, Project links
-- **Scroll-reveal animations** — IntersectionObserver-based fade-in on scroll
-- **Fully responsive** — mobile, tablet, desktop
-- **Zero dependencies** — pure HTML/CSS/JS, no build step
+## Tech
 
-## Recommended Architecture
+Pure HTML, CSS, and JavaScript — no build step, no dependencies, no framework.
 
-**For v1 (now):** Static HTML hosted on Vercel or Cloudflare Pages. Zero build step, instant deploys, free tier. The current `index.html` concept is ready to ship as-is.
+Hosted on GitHub Pages with custom domain via Namecheap DNS.
 
-**For v2 (when you have 3+ projects):** Migrate to a lightweight framework:
-- **Astro** (recommended) — static-first, zero JS by default, component islands for interactive bits. Perfect for a portfolio that's mostly content with a few interactive elements.
-- Keep the same visual language and interactions
-- Add individual project detail pages
-- Add a blog/writing section if desired
+## Projects Featured
 
-**Hosting:** Vercel (already familiar from VirtueForge) or Cloudflare Pages (faster edge network, also free). Either works — Vercel is simpler since you already have it set up.
+- **[Bedtime Virtues](https://virtueforge.vercel.app)** — AI-generated bedtime stories rooted in Aristotle's cardinal virtues
+- **[The Rudyard Library](https://rudyard.vercel.app)** — An explorable 3D atlas of a creator's intellectual universe
 
-**Domain:** Point jontidd.com DNS to whichever host. Add both `jontidd.com` and `www.jontidd.com`.
+## Run Locally
 
-## Project Structure
-
-```
-jontidd.com/
-  index.html          # Main landing page (current concept)
-  images/
-    hero-firelight.png # Bedtime Virtues featured image
-  README.md           # This file
+```bash
+npx serve -l 3456 .
 ```
 
-## Related Projects
-
-- [Bedtime Virtues](https://virtueforge.vercel.app) — AI bedtime stories + curated classics mapped to cardinal virtues
-- The Rudyard Collection — curated library of public domain character literature (coming soon)
+Open [http://localhost:3456](http://localhost:3456).
