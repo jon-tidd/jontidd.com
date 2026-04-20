@@ -139,17 +139,19 @@ nav{
 
 .hero-aside{
   font-size:clamp(12px,1.3vw,13.5px);color:#71717a;letter-spacing:.01em;
-  max-width:640px;line-height:1.8;margin:0 auto 48px;
+  max-width:580px;line-height:1.9;margin:0 auto 48px;
   font-family:'JetBrains Mono',monospace;
+  text-align:center;text-wrap:balance;
 }
 .hero-aside .aside-label{
+  display:inline-block;margin-bottom:8px;
   color:#6366f1;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
-  font-size:.85em;margin-right:10px;
+  font-size:.85em;
   padding:2px 8px;border-radius:4px;
   background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.18);
 }
+.hero-aside .aside-text{display:block}
 .hero-aside .dot{color:#3f3f46;margin:0 8px}
-.hero-aside .nw{white-space:nowrap}
 
 /* Scroll indicator */
 .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:8px}
@@ -406,14 +408,14 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-portrait">
-    <img src="images/family.jpg" alt="Jon Tidd" width="1200" height="869" fetchpriority="high">
+    <img src="images/family.jpg?v=2x" alt="Jon Tidd" width="2400" height="1738" fetchpriority="high">
   </div>
   <div class="hero-tag">Hi, I'm Jon</div>
   <h1>I build tools<br>for <span class="accent">human<br>flourishing</span></h1>
   <p class="hero-lead">I build <span class="hl">AI tools</span> to help people <span class="hl">learn</span> and <span class="hl">live well</span>. I'm hooked on exploring the intersection of <span class="hl-accent">technology, classical wisdom, and raising good humans</span>.</p>
   <p class="hero-aside">
     <span class="aside-label">Off the clock</span>
-    camping with the kiddos<span class="dot">·</span><span class="nw">synthwave &amp; tundra rock concerts</span><span class="dot">·</span>a growing wall full of 90&rsquo;s sci-fi animation cels
+    <span class="aside-text">camping with the kiddos<span class="dot">·</span>synthwave &amp; tundra rock&nbsp;concerts<span class="dot">·</span>a growing wall full of 90&rsquo;s sci-fi animation cels</span>
   </p>
   <div class="scroll-hint">
     <span>Scroll</span>
