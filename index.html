@@ -25,7 +25,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500&family=Lora:ital,wght@0,500;0,600;1,500;1,600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
@@ -208,38 +208,45 @@ section{position:relative;z-index:1;padding:120px 24px}
 }
 .card-media video{width:100%;height:100%;object-fit:cover}
 
-/* Typing demo (Bedtime Virtues) */
+/* Typing demo (Bedtime Virtues) — simplified */
 .typing-demo{
-  height:100%;display:flex;flex-direction:column;padding:20px;
-  background:linear-gradient(180deg,#0d0c14,#0a0b10);
+  height:100%;display:flex;flex-direction:column;justify-content:center;
+  padding:28px 32px;
+  background:radial-gradient(ellipse at 50% 0%,rgba(212,168,70,.08),transparent 70%),linear-gradient(180deg,#0e0c12,#0a0b10);
 }
-.td-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
-.td-title{font-size:11px;font-weight:700;color:#d4a846;display:flex;align-items:center;gap:6px}
-.td-title::before{content:'';width:6px;height:6px;border-radius:50%;background:#d4a846;animation:pulse 2s ease-in-out infinite}
-.td-generating{font-size:9px;color:#52525b;display:flex;align-items:center;gap:4px}
-.td-generating .td-dot{width:4px;height:4px;border-radius:50%;background:#d4a846;animation:pulse 1.5s ease-in-out infinite}
-.td-profile{display:flex;gap:6px;margin-bottom:14px}
-.td-chip{font-size:9px;padding:3px 10px;border-radius:8px;font-weight:500}
-.td-chip.child{background:rgba(99,102,241,.08);color:#818cf8;border:1px solid rgba(99,102,241,.12)}
-.td-chip.virtue{background:rgba(212,168,70,.08);color:#d4a846;border:1px solid rgba(212,168,70,.12)}
-.td-story{flex:1;position:relative}
-.td-story-title{font-style:italic;font-size:16px;font-weight:600;color:#d4a846;margin-bottom:8px;min-height:22px}
-.td-story-text{font-size:12px;color:#a1a1aa;line-height:1.8;min-height:80px}
+.td-profile{display:flex;gap:6px;margin-bottom:18px}
+.td-chip{font-size:10px;padding:4px 11px;border-radius:8px;font-weight:600;letter-spacing:.04em}
+.td-chip.virtue{background:rgba(212,168,70,.1);color:#d4a846;border:1px solid rgba(212,168,70,.18)}
+.td-story{flex:0 1 auto;position:relative}
+.td-story-title{font-family:'Lora',Georgia,serif;font-style:italic;font-size:18px;font-weight:600;color:#fef3c7;margin-bottom:10px;min-height:24px;letter-spacing:-.005em}
+.td-story-text{font-size:13px;color:#a1a1aa;line-height:1.85;min-height:80px}
 .td-cursor{display:inline-block;width:2px;height:14px;background:#d4a846;margin-left:1px;animation:blink 1s steps(1) infinite;vertical-align:text-bottom}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
 /* Card header (above media) */
-.card-header{padding:28px 28px 22px;position:relative;z-index:1}
-.card-header h3{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15;margin-bottom:8px}
-.card-header .card-tag{
-  font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
-  padding:4px 10px;border-radius:6px;display:inline-block;
+.card-header{padding:30px 30px 24px;position:relative;z-index:1}
+.card-title-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.card-header h3{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
+.card-status{
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:500;letter-spacing:.08em;
+  color:#a1a1aa;display:inline-flex;align-items:center;gap:7px;
+}
+.card-status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:currentColor;animation:pulse 2.4s ease-in-out infinite;
 }
 .card-question{
-  font-style:italic;font-size:15px;color:#a1a1aa;line-height:1.6;
-  margin-bottom:16px;padding-left:16px;
-  border-left:2px solid rgba(255,255,255,.08);
+  font-family:'Lora',Georgia,serif;font-style:italic;
+  font-size:15.5px;color:#c8c8cc;line-height:1.55;
+  margin-bottom:18px;
 }
+
+/* Warm amber wash on Bedtime Virtues header → fades into demo */
+.card-virtues .card-header{
+  background:linear-gradient(180deg,rgba(212,168,70,.06) 0%,rgba(212,168,70,.02) 70%,transparent 100%);
+}
+.card-virtues .card-status{color:#d4a846}
+.card-virtues .card-media{border-top:none}
 
 /* Card body */
 .card-body{padding:24px 28px 24px;position:relative;z-index:1}
@@ -265,10 +272,8 @@ section{position:relative;z-index:1;padding:120px 24px}
 .card-disclaimer{font-size:10px;color:#3f3f46;margin-top:12px;line-height:1.5}
 
 /* Card themes */
-.card-virtues .card-tag{background:rgba(212,168,70,.1);color:#d4a846}
 .card-virtues h3{color:#fef3c7}
 .card-virtues .card-link{color:#d4a846}
-.card-rudyard .card-tag{background:rgba(99,102,241,.1);color:#6366f1}
 .card-rudyard h3{color:#c7d2fe}
 .card-rudyard .card-link{color:#818cf8}
 
@@ -437,7 +442,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-portrait">
-    <img src="images/family.jpg?v=3x" alt="Jon Tidd" width="3000" height="2173" fetchpriority="high">
+    <img src="images/family.jpg?v=real" alt="Jon Tidd" width="2428" height="1760" fetchpriority="high">
   </div>
   <div class="hero-tag">Hi, I'm Jon</div>
   <h1>I build tools<br>for <span class="accent">human<br>flourishing</span></h1>
@@ -468,17 +473,14 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-border"></div>
       <div class="card-header">
         <div class="card-question">"What if bedtime stories could actually build character — not just entertain?"</div>
-        <h3>Bedtime Virtues</h3>
-        <div class="card-tag">Early Preview</div>
+        <div class="card-title-row">
+          <h3>Bedtime Virtues</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Early Preview</span>
+        </div>
       </div>
       <div class="card-media">
         <div class="typing-demo" id="typing-demo">
-          <div class="td-header">
-            <div class="td-title">AI Story Forge</div>
-            <div class="td-generating"><span class="td-dot"></span>Generating</div>
-          </div>
           <div class="td-profile">
-            <span class="td-chip child" id="td-child">Oliver, age 5</span>
             <span class="td-chip virtue" id="td-virtue">Generosity</span>
           </div>
           <div class="td-story">
@@ -488,7 +490,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
       </div>
       <div class="card-body">
-        <p class="desc">Aristotle called it <em>hexis</em> — the idea that virtue isn't something you're born with, but a habit forged through deliberate practice. For 2,600 years, the greatest thinkers agreed: character is built one story, one conversation, one bedtime at a time. This app brings that ancient insight to modern families with AI-generated stories rooted in the cardinal virtues — each paired with a parent discussion guide to make the lesson stick.</p>
+        <p class="desc">Character isn't born — it's built, one story at a time. Aristotle called it <em>hexis</em>. This app pairs <strong>AI-generated stories rooted in the cardinal virtues</strong> with parent discussion guides to make each lesson stick.</p>
         <div class="card-tech">
           <strong>16 classical virtues</strong> organized under Prudence, Justice, Courage, and Temperance. <strong>57+ curated classics</strong> spanning 2,600 years from Aesop to C.S. Lewis. A <strong>Virtue Compass</strong> radar chart tracks your child's character growth across every trait. AI stories generated via <strong>Claude</strong>, each mapped to specific virtues with <strong>guided discussion prompts</strong>.
         </div>
@@ -665,14 +667,13 @@ if(rudyardVideo){
 
 // ── Typing Demo (Bedtime Virtues) ──
 const stories=[
-  {child:'Oliver, age 5',virtue:'Generosity',title:'The Two Swords of Sir Oliver',text:'In a kingdom where every knight carried two swords, young Sir Oliver discovered that the stronger blade was always the one he chose to give away. For a sword shared becomes a bridge, and a bridge can hold more weight than any wall...'},
-  {child:'Maya, age 8',virtue:'Honesty',title:'The Truthful Mirror',text:'In the village of Thornwick, there lived a girl named Maya who had found a mirror that could only show things as they truly were. At first she hid it — truth, she learned, was not always comfortable...'},
-  {child:'Alex, age 6',virtue:'Perseverance',title:'The Mountain That Waited',text:'There once was a mountain that no child had ever climbed. Not because it was too tall — though it was very tall indeed — but because it had a trick. Each step up, it grew a little taller...'}
+  {virtue:'Generosity',title:'The Two Swords of Sir Oliver',text:'In a kingdom where every knight carried two swords, young Sir Oliver discovered that the stronger blade was always the one he chose to give away. For a sword shared becomes a bridge, and a bridge can hold more weight than any wall...'},
+  {virtue:'Honesty',title:'The Truthful Mirror',text:'In the village of Thornwick, there lived a girl named Maya who had found a mirror that could only show things as they truly were. At first she hid it — truth, she learned, was not always comfortable...'},
+  {virtue:'Perseverance',title:'The Mountain That Waited',text:'There once was a mountain that no child had ever climbed. Not because it was too tall — though it was very tall indeed — but because it had a trick. Each step up, it grew a little taller...'}
 ];
 let si=0,ci=0,phase='title',timer;
 const elTitle=document.getElementById('td-title');
 const elText=document.getElementById('td-text');
-const elChild=document.getElementById('td-child');
 const elVirtue=document.getElementById('td-virtue');
 
 function typeNext(){
@@ -682,7 +683,7 @@ function typeNext(){
     else{phase='text';ci=0;timer=setTimeout(typeNext,300)}
   }else if(phase==='text'){
     if(ci<=s.text.length){elText.innerHTML=s.text.slice(0,ci)+'<span class="td-cursor"></span>';ci++;timer=setTimeout(typeNext,28+Math.random()*20)}
-    else{timer=setTimeout(()=>{si=(si+1)%stories.length;ci=0;phase='title';elTitle.textContent='';elText.innerHTML='<span class="td-cursor"></span>';elChild.textContent=stories[si].child;elVirtue.textContent=stories[si].virtue;typeNext()},4000)}
+    else{timer=setTimeout(()=>{si=(si+1)%stories.length;ci=0;phase='title';elTitle.textContent='';elText.innerHTML='<span class="td-cursor"></span>';elVirtue.textContent=stories[si].virtue;typeNext()},4000)}
   }
 }
 typeNext();
