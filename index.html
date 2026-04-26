@@ -101,12 +101,14 @@ nav{
   object-fit:cover;object-position:center center;
   transform-origin:50% 33%;
   transform:scale(1) translateZ(0);will-change:transform;
-  backface-visibility:hidden;image-rendering:auto;
+  backface-visibility:hidden;
+  image-rendering:-webkit-optimize-contrast;
+  image-rendering:high-quality;
   animation:portrait-zoom 2.4s cubic-bezier(.65,0,.35,1) .5s both;
 }
 @keyframes portrait-zoom{
   from{transform:scale(1) translateZ(0)}
-  to{transform:scale(2.7) translateZ(0)}
+  to{transform:scale(2.1) translateZ(0)}
 }
 
 .hero-tag{
@@ -225,6 +227,16 @@ section{position:relative;z-index:1;padding:120px 24px}
 
 /* Card header (above media) */
 .card-header{padding:30px 30px 24px;position:relative;z-index:1}
+.proj-label{
+  display:inline-block;
+  font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:#71717a;margin-bottom:14px;
+  padding:3px 9px;border-radius:5px;
+  background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+}
+.card-virtues .proj-label{color:#d4a846;background:rgba(212,168,70,.06);border-color:rgba(212,168,70,.18)}
+.card-rudyard .proj-label{color:#818cf8;background:rgba(99,102,241,.06);border-color:rgba(99,102,241,.18)}
 .card-title-row{display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
 .card-header h3{font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.15}
 .card-status{
@@ -397,7 +409,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .hero-portrait::before{animation:none;opacity:.4}
   .hero h1{animation:none}
-  .hero-portrait img{animation:none;transform:scale(2.7) translateZ(0)}
+  .hero-portrait img{animation:none;transform:scale(2.1) translateZ(0)}
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -442,7 +454,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
 <!-- ═══ HERO ═══ -->
 <section class="hero">
   <div class="hero-portrait">
-    <img src="images/family.jpg?v=real" alt="Jon Tidd" width="2428" height="1760" fetchpriority="high">
+    <img src="images/family.jpg?v=hires" alt="Jon Tidd" width="2428" height="1760" fetchpriority="high">
   </div>
   <div class="hero-tag">Hi, I'm Jon</div>
   <h1>I build tools<br>for <span class="accent">human<br>flourishing</span></h1>
@@ -472,6 +484,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
+        <span class="proj-label">Project #1</span>
         <div class="card-question">"What if bedtime stories could actually build character — not just entertain?"</div>
         <div class="card-title-row">
           <h3>Bedtime Virtues</h3>
@@ -507,7 +520,8 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <div class="card-question">"What if you could map an entire mind — every book, every argument, every prediction — and then talk to it?"</div>
+        <span class="proj-label">Project #2</span>
+        <div class="card-question">"What if you could map an entire mind — every podcast, every YouTube video, every written word — and then talk to it?"</div>
         <h3>The Rudyard Library</h3>
       </div>
       <div class="card-media">
