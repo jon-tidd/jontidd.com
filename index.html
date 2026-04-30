@@ -83,7 +83,8 @@ nav{
   position:absolute;
   top:50%;left:50%;
   width:100%;height:100%;
-  border-radius:50%;
+  /* Slight asymmetry — the SVG filter does the wavy distortion */
+  border-radius:50% 50% 50% 50% / 50% 50% 50% 50%;
   pointer-events:none;
   opacity:0;
   background:radial-gradient(circle,
@@ -93,28 +94,37 @@ nav{
     rgba(212,168,70,.6) 52%,
     rgba(99,102,241,.4) 58%,
     transparent 72%);
-  filter:blur(3px);
-  transform:translate(-50%,-50%) scale(.6);
+  filter:url(#ripple-warp-1) blur(3px);
+  transform:translate(-50%,-50%) scale(.6) rotate(0deg);
   z-index:0;
+  --rot:32deg;
+}
+.hp-ripple:nth-child(2){
+  filter:url(#ripple-warp-2) blur(4px);
+  --rot:-26deg;
+}
+.hp-ripple:nth-child(3){
+  filter:url(#ripple-warp-3) blur(6px);
+  --rot:38deg;
 }
 .hero-portrait-shell.is-done .hp-ripple{
-  animation:ripple-roll 1.9s cubic-bezier(.2,.65,.25,1) forwards;
+  animation:ripple-roll 2.6s cubic-bezier(.2,.65,.25,1) forwards;
 }
-.hero-portrait-shell.is-done .hp-ripple:nth-child(2){animation-delay:.18s;filter:blur(4px)}
-.hero-portrait-shell.is-done .hp-ripple:nth-child(3){animation-delay:.42s;filter:blur(6px)}
+.hero-portrait-shell.is-done .hp-ripple:nth-child(2){animation-delay:.45s}
+.hero-portrait-shell.is-done .hp-ripple:nth-child(3){animation-delay:.95s}
 @keyframes ripple-roll{
-  0%{transform:translate(-50%,-50%) scale(.6);opacity:0}
-  12%{opacity:1}
-  100%{transform:translate(-50%,-50%) scale(14);opacity:0}
+  0%{transform:translate(-50%,-50%) scale(.6) rotate(0deg);opacity:0}
+  14%{opacity:1}
+  100%{transform:translate(-50%,-50%) scale(14) rotate(var(--rot));opacity:0}
 }
 
-/* Subtle pulse on the portrait itself when it lands */
+/* Slower, gentler pulse on the portrait when it lands */
 .hero-portrait-shell.is-done .hero-portrait{
-  animation:portrait-pulse .9s cubic-bezier(.3,.7,.3,1) both;
+  animation:portrait-pulse 1.5s cubic-bezier(.4,.7,.3,1) both;
 }
 @keyframes portrait-pulse{
   0%{transform:scale(1)}
-  35%{transform:scale(1.04)}
+  45%{transform:scale(1.025)}
   100%{transform:scale(1)}
 }
 
@@ -484,6 +494,24 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
 </style>
 </head>
 <body>
+
+<!-- SVG filters for the ripple wave distortion (out-of-flow, hidden) -->
+<svg width="0" height="0" style="position:absolute;pointer-events:none" aria-hidden="true">
+  <defs>
+    <filter id="ripple-warp-1" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="1" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="22"/>
+    </filter>
+    <filter id="ripple-warp-2" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="2" seed="5" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="28"/>
+    </filter>
+    <filter id="ripple-warp-3" x="-25%" y="-25%" width="150%" height="150%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.011" numOctaves="2" seed="3" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="34"/>
+    </filter>
+  </defs>
+</svg>
 
 <canvas id="bg-canvas"></canvas>
 <div class="grid-overlay"></div>
