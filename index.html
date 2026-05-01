@@ -158,16 +158,14 @@ nav{
   position:absolute;inset:0;
   width:100%;height:100%;display:block;
   object-fit:cover;object-position:center center;
-  transition:opacity .35s ease-out;
 }
-/* hp-video plays the pre-rendered zoom (every frame rasterized at
-   high quality, encoded as H.264 CRF 18). When it ends, JS swaps
-   to .hp-final — a static crop matching the last frame exactly,
-   so the resting state is rendered without any GPU compositing. */
-.hero-portrait .hp-video{z-index:1;opacity:1}
-.hero-portrait .hp-final{z-index:0;opacity:0}
-.hero-portrait.is-done .hp-video{opacity:0;pointer-events:none}
-.hero-portrait.is-done .hp-final{opacity:1}
+/* Video plays the pre-rendered zoom and then HOLDS its last frame.
+   We keep the same render pipeline (video decoder) for the resting
+   state, so there's no perceptual sharpness shift between playing and
+   ended. .hp-final is hidden by default and only used for the
+   reduced-motion / autoplay-blocked fallback. */
+.hero-portrait .hp-video{z-index:1}
+.hero-portrait .hp-final{z-index:0;display:none}
 
 .hero-tag{
   font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;
@@ -468,7 +466,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   .hero-portrait::before{animation:none;opacity:.4}
   .hero h1{animation:none}
   .hero-portrait .hp-video{display:none}
-  .hero-portrait .hp-final{opacity:1}
+  .hero-portrait .hp-final{display:block;opacity:1}
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -726,16 +724,24 @@ function enableGyro(){window.addEventListener('deviceorientation',e=>{if(e.gamma
 if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){document.addEventListener('touchstart',function once(){DeviceOrientationEvent.requestPermission().then(s=>{if(s==='granted')enableGyro()}).catch(()=>{});document.removeEventListener('touchstart',once)},{once:true})}else{enableGyro()}
 (function draw(){ctx.clearRect(0,0,W,H);const t=Date.now()*.001;for(const s of stars){s.x+=s.vx-mx*.2*s.r;s.y+=s.vy-my*.2*s.r;if(s.x<0)s.x+=W;if(s.x>W)s.x-=W;if(s.y<0)s.y+=H;if(s.y>H)s.y-=H;ctx.beginPath();ctx.arc(s.x%W,s.y%H,s.r,0,6.28);ctx.fillStyle=`rgba(255,255,255,${s.a*(.6+.4*Math.sin(t+s.p))})`;ctx.fill()}requestAnimationFrame(draw)})();
 
-// ── Hero Portrait: hand off video → static + ripple at end of zoom ──
+// ── Hero Portrait: trigger ripple at end of zoom; fall back if needed ──
 (function(){
   const shell=document.querySelector('.hero-portrait-shell');
   const wrap=shell&&shell.querySelector('.hero-portrait');
   const vid=wrap&&wrap.querySelector('.hp-video');
+  const still=wrap&&wrap.querySelector('.hp-final');
   if(!shell||!wrap||!vid)return;
-  const done=()=>{wrap.classList.add('is-done');shell.classList.add('is-done')};
-  vid.addEventListener('ended',done,{once:true});
-  // Fallback in case autoplay is blocked
-  setTimeout(done,3500);
+  let fired=false;
+  const fireRipple=()=>{if(fired)return;fired=true;wrap.classList.add('is-done');shell.classList.add('is-done')};
+  vid.addEventListener('ended',fireRipple,{once:true});
+  // If autoplay is blocked or the video errors, fall back to the static frame.
+  const showStill=()=>{if(still){still.style.display='block';still.style.opacity='1';vid.style.display='none'}fireRipple()};
+  vid.addEventListener('error',showStill);
+  // Catch a rejected play() — Safari/iOS sometimes need a user gesture.
+  const p=vid.play();
+  if(p&&typeof p.catch==='function')p.catch(showStill);
+  // Last-resort safety net so the ripple still triggers even if 'ended' never fires.
+  setTimeout(fireRipple,4500);
 })();
 
 // ── 3D Tilt + Metallic Sheen ──
