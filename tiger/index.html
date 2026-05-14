@@ -1,0 +1,934 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tiger Method — 14 Strokes by Sept 1</title>
+<meta name="description" content="A 16-week on-course practice plan to shave 14 strokes and become a consistent bogey golfer.">
+<link rel="icon" href="/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C8102E;
+    --red-dark:#8E0B20;
+    --black:#0B0B0B;
+    --panel:#1A1A1A;
+    --panel-2:#222;
+    --line:#333;
+    --cream:#F4EFE6;
+    --muted:#B5AE9F;
+    --gold:#C9A24B;
+    --green:#3DA35D;
+    --amber:#E0A106;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{background:var(--black);color:var(--cream);}
+  body{
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    font-size:20px;
+    line-height:1.55;
+    padding-bottom:80px;
+  }
+  h1,h2,h3,.display{font-family:"Oswald",system-ui,sans-serif;text-transform:uppercase;letter-spacing:.02em;}
+  .wrap{max-width:860px;margin:0 auto;padding:0 18px;}
+
+  /* ── sticky bar ── */
+  .sticky{
+    position:sticky;top:0;z-index:50;
+    background:#0B0B0B;
+    border-bottom:3px solid var(--red);
+  }
+  .sticky-inner{
+    display:flex;align-items:center;justify-content:space-between;gap:12px;
+    padding:10px 18px;max-width:860px;margin:0 auto;
+  }
+  .sticky-week{font-family:"Oswald";font-size:20px;color:var(--cream);line-height:1.1;}
+  .sticky-week b{color:var(--red);}
+  .sticky-week small{display:block;font-family:system-ui;font-size:14px;color:var(--muted);text-transform:none;letter-spacing:0;}
+  .jump-btn{
+    background:var(--red);color:#fff;border:none;
+    font-family:"Oswald";font-size:17px;text-transform:uppercase;
+    padding:11px 16px;border-radius:8px;cursor:pointer;white-space:nowrap;
+  }
+  .jump-btn:active{background:var(--red-dark);}
+
+  /* ── hero ── */
+  .hero{
+    text-align:center;padding:42px 18px 26px;
+    background:
+      radial-gradient(120% 90% at 50% 0%, rgba(200,16,46,.28), transparent 60%),
+      var(--black);
+    border-bottom:1px solid var(--line);
+  }
+  .hero .eyebrow{font-family:"Oswald";color:var(--red);letter-spacing:.3em;font-size:16px;}
+  .hero h1{font-size:clamp(38px,9vw,68px);line-height:.98;margin:8px 0 4px;font-weight:700;}
+  .hero h1 .red{color:var(--red);}
+  .hero .sub{color:var(--muted);font-size:18px;max-width:520px;margin:10px auto 0;}
+
+  /* ── cards ── */
+  .card{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:22px;margin:22px 0;
+  }
+  .card h2{font-size:26px;color:var(--cream);margin-bottom:14px;border-left:5px solid var(--red);padding-left:12px;}
+
+  /* ── on-track tracker ── */
+  .tracker{
+    background:linear-gradient(180deg,#241015,var(--panel));
+    border:1px solid var(--red-dark);
+  }
+  .tracker-q{font-family:"Oswald";font-size:24px;text-transform:uppercase;text-align:center;color:var(--cream);}
+  .tracker-q b{color:var(--red);}
+  .pace-badge{
+    display:block;text-align:center;font-family:"Oswald";font-weight:700;
+    font-size:40px;letter-spacing:.04em;margin:8px auto 4px;line-height:1;
+    padding:10px 0;border-radius:10px;
+  }
+  .pace-badge.on{color:#fff;background:var(--green);}
+  .pace-badge.catch{color:#221a00;background:var(--amber);}
+  .pace-badge.behind{color:#fff;background:var(--red);}
+  .tracker-stats{display:flex;gap:8px;margin:14px 0;}
+  .tracker-stats > div{
+    flex:1;background:rgba(0,0,0,.35);border-radius:10px;
+    text-align:center;padding:12px 4px;
+  }
+  .ts-num{display:block;font-family:"Oswald";font-weight:700;font-size:38px;color:var(--gold);line-height:1;}
+  .ts-lbl{display:block;font-size:13px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;margin-top:4px;}
+  .week-strip{display:flex;gap:4px;margin:6px 0 12px;}
+  .week-strip .seg{
+    flex:1;height:18px;border-radius:4px;
+    background:var(--panel-2);border:1px solid var(--line);
+  }
+  .week-strip .seg.done{background:var(--green);border-color:var(--green);}
+  .week-strip .seg.current{
+    background:var(--red);border-color:#fff;
+    box-shadow:0 0 0 2px rgba(200,16,46,.4);
+  }
+  .tracker-cap{font-size:16px;color:var(--muted);text-align:center;}
+  .tracker-cap b{color:var(--cream);}
+
+  /* ── scoreboard ── */
+  .goal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;}
+  .goal-cell{background:var(--panel-2);border-radius:10px;padding:14px 8px;}
+  .goal-cell .num{font-family:"Oswald";font-size:42px;font-weight:700;color:var(--red);line-height:1;}
+  .goal-cell .lbl{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-top:6px;}
+  .goal-cell input{
+    width:100%;background:transparent;border:none;text-align:center;
+    font-family:"Oswald";font-size:42px;font-weight:700;color:var(--gold);
+  }
+  .goal-cell input:focus{outline:2px solid var(--gold);border-radius:6px;}
+  .scoreboard-hint{font-size:15px;color:var(--muted);margin-top:14px;text-align:center;}
+
+  /* ── strokes-live bars ── */
+  .bar-row{display:flex;align-items:center;gap:12px;margin:11px 0;}
+  .bar-label{flex:0 0 145px;font-family:"Oswald";font-size:16px;text-transform:uppercase;}
+  .bar-track{flex:1;background:var(--panel-2);height:30px;border-radius:6px;overflow:hidden;}
+  .bar-val{height:100%;background:var(--red);display:flex;align-items:center;justify-content:flex-end;padding-right:8px;font-family:"Oswald";font-size:15px;color:#fff;}
+  .bar-row:nth-child(3) .bar-val{background:#A50E26;}
+  .bar-row:nth-child(4) .bar-val{background:#7E1E2C;}
+  .bar-row:nth-child(5) .bar-val{background:#5E2730;}
+  .bar-row:nth-child(6) .bar-val{background:#4A2D33;}
+
+  /* ── round log ── */
+  table{width:100%;border-collapse:collapse;}
+  .rounds th{font-family:"Oswald";font-size:14px;color:var(--muted);text-transform:uppercase;text-align:left;padding:6px 6px;border-bottom:2px solid var(--line);}
+  .rounds td{padding:4px 4px;border-bottom:1px solid var(--line);}
+  .rounds input{
+    width:100%;background:transparent;border:none;color:var(--cream);
+    font-size:18px;font-family:system-ui;padding:8px 6px;border-radius:6px;
+  }
+  .rounds input:focus{outline:none;background:var(--panel-2);}
+  .rounds .del{
+    background:none;border:none;color:var(--red);font-size:24px;
+    cursor:pointer;line-height:1;padding:4px 8px;
+  }
+  .add-btn{
+    margin-top:12px;background:var(--panel-2);color:var(--cream);
+    border:1px dashed var(--line);font-family:"Oswald";font-size:17px;
+    text-transform:uppercase;padding:12px 18px;border-radius:8px;cursor:pointer;width:100%;
+  }
+  .add-btn:active{background:#2c2c2c;}
+
+  /* ── weeks ── */
+  .phase-head{
+    font-family:"Oswald";font-size:18px;letter-spacing:.18em;
+    color:var(--gold);margin:34px 0 6px;padding-bottom:6px;
+    border-bottom:1px solid var(--line);
+  }
+  details.week{
+    background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;margin:14px 0;overflow:hidden;
+  }
+  details.week[open]{border-color:var(--red);}
+  details.week.current{border-color:var(--red);box-shadow:0 0 0 2px rgba(200,16,46,.35);}
+  summary{
+    list-style:none;cursor:pointer;padding:18px 20px;
+    display:flex;align-items:center;gap:14px;
+  }
+  summary::-webkit-details-marker{display:none;}
+  .wk-num{
+    flex:0 0 60px;height:60px;border-radius:50%;
+    background:var(--panel-2);border:2px solid var(--red);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    font-family:"Oswald";line-height:1;
+  }
+  .wk-num .n{font-size:26px;font-weight:700;color:var(--red);}
+  .wk-num .of{font-size:10px;color:var(--muted);}
+  details.week.done .wk-num{background:var(--green);border-color:var(--green);}
+  details.week.done .wk-num .n,details.week.done .wk-num .of{color:#fff;}
+  .wk-meta{flex:1;min-width:0;}
+  .wk-dates{font-size:14px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+  .wk-title{font-family:"Oswald";font-size:24px;color:var(--cream);line-height:1.1;}
+  .wk-current-tag{
+    display:inline-block;background:var(--red);color:#fff;
+    font-family:"Oswald";font-size:12px;padding:2px 8px;border-radius:4px;
+    letter-spacing:.1em;margin-bottom:3px;
+  }
+  .chev{flex:0 0 auto;color:var(--muted);font-size:22px;transition:transform .2s;}
+  details[open] .chev{transform:rotate(180deg);}
+
+  .wk-body{padding:0 20px 22px;border-top:1px solid var(--line);}
+  .wk-principle{
+    font-style:italic;color:var(--gold);font-size:18px;
+    margin:16px 0 18px;padding-left:14px;border-left:3px solid var(--gold);
+  }
+  .session{margin:18px 0;}
+  .session-name{
+    font-family:"Oswald";font-size:18px;text-transform:uppercase;
+    color:var(--red);letter-spacing:.06em;margin-bottom:6px;
+  }
+  .drill{
+    display:flex;gap:14px;align-items:flex-start;
+    padding:12px 12px;background:var(--panel-2);border-radius:10px;margin:8px 0;
+  }
+  .drill input[type=checkbox]{
+    flex:0 0 auto;width:30px;height:30px;margin-top:2px;
+    accent-color:var(--red);cursor:pointer;
+  }
+  .drill .edit{flex:1;font-size:19px;line-height:1.45;outline:none;}
+  .drill .edit:focus{background:#2e2e2e;border-radius:6px;}
+  .drill.done .edit{color:var(--muted);text-decoration:line-through;}
+  .oncourse{
+    margin-top:16px;background:#201012;border:1px solid var(--red-dark);
+    border-radius:10px;padding:14px 16px;
+  }
+  .oncourse .tag{font-family:"Oswald";font-size:15px;color:var(--red);letter-spacing:.1em;}
+  .oncourse .edit{font-size:20px;outline:none;margin-top:4px;}
+  .oncourse .edit:focus{background:#2e1a1c;border-radius:6px;}
+  .notes-label{font-family:"Oswald";font-size:15px;color:var(--muted);letter-spacing:.1em;margin-top:18px;display:block;}
+  textarea{
+    width:100%;margin-top:6px;background:var(--panel-2);color:var(--cream);
+    border:1px solid var(--line);border-radius:10px;padding:12px;
+    font-family:system-ui;font-size:18px;line-height:1.5;resize:vertical;min-height:90px;
+  }
+  textarea:focus{outline:none;border-color:var(--red);}
+  .wk-done-row{
+    display:flex;align-items:center;gap:12px;margin-top:18px;
+    padding-top:16px;border-top:1px solid var(--line);
+  }
+  .wk-done-row input{width:30px;height:30px;accent-color:var(--green);cursor:pointer;}
+  .wk-done-row label{font-family:"Oswald";font-size:18px;text-transform:uppercase;cursor:pointer;}
+
+  /* ── sync / data ── */
+  .sync-status{
+    display:flex;align-items:center;gap:10px;font-size:17px;
+    background:var(--panel-2);border-radius:10px;padding:12px 14px;margin-bottom:14px;
+  }
+  .sync-dot{width:14px;height:14px;border-radius:50%;flex:0 0 auto;background:var(--muted);}
+  .sync-dot.synced{background:var(--green);}
+  .sync-dot.saving{background:var(--amber);}
+  .sync-dot.offline{background:var(--red);}
+  .data-btns{display:flex;gap:10px;flex-wrap:wrap;}
+  .data-btns button{
+    flex:1;min-width:140px;background:var(--panel-2);color:var(--cream);
+    border:1px solid var(--line);font-family:"Oswald";font-size:16px;
+    text-transform:uppercase;padding:14px;border-radius:8px;cursor:pointer;
+  }
+  .data-btns button:active{background:#2c2c2c;}
+  .foot{text-align:center;color:var(--muted);font-size:14px;padding:30px 18px 10px;}
+  .foot b{color:var(--red);}
+  .saved-flash{
+    position:fixed;bottom:18px;left:50%;transform:translateX(-50%);
+    background:var(--green);color:#fff;font-family:"Oswald";
+    padding:10px 22px;border-radius:30px;font-size:16px;
+    opacity:0;transition:opacity .25s;pointer-events:none;z-index:99;
+  }
+  .saved-flash.show{opacity:1;}
+
+  @media(max-width:520px){
+    body{font-size:19px;}
+    .goal-grid{grid-template-columns:1fr;}
+    .bar-label{flex-basis:110px;font-size:14px;}
+    .wk-num{flex-basis:52px;height:52px;}
+    .wk-num .n{font-size:22px;}
+    .ts-num{font-size:32px;}
+    .pace-badge{font-size:34px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="sticky">
+  <div class="sticky-inner">
+    <div class="sticky-week" id="stickyWeek">Loading…</div>
+    <button class="jump-btn" id="jumpBtn">This Week ▾</button>
+  </div>
+</div>
+
+<div class="hero">
+  <div class="eyebrow">THE TIGER METHOD</div>
+  <h1>SHAVE <span class="red">14</span><br>STROKES</h1>
+  <div class="sub">A 16-week, on-course practice plan to become a consistent bogey golfer by <b>September 1</b>. Two rounds a week. Strokes where they actually live.</div>
+</div>
+
+<div class="wrap">
+
+  <!-- ON-TRACK TRACKER -->
+  <div class="card tracker">
+    <div class="tracker-q">On track for <b>Sept 1</b>?</div>
+    <div class="pace-badge" id="paceBadge">—</div>
+    <div class="tracker-stats">
+      <div><span class="ts-num" id="tsWeek">—</span><span class="ts-lbl">of 16 weeks</span></div>
+      <div><span class="ts-num" id="tsDays">—</span><span class="ts-lbl">days left</span></div>
+      <div><span class="ts-num" id="tsDone">—</span><span class="ts-lbl">weeks done</span></div>
+    </div>
+    <div class="week-strip" id="weekStrip"></div>
+    <div class="tracker-cap" id="trackerCap">—</div>
+  </div>
+
+  <!-- PRINCIPLE -->
+  <div class="card" style="background:linear-gradient(180deg,#201012,#1A1A1A);border-color:#8E0B20;">
+    <div style="font-family:Oswald;font-size:25px;color:var(--cream);margin-bottom:10px;">The one principle that beats every swing tip:</div>
+    <p style="font-size:21px;">Improving your <b style="color:var(--red)">short game — putting and chipping</b> — drops your score faster than anything else. Most amateurs spend 80% of practice on the range hitting drivers. That's the inverse of where the strokes actually live. This plan fixes that.</p>
+  </div>
+
+  <!-- WEEKS -->
+  <div id="weeks"></div>
+
+  <!-- SCOREBOARD -->
+  <div class="card">
+    <h2>The Scoreboard</h2>
+    <div class="goal-grid">
+      <div class="goal-cell">
+        <input type="number" data-field="baseline" placeholder="—" inputmode="numeric">
+        <div class="lbl">Starting Score</div>
+      </div>
+      <div class="goal-cell">
+        <div class="num" id="goalScore">—</div>
+        <div class="lbl">Goal Score</div>
+      </div>
+      <div class="goal-cell">
+        <div class="num" id="bestScore">—</div>
+        <div class="lbl">Best Round</div>
+      </div>
+    </div>
+    <div class="scoreboard-hint">Type your current typical score on the left — your goal (14 fewer) fills in automatically.</div>
+  </div>
+
+  <!-- ROUND LOG -->
+  <div class="card">
+    <h2>Round Log</h2>
+    <table class="rounds">
+      <thead><tr><th>Date</th><th>Course</th><th style="width:62px">Score</th><th style="width:60px">Putts</th><th></th></tr></thead>
+      <tbody id="roundsBody"></tbody>
+    </table>
+    <button class="add-btn" id="addRound">+ Add A Round</button>
+  </div>
+
+  <!-- WHERE STROKES LIVE -->
+  <div class="card">
+    <h2>Where The Strokes Live</h2>
+    <div class="bar-row"><div class="bar-label">Putting</div><div class="bar-track"><div class="bar-val" style="width:40%">40%</div></div></div>
+    <div class="bar-row"><div class="bar-label">Chip / Pitch</div><div class="bar-track"><div class="bar-val" style="width:25%">25%</div></div></div>
+    <div class="bar-row"><div class="bar-label">Course Mgmt</div><div class="bar-track"><div class="bar-val" style="width:15%">15%</div></div></div>
+    <div class="bar-row"><div class="bar-label">Iron Play</div><div class="bar-track"><div class="bar-val" style="width:12%">12%</div></div></div>
+    <div class="bar-row"><div class="bar-label">Driver / Swing</div><div class="bar-track"><div class="bar-val" style="width:8%">8%</div></div></div>
+  </div>
+
+  <!-- SYNC / DATA -->
+  <div class="card">
+    <h2>Saving &amp; Backup</h2>
+    <div class="sync-status">
+      <span class="sync-dot" id="syncDot"></span>
+      <span id="syncMsg">Checking…</span>
+    </div>
+    <p style="color:var(--muted);font-size:16px;margin-bottom:14px;">Everything you type saves automatically. Backup files below are an extra safety net — you don't need them day to day.</p>
+    <div class="data-btns">
+      <button id="exportBtn">⬇ Export Backup</button>
+      <button id="importBtn">⬆ Restore Backup</button>
+      <input type="file" id="importFile" accept="application/json" style="display:none">
+    </div>
+  </div>
+
+  <div class="foot">
+    Built for <b>Dad</b> — Sunday Red, every round. · Coached by Tiger Claude.
+  </div>
+</div>
+
+<div class="saved-flash" id="savedFlash">Saved ✓</div>
+
+<script>
+/* ════════════════ CLOUD SYNC CONFIG ════════════════
+   To turn on cross-device cloud sync (free):
+   1. Make a free account at jsonbin.io
+   2. Create a new bin — paste  {}  as the content — and copy its BIN ID
+   3. Go to API Keys → create an ACCESS KEY with "Read" + "Update" enabled
+   4. Paste both values below. That's it — sync turns on automatically.
+   Leave them blank and the page still works, saving to this device only.   */
+const SYNC = {
+  binId:     "6a062d0aadc21f119a9f2284",
+  accessKey: "$2a$10$b1JXDtBb71FZY5HDd0XHVuU1ofwHAw/XF6HJ5CnawVip1P/TbwVU2"
+};
+const SYNC_ON = !!(SYNC.binId && SYNC.accessKey);
+
+/* ───────────────────────── THE PLAN ───────────────────────── */
+const START = new Date(2026,4,14);     // May 14 2026 — Week 1 begins
+const GOAL_DATE = new Date(2026,8,1);  // Sept 1 2026 — the deadline
+const PLAN = [
+  { phase:"PHASE 1 · PUTTING — 40% OF YOUR STROKES",
+    title:"Distance Control & Lag Putting",
+    principle:"Most 3-putts come from poor distance, not bad line. Learn to lag the ball into a 3-foot circle.",
+    sessions:[
+      { name:"Session 1 · Ladder Drill", drills:[
+        "Putt to targets at 10, 20, 30, 40 ft — each ball must finish within a club-length.",
+        "Run the ladder 3 times. Feel how length of stroke = distance.",
+        "Finish with 10 long lag putts, eyes on the hole, not the ball."]},
+      { name:"Session 2 · The 3-Foot Circle", drills:[
+        "From 30, 40 & 50 ft, lag 20 balls. Goal: 80% finish inside a 3-ft circle.",
+        "Two-putt challenge: lag close, then hole the short one. 9 in a row.",
+        "Last 5: imagine it's the round — one putt, full routine."]}
+    ],
+    onCourse:"Zero 3-putts from outside 25 feet this round."
+  },
+  { phase:"PHASE 1 · PUTTING — 40% OF YOUR STROKES",
+    title:"Short Putts: The 3–6 Footers",
+    principle:"Face angle at impact is 90% of a made short putt. Build one repeatable, square stroke.",
+    sessions:[
+      { name:"Session 1 · Gate Drill", drills:[
+        "Set two tees just wider than the putter head, ball at 3 ft. Stroke through the gate.",
+        "Make 25 in a row. Miss the gate or the hole = restart the count.",
+        "Move to 4 ft, make 15 in a row."]},
+      { name:"Session 2 · Circle Drill", drills:[
+        "Place 6 balls in a ring 4 ft from the hole. Make all 6. Repeat 3 times.",
+        "Step out to 6 ft, 6 balls, make 4 of 6.",
+        "Finish with 10 putts at 5 ft, full pre-shot routine each time."]}
+    ],
+    onCourse:"Make every putt inside 4 feet. No careless misses."
+  },
+  { phase:"PHASE 1 · PUTTING — 40% OF YOUR STROKES",
+    title:"Green Reading: Slope, Grain & Speed",
+    principle:"Read the green before you stand over the ball. Commit to one read — indecision misses putts.",
+    sessions:[
+      { name:"Session 1 · See The Slope", drills:[
+        "On every putt, walk to the low side and find the fall line first.",
+        "Practice plumb-bobbing 10 putts — confirm which way it breaks.",
+        "Pick a spot where the ball will start, not the hole."]},
+      { name:"Session 2 · Speed & Grain", drills:[
+        "Putt the same 20-footer uphill, downhill, across — feel how speed changes break.",
+        "Note grain: shiny = downgrain (faster), dull = into grain (slower).",
+        "5 putts: read it, commit, no second-guessing once you're over it."]}
+    ],
+    onCourse:"Commit to your first read on every green. Trust it."
+  },
+  { phase:"PHASE 1 · PUTTING — 40% OF YOUR STROKES",
+    title:"Putting Integration — Beat 34 Putts",
+    principle:"Bring distance control + short putts + reading together. This is the week putting becomes a weapon.",
+    sessions:[
+      { name:"Session 1 · Up & Down Putting", drills:[
+        "From 30 ft: lag, then hole out. Must 2-putt 9 times in a row.",
+        "From 40 ft: same drill, 6 in a row.",
+        "Track your 3-putts — goal is zero."]},
+      { name:"Session 2 · Pressure Putts", drills:[
+        "5-footer: miss = start the whole set over. Make 10 straight.",
+        "Random distances 15–40 ft: one ball, full routine, score each as 1/2/3 putts.",
+        "Finish on a make — never leave the green on a miss."]}
+    ],
+    onCourse:"Under 34 putts for the round. Count them honestly."
+  },
+
+  { phase:"PHASE 2 · CHIPPING & PITCHING — 25% OF YOUR STROKES",
+    title:"The Bump-and-Run Chip",
+    principle:"Master ONE reliable low chip with a 7 or 8 iron before adding any other shot. Simple beats fancy.",
+    sessions:[
+      { name:"Session 1 · One Club, One Swing", drills:[
+        "Chip 20 balls with your 8-iron. Ball back, hands ahead, putting-style stroke.",
+        "Land it 3 ft onto the green and let it roll like a putt.",
+        "No wrists — rock the shoulders. Same swing every time."]},
+      { name:"Session 2 · Landing Zone Game", drills:[
+        "Put a towel down as your landing target. 20 chips — land 15 on the towel.",
+        "Vary the distance to the towel; the swing stays the same, the club changes.",
+        "Finish: 5 chips to a real hole, get each inside 3 ft."]}
+    ],
+    onCourse:"Use the bump-and-run for every greenside chip. No exceptions."
+  },
+  { phase:"PHASE 2 · CHIPPING & PITCHING — 25% OF YOUR STROKES",
+    title:"Pitch Shots — 30 to 80 Yards",
+    principle:"Swing length controls distance. Build a half swing and a 3/4 swing you can repeat.",
+    sessions:[
+      { name:"Session 1 · The Half Swing", drills:[
+        "Clock face: take hands to 9 o'clock, smooth through. Hit 15 balls.",
+        "Note the carry distance — that's your half-swing number. Write it down.",
+        "Repeat until 8 of 10 land within 5 yards of each other."]},
+      { name:"Session 2 · The 3/4 Swing", drills:[
+        "Hands to 10:30, same tempo. Find that carry number and write it down.",
+        "Alternate half and 3/4 swings on command — call the shot before you hit.",
+        "Finish: 10 pitches to a flag from random 30–80 yd distances."]}
+    ],
+    onCourse:"Every pitch from 30–80 yards finishes on the green."
+  },
+  { phase:"PHASE 2 · CHIPPING & PITCHING — 25% OF YOUR STROKES",
+    title:"Sand & Bunker Play",
+    principle:"An average bunker shot beats a buried one. Priority #1 is always: get out in one.",
+    sessions:[
+      { name:"Session 1 · The Explosion Shot", drills:[
+        "Open the clubface. Draw a line in the sand, swing to hit 2 inches behind it.",
+        "Splash the sand — the sand lifts the ball out. Do this 20 times.",
+        "Make a full, confident swing. Decelerating is the #1 bunker killer."]},
+      { name:"Session 2 · Get Out Every Time", drills:[
+        "20 real bunker shots — goal is 15 of 20 onto the green in one.",
+        "From a buried lie: square-to-closed face, steep, just dig it out.",
+        "Finish: 5 shots, par is escaping in one — score yourself."]}
+    ],
+    onCourse:"Out of every bunker in one shot. Escape first, fancy never."
+  },
+  { phase:"PHASE 2 · CHIPPING & PITCHING — 25% OF YOUR STROKES",
+    title:"Short Game Integration — The Up & Down",
+    principle:"Getting up-and-down even sometimes saves enormous strokes. This week you build the skill of scrambling.",
+    sessions:[
+      { name:"Session 1 · Up-and-Down Game", drills:[
+        "Drop 10 balls in random spots around a green. Chip/pitch + putt each — must get up and down.",
+        "Track your percentage. Anything over 30% is bogey-golfer territory.",
+        "Re-play your 3 worst lies until you get up and down."]},
+      { name:"Session 2 · Around-the-Green Circuit", drills:[
+        "Pick 9 different lies: rough, tight, uphill, downhill, bunker. Score each up-and-down attempt.",
+        "Total your 'score' for the 9 — beat it next time.",
+        "Finish on your favorite shot, full routine."]}
+    ],
+    onCourse:"Get up-and-down at least 4 times this round."
+  },
+
+  { phase:"PHASE 3 · COURSE MANAGEMENT — KILL THE BIG NUMBERS",
+    title:"Play To Your Miss",
+    principle:"Better decisions eliminate doubles and triples before you ever swing. Know your bad shot — aim to make it harmless.",
+    sessions:[
+      { name:"Session 1 · Chart Your Miss", drills:[
+        "Be honest: what's your bad shot? Slice? Pull? Chunk? Write it down.",
+        "On the range, hit 20 balls and chart where the misses actually go.",
+        "Decide your standard aim point that makes that miss safe."]},
+      { name:"Session 2 · The Harmless Miss", drills:[
+        "Play a practice 9 aiming so your miss never finds water, OB, or a bunker.",
+        "When trouble is on the right, aim up the left side — and accept it.",
+        "No hero shots. Note every time ego tried to take over."]}
+    ],
+    onCourse:"Zero doubles or worse. Play the percentages, not the highlight reel."
+  },
+  { phase:"PHASE 3 · COURSE MANAGEMENT — KILL THE BIG NUMBERS",
+    title:"Fat Targets, Not Tight Pins",
+    principle:"Aim for the center of the green. A 30-foot putt is a great result — a short-side chip is not.",
+    sessions:[
+      { name:"Session 1 · Center Of The Green", drills:[
+        "Play a practice round aiming EVERY approach at the center of the green.",
+        "Ignore the flag completely. Count your greens hit.",
+        "Notice how many 'misses' still end up safely on the putting surface."]},
+      { name:"Session 2 · The 30-Foot Mindset", drills:[
+        "Repeat: '30 feet is a good shot.' Take the safe number, not the perfect one.",
+        "Never short-side yourself — miss to the fat side of the green.",
+        "Track greens in regulation — that's the stat that matters now."]}
+    ],
+    onCourse:"Aim center of the green on every approach. Count your GIR."
+  },
+  { phase:"PHASE 3 · COURSE MANAGEMENT — KILL THE BIG NUMBERS",
+    title:"Smart Club Selection Off The Tee",
+    principle:"Driver isn't always right. A 3-wood in the fairway beats a driver in the trees every single time.",
+    sessions:[
+      { name:"Session 1 · Know Your Dispersion", drills:[
+        "Hit 15 drivers and 15 3-woods on the range — chart the accuracy of each.",
+        "Find your 'fairway club' — the one you trust under pressure.",
+        "Decide: which holes truly need a driver, which don't."]},
+      { name:"Session 2 · Tee Club By Shape", drills:[
+        "Play a 9 picking the tee club by the hole, not by ego.",
+        "Tight hole or trouble both sides? Take the club that finds short grass.",
+        "Note fairways hit — fairway-in-regulation is the goal."]}
+    ],
+    onCourse:"Driver only when it's clearly the right call. Find the fairway."
+  },
+
+  { phase:"PHASE 4 · IRON PLAY — CLEAN CONTACT FROM THE FAIRWAY",
+    title:"Ball-First Contact",
+    principle:"Hit the ball first, then the turf. This single fix transforms iron play more than anything else.",
+    sessions:[
+      { name:"Session 1 · The Divot Drill", drills:[
+        "Place a tee or line just ahead of the ball — your divot must start AFTER the ball.",
+        "Hit 20 balls feeling the low point in front of the ball.",
+        "Weight slightly forward at impact — feel pressure in the lead foot."]},
+      { name:"Session 2 · Ball Position", drills:[
+        "Check ball position for each iron — middle for short irons, slightly forward for longer.",
+        "Hit 15 balls keeping it consistent shot to shot.",
+        "Finish: 10 balls, only goal is ball-first, turf-second contact."]}
+    ],
+    onCourse:"Solid contact every iron shot. Track greens in regulation."
+  },
+  { phase:"PHASE 4 · IRON PLAY — CLEAN CONTACT FROM THE FAIRWAY",
+    title:"Shaft Lean — Hands Ahead At Impact",
+    principle:"Hands slightly ahead of the ball at contact gives you compression, consistency and control.",
+    sessions:[
+      { name:"Session 1 · Punch Shots", drills:[
+        "Hit 20 low punch shots — hands ahead, abbreviated low finish.",
+        "Feel the shaft leaning toward the target at impact.",
+        "Use an impact bag or old tire if you have one — press, don't flip."]},
+      { name:"Session 2 · Compress It", drills:[
+        "Half-swing 9-irons feeling the hands lead the clubhead.",
+        "Build up to full swings keeping that same forward-shaft feel.",
+        "Finish: 10 stock shots that feel compressed and flush."]}
+    ],
+    onCourse:"Trust the strike. Hands lead, ball first."
+  },
+  { phase:"PHASE 4 · IRON PLAY — CLEAN CONTACT FROM THE FAIRWAY",
+    title:"Build One Go-To Club",
+    principle:"Confidence comes from one club you own. Know your 7 or 8 iron's number cold before worrying about the rest.",
+    sessions:[
+      { name:"Session 1 · Own The Yardage", drills:[
+        "Hit 25 shots with your go-to iron. Find the exact carry number. Write it down.",
+        "Hit it to a target on command — same swing, same result.",
+        "8 of 10 must finish within 5 yards of the target."]},
+      { name:"Session 2 · Go-To Under Pressure", drills:[
+        "Pick a target, full routine, one ball — score it. Repeat 10 times.",
+        "When in doubt on course, this is the club and the swing you trust.",
+        "Finish on three flush ones."]}
+    ],
+    onCourse:"Use your go-to club for every stock distance. Trust the number."
+  },
+
+  { phase:"PHASE 5 · FULL SWING & DRIVER — POLISH, DON'T OBSESS",
+    title:"Fundamentals Tune-Up",
+    principle:"Grip, posture and tempo matter — but they're the foundation, not the obsession. A quick, clean tune-up.",
+    sessions:[
+      { name:"Session 1 · Grip · Posture · Tempo", drills:[
+        "Check the grip — neutral, both hands working together. Fix this first.",
+        "Athletic stance, spine tilt, balanced. Mirror or buddy check.",
+        "Tempo: 3-to-1 backswing-to-downswing. Count it. Most amateurs swing too fast."]},
+      { name:"Session 2 · Turn, Don't Sway", drills:[
+        "Takeaway: turn the shoulders, not just the arms.",
+        "Hit 20 balls at 80% effort with smooth tempo — note how contact improves.",
+        "Finish: 10 swings, one thought only — smooth."]}
+    ],
+    onCourse:"One swing thought all round: smooth tempo. Nothing else."
+  },
+  { phase:"PHASE 5 · FULL SWING & DRIVER — POLISH, DON'T OBSESS",
+    title:"Driver Polish & Bring It All Together",
+    principle:"This is goal week. Trust 16 weeks of work. Driver: tee it high, hit up, find the center of the face.",
+    sessions:[
+      { name:"Session 1 · Driver Keys", drills:[
+        "Tee height: half the ball above the crown of the driver. Most people tee it too low.",
+        "Ball forward in the stance, slight upward angle of attack.",
+        "Center-face contact beats swing speed every time — hit 20, prioritize the strike."]},
+      { name:"Session 2 · The Full Game", drills:[
+        "Play a relaxed practice round using every skill — putting, chipping, management.",
+        "Short-game touch-up: 15 minutes of lag putts and bump-and-runs.",
+        "Visualize the goal round. You've earned the score."]}
+    ],
+    onCourse:"GOAL ROUND — shoot your target score. You're a bogey golfer now."
+  }
+];
+
+/* ───────────────────────── STATE ───────────────────────── */
+const KEY = "tigerMethodV1";
+let state = {};
+try { state = JSON.parse(localStorage.getItem(KEY)) || {}; } catch(e){ state = {}; }
+state.fields = state.fields || {};
+state.checks = state.checks || {};
+state.rounds = state.rounds || [];
+state.updatedAt = state.updatedAt || 0;
+
+function hasContent(){
+  return Object.keys(state.fields).length || Object.keys(state.checks).length || state.rounds.length;
+}
+
+let flashTimer, pushTimer;
+function save(){
+  state.updatedAt = Date.now();
+  localStorage.setItem(KEY, JSON.stringify(state));
+  const f = document.getElementById('savedFlash');
+  f.classList.add('show');
+  clearTimeout(flashTimer);
+  flashTimer = setTimeout(()=>f.classList.remove('show'), 900);
+  schedulePush();
+}
+
+/* ───────────── cloud sync (JSONBin) ───────────── */
+function setSync(kind,msg){
+  const dot = document.getElementById('syncDot');
+  const txt = document.getElementById('syncMsg');
+  if(!dot) return;
+  dot.className = 'sync-dot ' + kind;
+  txt.textContent = msg;
+}
+function schedulePush(){
+  if(!SYNC_ON) return;
+  setSync('saving','Saving to the cloud…');
+  clearTimeout(pushTimer);
+  pushTimer = setTimeout(pushRemote, 1500);
+}
+function pushRemote(){
+  if(!SYNC_ON) return;
+  fetch('https://api.jsonbin.io/v3/b/'+SYNC.binId,{
+    method:'PUT',
+    headers:{'Content-Type':'application/json','X-Access-Key':SYNC.accessKey},
+    body: JSON.stringify(state)
+  })
+  .then(r=>{ if(!r.ok) throw 0; setSync('synced','Synced to the cloud ✓'); })
+  .catch(()=>setSync('offline','Offline — saved on this device, will sync later'));
+}
+function pullRemote(){
+  if(!SYNC_ON){ setSync('','Cloud sync not set up — saving on this device only'); return; }
+  setSync('saving','Checking the cloud…');
+  fetch('https://api.jsonbin.io/v3/b/'+SYNC.binId+'/latest',{
+    headers:{'X-Access-Key':SYNC.accessKey,'X-Bin-Meta':'false'}
+  })
+  .then(r=>{ if(!r.ok) throw 0; return r.json(); })
+  .then(remote=>{
+    if(!remote || typeof remote!=='object'){ setSync('synced','Synced to the cloud ✓'); return; }
+    const rT = remote.updatedAt || 0;
+    if(rT > state.updatedAt){
+      // cloud is newer (edited on another device) — adopt it and reload
+      localStorage.setItem(KEY, JSON.stringify(remote));
+      location.reload();
+    } else if(state.updatedAt > rT || (hasContent() && !rT)){
+      // this device is newer — push it up
+      pushRemote();
+    } else {
+      setSync('synced','Synced to the cloud ✓');
+    }
+  })
+  .catch(()=>setSync('offline','Offline — saved on this device, will sync later'));
+}
+
+/* ───────────── dates / current week ───────────── */
+const DAY = 24*60*60*1000;
+function currentWeekIndex(){
+  let idx = Math.floor((Date.now() - START.getTime()) / (7*DAY));
+  return Math.max(0, Math.min(15, idx));
+}
+function weekDates(i){
+  const s = new Date(START.getTime() + i*7*DAY);
+  const e = new Date(s.getTime() + 6*DAY);
+  const fmt = d => d.toLocaleDateString('en-US',{month:'short',day:'numeric'});
+  return fmt(s) + " – " + fmt(e);
+}
+const CUR = currentWeekIndex();
+const daysLeft = Math.max(0, Math.ceil((GOAL_DATE.getTime() - Date.now()) / DAY));
+
+/* ───────────── bind helpers ───────────── */
+function bindField(el){
+  const k = el.dataset.field;
+  if(el.isContentEditable){
+    if(state.fields[k]!=null) el.innerHTML = state.fields[k];
+    el.addEventListener('input',()=>{ state.fields[k]=el.innerHTML; save(); });
+  } else {
+    if(state.fields[k]!=null) el.value = state.fields[k];
+    el.addEventListener('input',()=>{ state.fields[k]=el.value; save(); refreshScoreboard(); });
+  }
+}
+function bindCheck(el){
+  const k = el.dataset.check;
+  if(state.checks[k]) el.checked = true;
+  el.addEventListener('change',()=>{
+    state.checks[k]=el.checked; save();
+    const drill = el.closest('.drill'); if(drill) drill.classList.toggle('done', el.checked);
+    const wk = el.closest('details.week'); if(wk && el.dataset.weekDone!=null) wk.classList.toggle('done', el.checked);
+    updateProgress();
+  });
+}
+
+/* ───────────── render weeks ───────────── */
+const weeksEl = document.getElementById('weeks');
+let lastPhase = "";
+PLAN.forEach((wk,i)=>{
+  if(wk.phase !== lastPhase){
+    const ph = document.createElement('div');
+    ph.className = 'phase-head';
+    ph.textContent = wk.phase;
+    weeksEl.appendChild(ph);
+    lastPhase = wk.phase;
+  }
+  const d = document.createElement('details');
+  d.className = 'week';
+  d.dataset.week = i;
+  if(i===CUR) d.classList.add('current');
+  if(state.checks['wk'+i+'-done']) d.classList.add('done');
+
+  let sessionsHtml = wk.sessions.map((s,si)=>{
+    const drills = s.drills.map((txt,di)=>{
+      const ck = 'wk'+i+'-s'+si+'-d'+di;
+      const fk = ck+'-t';
+      const done = state.checks[ck] ? ' done' : '';
+      return `<div class="drill${done}">
+        <input type="checkbox" data-check="${ck}">
+        <div class="edit" contenteditable="true" data-field="${fk}">${txt}</div>
+      </div>`;
+    }).join('');
+    return `<div class="session"><div class="session-name">${s.name}</div>${drills}</div>`;
+  }).join('');
+
+  d.innerHTML = `
+    <summary>
+      <div class="wk-num"><span class="n">${i+1}</span><span class="of">OF 16</span></div>
+      <div class="wk-meta">
+        ${i===CUR?'<span class="wk-current-tag">THIS WEEK</span><br>':''}
+        <div class="wk-dates">${weekDates(i)}</div>
+        <div class="wk-title">${wk.title}</div>
+      </div>
+      <div class="chev">▾</div>
+    </summary>
+    <div class="wk-body">
+      <div class="wk-principle">${wk.principle}</div>
+      ${sessionsHtml}
+      <div class="oncourse">
+        <div class="tag">⛳ ON-COURSE GOAL</div>
+        <div class="edit" contenteditable="true" data-field="wk${i}-oncourse">${wk.onCourse}</div>
+      </div>
+      <span class="notes-label">MY NOTES — WHAT WORKED, WHAT TO FIX</span>
+      <textarea data-field="wk${i}-notes" placeholder="Type anything here. It saves automatically."></textarea>
+      <div class="wk-done-row">
+        <input type="checkbox" data-check="wk${i}-done" data-week-done="1">
+        <label>Mark Week ${i+1} Complete</label>
+      </div>
+    </div>`;
+  weeksEl.appendChild(d);
+});
+const curDetails = weeksEl.querySelector('details[data-week="'+CUR+'"]');
+if(curDetails) curDetails.open = true;
+
+document.querySelectorAll('[data-field]').forEach(bindField);
+document.querySelectorAll('[data-check]').forEach(bindCheck);
+
+/* ───────────── round log ───────────── */
+const roundsBody = document.getElementById('roundsBody');
+function renderRounds(){
+  roundsBody.innerHTML = '';
+  state.rounds.forEach((r,idx)=>{
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input value="${(r.date||'').replace(/"/g,'&quot;')}" placeholder="5/14" data-r="${idx}" data-k="date"></td>
+      <td><input value="${(r.course||'').replace(/"/g,'&quot;')}" placeholder="Course" data-r="${idx}" data-k="course"></td>
+      <td><input value="${(r.score||'').replace(/"/g,'&quot;')}" placeholder="—" inputmode="numeric" data-r="${idx}" data-k="score"></td>
+      <td><input value="${(r.putts||'').replace(/"/g,'&quot;')}" placeholder="—" inputmode="numeric" data-r="${idx}" data-k="putts"></td>
+      <td><button class="del" data-del="${idx}" aria-label="Delete round">×</button></td>`;
+    roundsBody.appendChild(tr);
+  });
+  roundsBody.querySelectorAll('input').forEach(inp=>{
+    inp.addEventListener('input',()=>{
+      state.rounds[inp.dataset.r][inp.dataset.k] = inp.value;
+      save(); refreshScoreboard();
+    });
+  });
+  roundsBody.querySelectorAll('.del').forEach(b=>{
+    b.addEventListener('click',()=>{
+      state.rounds.splice(+b.dataset.del,1);
+      save(); renderRounds(); refreshScoreboard();
+    });
+  });
+}
+document.getElementById('addRound').addEventListener('click',()=>{
+  state.rounds.push({date:'',course:'',score:'',putts:''});
+  save(); renderRounds();
+});
+renderRounds();
+
+/* ───────────── scoreboard ───────────── */
+function refreshScoreboard(){
+  const base = parseFloat(state.fields['baseline']);
+  document.getElementById('goalScore').textContent = isNaN(base) ? '—' : Math.round(base-14);
+  const scores = state.rounds.map(r=>parseFloat(r.score)).filter(n=>!isNaN(n));
+  document.getElementById('bestScore').textContent = scores.length ? Math.min(...scores) : '—';
+}
+
+/* ───────────── progress + pace tracker ───────────── */
+const weekStrip = document.getElementById('weekStrip');
+for(let i=0;i<16;i++){
+  const seg = document.createElement('div');
+  seg.className = 'seg';
+  seg.dataset.seg = i;
+  weekStrip.appendChild(seg);
+}
+function updateProgress(){
+  let totalDrills=0, doneDrills=0;
+  PLAN.forEach((wk,i)=>wk.sessions.forEach((s,si)=>s.drills.forEach((d,di)=>{
+    totalDrills++;
+    if(state.checks['wk'+i+'-s'+si+'-d'+di]) doneDrills++;
+  })));
+  let weeksDone=0;
+  for(let i=0;i<16;i++) if(state.checks['wk'+i+'-done']) weeksDone++;
+
+  // week strip
+  weekStrip.querySelectorAll('.seg').forEach((seg,i)=>{
+    seg.className = 'seg'
+      + (state.checks['wk'+i+'-done'] ? ' done' : '')
+      + (i===CUR ? ' current' : '');
+  });
+
+  // pace: by now, weeks 0..CUR-1 should be done -> expected = CUR
+  const expected = CUR;
+  const diff = weeksDone - expected;
+  const badge = document.getElementById('paceBadge');
+  if(diff >= 0){ badge.textContent='ON PACE'; badge.className='pace-badge on'; }
+  else if(diff === -1){ badge.textContent='CATCH UP'; badge.className='pace-badge catch'; }
+  else { badge.textContent='BEHIND'; badge.className='pace-badge behind'; }
+
+  document.getElementById('tsWeek').textContent = CUR+1;
+  document.getElementById('tsDays').textContent = daysLeft;
+  document.getElementById('tsDone').textContent = weeksDone;
+
+  const pct = totalDrills ? Math.round(doneDrills/totalDrills*100) : 0;
+  const expTxt = expected===0 ? "You're in week 1 — right on schedule." :
+    (diff>=0 ? `${weeksDone} done vs. ${expected} expected by now — keep it rolling.` :
+               `${weeksDone} done, ${expected} expected by now — close ${expected-weeksDone} to get back on pace.`);
+  document.getElementById('trackerCap').innerHTML =
+    `<b>${expTxt}</b><br>${doneDrills}/${totalDrills} drills done (${pct}%)`;
+}
+
+refreshScoreboard();
+updateProgress();
+
+/* ───────────── sticky bar ───────────── */
+document.getElementById('stickyWeek').innerHTML =
+  `<b>WEEK ${CUR+1}</b> / 16<small>${PLAN[CUR].title}</small>`;
+document.getElementById('jumpBtn').addEventListener('click',()=>{
+  const t = weeksEl.querySelector('details[data-week="'+CUR+'"]');
+  if(t){ t.open = true; t.scrollIntoView({behavior:'smooth',block:'start'}); }
+});
+
+/* ───────────── export / import ───────────── */
+document.getElementById('exportBtn').addEventListener('click',()=>{
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'tiger-method-backup-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+});
+document.getElementById('importBtn').addEventListener('click',()=>document.getElementById('importFile').click());
+document.getElementById('importFile').addEventListener('change',e=>{
+  const file = e.target.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = ()=>{
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data || typeof data!=='object') throw 0;
+      data.fields = data.fields||{};
+      data.checks = data.checks||{};
+      data.rounds = data.rounds||[];
+      data.updatedAt = Date.now();
+      localStorage.setItem(KEY, JSON.stringify(data));
+      location.reload();
+    }catch(err){ alert('That file could not be read. Make sure it is a Tiger Method backup.'); }
+  };
+  reader.readAsText(file);
+});
+
+/* ───────────── kick off cloud sync ───────────── */
+pullRemote();
+</script>
+</body>
+</html>
