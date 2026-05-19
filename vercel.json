@@ -2,6 +2,9 @@
   "rewrites": [
     { "source": "/battleplan", "destination": "https://nova-plan-omega.vercel.app/" },
     { "source": "/battleplan/api/:path*", "destination": "https://nova-plan-omega.vercel.app/api/:path*" },
-    { "source": "/battleplan/:path*", "destination": "https://nova-plan-omega.vercel.app/:path*" }
+    { "source": "/battleplan/:path*", "destination": "https://nova-plan-omega.vercel.app/:path*" },
+    { "source": "/projectplan", "destination": "https://nova-plan-omega.vercel.app/projectplan" },
+    { "source": "/projectplan/api/:path*", "destination": "https://nova-plan-omega.vercel.app/api/:path*" },
+    { "source": "/projectplan/:path*", "destination": "https://nova-plan-omega.vercel.app/projectplan/:path*" }
   ]
 }
