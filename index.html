@@ -153,19 +153,21 @@ nav{
   -webkit-mask-composite:xor;mask-composite:exclude;
   pointer-events:none;z-index:2;
 }
-.hero-portrait .hp-video,
-.hero-portrait .hp-final{
+/* Canvas renders the full zoom from a single WebP source via
+   requestAnimationFrame + ctx.drawImage with imageSmoothingQuality='high'.
+   One render pipeline (canvas) for loading, animating, and the resting
+   state — no perceptual sharpness shift, no video/img/jpg seams. The
+   .hp-fallback img sits behind the canvas as a no-JS / loading
+   placeholder; JS hides it once the canvas takes over. */
+.hero-portrait .hp-canvas,
+.hero-portrait .hp-fallback{
   position:absolute;inset:0;
   width:100%;height:100%;display:block;
   object-fit:cover;object-position:center center;
 }
-/* Video plays the pre-rendered zoom and then HOLDS its last frame.
-   We keep the same render pipeline (video decoder) for the resting
-   state, so there's no perceptual sharpness shift between playing and
-   ended. .hp-final is hidden by default and only used for the
-   reduced-motion / autoplay-blocked fallback. */
-.hero-portrait .hp-video{z-index:1}
-.hero-portrait .hp-final{z-index:0;display:none}
+.hero-portrait .hp-canvas{z-index:1;opacity:0;transition:opacity .25s ease-out}
+.hero-portrait.is-ready .hp-canvas{opacity:1}
+.hero-portrait.is-ready .hp-fallback{display:none}
 
 .hero-tag{
   font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:500;
@@ -465,8 +467,10 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}
   .hero-portrait::before{animation:none;opacity:.4}
   .hero h1{animation:none}
-  .hero-portrait .hp-video{display:none}
-  .hero-portrait .hp-final{display:block;opacity:1}
+  /* Reduced motion: skip the JS animation; the static fallback img
+     remains visible (canvas stays hidden). */
+  .hero-portrait .hp-canvas{display:none}
+  .hero-portrait .hp-fallback{display:block;opacity:1}
 }
 
 /* ═══ RESPONSIVE ═══ */
@@ -533,10 +537,8 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     <span class="hp-ripple" aria-hidden="true"></span>
     <span class="hp-ripple" aria-hidden="true"></span>
     <div class="hero-portrait">
-      <video class="hp-video" autoplay muted playsinline preload="auto" poster="images/portrait-poster.jpg?v=hd" width="1440" height="1440" aria-label="Jon Tidd">
-        <source src="images/portrait-zoom.mp4?v=hd" type="video/mp4">
-      </video>
-      <img class="hp-final" src="images/portrait-final.jpg?v=hd" alt="Jon Tidd" width="1440" height="1440" loading="eager">
+      <canvas class="hp-canvas" aria-label="Jon Tidd"></canvas>
+      <img class="hp-fallback" src="images/family.webp" alt="Jon Tidd" width="2428" height="1760" loading="eager" fetchpriority="high">
     </div>
   </div>
   <div class="hero-tag">Hi, I'm Jon</div>
@@ -634,7 +636,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   </div>
   <div class="about-content" data-reveal data-delay="1">
     <div class="about-photo">
-      <img src="images/family.jpg" alt="The Tidd family">
+      <img src="images/family.webp" alt="The Tidd family" loading="lazy">
     </div>
     <p>I'm an <span class="hl">AI developer</span> and <span class="hl">father</span> exploring what happens when you point powerful new tools at problems that actually matter.</p>
     <p>My work lives at the intersection of <span class="hl">agentic AI</span> and <span class="hl">classical wisdom</span> &mdash; building things that help families raise children of character in an age of algorithmic distraction.</p>
@@ -724,24 +726,97 @@ function enableGyro(){window.addEventListener('deviceorientation',e=>{if(e.gamma
 if(typeof DeviceOrientationEvent!=='undefined'&&typeof DeviceOrientationEvent.requestPermission==='function'){document.addEventListener('touchstart',function once(){DeviceOrientationEvent.requestPermission().then(s=>{if(s==='granted')enableGyro()}).catch(()=>{});document.removeEventListener('touchstart',once)},{once:true})}else{enableGyro()}
 (function draw(){ctx.clearRect(0,0,W,H);const t=Date.now()*.001;for(const s of stars){s.x+=s.vx-mx*.2*s.r;s.y+=s.vy-my*.2*s.r;if(s.x<0)s.x+=W;if(s.x>W)s.x-=W;if(s.y<0)s.y+=H;if(s.y>H)s.y-=H;ctx.beginPath();ctx.arc(s.x%W,s.y%H,s.r,0,6.28);ctx.fillStyle=`rgba(255,255,255,${s.a*(.6+.4*Math.sin(t+s.p))})`;ctx.fill()}requestAnimationFrame(draw)})();
 
-// ── Hero Portrait: trigger ripple at end of zoom; fall back if needed ──
+// ── Hero Portrait: canvas-rendered zoom from a single WebP source ──
 (function(){
   const shell=document.querySelector('.hero-portrait-shell');
   const wrap=shell&&shell.querySelector('.hero-portrait');
-  const vid=wrap&&wrap.querySelector('.hp-video');
-  const still=wrap&&wrap.querySelector('.hp-final');
-  if(!shell||!wrap||!vid)return;
-  let fired=false;
-  const fireRipple=()=>{if(fired)return;fired=true;wrap.classList.add('is-done');shell.classList.add('is-done')};
-  vid.addEventListener('ended',fireRipple,{once:true});
-  // If autoplay is blocked or the video errors, fall back to the static frame.
-  const showStill=()=>{if(still){still.style.display='block';still.style.opacity='1';vid.style.display='none'}fireRipple()};
-  vid.addEventListener('error',showStill);
-  // Catch a rejected play() — Safari/iOS sometimes need a user gesture.
-  const p=vid.play();
-  if(p&&typeof p.catch==='function')p.catch(showStill);
-  // Last-resort safety net so the ripple still triggers even if 'ended' never fires.
-  setTimeout(fireRipple,4500);
+  const canvas=wrap&&wrap.querySelector('.hp-canvas');
+  if(!shell||!wrap||!canvas)return;
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // ── Geometry — matches what the old transform: scale + transform-origin
+  //    50% 33% produced, derived from cover-fit math against the source.
+  //    See git history for the full derivation.
+  const SCALE_START=1.0,SCALE_END=2.1;
+  const DELAY_MS=500,DUR_MS=2400;
+  const RIPPLE_LEAD=180;   // fire ripple this much before zoom ends so it
+                           //   feels caused by the landing, not after it
+  function cropAtScale(s,W,H){
+    // Visible source region for a square container with cover-fit on a
+    // wider image, then 'transform: scale(s)' around origin (50%, 33%).
+    // Derivation:  sw = sh = H/s ;  sx centered, sy biased by origin_y.
+    const ORIGIN_Y = 0.33;
+    const sw = H/s, sh = H/s;
+    return { sx:(W-sw)/2, sy:ORIGIN_Y*H*(s-1)/s, sw, sh };
+  }
+  // CSS cubic-bezier(.65,0,.35,1) — Newton-iterate to invert x→u, return y(u).
+  function bezY(t){
+    const x1=0.65,y1=0,x2=0.35,y2=1;
+    const bx=u=>3*(1-u)*(1-u)*u*x1 + 3*(1-u)*u*u*x2 + u*u*u;
+    const dx=u=>3*(1-u)*(1-u)*x1 + 6*(1-u)*u*(x2-x1) + 3*u*u*(1-x2);
+    let u=t;
+    for(let i=0;i<8;i++){const v=bx(u)-t;const d=dx(u);if(Math.abs(d)<1e-6)break;u-=v/d}
+    return 3*(1-u)*(1-u)*u*y1 + 3*(1-u)*u*u*y2 + u*u*u;
+  }
+
+  const img=new Image();
+  img.decoding='async';
+  let dpr=Math.max(window.devicePixelRatio||1,1);
+  let started=false,rippleFired=false;
+
+  function sizeCanvas(){
+    const r=canvas.getBoundingClientRect();
+    const w=Math.max(1,Math.round(r.width*dpr));
+    const h=Math.max(1,Math.round(r.height*dpr));
+    if(canvas.width!==w)canvas.width=w;
+    if(canvas.height!==h)canvas.height=h;
+  }
+  function draw(scale){
+    const ctx=canvas.getContext('2d');
+    if(!ctx)return;
+    ctx.imageSmoothingEnabled=true;
+    ctx.imageSmoothingQuality='high';
+    const W=img.naturalWidth,H=img.naturalHeight;
+    const c=cropAtScale(scale,W,H);
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.drawImage(img,c.sx,c.sy,c.sw,c.sh,0,0,canvas.width,canvas.height);
+  }
+  function fireRipple(){
+    if(rippleFired)return;
+    rippleFired=true;
+    wrap.classList.add('is-done');
+    shell.classList.add('is-done');
+  }
+  function run(){
+    sizeCanvas();
+    wrap.classList.add('is-ready');
+    if(reduced){draw(SCALE_END);fireRipple();return;}
+    draw(SCALE_START);
+    const startAt=performance.now()+DELAY_MS;
+    const endAt=startAt+DUR_MS;
+    function tick(now){
+      if(now<startAt){draw(SCALE_START);requestAnimationFrame(tick);return;}
+      const t=Math.min(1,Math.max(0,(now-startAt)/DUR_MS));
+      const s=SCALE_START+(SCALE_END-SCALE_START)*bezY(t);
+      draw(s);
+      if(now>=endAt-RIPPLE_LEAD&&!rippleFired)fireRipple();
+      if(t<1)requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+  img.addEventListener('load',()=>{if(!started){started=true;run();}},{once:true});
+  img.addEventListener('error',()=>{wrap.classList.remove('is-ready');fireRipple();},{once:true});
+  // Redraw the last frame on resize / DPR change so the canvas stays crisp.
+  let resizeRaf;
+  window.addEventListener('resize',()=>{
+    if(resizeRaf)cancelAnimationFrame(resizeRaf);
+    resizeRaf=requestAnimationFrame(()=>{
+      dpr=Math.max(window.devicePixelRatio||1,1);
+      sizeCanvas();
+      if(img.naturalWidth)draw(rippleFired?SCALE_END:SCALE_START);
+    });
+  });
+  img.src='images/family.webp';
 })();
 
 // ── 3D Tilt + Metallic Sheen ──
