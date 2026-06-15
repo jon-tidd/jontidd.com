@@ -291,16 +291,38 @@ a{color:var(--gold-lt)}
 .cmate .cm-main{min-width:0}
 .cmate .cm-par{font-size:12px; color:var(--gold-lt); font-weight:600; margin-top:1px}
 
-/* ---------- CONNECTION EXPLORER ---------- */
-.viewer-bar{display:flex; align-items:center; gap:12px; flex-wrap:wrap; margin:4px 0 18px;
-  background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px 16px}
-.viewer-bar label{font:700 11px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase; color:var(--gold)}
-.viewer-bar select{flex:1; min-width:220px; background:var(--panel2); color:var(--cream); border:1px solid var(--line);
-  border-radius:10px; padding:11px 13px; font:600 14px/1 var(--sans); cursor:pointer}
-.viewer-bar select:focus{outline:none; border-color:var(--gold)}
+/* ---------- BIG FAMILY FINDER ---------- */
+.family-finder{background:linear-gradient(150deg,rgba(245,185,66,.10),rgba(255,140,90,.05) 55%,transparent),var(--panel);
+  border:1px solid rgba(245,185,66,.25); border-radius:20px; padding:30px 30px 26px; margin-top:28px}
+.family-finder .ff-eyebrow{font:700 11.5px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:12px}
+.family-finder h3{font-family:var(--serif); font-size:clamp(22px,3vw,30px); font-weight:600; color:var(--cream); margin:0 0 6px}
+.family-finder .ff-sub{font-size:14px; color:var(--mut); margin-bottom:20px; max-width:56ch; line-height:1.5}
+.family-finder select{width:100%; background:var(--bg1); color:var(--cream); border:1px solid var(--line);
+  border-radius:12px; padding:16px 18px; font:600 16px/1 var(--sans); cursor:pointer;
+  -webkit-appearance:none; appearance:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239fb0cc' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat:no-repeat; background-position:right 16px center}
+.family-finder select:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(245,185,66,.15)}
+.family-finder .ff-actions{display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap}
+.family-finder .ff-hint{font-size:12.5px; color:var(--mut2)}
 #viewerReset{border:1px solid var(--line); background:transparent; color:var(--mut); border-radius:999px;
-  padding:10px 15px; font:600 12.5px/1 var(--sans); cursor:pointer; transition:.15s; white-space:nowrap}
+  padding:9px 16px; font:600 12.5px/1 var(--sans); cursor:pointer; transition:.15s; white-space:nowrap}
 #viewerReset:hover{border-color:var(--gold); color:var(--gold-lt)}
+
+/* ---------- TIDD DIVIDER ---------- */
+.tidd-section-divider{padding:10px 22px 0}
+.tidd-section-divider-inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:16px;
+  padding:18px 24px; border:1px solid rgba(245,185,66,.22); border-radius:16px;
+  background:linear-gradient(135deg,rgba(245,185,66,.09),rgba(255,140,90,.04) 50%,transparent),var(--panel)}
+.tidd-section-divider-inner .tsd-icon{font-size:24px; flex:none}
+.tidd-section-divider-inner .tsd-body{flex:1}
+.tidd-section-divider-inner .tsd-label{font:700 11px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:5px}
+.tidd-section-divider-inner .tsd-title{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--cream)}
+.tidd-section-divider-inner .tsd-sub{font-size:13px; color:var(--mut); margin-top:3px}
+.tidd-section-divider-inner .tsd-rule{flex:1; height:1px; background:linear-gradient(90deg,rgba(245,185,66,.3),transparent)}
+
+/* ---------- CONNECTION EXPLORER ---------- */
+.viewer-bar{display:none}
 
 .filters{display:flex; flex-direction:column; gap:11px; background:var(--panel); border:1px solid var(--line);
   border-radius:14px; padding:15px 16px; margin-bottom:18px}
@@ -423,19 +445,30 @@ function checkPw(){
 </header>
 
 <main>
+
+<!-- ============ FAMILY FINDER ============ -->
+<section class="section" style="padding-bottom:0">
+  <div class="wrap">
+    <div class="family-finder">
+      <div class="ff-eyebrow">Week 4 · June 2026</div>
+      <h3>Find your family — see who to meet.</h3>
+      <p class="ff-sub">Pick your last name below. The map, match scores, and top-5 list will all update to show the week from <em>your</em> family's perspective.</p>
+      <select id="viewerSel"></select>
+      <div class="ff-actions">
+        <button id="viewerReset">↺ Switch back to the Tidds</button>
+        <span class="ff-hint">Sorted by last name · includes all 74 families</span>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ============ GLOBE ============ -->
 <section class="section" id="map">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow-num">01 — Connection explorer</span>
       <h2>The whole roster, on one map.</h2>
-      <p>Every dot is a family, coloured by how strong a match they are with whoever you're <b>viewing as</b>. Switch the viewer to see the week through any family's eyes — and their top 5 people to find. Tap a dot for the parents, kids and ages, prior years here, and the connection score. Filter by kids' ages, distance, and more.</p>
-    </div>
-
-    <div class="viewer-bar">
-      <label for="viewerSel">Viewing as</label>
-      <select id="viewerSel"></select>
-      <button id="viewerReset">↺ Back to the Tidds</button>
+      <p>Every dot is a family, coloured by how strong a match they are with the family selected above. Tap a dot for parents, kids, prior years here, and the connection score. Filter by kids' ages, distance, and more.</p>
     </div>
 
     <div class="filters">
@@ -477,8 +510,21 @@ function checkPw(){
   </div>
 </section>
 
+<!-- ============ TIDD DIVIDER ============ -->
+<div class="tidd-section-divider">
+  <div class="tidd-section-divider-inner">
+    <div class="tsd-icon">⭐</div>
+    <div class="tsd-body">
+      <div class="tsd-label">Tidd family · personal section</div>
+      <div class="tsd-title">Everything below is personal to the Tidds</div>
+      <div class="tsd-sub">Match scores, crews, and conversation starters built specifically around Alice, Miles &amp; Mason</div>
+    </div>
+    <div class="tsd-rule"></div>
+  </div>
+</div>
+
 <!-- ============ YOUR FAMILY ============ -->
-<section class="section" style="padding-top:20px">
+<section class="section" style="padding-top:28px">
   <div class="wrap">
     <div class="you" id="youBanner"></div>
   </div>
@@ -1269,7 +1315,7 @@ function rankFor(viewer, k){
     /* ---------- VIEWER SELECT ---------- */
     var sel=$('#viewerSel');
     if(sel){ ALL.slice().sort(function(a,b){return a.f.localeCompare(b.f);}).forEach(function(a){
-        var o=ce('option'); o.value=a.id; o.textContent=a.adults.slice(0,2).join(' & ')+' — '+a.f+' ('+shortC(a.city)+')'+(a.me?'  ★ you':''); sel.appendChild(o); });
+        var o=ce('option'); o.value=a.id; o.textContent=a.f+' — '+a.adults.slice(0,2).join(' & ')+' ('+shortC(a.city)+')'+(a.me?'  ★ you':''); sel.appendChild(o); });
       sel.value=viewerId;
       sel.addEventListener('change',function(){ viewerId=+sel.value; selId=-1; hoverIdx=-1; hideTip();
         rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){ d.innerHTML=detailHTML(viewer()); d.classList.add('on'); } });
