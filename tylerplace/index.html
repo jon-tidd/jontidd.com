@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+<meta name="referrer" content="no-referrer">
 <title>Tyler Place · Week 4 — Your Connection Map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -248,8 +250,9 @@ a{color:var(--gold-lt)}
 @media (prefers-reduced-motion:reduce){ .scrollcue .arr{animation:none} }
 
 /* ---------- US MAP ---------- */
-.map-shell{position:relative; border:1px solid var(--line); border-radius:20px; overflow:hidden;
-  background:radial-gradient(130% 120% at 50% -10%, #0e1a36, #070c19)}
+.map-shell{position:relative; border:1px solid rgba(78,205,196,.18); border-radius:20px; overflow:hidden;
+  background:linear-gradient(180deg,#07101f 0%,#060e1a 100%);
+  box-shadow:inset 0 0 80px rgba(78,205,196,.04),0 4px 24px rgba(0,0,0,.4)}
 #mapCanvas{display:block; width:100%; touch-action:pan-y}
 .map-ui{position:absolute; inset:0; pointer-events:none}
 .map-views{position:absolute; left:16px; top:16px; display:flex; gap:7px; pointer-events:auto; flex-wrap:wrap}
@@ -291,37 +294,35 @@ a{color:var(--gold-lt)}
 .cmate .cm-main{min-width:0}
 .cmate .cm-par{font-size:12px; color:var(--gold-lt); font-weight:600; margin-top:1px}
 
-/* ---------- BIG FAMILY FINDER ---------- */
-.family-finder{background:linear-gradient(150deg,rgba(245,185,66,.10),rgba(255,140,90,.05) 55%,transparent),var(--panel);
-  border:1px solid rgba(245,185,66,.25); border-radius:20px; padding:30px 30px 26px; margin-top:28px}
+/* ---------- FAMILY FINDER ---------- */
+.family-finder{background:linear-gradient(150deg,rgba(245,185,66,.10),rgba(255,140,90,.05) 60%,transparent),var(--panel);
+  border:1px solid rgba(245,185,66,.28); border-radius:20px; padding:30px 30px 26px; margin-top:28px}
 .family-finder .ff-eyebrow{font:700 11.5px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:12px}
 .family-finder h3{font-family:var(--serif); font-size:clamp(22px,3vw,30px); font-weight:600; color:var(--cream); margin:0 0 6px}
-.family-finder .ff-sub{font-size:14px; color:var(--mut); margin-bottom:20px; max-width:56ch; line-height:1.5}
-.family-finder select{width:100%; background:var(--bg1); color:var(--cream); border:1px solid var(--line);
-  border-radius:12px; padding:16px 18px; font:600 16px/1 var(--sans); cursor:pointer;
+.family-finder .ff-sub{font-size:14px; color:var(--mut); margin-bottom:20px; max-width:56ch; line-height:1.55}
+.family-finder select{width:100%; background:var(--bg1); color:var(--cream); border:1px solid rgba(245,185,66,.25);
+  border-radius:12px; padding:16px 44px 16px 18px; font:600 16px/1 var(--sans); cursor:pointer;
   -webkit-appearance:none; appearance:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239fb0cc' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   background-repeat:no-repeat; background-position:right 16px center}
-.family-finder select:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(245,185,66,.15)}
-.family-finder .ff-actions{display:flex; align-items:center; gap:12px; margin-top:14px; flex-wrap:wrap}
-.family-finder .ff-hint{font-size:12.5px; color:var(--mut2)}
+.family-finder select:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(245,185,66,.12)}
+.family-finder .ff-actions{display:flex; align-items:center; gap:14px; margin-top:14px; flex-wrap:wrap}
 #viewerReset{border:1px solid var(--line); background:transparent; color:var(--mut); border-radius:999px;
   padding:9px 16px; font:600 12.5px/1 var(--sans); cursor:pointer; transition:.15s; white-space:nowrap}
 #viewerReset:hover{border-color:var(--gold); color:var(--gold-lt)}
-
+.ff-hint{font-size:12.5px; color:var(--mut2)}
 /* ---------- TIDD DIVIDER ---------- */
-.tidd-section-divider{padding:10px 22px 0}
-.tidd-section-divider-inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:16px;
+.tidd-divider{padding:10px 22px 0}
+.tidd-divider-inner{max-width:var(--maxw); margin:0 auto; display:flex; align-items:center; gap:16px;
   padding:18px 24px; border:1px solid rgba(245,185,66,.22); border-radius:16px;
-  background:linear-gradient(135deg,rgba(245,185,66,.09),rgba(255,140,90,.04) 50%,transparent),var(--panel)}
-.tidd-section-divider-inner .tsd-icon{font-size:24px; flex:none}
-.tidd-section-divider-inner .tsd-body{flex:1}
-.tidd-section-divider-inner .tsd-label{font:700 11px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:5px}
-.tidd-section-divider-inner .tsd-title{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--cream)}
-.tidd-section-divider-inner .tsd-sub{font-size:13px; color:var(--mut); margin-top:3px}
-.tidd-section-divider-inner .tsd-rule{flex:1; height:1px; background:linear-gradient(90deg,rgba(245,185,66,.3),transparent)}
-
-/* ---------- CONNECTION EXPLORER ---------- */
+  background:linear-gradient(135deg,rgba(245,185,66,.08),rgba(255,140,90,.04) 50%,transparent),var(--panel)}
+.tsd-icon{font-size:22px; flex:none}
+.tsd-body{flex:1}
+.tsd-label{font:700 11px/1 var(--sans); letter-spacing:.18em; text-transform:uppercase; color:var(--gold); margin-bottom:5px}
+.tsd-title{font-family:var(--serif); font-size:20px; font-weight:600; color:var(--cream)}
+.tsd-sub{font-size:13px; color:var(--mut); margin-top:3px}
+.tsd-rule{flex:1; height:1px; background:linear-gradient(90deg,rgba(245,185,66,.3),transparent)}
+/* hide the old inline viewer bar */
 .viewer-bar{display:none}
 
 .filters{display:flex; flex-direction:column; gap:11px; background:var(--panel); border:1px solid var(--line);
@@ -382,37 +383,58 @@ a{color:var(--gold-lt)}
 .t5-fam{display:block; font-size:11.5px; color:var(--mut2); margin-top:2px}
 .t5-why{display:block; font-size:12px; color:var(--mut); margin-top:6px; line-height:1.4}
 .t5-sc{flex:none; font:700 13px/1 var(--sans); color:var(--ink); border-radius:8px; padding:7px 9px}
+
+/* ---------- PRIVACY GATE ---------- */
+#gate{position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; padding:24px;
+  background:radial-gradient(130% 100% at 50% 0%, #0e1830, #060a16); transition:opacity .55s ease}
+#gate.gone{opacity:0; pointer-events:none}
+#gate.shake .gate-card{animation:gshake .45s}
+@keyframes gshake{0%,100%{transform:none}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.gate-card{max-width:390px; width:100%; text-align:center; background:var(--panel); border:1px solid var(--line);
+  border-radius:20px; padding:34px 28px; box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.gate-eyebrow{font:700 11px/1 var(--sans); letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
+.gate-h{font-family:var(--serif); font-size:23px; font-weight:600; margin:14px 0 8px; color:var(--cream); line-height:1.2}
+.gate-p{font-size:14px; color:var(--mut); margin:0 0 20px; line-height:1.5}
+.gate-row{display:flex; gap:8px}
+#gatePw{flex:1; min-width:0; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:13px 14px;
+  color:var(--cream); font:500 15px/1 var(--sans)}
+#gatePw:focus{outline:none; border-color:var(--gold)}
+#gateBtn{border:none; background:var(--gold); color:var(--ink); border-radius:11px; padding:13px 20px;
+  font:700 14px/1 var(--sans); cursor:pointer; transition:.15s; white-space:nowrap}
+#gateBtn:hover{background:var(--gold-lt)}
+.gate-err{display:none; color:var(--coral); font-size:13px; margin-top:13px}
+.gate-foot{font-size:11px; color:var(--mut2); margin-top:18px}
 </style>
 </head>
 <body>
 
-<!-- ============ PASSWORD GATE ============ -->
-<div id="gate" style="position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:#080d1c;font-family:'Inter',system-ui,sans-serif">
-  <div style="text-align:center;padding:40px 32px;border:1px solid #243250;border-radius:20px;background:#0b1226;max-width:380px;width:90%">
-    <div style="font-size:28px;margin-bottom:8px">⛵</div>
-    <div style="font-family:'Fraunces',Georgia,serif;font-size:26px;font-weight:600;color:#f4ede4;margin-bottom:8px">Tyler Place</div>
-    <div style="font-size:14px;color:#9fb0cc;margin-bottom:28px">Week 4 · June 2026</div>
-    <input id="pw" type="password" placeholder="Enter password" autocomplete="off"
-      style="width:100%;padding:14px 16px;border-radius:12px;border:1px solid #243250;background:#0e1830;color:#f4ede4;font-size:16px;text-align:center;letter-spacing:.2em;outline:none;margin-bottom:12px">
-    <div id="pw-err" style="color:#ff6b6b;font-size:13px;margin-bottom:10px;min-height:18px"></div>
-    <button onclick="checkPw()" style="width:100%;padding:14px;border-radius:12px;border:none;background:#f5b942;color:#0a1120;font-size:15px;font-weight:700;cursor:pointer">Enter →</button>
+<div id="gate">
+  <div class="gate-card">
+    <div class="gate-eyebrow">Private · Tyler Place</div>
+    <h2 class="gate-h">A field guide for the Tidd family</h2>
+    <p class="gate-p">This page is shared privately. Enter the password to continue.</p>
+    <div class="gate-row">
+      <input id="gatePw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="numeric">
+      <button id="gateBtn">Enter</button>
+    </div>
+    <div id="gateErr" class="gate-err">That's not the password — try again.</div>
+    <div class="gate-foot">Please keep names &amp; details within the Tyler Place community.</div>
   </div>
 </div>
 <script>
 (function(){
-  if(sessionStorage.getItem('tp26ok')==='1'){document.getElementById('gate').style.display='none';}
-  document.getElementById('pw').addEventListener('keydown',function(e){if(e.key==='Enter')checkPw();});
+  var KEY='tp_unlock_w4', PW='2026';
+  var ov=document.getElementById('gate'); if(!ov) return;
+  function unlock(persist){ ov.classList.add('gone'); setTimeout(function(){ ov.style.display='none'; },600);
+    if(persist){ try{ sessionStorage.setItem(KEY,'1'); }catch(e){} } }
+  try{ if(sessionStorage.getItem(KEY)==='1'){ ov.style.display='none'; return; } }catch(e){}
+  var inp=document.getElementById('gatePw'), btn=document.getElementById('gateBtn'), err=document.getElementById('gateErr');
+  function tryit(){ if((inp.value||'').trim()===PW){ unlock(true); }
+    else { err.style.display='block'; ov.classList.add('shake'); setTimeout(function(){ ov.classList.remove('shake'); },500); inp.select(); } }
+  btn.addEventListener('click',tryit);
+  inp.addEventListener('keydown',function(e){ if(e.key==='Enter'){ e.preventDefault(); tryit(); } });
+  setTimeout(function(){ try{ inp.focus(); }catch(e){} },60);
 })();
-function checkPw(){
-  if(document.getElementById('pw').value==='2026'){
-    sessionStorage.setItem('tp26ok','1');
-    document.getElementById('gate').style.display='none';
-  } else {
-    document.getElementById('pw-err').textContent='Incorrect password — try again.';
-    document.getElementById('pw').value='';
-    document.getElementById('pw').focus();
-  }
-}
 </script>
 
 <!-- ============ HERO ============ -->
@@ -450,25 +472,25 @@ function checkPw(){
 <section class="section" style="padding-bottom:0">
   <div class="wrap">
     <div class="family-finder">
-      <div class="ff-eyebrow">Week 4 · June 2026</div>
-      <h3>Find your family — see who to meet.</h3>
-      <p class="ff-sub">Pick your last name below. The map, match scores, and top-5 list will all update to show the week from <em>your</em> family's perspective.</p>
+      <div class="ff-eyebrow">Week 4 · June 2026 · 74 families</div>
+      <h3>Find your family — see your week.</h3>
+      <p class="ff-sub">Pick your last name from the list. The map, match scores, and top-5 picks below will all update to show the week from <em>your</em> family's point of view.</p>
       <select id="viewerSel"></select>
       <div class="ff-actions">
         <button id="viewerReset">↺ Switch back to the Tidds</button>
-        <span class="ff-hint">Sorted by last name · includes all 74 families</span>
+        <span class="ff-hint">Alphabetical by last name · all 74 families</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ============ GLOBE ============ -->
+<!-- ============ MAP ============ -->
 <section class="section" id="map">
   <div class="wrap">
     <div class="section-head">
       <span class="eyebrow-num">01 — Connection explorer</span>
       <h2>The whole roster, on one map.</h2>
-      <p>Every dot is a family, coloured by how strong a match they are with the family selected above. Tap a dot for parents, kids, prior years here, and the connection score. Filter by kids' ages, distance, and more.</p>
+      <p>Every dot is a family, coloured by how strong a match they are for the family selected above. Hover or tap a dot for parents, kids, prior years, and connection score. Filter by kids' ages, distance, or history.</p>
     </div>
 
     <div class="filters">
@@ -511,13 +533,13 @@ function checkPw(){
 </section>
 
 <!-- ============ TIDD DIVIDER ============ -->
-<div class="tidd-section-divider">
-  <div class="tidd-section-divider-inner">
+<div class="tidd-divider">
+  <div class="tidd-divider-inner">
     <div class="tsd-icon">⭐</div>
     <div class="tsd-body">
       <div class="tsd-label">Tidd family · personal section</div>
       <div class="tsd-title">Everything below is personal to the Tidds</div>
-      <div class="tsd-sub">Match scores, crews, and conversation starters built specifically around Alice, Miles &amp; Mason</div>
+      <div class="tsd-sub">Match scores, camp crews, and conversation starters built specifically around Alice, Miles &amp; Mason</div>
     </div>
     <div class="tsd-rule"></div>
   </div>
@@ -1190,38 +1212,134 @@ function rankFor(viewer, k){
       ALL.forEach(function(a){ var p=proj([a.lon,a.lat]); a._px=p?p[0]:null; a._py=p?p[1]:null; });
       draw();
     }
-    function rad(t,hot){ var r=t==='best'?5.6:t==='good'?4.6:t==='local'?4.1:3.2; return r+(hot?2.4:0); }
+    function rad(t,hot){ var r=t==='best'?6.2:t==='good'?5.2:t==='local'?4.6:3.4; return r+(hot?2.8:0); }
     function drawDot(a,hot,faint){
       if(a._px==null) return; var t=tierFor(a), c=TC[t], r=rad(t,hot);
       ctx.save();
-      if(faint){ ctx.globalAlpha=0.16; ctx.beginPath(); ctx.arc(a._px,a._py,2.6,0,6.2832); ctx.fillStyle='#6b7a9c'; ctx.fill(); ctx.restore(); return; }
-      if(t==='best'||hot){ ctx.shadowColor=c; ctx.shadowBlur=hot?16:9; }
-      ctx.beginPath(); ctx.arc(a._px,a._py,r,0,6.2832); ctx.fillStyle=c; ctx.globalAlpha=hot?1:0.92; ctx.fill();
-      ctx.shadowBlur=0; ctx.globalAlpha=1; ctx.lineWidth=1.1; ctx.strokeStyle='rgba(10,14,24,0.65)'; ctx.stroke();
-      if(hot){ ctx.beginPath(); ctx.arc(a._px,a._py,r+2.6,0,6.2832); ctx.strokeStyle='#fff'; ctx.lineWidth=1.7; ctx.stroke(); }
+      if(faint){
+        ctx.globalAlpha=0.13; ctx.beginPath(); ctx.arc(a._px,a._py,2.8,0,6.2832);
+        ctx.fillStyle='#5a6880'; ctx.fill(); ctx.restore(); return;
+      }
+      // outer glow ring for best/good
+      if(t==='best'||t==='good'||hot){
+        ctx.globalAlpha=hot?0.35:0.18;
+        ctx.beginPath(); ctx.arc(a._px,a._py,r+5,0,6.2832);
+        ctx.fillStyle=c; ctx.fill(); ctx.globalAlpha=1;
+      }
+      // shadow glow
+      ctx.shadowColor=c; ctx.shadowBlur=hot?22:(t==='best'?14:t==='good'?8:0);
+      ctx.beginPath(); ctx.arc(a._px,a._py,r,0,6.2832);
+      ctx.fillStyle=c; ctx.globalAlpha=hot?1:0.94; ctx.fill();
+      ctx.shadowBlur=0; ctx.globalAlpha=1;
+      // inner shine
+      ctx.beginPath(); ctx.arc(a._px,a._py,r,0,6.2832);
+      ctx.lineWidth=1.2; ctx.strokeStyle='rgba(10,14,24,0.55)'; ctx.stroke();
+      if(hot){
+        ctx.beginPath(); ctx.arc(a._px,a._py,r+3,0,6.2832);
+        ctx.strokeStyle='rgba(255,255,255,0.7)'; ctx.lineWidth=1.5; ctx.stroke();
+      }
+      // specular highlight
+      if(!faint && (t==='best'||t==='good'||hot)){
+        ctx.beginPath(); ctx.arc(a._px-r*0.28,a._py-r*0.28,r*0.32,0,6.2832);
+        ctx.fillStyle='rgba(255,255,255,0.22)'; ctx.fill();
+      }
+      ctx.restore();
+    }
+    // Tyler Place coordinates (Highgate Springs, VT)
+    var TP_LON=-72.96, TP_LAT=44.99;
+    function drawTylerPlace(){
+      var p=proj&&proj([TP_LON,TP_LAT]); if(!p) return;
+      var x=p[0], y=p[1];
+      ctx.save();
+      // pulsing halo
+      ctx.globalAlpha=0.22; ctx.beginPath(); ctx.arc(x,y,13,0,6.2832);
+      ctx.fillStyle='#4ecdc4'; ctx.fill();
+      ctx.globalAlpha=0.55; ctx.beginPath(); ctx.arc(x,y,6,0,6.2832);
+      ctx.fillStyle='#4ecdc4'; ctx.fill();
+      ctx.globalAlpha=1;
+      // anchor pin body
+      ctx.shadowColor='#4ecdc4'; ctx.shadowBlur=10;
+      ctx.beginPath(); ctx.arc(x,y,4.5,0,6.2832);
+      ctx.fillStyle='#fff'; ctx.fill();
+      ctx.shadowBlur=0;
+      ctx.beginPath(); ctx.arc(x,y,4.5,0,6.2832);
+      ctx.lineWidth=1.5; ctx.strokeStyle='#4ecdc4'; ctx.stroke();
+      ctx.beginPath(); ctx.arc(x,y,1.8,0,6.2832);
+      ctx.fillStyle='#4ecdc4'; ctx.fill();
+      // label
+      ctx.font='700 10px Inter,sans-serif';
+      var lbl='Tyler Place';
+      ctx.fillStyle='rgba(78,205,196,0.95)';
+      ctx.fillText(lbl, x+9, y+4);
       ctx.restore();
     }
     function drawHome(){
       var v=viewer(); if(v._px==null) return; var x=v._px,y=v._py;
       ctx.save();
-      var g=ctx.createRadialGradient(x,y,0,x,y,20); g.addColorStop(0,'rgba(245,185,66,0.5)'); g.addColorStop(1,'rgba(245,185,66,0)');
-      ctx.fillStyle=g; ctx.fillRect(x-20,y-20,40,40);
-      ctx.shadowColor='#f5b942'; ctx.shadowBlur=15; ctx.beginPath(); ctx.arc(x,y,6.6,0,6.2832); ctx.fillStyle='#ffd884'; ctx.fill();
-      ctx.shadowBlur=0; ctx.beginPath(); ctx.arc(x,y,2.6,0,6.2832); ctx.fillStyle='#3a2a12'; ctx.fill();
-      ctx.font='600 12px Inter,sans-serif'; var lbl=shortC(v.city)+(v.me?' — you':' — viewing'); var tw=ctx.measureText(lbl).width;
-      ctx.fillStyle='rgba(255,216,132,0.95)'; ctx.fillText(lbl, Math.min(W-tw-10,x+12), y-9);
+      // glow halo
+      var g=ctx.createRadialGradient(x,y,0,x,y,28);
+      g.addColorStop(0,'rgba(245,185,66,0.35)'); g.addColorStop(1,'rgba(245,185,66,0)');
+      ctx.fillStyle=g; ctx.fillRect(x-28,y-28,56,56);
+      // pin
+      ctx.shadowColor='#f5b942'; ctx.shadowBlur=18;
+      ctx.beginPath(); ctx.arc(x,y,7.5,0,6.2832);
+      ctx.fillStyle='#ffd884'; ctx.fill();
+      ctx.shadowBlur=0;
+      ctx.beginPath(); ctx.arc(x,y,7.5,0,6.2832);
+      ctx.lineWidth=1.5; ctx.strokeStyle='rgba(245,185,66,0.5)'; ctx.stroke();
+      // inner dot
+      ctx.beginPath(); ctx.arc(x,y,3,0,6.2832);
+      ctx.fillStyle='#3a2a12'; ctx.fill();
+      // specular
+      ctx.beginPath(); ctx.arc(x-2.5,y-2.5,2.2,0,6.2832);
+      ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.fill();
+      // label
+      ctx.font='700 11.5px Inter,sans-serif';
+      var lbl=shortC(v.city)+(v.me?' ★':'');
+      var tw=ctx.measureText(lbl).width;
+      var lx=Math.min(W-tw-8,x+12); var ly=y-11;
+      // label bg pill
+      ctx.fillStyle='rgba(10,14,26,0.72)';
+      ctx.beginPath(); ctx.roundRect(lx-5,ly-13,tw+10,18,5); ctx.fill();
+      ctx.fillStyle='#ffd884'; ctx.fillText(lbl,lx,ly);
       ctx.restore();
     }
     function draw(){
       if(!mapOK) return;
       ctx.clearRect(0,0,W,H); ctx.lineJoin='round'; ctx.lineCap='round';
-      (mode==='ne'?neFeat:allFeat).features.forEach(function(ft){ ctx.beginPath(); path(ft);
-        ctx.fillStyle='rgba(120,160,210,0.05)'; ctx.fill(); ctx.lineWidth=1; ctx.strokeStyle='rgba(245,185,66,0.18)'; ctx.stroke(); });
+      // ocean background
+      var bg=ctx.createLinearGradient(0,0,0,H);
+      bg.addColorStop(0,'#060e1d'); bg.addColorStop(1,'#040b17');
+      ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+      // subtle vignette
+      var vig=ctx.createRadialGradient(W/2,H/2,H*0.2,W/2,H/2,H*0.85);
+      vig.addColorStop(0,'rgba(0,0,0,0)'); vig.addColorStop(1,'rgba(0,0,0,0.35)');
+      ctx.fillStyle=vig; ctx.fillRect(0,0,W,H);
+      // states - two-pass: fill then stroke
+      var feat=(mode==='ne'?neFeat:allFeat).features;
+      feat.forEach(function(ft){
+        ctx.beginPath(); path(ft);
+        ctx.fillStyle='rgba(100,140,200,0.08)'; ctx.fill();
+      });
+      feat.forEach(function(ft){
+        ctx.beginPath(); path(ft);
+        ctx.lineWidth=0.75; ctx.strokeStyle='rgba(180,210,255,0.18)'; ctx.stroke();
+      });
+      // highlight viewer's home state
+      var vState=viewer().state;
+      var stateName={VA:'Virginia',MD:'Maryland',DC:'District of Columbia',PA:'Pennsylvania',NY:'New York',MA:'Massachusetts',NJ:'New Jersey',CT:'Connecticut',NH:'New Hampshire',IL:'Illinois',TX:'Texas',OH:'Ohio',FL:'Florida',NC:'North Carolina',SC:'South Carolina',CO:'Colorado',GA:'Georgia',CA:'California',WI:'Wisconsin',MO:'Missouri',TN:'Tennessee',KY:'Kentucky',LA:'Louisiana',IN:'Indiana',MI:'Michigan',NV:'Nevada',RI:'Rhode Island',VT:'Vermont',ME:'Maine',DE:'Delaware',WV:'West Virginia',MN:'Minnesota',IA:'Iowa',NE:'Nebraska',KS:'Kansas',OK:'Oklahoma',AR:'Arkansas',MS:'Mississippi',AL:'Alabama',ND:'North Dakota',SD:'South Dakota',WY:'Wyoming',MT:'Montana',ID:'Idaho',WA:'Washington',OR:'Oregon',UT:'Utah',AZ:'Arizona',NM:'New Mexico',AK:'Alaska',HI:'Hawaii'}[vState];
+      if(stateName){ feat.forEach(function(ft){ if(ft.properties.name===stateName){
+        ctx.beginPath(); path(ft);
+        ctx.fillStyle='rgba(245,185,66,0.09)'; ctx.fill();
+        ctx.lineWidth=1.2; ctx.strokeStyle='rgba(245,185,66,0.28)'; ctx.stroke();
+      }}); }
+      // dots
       var vis=ALL.filter(function(a){return a._px!=null && a.id!==viewerId;});
       vis.filter(function(a){return !passFilter(a);}).forEach(function(a){ drawDot(a,false,true); });
       var inn=vis.filter(passFilter);
       inn.sort(function(a,b){ var o={other:0,local:1,good:2,best:3}; return o[tierFor(a)]-o[tierFor(b)]; });
       inn.forEach(function(a){ if(a.id!==selId && a.id!==hoverIdx) drawDot(a,false,false); });
+      drawTylerPlace();
       drawHome();
       var act=(selId>=0?selId:hoverIdx);
       if(act>=0 && ALL[act] && ALL[act].id!==viewerId && passFilter(ALL[act])) drawDot(ALL[act],true,false);
