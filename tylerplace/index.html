@@ -59,9 +59,38 @@ a{color:var(--gold-lt)}
 .hero{position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:space-between; padding-top:42px; overflow:hidden}
 .hero-sky{position:absolute; inset:0; z-index:-1; pointer-events:none;
   background:linear-gradient(180deg, #0d1f2d 0%, #1a3a5a 60%, #2a5a7a 100%)}
-.hero-sun{position:absolute; left:50%; top:13%; width:min(58vw,420px); aspect-ratio:1; transform:translateX(-50%);
-  background:radial-gradient(circle, #c9a84c 0%, rgba(201,168,76,0.3) 60%, transparent 70%);
-  filter:blur(2px); opacity:.85}
+.hero-sky::after{
+  content:'';
+  position:absolute; bottom:0; left:0; right:0; height:120px;
+  background: linear-gradient(to top,
+    rgba(26,58,90,0.95) 0%,
+    rgba(42,96,112,0.4) 40%,
+    transparent 100%
+  );
+  pointer-events:none;
+}
+.hero-water{
+  position:absolute; bottom:0; left:0; right:0; height:60px;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 3px,
+    rgba(74,173,170,0.06) 3px,
+    rgba(74,173,170,0.06) 4px
+  );
+  animation: waterMove 3s linear infinite;
+}
+@keyframes waterMove{
+  0%{background-position:0 0}
+  100%{background-position:0 -20px}
+}
+.hero-sun{
+  position:absolute; top:15%; left:50%; transform:translateX(-50%);
+  width:48px; height:48px;
+  background: radial-gradient(circle, rgba(201,168,76,0.5) 0%, rgba(201,168,76,0.15) 55%, transparent 70%);
+  border-radius:50%;
+  filter:blur(2px);
+}
 .hero-horizon{position:absolute; left:0; right:0; bottom:0; height:34%;
   background:linear-gradient(180deg, transparent, rgba(74,173,170,.06) 30%, rgba(58,140,137,.12));
   -webkit-mask:linear-gradient(180deg,transparent,#000 40%); mask:linear-gradient(180deg,transparent,#000 40%)}
@@ -74,7 +103,7 @@ a{color:var(--gold-lt)}
   100%{opacity:.8; transform:scaleX(1.02)}
 }
 .hero-mountains{position:absolute; bottom:30px; left:0; right:0;
-  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,120 0,80 150,30 300,70 450,20 600,60 750,15 900,55 1050,25 1200,65 1200,120' fill='%230d2a3d' opacity='0.6'/%3E%3Cpolygon points='0,120 0,90 100,55 250,85 400,40 550,75 700,30 850,70 1000,45 1150,75 1200,60 1200,120' fill='%230d1f2d' opacity='0.8'/%3E%3C/svg%3E") center bottom/cover no-repeat;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,120 0,80 150,30 300,70 450,20 600,60 750,15 900,55 1050,25 1200,65 1200,120' fill='%232d5a1b' opacity='0.6'/%3E%3Cpolygon points='0,120 0,90 100,55 250,85 400,40 550,75 700,30 850,70 1000,45 1150,75 1200,60 1200,120' fill='%232d5a1b' opacity='0.8'/%3E%3C/svg%3E") center bottom/cover no-repeat;
   height:80px}
 .hero-top{display:flex; align-items:center; justify-content:space-between; gap:16px}
 .badge{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--green); background:rgba(74,140,92,0.15);
@@ -248,6 +277,15 @@ a{color:var(--gold-lt)}
 .fact .fb .u{color:var(--gold-lt)}
 .fact .fd{color:var(--mut); font-size:13px; line-height:1.4}
 
+/* compact fun facts */
+#facts{display:flex; flex-direction:column; gap:0}
+.fact{display:flex; align-items:baseline; gap:10px; padding:8px 0; border:none; border-bottom:1px solid var(--line); background:transparent; border-radius:0; box-shadow:none; overflow:visible}
+.fact:last-child{border-bottom:none}
+.fact .ic{font-size:16px; flex-shrink:0; line-height:1; margin:0}
+.fact .ft{font:600 11px/1.3 var(--sans); letter-spacing:.05em; text-transform:uppercase; color:var(--mut2); order:1; flex:0 0 100%}
+.fact .fb{font:700 14px/1.3 var(--sans); color:var(--cream); margin:0; letter-spacing:0; order:2}
+.fact .fd{font:400 12px/1.3 var(--sans); color:var(--mut); text-transform:none; letter-spacing:0; margin-top:0; order:3}
+
 /* ---------- FOOTER ---------- */
 .foot{border-top:1px solid var(--line); padding:46px 0 70px; color:var(--mut2); font-size:13px}
 .foot .fh{font-family:var(--serif); font-size:22px; color:var(--cream); font-weight:600; margin-bottom:14px}
@@ -276,18 +314,18 @@ a{color:var(--gold-lt)}
   background:linear-gradient(180deg,#07101f 0%,#060e1a 100%);
   box-shadow:inset 0 0 80px rgba(78,205,196,.04),0 4px 24px rgba(0,0,0,.4)}
 #mapCanvas{display:block; width:100%; touch-action:pan-y}
-.map-ui{position:absolute; inset:0; pointer-events:none}
+.map-ui{display:none}
+.map-legend-bar{display:flex; flex-wrap:wrap; gap:6px 14px; margin-bottom:10px; padding:8px 0}
+.map-legend-bar .legrow{display:flex; align-items:center; gap:6px; font:500 12px/1 var(--sans); color:var(--mut2)}
+.map-legend-bar .legrow i{display:inline-block; width:10px; height:10px; border-radius:50%; flex-shrink:0}
+.map-legend-bar .legrow i.home{background:#ffd884; outline:2px solid rgba(255,255,255,0.7); outline-offset:1px}
 .map-views-row{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap}
 .mv-btn{border:1px solid var(--line); background:var(--panel); color:var(--mut);
   border-radius:999px; padding:10px 18px; font:600 13px/1 var(--sans); cursor:pointer; transition:.15s; min-height:44px}
 .mv-btn:hover{border-color:var(--gold); color:var(--cream)}
 .mv-btn.on{background:var(--gold); color:var(--ink); border-color:var(--gold)}
-.map-legend{position:absolute; left:16px; bottom:16px; background:rgba(9,14,28,.7); border:1px solid var(--line);
-  border-radius:13px; padding:12px 15px; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); pointer-events:auto}
-.map-legend .t{font:600 11px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--mut); margin-bottom:9px}
-.map-legend .legrow i.home{width:12px;height:12px;border-radius:50%;background:var(--gold-lt); box-shadow:0 0 8px var(--gold)}
-.map-hint{position:absolute; right:16px; top:16px; background:rgba(9,14,28,.6); border:1px solid var(--line);
-  border-radius:999px; padding:8px 13px; font:600 11.5px/1 var(--sans); color:var(--mut); pointer-events:none}
+.map-legend{display:none}
+.map-hint{display:none}
 .map-tip{position:absolute; z-index:6; display:none; max-width:262px; background:rgba(11,17,32,.95);
   border:1px solid var(--line); border-radius:13px; padding:12px 14px; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
   box-shadow:0 16px 44px rgba(0,0,0,.55); pointer-events:none}
@@ -531,6 +569,7 @@ a{color:var(--gold-lt)}
     <div class="hero-horizon"></div>
     <div class="hero-mountains"></div>
     <div class="hero-lake"></div>
+    <div class="hero-water"></div>
   </div>
   <div class="wrap hero-top">
     <span class="badge"><span class="dot"></span> Tyler Place Family Resort &middot; Lake Champlain, VT</span>
@@ -593,19 +632,15 @@ a{color:var(--gold-lt)}
         <button id="mfRet" class="mf-btn">Were here in '25</button>
       </div>
     </div>
+    <div class="map-legend-bar">
+      <div class="legrow"><i style="background:#ffd07a"></i> Best match</div>
+      <div class="legrow"><i style="background:#ff8c5a"></i> Strong</div>
+      <div class="legrow"><i style="background:#4ecdc4"></i> Nearby (&le;150 mi)</div>
+      <div class="legrow"><i style="background:#6b7a9c"></i> Everyone else</div>
+      <div class="legrow"><i class="home"></i> You</div>
+    </div>
     <div class="map-shell" id="mapWrap">
       <canvas id="mapCanvas"></canvas>
-      <div class="map-ui">
-        <div class="map-legend">
-          <div class="t">Match strength</div>
-          <div class="legrow"><i style="background:#ffd07a"></i> Best match</div>
-          <div class="legrow"><i style="background:#ff8c5a"></i> Strong</div>
-          <div class="legrow"><i style="background:#4ecdc4"></i> Nearby (&le;150 mi)</div>
-          <div class="legrow"><i style="background:#6b7a9c"></i> Everyone else</div>
-          <div class="legrow"><i class="home"></i> You</div>
-        </div>
-        <div class="map-hint">tap a dot</div>
-      </div>
       <div class="map-tip" id="mapTip"></div>
     </div>
     <div class="map-sel-detail" id="mapSelDetail"></div>
@@ -1316,16 +1351,6 @@ function rankFor(viewer, k){
     if(!ctx){ var fn2=$('#mapFallNote'); if(fn2) fn2.style.display='block'; return; }
 
     var dotHit = [], selectedId = null;
-    var VIEWS = {
-      usa:{lon0:-95, lat0:37,   scale:720},
-      ne: {lon0:-73.5,lat0:42.5,scale:2400}
-    };
-
-    function project(lat,lon,vw,vh){
-      var v=VIEWS[mapView], s=v.scale*(Math.min(vw,vh)/560);
-      return [(lon-v.lon0)*Math.cos(v.lat0*Math.PI/180)*s+vw/2, -(lat-v.lat0)*s+vh/2];
-    }
-
     function colorFor(tier){
       if(tier==='home')   return '#ffd884';
       if(tier==='best')   return '#ffd07a';
@@ -1334,25 +1359,24 @@ function rankFor(viewer, k){
       return '#6b7a9c';
     }
 
+    function getProj(vw, vh){
+      if(mapView==='usa'){
+        return d3.geoAlbersUsa().scale(vw*1.1).translate([vw/2, vh/2]);
+      }
+      return d3.geoMercator().scale(vw*9.5).center([-73.5,42.5]).translate([vw/2,vh/2]);
+    }
+
     function drawMap(ctx2,vw,vh){
       ctx2.clearRect(0,0,vw,vh);
-      if(!US_GEO) return;
+      if(!US_GEO || typeof d3==='undefined') return;
+      var path = d3.geoPath().projection(getProj(vw,vh)).context(ctx2);
+      ctx2.fillStyle='rgba(14,24,44,0.9)';
+      ctx2.strokeStyle='rgba(78,205,196,0.18)';
+      ctx2.lineWidth=0.7;
       US_GEO.features.forEach(function(feat){
         if(!feat||!feat.geometry) return;
-        var geom=feat.geometry;
-        function drawPoly(ring){
-          if(!ring||!ring.length) return;
-          ctx2.beginPath();
-          ring.forEach(function(pt,i){
-            var xy=project(pt[1],pt[0],vw,vh);
-            if(i===0) ctx2.moveTo(xy[0],xy[1]); else ctx2.lineTo(xy[0],xy[1]);
-          });
-          ctx2.closePath();
-          ctx2.fillStyle='rgba(14,24,44,0.9)'; ctx2.fill();
-          ctx2.strokeStyle='rgba(78,205,196,0.18)'; ctx2.lineWidth=0.7; ctx2.stroke();
-        }
-        if(geom.type==='Polygon') geom.coordinates.forEach(drawPoly);
-        else if(geom.type==='MultiPolygon') geom.coordinates.forEach(function(p){ p.forEach(drawPoly); });
+        ctx2.beginPath(); path(feat);
+        ctx2.fill(); ctx2.stroke();
       });
     }
 
@@ -1363,10 +1387,13 @@ function rankFor(viewer, k){
       drawMap(ctx,vw,vh);
       dotHit=[];
       var v=window._getViewer?window._getViewer():(ALL.find(function(x){return x.me;}));
+      var proj=getProj(vw,vh);
       ALL.forEach(function(a){
         if(!passFilter(a)) return;
         var tier=(v&&a.id===v.id)?'home':tierFor(a);
-        var xy=project(a.lat,a.lon,vw,vh), r=tier==='home'?8:5;
+        var xy=proj([a.lon,a.lat]);
+        if(!xy) return;
+        var r=tier==='home'?8:5;
         if(selectedId===a.id) r+=3;
         ctx.beginPath(); ctx.arc(xy[0],xy[1],r,0,7);
         ctx.fillStyle=colorFor(tier); ctx.fill();
