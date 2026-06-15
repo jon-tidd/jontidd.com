@@ -522,6 +522,21 @@ a{color:var(--gold-lt)}
 .fl-kids{font:400 11px/1 var(--sans); color:var(--mut2); margin-top:3px}
 .fl-detail{max-height:0; overflow:hidden; font:400 13px/1.5 var(--sans); color:var(--cream); transition:max-height .3s ease}
 .fl-detail.open{max-height:400px; padding-top:10px; border-top:1px solid var(--line); margin-top:10px}
+/* ---- GATE DISCLAIMER ---- */
+.gate-disclaimer{font-size:11px; color:var(--mut2); margin:14px 0 0; line-height:1.5; text-align:center; opacity:.8}
+/* ---- HERO QUESTIONS ---- */
+.hero-qs{margin:22px 0 0; border-top:1px solid rgba(255,255,255,.10); padding-top:4px}
+.hq-item{display:flex; gap:14px; align-items:flex-start; padding:11px 0; border-bottom:1px solid rgba(255,255,255,.05)}
+.hq-item:last-child{border-bottom:none; padding-bottom:4px}
+.hq-num{font:700 10px/1 var(--sans); color:var(--gold); letter-spacing:.14em; flex-shrink:0; margin-top:4px; min-width:20px}
+.hq-body{display:flex; flex-direction:column; gap:3px}
+.hq-q{font:600 14px/1.3 var(--serif); color:var(--cream)}
+.hq-a{font:400 12px/1.4 var(--sans); color:var(--mut)}
+/* ---- STATE FILTER ---- */
+.list-state-row{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+.list-state-label{font:600 12px/1 var(--sans); color:var(--mut); white-space:nowrap}
+.list-state-sel{background:var(--panel2); color:var(--cream); border:1px solid var(--line); border-radius:8px; padding:7px 12px; font:400 13px/1 var(--sans); cursor:pointer; flex:1 1 140px}
+.list-state-sel:focus{outline:none; border-color:var(--gold)}
 </style>
 </head>
 <body>
@@ -543,6 +558,7 @@ a{color:var(--gold-lt)}
     </div>
     <div id="gateErr" class="gate-err">That's not the password — try again.</div>
     <div class="gate-foot">Please keep names &amp; details within the Tyler Place community.</div>
+    <p class="gate-disclaimer">Personal hobby project by a Week 4 family. Not affiliated with or endorsed by Tyler Place Family Resort.</p>
   </div>
 </div>
 <script>
@@ -578,7 +594,21 @@ a{color:var(--gold-lt)}
   <div class="wrap hero-mid">
     <span class="kicker">Week 4 &middot; Lake Champlain, VT</span>
     <h1>Your people,<br>this year <span class="em">by the lake.</span></h1>
-    <p class="hero-sub">74 families this week. Pick yours below and everything updates: your top 5 matches, a color-coded map of where everyone is from, and the full roster sorted by how well they fit your family.</p>
+    <p class="hero-sub">Every family on the Week 4 roster, ranked for yours. Pick your family name below and this page answers three questions:</p>
+    <div class="hero-qs">
+      <div class="hq-item">
+        <span class="hq-num">01</span>
+        <div class="hq-body"><div class="hq-q">Who should your kids meet first?</div><div class="hq-a">Top 5 families ranked by kid compatibility &amp; proximity</div></div>
+      </div>
+      <div class="hq-item">
+        <span class="hq-num">02</span>
+        <div class="hq-body"><div class="hq-q">Where is everyone from?</div><div class="hq-a">Live map, dots colored by how well each family matches yours</div></div>
+      </div>
+      <div class="hq-item">
+        <span class="hq-num">03</span>
+        <div class="hq-body"><div class="hq-q">Who else is worth talking to?</div><div class="hq-a">All 74 families — searchable, sortable, filterable by state or type</div></div>
+      </div>
+    </div>
   </div>
   <div class="wrap">
     <div class="hero-stats" id="heroStats">
@@ -668,6 +698,12 @@ a{color:var(--gold-lt)}
           <option value="tenure">Years returning</option>
         </select>
         <span class="list-count" id="listCount"></span>
+      </div>
+      <div class="list-state-row">
+        <label class="list-state-label" for="listState">State</label>
+        <select id="listState" class="list-state-sel">
+          <option value="">All states</option>
+        </select>
       </div>
       <div class="list-filter-chips" id="listChips"></div>
     </div>
@@ -1370,8 +1406,8 @@ function rankFor(viewer, k){
       ctx2.clearRect(0,0,vw,vh);
       if(!US_GEO || typeof d3==='undefined') return;
       var path = d3.geoPath().projection(getProj(vw,vh)).context(ctx2);
-      ctx2.fillStyle='rgba(14,24,44,0.9)';
-      ctx2.strokeStyle='rgba(78,205,196,0.18)';
+      ctx2.fillStyle='rgba(22,42,62,0.95)';
+      ctx2.strokeStyle='rgba(78,205,196,0.42)';
       ctx2.lineWidth=0.7;
       US_GEO.features.forEach(function(feat){
         if(!feat||!feat.geometry) return;
@@ -1470,8 +1506,9 @@ function rankFor(viewer, k){
   /* ================= FAMILY LIST ================= */
   (function(){
     var search=$('#listSearch'), sortSel=$('#listSort'), chips=$('#listChips');
+    var stateSel=$('#listState');
     var countEl=$('#listCount'), listEl=$('#famList'), moreBtn=$('#listMore');
-    var SHOW=20, showing=20, query='', sortBy='score', filters={};
+    var SHOW=20, showing=20, query='', sortBy='score', filters={}, stateFilter='';
 
     function getV(){ return window._getViewer?window._getViewer():(TP.all2026.find(function(x){return x.me;})); }
     function commaC(c){ return c.replace(/ ([A-Z]{2})$/,', $1'); }
@@ -1486,6 +1523,15 @@ function rankFor(viewer, k){
           tenure:r.fam.tenure,fg:r.fam.fg,id:r.fam.id,score:r.total,dist:r.dist,
           strongMatches:r.strongMatches||0,matchedKids:mk,reason:(r.reasons&&r.reasons[0])||''};
       });
+      // populate state dropdown
+      if(stateSel){
+        var states=[];
+        fams.forEach(function(f){ if(f.state&&states.indexOf(f.state)<0) states.push(f.state); });
+        states.sort();
+        var cur=stateSel.value;
+        stateSel.innerHTML='<option value="">All states</option>'+
+          states.map(function(s){return '<option value="'+s+'"'+(s===cur?' selected':'')+'>'+s+'</option>';}).join('');
+      }
     }
 
     function buildChips(){
@@ -1495,7 +1541,6 @@ function rankFor(viewer, k){
       [
         {id:'match',label:'Has kid match',      fn:function(f){return f.strongMatches>=1;}},
         {id:'near', label:'Within 300 mi',      fn:function(f){return f.dist<=300;}},
-        {id:'state',label:v&&v.state?'Same state ('+v.state+')':'Same state',fn:function(f){return v&&f.state===v.state;}},
         {id:'new',  label:'First-timers',        fn:function(f){return f.tenure===0;}},
         {id:'ret',  label:"Were here in '25",    fn:function(f){return f.fg&&f.fg.indexOf(2025)>=0;}}
       ].forEach(function(d){
@@ -1508,8 +1553,9 @@ function rankFor(viewer, k){
 
     function applyFilters(list){
       var actIds=Object.keys(filters).filter(function(k){return filters[k];});
-      if(!actIds.length&&!query) return list;
+      if(!actIds.length&&!query&&!stateFilter) return list;
       return list.filter(function(f){
+        if(stateFilter&&f.state!==stateFilter) return false;
         if(query){var q=query.toLowerCase();if(f.f.toLowerCase().indexOf(q)<0&&f.city.toLowerCase().indexOf(q)<0)return false;}
         for(var i=0;i<actIds.length;i++){
           var btn=chips&&chips.querySelector('[data-id="'+actIds[i]+'"]');
@@ -1576,10 +1622,11 @@ function rankFor(viewer, k){
 
     if(search)  search.addEventListener('input', function(){query=search.value;showing=SHOW;render();});
     if(sortSel) sortSel.addEventListener('change',function(){sortBy=sortSel.value;showing=SHOW;render();});
+    if(stateSel) stateSel.addEventListener('change',function(){stateFilter=stateSel.value;showing=SHOW;render();});
     if(moreBtn) moreBtn.addEventListener('click', function(){showing+=SHOW;render();});
 
     window._refreshList=function(){
-      showing=SHOW;query='';filters={};if(search)search.value='';rebuild();buildChips();render();
+      showing=SHOW;query='';filters={};stateFilter='';if(search)search.value='';if(stateSel)stateSel.value='';rebuild();buildChips();render();
     };
     rebuild(); buildChips(); render();
   })();
