@@ -255,11 +255,11 @@ a{color:var(--gold-lt)}
   box-shadow:inset 0 0 80px rgba(78,205,196,.04),0 4px 24px rgba(0,0,0,.4)}
 #mapCanvas{display:block; width:100%; touch-action:pan-y}
 .map-ui{position:absolute; inset:0; pointer-events:none}
-.map-views{position:absolute; left:16px; top:16px; display:flex; gap:7px; pointer-events:auto; flex-wrap:wrap}
-.map-views button{border:1px solid var(--line); background:rgba(9,14,28,.72); color:var(--mut);
-  border-radius:999px; padding:8px 14px; font:600 12.5px/1 var(--sans); cursor:pointer; transition:.15s; -webkit-backdrop-filter:blur(6px); backdrop-filter:blur(6px)}
-.map-views button:hover{border-color:var(--gold); color:var(--cream)}
-.map-views button.on{background:var(--gold); color:var(--ink); border-color:var(--gold)}
+.map-views-row{display:flex; gap:8px; margin-bottom:12px; flex-wrap:wrap}
+.mv-btn{border:1px solid var(--line); background:var(--panel); color:var(--mut);
+  border-radius:999px; padding:10px 18px; font:600 13px/1 var(--sans); cursor:pointer; transition:.15s; min-height:44px}
+.mv-btn:hover{border-color:var(--gold); color:var(--cream)}
+.mv-btn.on{background:var(--gold); color:var(--ink); border-color:var(--gold)}
 .map-legend{position:absolute; left:16px; bottom:16px; background:rgba(9,14,28,.7); border:1px solid var(--line);
   border-radius:13px; padding:12px 15px; -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px); pointer-events:auto}
 .map-legend .t{font:600 11px/1 var(--sans); letter-spacing:.13em; text-transform:uppercase; color:var(--mut); margin-bottom:9px}
@@ -490,25 +490,18 @@ a{color:var(--gold-lt)}
     <div class="section-head">
       <span class="eyebrow-num">01 — Connection explorer</span>
       <h2>The whole roster, on one map.</h2>
-      <p>Every dot is a family, coloured by how strong a match they are for the family selected above. Hover or tap a dot for parents, kids, prior years, and connection score. Filter by kids' ages, distance, or history.</p>
-    </div>
-
-    <div class="filters">
-      <div class="frow"><span class="flab">Kids' ages</span><div class="fgrp" id="fAge"></div></div>
-      <div class="frow"><span class="flab">Distance from viewer</span><div class="fgrp" id="fDist"></div></div>
-      <div class="frow"><span class="flab">History</span><div class="fgrp" id="fStatus"></div><button class="fbtn solo" id="fStrong">★ Has a kid match</button></div>
-      <div class="fcount" id="fCount"></div>
+      <p>Every dot is a family, coloured by how strong a match they are for the selected family. Tap a dot to see parents, kids, and connection score.</p>
     </div>
 
     <div class="explorer-grid">
       <div class="map-col">
+        <div class="map-views-row">
+          <button id="mvUsa" class="mv-btn on">United States</button>
+          <button id="mvNe" class="mv-btn">Northeast</button>
+        </div>
         <div class="map-shell" id="mapWrap">
           <canvas id="mapCanvas"></canvas>
           <div class="map-ui">
-            <div class="map-views">
-              <button id="mvUsa" class="on">United States</button>
-              <button id="mvNe">Northeast</button>
-            </div>
             <div class="map-legend">
               <div class="t">Match strength</div>
               <div class="legrow"><i style="background:#ffd07a"></i> Best match</div>
@@ -517,12 +510,11 @@ a{color:var(--gold-lt)}
               <div class="legrow"><i style="background:#6b7a9c"></i> Everyone else</div>
               <div class="legrow"><i class="home"></i> Viewer</div>
             </div>
-            <div class="map-hint">hover / tap a dot</div>
+            <div class="map-hint">tap a dot</div>
           </div>
           <div class="map-tip" id="mapTip"></div>
         </div>
-        <p id="mapFallNote" style="display:none; color:var(--mut); font-size:14px; margin:14px 2px">Your browser can't draw the interactive map — the top-5 list and family details below still work.</p>
-        <div class="fd" id="famDetail"></div>
+        <p id="mapFallNote" style="display:none; color:var(--mut); font-size:14px; margin:14px 2px">Your browser can't draw the interactive map — the top-5 list still works.</p>
       </div>
       <div class="t5-col">
         <div class="t5-lab" id="top5Lab"></div>
@@ -1423,14 +1415,14 @@ function rankFor(viewer, k){
         var o=ce('option'); o.value=a.id; o.textContent=a.f+' — '+a.adults.slice(0,2).join(' & ')+' ('+shortC(a.city)+')'+(a.me?'  ★ you':''); sel.appendChild(o); });
       sel.value=viewerId;
       sel.addEventListener('change',function(){ viewerId=+sel.value; selId=-1; hoverIdx=-1; hideTip();
-        rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){ d.innerHTML=detailHTML(viewer()); d.classList.add('on'); }
+        rebuildScores(); renderTop5(); refresh();
         if(window._refreshBanner) window._refreshBanner();
         if(window._refreshCards) window._refreshCards();
         if(window._refreshCrews) window._refreshCrews();
         var banner=$('#youBanner'); if(banner) setTimeout(function(){ banner.scrollIntoView({behavior:'smooth',block:'start'}); },80); });
     }
     var resetBtn=$('#viewerReset');
-    if(resetBtn) resetBtn.addEventListener('click',function(){ viewerId=TP.meId; if(sel)sel.value=viewerId; selId=-1; hideTip(); rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){d.innerHTML=detailHTML(viewer());d.classList.add('on');}
+    if(resetBtn) resetBtn.addEventListener('click',function(){ viewerId=TP.meId; if(sel)sel.value=viewerId; selId=-1; hideTip(); rebuildScores(); renderTop5(); refresh();
       if(window._refreshBanner) window._refreshBanner();
       if(window._refreshCards) window._refreshCards();
       if(window._refreshCrews) window._refreshCrews();
@@ -1438,7 +1430,6 @@ function rankFor(viewer, k){
 
     /* ---------- INIT ---------- */
     rebuildScores(); buildFilters(); renderTop5();
-    var d0=$('#famDetail'); if(d0){ d0.innerHTML=detailHTML(viewer()); d0.classList.add('on'); }
     refresh();
     if(mapOK) layout();
   })();
@@ -1525,11 +1516,8 @@ function rankFor(viewer, k){
         {id:'best',label:'🎯 Best matches',fn:function(f){return f.strongMatches>=2;}}
       ];
       if(curV.state) FILTERS.push({id:'local',label:'📍 Same state',fn:function(f){return f.state===curV.state;}});
-      curV.kids.filter(function(kd){return kd.age!=null;}).forEach(function(kd){
-        var n=kd.name;
-        FILTERS.push({id:'kid_'+n,label:n+'’s buddies',fn:function(f){return f.buddies.some(function(b){return b.myKid===n;});}});
-      });
       FILTERS.push({id:'new',label:'✨ First-timers',fn:function(f){return f.tenure===0;}});
+      if(curFilter.indexOf('kid_')===0) curFilter='all';
       activeFilters=FILTERS;
       FILTERS.forEach(function(fi){
         var c=ce('button','chip'+(curFilter===fi.id?' on':'')); c.textContent=fi.label; c.dataset.id=fi.id;
