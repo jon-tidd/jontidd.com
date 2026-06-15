@@ -8,17 +8,28 @@
 <title>Tyler Place · Week 4 — Your Connection Map</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg0:#080d1c; --bg1:#0b1226; --bg2:#0e1830;
-  --panel:#121d38; --panel2:#16233f; --line:#243250;
-  --gold:#f5b942; --gold-lt:#ffd884; --coral:#ff8c5a; --rose:#ff6b6b;
-  --teal:#4ecdc4; --teal-dk:#2a9d8f; --sky:#6fb6e8;
-  --cream:#f4ede4; --ink:#0a1120;
-  --mut:#9fb0cc; --mut2:#728099;
-  --hot:#ffb05a; --local:#4ecdc4; --warm:#ffd884; --cool:#7fa8d8;
-  --serif:'Fraunces',Georgia,serif; --sans:'Inter',system-ui,sans-serif;
+  --bg:       #0d1f2d;    /* deep lake night */
+  --panel:    #132536;    /* dark panel */
+  --panel2:   #1a3347;    /* slightly lighter */
+  --line:     rgba(255,255,255,.10);
+  --cream:    #f0ebe0;    /* warm ivory */
+  --cream2:   #d4cfc4;    /* muted ivory */
+  --gold:     #c9a84c;    /* Vermont golden hour */
+  --teal:     #4aadaa;    /* Lake Champlain teal */
+  --green:    #4a8c5c;    /* Vermont forest green */
+  --mut:      #7a9bb0;    /* muted lake blue */
+  --mut2:     #5a7a8f;    /* more muted */
+  --sans:     'Inter', system-ui, sans-serif;
+  --serif:    'Cormorant Garamond', Georgia, serif;
+  /* legacy aliases mapped onto the resort palette */
+  --bg0:#0d1f2d; --bg1:#132536; --bg2:#1a3347;
+  --gold-lt:#e0c576; --coral:#d98a4a; --rose:#d96a6a;
+  --teal-dk:#3a8c89; --sky:#6f9fc4;
+  --ink:#0d1f2d;
+  --hot:#d99a5a; --local:#4aadaa; --warm:#e0c576; --cool:#7a9bb0;
   --maxw:1140px;
 }
 *{box-sizing:border-box}
@@ -39,28 +50,39 @@ body::before{
 h1,h2,h3{font-family:var(--serif); font-weight:600; line-height:1.04; margin:0; letter-spacing:-.01em}
 .section{padding:74px 0; position:relative}
 .section-head{max-width:760px; margin-bottom:30px}
-.section-head h2{font-size:clamp(28px,4.4vw,46px); margin:14px 0 0}
+.section-head h2{font-family:var(--serif); font-size:2.2rem; font-weight:600; margin:14px 0 0}
 .section-head p{color:var(--mut); font-size:16.5px; margin:14px 0 0; max-width:640px}
-.eyebrow-num{font-family:var(--serif); color:var(--teal); opacity:.6; font-size:15px; font-weight:500}
+.eyebrow-num{font-family:var(--serif); color:var(--gold); font-size:16px; font-weight:600}
 a{color:var(--gold-lt)}
 
 /* ---------- HERO ---------- */
 .hero{position:relative; min-height:100svh; display:flex; flex-direction:column; justify-content:space-between; padding-top:42px; overflow:hidden}
-.hero-sky{position:absolute; inset:0; z-index:-1; pointer-events:none}
+.hero-sky{position:absolute; inset:0; z-index:-1; pointer-events:none;
+  background:linear-gradient(180deg, #0d1f2d 0%, #1a3a5a 60%, #2a5a7a 100%)}
 .hero-sun{position:absolute; left:50%; top:13%; width:min(58vw,420px); aspect-ratio:1; transform:translateX(-50%);
-  background:radial-gradient(circle at 50% 50%, rgba(255,216,132,.55), rgba(255,140,90,.16) 42%, transparent 66%);
+  background:radial-gradient(circle, #c9a84c 0%, rgba(201,168,76,0.3) 60%, transparent 70%);
   filter:blur(2px); opacity:.85}
 .hero-horizon{position:absolute; left:0; right:0; bottom:0; height:34%;
-  background:linear-gradient(180deg, transparent, rgba(78,205,196,.05) 30%, rgba(42,157,143,.10));
+  background:linear-gradient(180deg, transparent, rgba(74,173,170,.06) 30%, rgba(58,140,137,.12));
   -webkit-mask:linear-gradient(180deg,transparent,#000 40%); mask:linear-gradient(180deg,transparent,#000 40%)}
 .hero-stars{position:absolute; inset:0; opacity:.5}
+.hero-lake{position:absolute; bottom:0; left:0; right:0; height:80px;
+  background: linear-gradient(to top, rgba(74,173,170,0.08) 0%, transparent 100%);
+  animation: lakeShimmer 4s ease-in-out infinite alternate}
+@keyframes lakeShimmer{
+  0%{opacity:.4; transform:scaleX(1)}
+  100%{opacity:.8; transform:scaleX(1.02)}
+}
+.hero-mountains{position:absolute; bottom:30px; left:0; right:0;
+  background: url("data:image/svg+xml,%3Csvg viewBox='0 0 1200 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,120 0,80 150,30 300,70 450,20 600,60 750,15 900,55 1050,25 1200,65 1200,120' fill='%230d2a3d' opacity='0.6'/%3E%3Cpolygon points='0,120 0,90 100,55 250,85 400,40 550,75 700,30 850,70 1000,45 1150,75 1200,60 1200,120' fill='%230d1f2d' opacity='0.8'/%3E%3C/svg%3E") center bottom/cover no-repeat;
+  height:80px}
 .hero-top{display:flex; align-items:center; justify-content:space-between; gap:16px}
-.badge{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--line); background:rgba(18,29,56,.5);
-  padding:8px 14px; border-radius:999px; font:600 12px/1 var(--sans); letter-spacing:.04em; color:var(--mut); backdrop-filter:blur(6px)}
-.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold); box-shadow:0 0 10px var(--gold)}
+.badge{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--green); background:rgba(74,140,92,0.15);
+  padding:8px 14px; border-radius:999px; font:600 12px/1 var(--sans); letter-spacing:.04em; color:var(--green); backdrop-filter:blur(6px)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--green); box-shadow:0 0 10px var(--green)}
 .hero-mid{flex:1; display:flex; flex-direction:column; justify-content:center; padding-top:38px; padding-bottom:38px}
-.hero-mid h1{font-size:clamp(40px,8.2vw,92px); font-weight:600; letter-spacing:-.025em; max-width:14ch}
-.hero-mid h1 .em{font-style:italic; color:var(--gold-lt)}
+.hero-mid h1{font-family:var(--serif); font-size:clamp(40px,7vw,56px); line-height:1.1; font-weight:600; letter-spacing:-.01em; max-width:16ch}
+.hero-mid h1 .em{font-style:italic; color:var(--gold)}
 .hero-sub{margin-top:22px; font-size:clamp(16px,2.2vw,20px); color:var(--mut); max-width:50ch}
 .hero-sub b{color:var(--cream); font-weight:600}
 .scrollcue{display:inline-flex; align-items:center; gap:10px; margin-top:30px; color:var(--mut2); font:600 12px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase}
@@ -68,8 +90,8 @@ a{color:var(--gold-lt)}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 .hero-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding-top:24px; padding-bottom:38px}
 .stat{border-top:1px solid var(--line); padding-top:14px}
-.stat .n{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.6vw,44px); letter-spacing:-.02em; line-height:1}
-.stat .n.gold{color:var(--gold-lt)} .stat .n.teal{color:var(--teal)}
+.stat .n{font-family:var(--serif); font-weight:600; font-size:clamp(32px,5.2vw,54px); letter-spacing:-.01em; line-height:1}
+.stat .n.gold{color:var(--gold)} .stat .n.teal{color:var(--teal)}
 .stat .l{color:var(--mut); font-size:12.5px; margin-top:7px; line-height:1.3}
 
 /* ---------- GLOBE ---------- */
@@ -386,20 +408,21 @@ a{color:var(--gold-lt)}
 
 /* ---------- PRIVACY GATE ---------- */
 #gate{position:fixed; inset:0; z-index:99999; display:flex; align-items:center; justify-content:center; padding:24px;
-  background:radial-gradient(130% 100% at 50% 0%, #0e1830, #060a16); transition:opacity .55s ease}
+  background:linear-gradient(180deg, #0d1f2d 0%, #1a3a5a 60%, #2a5a7a 100%); transition:opacity .55s ease}
 #gate.gone{opacity:0; pointer-events:none}
 #gate.shake .gate-card{animation:gshake .45s}
 @keyframes gshake{0%,100%{transform:none}20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
-.gate-card{max-width:390px; width:100%; text-align:center; background:var(--panel); border:1px solid var(--line);
+.gate-card{max-width:390px; width:100%; text-align:center; background:linear-gradient(180deg, #0d1f2d 0%, #132536 100%); border:1px solid rgba(201,168,76,.22);
   border-radius:20px; padding:34px 28px; box-shadow:0 30px 80px rgba(0,0,0,.55)}
+.gate-logo{display:block; margin:0 auto 18px; width:56px; height:auto; color:var(--gold)}
 .gate-eyebrow{font:700 11px/1 var(--sans); letter-spacing:.2em; text-transform:uppercase; color:var(--gold)}
-.gate-h{font-family:var(--serif); font-size:23px; font-weight:600; margin:14px 0 8px; color:var(--cream); line-height:1.2}
+.gate-h{font-family:var(--serif); font-size:28px; font-weight:600; margin:14px 0 8px; color:var(--cream); line-height:1.2}
 .gate-p{font-size:14px; color:var(--mut); margin:0 0 20px; line-height:1.5}
 .gate-row{display:flex; gap:8px}
 #gatePw{flex:1; min-width:0; background:var(--panel2); border:1px solid var(--line); border-radius:11px; padding:13px 14px;
   color:var(--cream); font:500 15px/1 var(--sans)}
 #gatePw:focus{outline:none; border-color:var(--gold)}
-#gateBtn{border:none; background:var(--gold); color:var(--ink); border-radius:11px; padding:13px 20px;
+#gateBtn{border:none; background:var(--gold); color:#0d1f2d; border-radius:11px; padding:13px 20px;
   font:700 14px/1 var(--sans); cursor:pointer; transition:.15s; white-space:nowrap}
 #gateBtn:hover{background:var(--gold-lt)}
 .gate-err{display:none; color:var(--coral); font-size:13px; margin-top:13px}
@@ -409,12 +432,13 @@ a{color:var(--gold-lt)}
 .hero-finder{padding:24px 0 32px; border-top:1px solid rgba(255,255,255,.08); margin-top:24px}
 .hf-label{font:600 13px/1 var(--sans); color:var(--mut); letter-spacing:.04em; margin-bottom:14px}
 .hf-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
-.hf-sel{flex:1 1 220px; background:var(--panel2); color:var(--cream); border:1px solid var(--line); border-radius:10px; padding:12px 14px; font:600 14px/1 var(--sans); cursor:pointer; min-width:0}
+.hf-sel{flex:1 1 220px; background:var(--panel2); color:var(--cream); border:1px solid rgba(201,168,76,.28); border-radius:10px; padding:12px 14px; font:600 14px/1 var(--sans); cursor:pointer; min-width:0; transition:border-color .15s,box-shadow .15s}
+.hf-sel:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,.14)}
 .hf-reset{flex:0 0 auto; background:transparent; color:var(--mut); border:1px solid var(--line); border-radius:10px; padding:11px 16px; font:600 13px/1 var(--sans); cursor:pointer; white-space:nowrap}
 .hf-reset:hover{color:var(--cream); border-color:var(--cream)}
 /* ---- TOP 5 ---- */
 .top5-grid{display:grid; grid-template-columns:repeat(auto-fill,minmax(240px,1fr)); gap:14px; margin-top:8px}
-.t5c{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:4px; position:relative}
+.t5c{background:linear-gradient(135deg, var(--panel) 0%, var(--panel2) 100%); border:1px solid rgba(201,168,76,0.2); border-left:3px solid var(--gold); border-radius:14px; padding:18px 20px; display:flex; flex-direction:column; gap:4px; position:relative}
 .t5c-rank{position:absolute; top:14px; right:16px; font:700 11px/1 var(--sans); color:var(--mut); letter-spacing:.08em}
 .t5c-score{font:700 24px/1 var(--sans); color:var(--gold); margin-bottom:2px}
 .t5c-par{font:700 15px/1.2 var(--sans); color:var(--cream)}
@@ -426,7 +450,7 @@ a{color:var(--gold-lt)}
 .mt-group{display:flex; align-items:center; gap:6px; flex-wrap:wrap}
 .mt-label{font:600 11px/1 var(--sans); color:var(--mut); text-transform:uppercase; letter-spacing:.08em; white-space:nowrap}
 .mv-btn,.mf-btn{background:var(--panel2); color:var(--mut); border:1px solid var(--line); border-radius:8px; padding:8px 14px; font:600 12px/1 var(--sans); cursor:pointer; white-space:nowrap; min-height:40px; transition:background .15s,color .15s,border-color .15s}
-.mv-btn.on,.mf-btn.on{background:var(--gold); color:#0e1828; border-color:var(--gold)}
+.mv-btn.on,.mf-btn.on{background:var(--gold); color:#0d1f2d; border-color:var(--gold)}
 .mv-btn:hover:not(.on),.mf-btn:hover:not(.on){color:var(--cream); border-color:rgba(255,255,255,.3)}
 .map-sel-detail{font:400 13px/1.5 var(--sans); color:var(--cream); padding:10px 14px; background:var(--panel2); border-radius:10px; margin-top:10px; display:none}
 .map-sel-detail:not(:empty){display:block}
@@ -463,12 +487,18 @@ a{color:var(--gold-lt)}
 </style>
 </head>
 <body>
+<script>window.history.scrollRestoration='manual'; window.scrollTo(0,0);</script>
 
 <div id="gate">
   <div class="gate-card">
+    <svg class="gate-logo" viewBox="0 0 80 50" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <polyline points="4,34 22,14 34,28 48,8 62,26 76,16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      <line x1="4" y1="42" x2="76" y2="42" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.6"/>
+      <line x1="12" y1="46" x2="68" y2="46" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" opacity="0.35"/>
+    </svg>
     <div class="gate-eyebrow">Private · Tyler Place</div>
-    <h2 class="gate-h">Your Week 4 connection guide</h2>
-    <p class="gate-p">This page is shared privately. Enter the password to continue.</p>
+    <h2 class="gate-h">Tyler Place · Week 4</h2>
+    <p class="gate-p">Enter the password to see your week.</p>
     <div class="gate-row">
       <input id="gatePw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="numeric">
       <button id="gateBtn">Enter</button>
@@ -481,7 +511,7 @@ a{color:var(--gold-lt)}
 (function(){
   var KEY='tp_unlock_w4', PW='2026';
   var ov=document.getElementById('gate'); if(!ov) return;
-  function unlock(persist){ ov.classList.add('gone'); setTimeout(function(){ ov.style.display='none'; },600);
+  function unlock(persist){ ov.classList.add('gone'); window.scrollTo(0,0); setTimeout(function(){ ov.style.display='none'; },600);
     if(persist){ try{ sessionStorage.setItem(KEY,'1'); }catch(e){} } }
   try{ if(sessionStorage.getItem(KEY)==='1'){ ov.style.display='none'; return; } }catch(e){}
   var inp=document.getElementById('gatePw'), btn=document.getElementById('gateBtn'), err=document.getElementById('gateErr');
@@ -499,6 +529,8 @@ a{color:var(--gold-lt)}
     <div class="hero-sun"></div>
     <canvas class="hero-stars" id="starCanvas"></canvas>
     <div class="hero-horizon"></div>
+    <div class="hero-mountains"></div>
+    <div class="hero-lake"></div>
   </div>
   <div class="wrap hero-top">
     <span class="badge"><span class="dot"></span> Tyler Place Family Resort &middot; Lake Champlain, VT</span>
@@ -1403,8 +1435,9 @@ function rankFor(viewer, k){
       rebuildScores(); selectedId=null;
       var d=$('#mapSelDetail'); if(d) d.innerHTML=''; draw();
     };
-    rebuildScores(); draw();
+    rebuildScores();
     window.addEventListener('resize',draw);
+    requestAnimationFrame(function(){ requestAnimationFrame(draw); });
   })();
 
   /* ================= FAMILY LIST ================= */
@@ -1632,6 +1665,22 @@ function rankFor(viewer, k){
         gsap.from(el,{y:20,opacity:0,duration:.55,ease:'power2.out',scrollTrigger:{trigger:el,start:'top bottom',once:true}});
       });
     });
+    // Top 5 cards stagger
+    gsap.utils.toArray('.t5c').forEach(function(el, i){
+      gsap.from(el, {y:30, opacity:0, duration:.6, delay:i*.08, ease:'power2.out',
+        scrollTrigger:{trigger:el, start:'top bottom', once:true}});
+    });
+    // Family list rows
+    gsap.utils.toArray('.fl-row').forEach(function(el, i){
+      if(i < 10) gsap.from(el, {x:-20, opacity:0, duration:.4, delay:i*.04, ease:'power2.out',
+        scrollTrigger:{trigger:el, start:'top bottom', once:true}});
+    });
+  }
+
+  /* gate card entrance */
+  if(hasGSAP && !RM){
+    var gc=document.querySelector('#gate:not(.gone) .gate-card');
+    if(gc){ gsap.from(gc,{y:24,opacity:0,duration:.7,ease:'power2.out'}); }
   }
 
 })();
