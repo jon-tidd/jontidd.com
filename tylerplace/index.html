@@ -411,7 +411,7 @@ a{color:var(--gold-lt)}
 <div id="gate">
   <div class="gate-card">
     <div class="gate-eyebrow">Private · Tyler Place</div>
-    <h2 class="gate-h">A field guide for the Tidd family</h2>
+    <h2 class="gate-h">Your Week 4 connection guide</h2>
     <p class="gate-p">This page is shared privately. Enter the password to continue.</p>
     <div class="gate-row">
       <input id="gatePw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="numeric">
@@ -450,7 +450,7 @@ a{color:var(--gold-lt)}
   </div>
 
   <div class="wrap hero-mid">
-    <span class="kicker">A field guide for the Tidd family</span>
+    <span class="kicker">Week 4 · Lake Champlain, VT</span>
     <h1>Your people,<br>this year <span class="em">by the lake.</span></h1>
     <p class="hero-sub">Every family on the Week 4 roster, ranked by how likely your kids are to find their people — and who to actually talk to, with the <b>parents' first names and conversation starters</b> for each. Built only from this year's and last year's guest lists.</p>
     <a class="scrollcue" href="#map"><span class="arr">↓</span> Explore the map</a>
@@ -477,7 +477,7 @@ a{color:var(--gold-lt)}
       <p class="ff-sub">Pick your last name from the list. The map, match scores, and top-5 picks below will all update to show the week from <em>your</em> family's point of view.</p>
       <select id="viewerSel"></select>
       <div class="ff-actions">
-        <button id="viewerReset">↺ Switch back to the Tidds</button>
+        <button id="viewerReset">↺ Reset to default</button>
         <span class="ff-hint">Alphabetical by last name · all 74 families</span>
       </div>
     </div>
@@ -532,19 +532,6 @@ a{color:var(--gold-lt)}
   </div>
 </section>
 
-<!-- ============ TIDD DIVIDER ============ -->
-<div class="tidd-divider">
-  <div class="tidd-divider-inner">
-    <div class="tsd-icon">⭐</div>
-    <div class="tsd-body">
-      <div class="tsd-label">Tidd family · personal section</div>
-      <div class="tsd-title">Everything below is personal to the Tidds</div>
-      <div class="tsd-sub">Match scores, camp crews, and conversation starters built specifically around Alice, Miles &amp; Mason</div>
-    </div>
-    <div class="tsd-rule"></div>
-  </div>
-</div>
-
 <!-- ============ YOUR FAMILY ============ -->
 <section class="section" style="padding-top:28px">
   <div class="wrap">
@@ -558,7 +545,7 @@ a{color:var(--gold-lt)}
     <div class="section-head">
       <span class="eyebrow-num">02 — Your best bets</span>
       <h2>Who to seek out — and what to say.</h2>
-      <p>Ranked by how well each family's kids line up with Alice, Miles, and Mason (same or neighboring camp group counts most), plus how close they live and whether they're at your stage of family life. Every card leads with the <b>parents' first names</b> and a few <b>conversation starters</b> grounded in what you actually share. Tap a filter to focus.</p>
+      <p id="sec02head">Ranked by how well each family's kids line up with yours (same or neighboring camp group counts most), plus how close they live and whether they're at your stage of family life. Every card leads with the <b>parents' first names</b> and a few <b>conversation starters</b> grounded in what you actually share. Tap a filter to focus.</p>
     </div>
     <div class="chips" id="chips"></div>
     <div class="cards" id="cards"></div>
@@ -618,11 +605,10 @@ a{color:var(--gold-lt)}
 <!-- ============ FOOTER ============ -->
 <footer class="foot">
   <div class="wrap">
-    <div class="fh">Made for the Tidds — have a wonderful week.</div>
+    <div class="fh">Have a wonderful week.</div>
     <p>Everything here is built only from the two guest lists you were handed (this year's and last year's). Names, hometowns, and kids' ages and camp groups all come straight off those rosters — information the resort already shares among guests for exactly this reason: so families can find each other.</p>
     <div class="method">
-      <p style="margin-top:0"><b>How the match score works, in plain terms.</b> For each family, every one of their kids is paired with whichever of your three is the best fit — and each kid can only be claimed once, so a family with three well-matched kids scores far higher than one kid who happens to be close in age to all of yours. A shared camp group is worth the most, a neighboring group nearly as much, then age gaps from there. On top of that: living in Virginia or the broader DC/Maryland area adds points (those are the friendships you can keep up with), as does being at the same family stage — three kids, or a little one Alice's age.</p>
-      <p style="margin-bottom:0; color:var(--mut2)"><b style="color:var(--mut)">A note on the "dig into everyone's background online" idea:</b> I deliberately didn't comb the web for ~100 private families with young children — it's a privacy minefield and the matches would be guesses built on the wrong people. The rankings above are stronger for staying grounded in real roster data. If there's a specific family you'd like me to look up properly, just point me at them.</p>
+      <p style="margin-bottom:0"><b>How the match score works, in plain terms.</b> For each family, their kids are paired with yours — and each kid can only be claimed once, so a family with multiple well-matched kids scores far higher than one where just one kid happens to be close in age. A shared camp group is worth the most, a neighboring group nearly as much, then age gaps from there. On top of that: living nearby adds points (those are the friendships you can keep up after the week), as does being at the same family stage. All data comes from the guest roster — names, hometowns, kids' ages and camp groups.</p>
     </div>
   </div>
 </footer>
@@ -907,7 +893,7 @@ function tagsFor(s){
   else if(s.geoLabel==="DMV — your backyard") t.push({icon:"📍",txt:"DMV — practically neighbors",kind:"local"});
   else if(s.geoLabel==="Northeast / East Coast") t.push({icon:"🧭",txt:"East Coast",kind:"cool"});
   if(s.nk===3) t.push({icon:"👨‍👩‍👧‍👦",txt:"Three kids, like yours",kind:"warm"});
-  if(s.fam.kids.some(x=>x.age!==null&&x.age<=3)) t.push({icon:"👶",txt:"Has a toddler (Alice's stage)",kind:"warm"});
+  if(s.fam.kids.some(x=>x.age!==null&&x.age<=3)) t.push({icon:"👶",txt:"Has a toddler too",kind:"warm"});
   if(s.fam.fg.length>0&&s.fam.fg.length<=2) t.push({icon:"🌱",txt:"Newer family, like you",kind:"cool"});
   if(s.fam.fg.length===0) t.push({icon:"✨",txt:"First-timers this year",kind:"cool"});
   return t;
@@ -1146,6 +1132,7 @@ function rankFor(viewer, k){
     var scoreCache={}, viewerMax=1, rankIndex={}, selId=-1;
 
     function viewer(){ return ALL[viewerId]; }
+    window._getViewer = viewer;
     function bucket(a){ return a<=3?'0-3':a<=6?'4-6':a<=9?'7-9':a<=12?'10-12':'13+'; }
     function fmtYears(fg){
       if(!fg.length) return 'first time here';
@@ -1436,10 +1423,16 @@ function rankFor(viewer, k){
         var o=ce('option'); o.value=a.id; o.textContent=a.f+' — '+a.adults.slice(0,2).join(' & ')+' ('+shortC(a.city)+')'+(a.me?'  ★ you':''); sel.appendChild(o); });
       sel.value=viewerId;
       sel.addEventListener('change',function(){ viewerId=+sel.value; selId=-1; hoverIdx=-1; hideTip();
-        rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){ d.innerHTML=detailHTML(viewer()); d.classList.add('on'); } });
+        rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){ d.innerHTML=detailHTML(viewer()); d.classList.add('on'); }
+        if(window._refreshBanner) window._refreshBanner();
+        if(window._refreshCards) window._refreshCards();
+        if(window._refreshCrews) window._refreshCrews(); });
     }
     var resetBtn=$('#viewerReset');
-    if(resetBtn) resetBtn.addEventListener('click',function(){ viewerId=TP.meId; if(sel)sel.value=viewerId; selId=-1; hideTip(); rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){d.innerHTML=detailHTML(viewer());d.classList.add('on');} });
+    if(resetBtn) resetBtn.addEventListener('click',function(){ viewerId=TP.meId; if(sel)sel.value=viewerId; selId=-1; hideTip(); rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){d.innerHTML=detailHTML(viewer());d.classList.add('on');}
+      if(window._refreshBanner) window._refreshBanner();
+      if(window._refreshCards) window._refreshCards();
+      if(window._refreshCrews) window._refreshCrews(); });
 
     /* ---------- INIT ---------- */
     rebuildScores(); buildFilters(); renderTop5();
@@ -1450,72 +1443,136 @@ function rankFor(viewer, k){
 
   /* ================= YOUR FAMILY BANNER ================= */
   (function(){
-    var me=TP.me, el=$('#youBanner');
-    var H='<div class="lab">Start here · your family</div>';
-    H+='<h2>The Tidds</h2>';
-    H+='<div class="adlt">'+esc(me.adults.join(' & '))+' · '+esc(me.city)+' · 2nd year at Tyler Place</div>';
-    H+='<div class="kidrow">';
-    me.kids.forEach(function(kd){
-      var col=KIDCOL[kd.name]||'#f5b942';
-      H+='<div class="kidchip"><div class="av" style="background:'+col+'">'+initials(kd.name)+'</div>'+
-         '<div><div class="nm">'+esc(kd.name)+', '+kd.age+'</div><div class="pg">'+esc(kd.program)+'</div></div></div>';
-    });
-    H+='</div>';
-    el.innerHTML=H;
+    var BCOLORS=['#ff8c5a','#4ecdc4','#f5b942','#6fb6e8','#ff6b6b','#a8e6cf'];
+    function bkidCol(name,idx){ return KIDCOL[name]||BCOLORS[idx%BCOLORS.length]; }
+    function tenureStr(v){
+      var t=v.tenure||0;
+      if(t===0) return '1st year at Tyler Place';
+      if(t===1) return '2nd year at Tyler Place';
+      if(t===2) return '3rd year at Tyler Place';
+      return (t+1)+'th year at Tyler Place';
+    }
+    function renderBanner(){
+      var v=window._getViewer?window._getViewer():(TP.all2026.find(function(x){return x.me;}));
+      var el=$('#youBanner'); if(!el||!v) return;
+      var H='<div class="lab">Your family</div>';
+      H+='<h2>The '+esc(v.f)+' family</h2>';
+      H+='<div class="adlt">'+esc(v.adults.join(' & '))+' · '+esc(v.city)+' · '+tenureStr(v)+'</div>';
+      H+='<div class="kidrow">';
+      v.kids.filter(function(kd){return kd.age!=null;}).forEach(function(kd,i){
+        var col=bkidCol(kd.name,i);
+        H+='<div class="kidchip"><div class="av" style="background:'+col+'">'+initials(kd.name)+'</div>'+
+           '<div><div class="nm">'+esc(kd.name)+', '+kd.age+'</div><div class="pg">'+esc(kd.program)+'</div></div></div>';
+      });
+      H+='</div>';
+      el.innerHTML=H;
+    }
+    window._refreshBanner=renderBanner;
+    renderBanner();
   })();
 
   /* ================= TOP CONNECTIONS ================= */
   (function(){
-    var fams=TP.families, maxScore=fams[0].score;
-    var FILTERS=[
-      {id:'all',label:'All families',fn:function(){return true;}},
-      {id:'local',label:'📍 Local (VA + DC/MD)',fn:function(f){return f.state==='VA'||f.state==='MD'||f.state==='DC';}},
-      {id:'best',label:'🎯 Best matches',fn:function(f){return f.strongMatches>=2;}},
-      {id:'alice',label:"Alice's buddies",fn:function(f){return f.buddies.some(function(b){return b.myKid==='Alice';});}},
-      {id:'miles',label:"Miles's buddies",fn:function(f){return f.buddies.some(function(b){return b.myKid==='Miles';});}},
-      {id:'mason',label:"Mason's buddies",fn:function(f){return f.buddies.some(function(b){return b.myKid==='Mason';});}},
-      {id:'new',label:'✨ First-timers',fn:function(f){return f.tenure===0;}}
-    ];
-    var curFilter='all', expanded=false;
+    var curV, fams, maxScore;
+    var curFilter='all', expanded=false, activeFilters=[];
+
+    function getV(){ return window._getViewer?window._getViewer():(TP.all2026.find(function(x){return x.me;})); }
+
+    function progRelStr(a,b){
+      var d=Math.abs(PROGRAM_ORDER.indexOf(normProg(a))-PROGRAM_ORDER.indexOf(normProg(b)));
+      return d===0?'same group':d===1?'next-door group':(d+' groups apart');
+    }
+
+    function rebuild(){
+      curV=getV(); if(!curV) return;
+      var ranked=TP.api.rankFor(curV,300).filter(function(r){return r.fam.id!==curV.id;});
+      maxScore=ranked.length&&ranked[0].total||1;
+      fams=ranked.map(function(r){
+        var fam=r.fam, mk=r.matchedKids||[];
+        var buddies=mk.filter(function(m){return m.their;}).map(function(m){
+          return {myKid:m.my,myAge:m.my_age,myProg:m.my_prog,
+                  theirKid:m.their,theirAge:m.age,theirProg:m.prog,
+                  rel:progRelStr(m.my_prog,m.prog),strong:m.strong};
+        });
+        var tags=[];
+        if(r.strongMatches>=3) tags.push({icon:'🎯',txt:'A buddy for every kid',kind:'hot'});
+        else if(r.strongMatches>=2) tags.push({icon:'👥',txt:'Two strong kid matches',kind:'hot'});
+        else if(r.strongMatches===1) tags.push({icon:'🤝',txt:'A strong kid match',kind:'warm'});
+        if(fam.state&&curV.state&&fam.state===curV.state) tags.push({icon:'📍',txt:'Same state — home-area neighbors',kind:'local'});
+        else if(r.dist<150) tags.push({icon:'📍',txt:'Close to home (~'+r.dist+' mi)',kind:'local'});
+        var nk=fam.kids.filter(function(k){return k.age!=null;}).length;
+        var vk=curV.kids.filter(function(k){return k.age!=null;}).length;
+        if(nk>0&&vk>0&&nk===vk) tags.push({icon:'👪',txt:nk+' kids, just like yours',kind:'warm'});
+        if(fam.tenure===0) tags.push({icon:'✨',txt:'First-timers this year',kind:'cool'});
+        else if(fam.fg&&fam.fg.indexOf(2025)>=0&&curV.fg&&curV.fg.indexOf(2025)>=0) tags.push({icon:'🔄',txt:'Both here last year',kind:'cool'});
+        return {
+          f:fam.f,city:fam.city,state:fam.state,adults:fam.adults,kids:fam.kids,
+          fg:fam.fg,firstYear:fam.firstYear,tenure:fam.tenure,
+          score:r.total,dist:r.dist,geoLabel:r.geoLabel,
+          strongMatches:r.strongMatches,buddies:buddies,tags:tags
+        };
+      });
+    }
+
     var chips=$('#chips');
-    FILTERS.forEach(function(f,i){
-      var c=ce('button','chip'+(i===0?' on':'')); c.textContent=f.label; c.dataset.id=f.id;
-      c.addEventListener('click',function(){ curFilter=f.id; chips.querySelectorAll('.chip').forEach(function(x){x.classList.remove('on')}); c.classList.add('on'); render(); });
-      chips.appendChild(c);
-    });
+    function buildFilters(){
+      if(!curV||!chips) return;
+      chips.innerHTML='';
+      var FILTERS=[
+        {id:'all',label:'All families',fn:null},
+        {id:'best',label:'🎯 Best matches',fn:function(f){return f.strongMatches>=2;}}
+      ];
+      if(curV.state) FILTERS.push({id:'local',label:'📍 Same state',fn:function(f){return f.state===curV.state;}});
+      curV.kids.filter(function(kd){return kd.age!=null;}).forEach(function(kd){
+        var n=kd.name;
+        FILTERS.push({id:'kid_'+n,label:n+'’s buddies',fn:function(f){return f.buddies.some(function(b){return b.myKid===n;});}});
+      });
+      FILTERS.push({id:'new',label:'✨ First-timers',fn:function(f){return f.tenure===0;}});
+      activeFilters=FILTERS;
+      FILTERS.forEach(function(fi){
+        var c=ce('button','chip'+(curFilter===fi.id?' on':'')); c.textContent=fi.label; c.dataset.id=fi.id;
+        c.addEventListener('click',function(){
+          curFilter=fi.id; expanded=false;
+          chips.querySelectorAll('.chip').forEach(function(x){x.classList.toggle('on',x.dataset.id===fi.id);});
+          render();
+        });
+        chips.appendChild(c);
+      });
+    }
 
     function cityShort(c){ return c.replace(/ ([A-Z]{2})$/,''); }
     function cityComma(c){ return c.replace(/ ([A-Z]{2})$/,', $1'); }
 
     function genOpeners(f){
-      var me=TP.me, out=[];
-      var city=cityShort(f.city);
-      var sb=f.buddies.filter(function(b){return b.strong;})[0] || f.buddies[0];
+      var out=[];
+      var sb=f.buddies.filter(function(b){return b.strong;})[0]||f.buddies[0];
       if(sb){
         out.push('Your <b>'+esc(sb.myKid)+'</b> and their <b>'+esc(sb.theirKid)+'</b> ('+sb.theirAge+') are in the '+(sb.rel==='same group'?'same camp group':'next camp group over')+' — point them at each other at morning drop-off and the rest takes care of itself.');
       }
-      if(f.state==='VA'){
-        out.push('You\u2019re local to each other \u2014 '+esc(city)+' is ~'+f.dist+' mi from Burke. The real prize here is a Northern-Virginia playdate that outlasts the week.');
-      } else if(f.state==='MD'||f.state==='DC'){
-        out.push('Practically neighbors \u2014 '+esc(city)+' is ~'+f.dist+' mi away. Swap numbers so the kids can keep it going back home in the DMV.');
+      if(curV.state&&f.state===curV.state){
+        out.push('You’re local to each other — '+esc(cityShort(f.city))+' is ~'+f.dist+' mi from home. The real prize here is a playdate that outlasts the week.');
+      } else if(f.dist<=300){
+        out.push('Close-ish neighbors — '+esc(cityShort(f.city))+' is ~'+f.dist+' mi away. Swap numbers so the kids can keep it going back home.');
       }
-      if(f.kids.length>=3 && me.kids.length>=3){
+      var vk=curV.kids.filter(function(k){return k.age!=null;}).length;
+      if(f.kids.length>=3&&vk>=3){
         var progs={}; f.kids.forEach(function(k){progs[k.program]=1;});
-        out.push('Like you, they\u2019re running '+f.kids.length+' kids across '+Object.keys(progs).length+' different camps \u2014 instant solidarity on the daily logistics scramble.');
+        out.push('Like you, they’re running '+f.kids.length+' kids across '+Object.keys(progs).length+' different camps — instant solidarity on the daily logistics scramble.');
       }
-      var lil=f.kids.filter(function(k){return k.age!=null && k.age<=3;})[0];
-      if(lil && !(sb && sb.theirKid===lil.name)){
-        out.push('They\u2019ve got a little one too \u2014 '+esc(lil.name)+' ('+lil.age+') is right around Alice\u2019s age, so you\u2019re on the same nap-and-snack wavelength.');
+      var vLil=curV.kids.filter(function(k){return k.age!=null&&k.age<=3;})[0];
+      var lil=f.kids.filter(function(k){return k.age!=null&&k.age<=3;})[0];
+      if(lil&&vLil&&!(sb&&sb.theirKid===lil.name)){
+        out.push('Both families have a little one — '+esc(lil.name)+' ('+lil.age+') and '+esc(vLil.name)+' ('+vLil.age+') are at the same toddler stage.');
       }
-      if(f.firstYear && f.firstYear<=2008){
-        out.push('They go way back at Tyler Place (since '+f.firstYear+') \u2014 exactly the family to ask which docks, trails and counselors to make a beeline for.');
-      } else if(f.fg && f.fg.indexOf(2025)>=0){
-        out.push('They were here last year too, so odds are you\u2019ll half-recognize each other \u2014 an easy \u201cweren\u2019t you here in \u201925?\u201d opener.');
+      if(f.firstYear&&f.firstYear<=2008){
+        out.push('The '+esc(f.f)+'s have been coming since '+f.firstYear+' — exactly the family to ask which docks, trails and counselors to make a beeline for.');
+      } else if(f.fg&&f.fg.indexOf(2025)>=0){
+        out.push('They were here last year too — an easy “weren’t you here in ’25?” opener.');
       }
       if(f.dist>1200){
-        out.push('They came '+f.dist.toLocaleString()+' mi from '+esc(city)+' \u2014 a natural \u201chow did you find this place?\u201d conversation.');
+        out.push('They came '+f.dist.toLocaleString()+' mi from '+esc(cityShort(f.city))+' — a natural “how did you find this place?” conversation.');
       }
-      if(!out.length){ out.push('Same week, same little resort \u2014 a hello at the dock or the dinner line is the whole point.'); }
+      if(!out.length){ out.push('Same week, same little resort — a hello at the dock or the dinner line is the whole point.'); }
       return out.slice(0,3);
     }
 
@@ -1526,74 +1583,117 @@ function rankFor(viewer, k){
       H+='<div class="rk">'+rank+'</div>';
       H+='<div class="cardhead"><h3 class="par">'+esc(par)+'</h3>'+
          '<div class="surn">the '+esc(f.f)+' family</div></div>';
-      var locExtra=(f.state==='VA')?' · <span class="pin">drive-home close</span>':((f.state==='MD'||f.state==='DC')?' · <span class="pin">~'+f.dist+' mi from you</span>':'');
+      var locExtra=(curV.state&&f.state===curV.state)?' · <span class="pin">home-state neighbors</span>':(f.dist<=150?' · <span class="pin">~'+f.dist+' mi away</span>':'');
       H+='<div class="loc">'+esc(cityComma(f.city))+' · '+f.dist+' mi'+locExtra+'</div>';
       H+='<div class="meter"><i style="width:'+Math.round(f.score/maxScore*100)+'%"></i></div>';
       if(f.kids.length){
         H+='<div class="theirkids"><span class="tk-lab">their kids</span> '+
            f.kids.map(function(k){return '<span class="tkid">'+esc(k.name)+(k.age!=null?'&nbsp;'+k.age:'')+'</span>';}).join('')+'</div>';
       }
-      if(f.tags.length){
+      if(f.tags&&f.tags.length){
         H+='<div class="pills">'+f.tags.slice(0,4).map(function(t){return '<span class="pill '+t.kind+'">'+t.icon+' '+esc(t.txt)+'</span>';}).join('')+'</div>';
       }
-      if(f.buddies.length){
+      if(f.buddies&&f.buddies.length){
         H+='<div class="buds">'+f.buddies.map(function(b){
           return '<div class="bud'+(b.strong?' strong':'')+'">'+(b.strong?'<span class="dotk"></span>':'')+
-            '<span class="b-their">'+esc(b.theirKid)+' ('+b.theirAge+')</span><span class="arr">\u2194</span>'+
+            '<span class="b-their">'+esc(b.theirKid)+' ('+b.theirAge+')</span><span class="arr">↔</span>'+
             '<span class="b-mine">'+esc(b.myKid)+'</span><span class="b-rel">'+esc(b.rel)+'</span></div>';
         }).join('')+'</div>';
       }
       var ops=genOpeners(f);
-      H+='<div class="ice"><div class="ice-h">\uD83D\uDCAC Break the ice</div>'+
+      H+='<div class="ice"><div class="ice-h">💬 Break the ice</div>'+
          ops.map(function(o){return '<div class="ice-line">'+o+'</div>';}).join('')+'</div>';
       H+='</div>';
       return H;
     }
 
+    var sec02head=$('#sec02head');
     function render(){
-      var f=FILTERS.find(function(x){return x.id===curFilter;});
-      var list=fams.filter(f.fn);
-      var show = expanded? list : list.slice(0,12);
-      $('#cards').innerHTML=show.map(function(fm){ return cardHTML(fm, fams.indexOf(fm)+1); }).join('');
+      if(!fams||!fams.length) return;
+      var fi=activeFilters.find(function(x){return x.id===curFilter;});
+      var list=fi&&fi.fn?fams.filter(fi.fn):fams;
+      var show=expanded?list:list.slice(0,12);
+      $('#cards').innerHTML=show.map(function(fm){return cardHTML(fm,fams.indexOf(fm)+1);}).join('');
       var sm=$('#showmore');
       if(list.length>12){ sm.style.display='block'; sm.textContent=expanded?'Show fewer ↑':('Show all '+list.length+' ↓'); }
       else sm.style.display='none';
-      if(hasGSAP && !RM){
+      if(sec02head&&curV){
+        var vk=curV.kids.filter(function(k){return k.age!=null;});
+        var kidDesc=vk.length?vk.map(function(k){return esc(k.name);}).join(', '):'your kids';
+        sec02head.innerHTML='Ranked by how well each family’s kids line up with <b>'+kidDesc+'</b> (same or neighboring camp group counts most), plus how close they live and whether they’re at your stage of family life. Every card leads with the <b>parents’ first names</b> and a few <b>conversation starters</b> grounded in what you actually share. Tap a filter to focus.';
+      }
+      if(hasGSAP&&!RM){
         gsap.from('#cards .card',{y:18,opacity:0,duration:.5,stagger:.04,ease:'power2.out',overwrite:true});
       }
     }
     $('#showmore').addEventListener('click',function(){ expanded=!expanded; render(); });
-    render();
+    window._refreshCards=function(){ rebuild(); buildFilters(); expanded=false; render(); };
+    rebuild(); buildFilters(); render();
   })();
 
   /* ================= KIDS CREWS ================= */
   (function(){
     var wrap=$('#crews');
+    function getV(){ return window._getViewer?window._getViewer():(TP.all2026.find(function(x){return x.me;})); }
+    function hav(la1,lo1,la2,lo2){
+      var R=3959,d2r=Math.PI/180;
+      var dLa=(la2-la1)*d2r,dLo=(lo2-lo1)*d2r;
+      var A=Math.sin(dLa/2)*Math.sin(dLa/2)+Math.cos(la1*d2r)*Math.cos(la2*d2r)*Math.sin(dLo/2)*Math.sin(dLo/2);
+      return Math.round(2*R*Math.asin(Math.sqrt(A)));
+    }
     function parentsFor(surname,city){
-      var hit=TP.families.filter(function(x){return x.f===surname && x.city===city;})[0];
+      var hit=TP.all2026.filter(function(x){return x.f===surname&&x.city===city;})[0];
       return hit?hit.adults.slice(0,2).join(' & '):'';
     }
-    TP.crews.forEach(function(c){
-      var col=KIDCOL[c.myKid]||'#f5b942';
-      var H='<div class="crew"><div class="ch"><div class="who">'+
-        '<div class="av" style="background:'+col+'">'+initials(c.myKid)+'</div>'+
-        '<div><div class="nm">'+esc(c.myKid)+'\u2019s crew</div><div class="pg">'+esc(c.program)+' \u00b7 age '+c.myAge+'</div></div></div>'+
-        '<div class="cnt"><b>'+c.count+'</b> other kids in this group</div></div>';
-      H+='<div class="crewlist">';
-      c.crew.forEach(function(m){
-        var dmv=(m.state==='VA'||m.state==='MD'||m.state==='DC');
-        var par=parentsFor(m.family,m.city);
-        H+='<div class="cmate'+(dmv?' dmv':'')+'">'+
-           '<div class="cm-main"><div class="cm-nm">'+esc(m.name)+(m.age!=null?', '+m.age:'')+'</div>'+
-           (par?'<div class="cm-par">'+esc(par)+'</div>':'')+
-           '<div class="cm-fam">'+esc(m.family)+' \u00b7 '+esc(m.city.replace(/ ([A-Z]{2})$/,', $1'))+'</div></div>'+
-           '<div class="cm-d">'+m.dist+' mi'+(dmv?'<br>nearby':'')+'</div></div>';
+    var CREWCOLS=['#ff8c5a','#4ecdc4','#f5b942','#6fb6e8','#ff6b6b','#a8e6cf'];
+    function kidColor(name,idx){ return KIDCOL[name]||CREWCOLS[idx%CREWCOLS.length]; }
+    function buildCrewsFor(v){
+      return v.kids.filter(function(kd){return kd.age!=null;}).map(function(my){
+        var crew=[];
+        TP.all2026.forEach(function(fam){
+          if(fam.id===v.id) return;
+          fam.kids.forEach(function(ok){
+            if(normProg(ok.program)===normProg(my.program)){
+              crew.push({name:ok.name,age:ok.age,family:fam.f,city:fam.city,state:fam.state,
+                         dist:hav(v.lat,v.lon,fam.lat,fam.lon)});
+            }
+          });
+        });
+        crew.sort(function(a,b){return a.dist-b.dist;});
+        return {myKid:my.name,myAge:my.age,program:my.program,count:crew.length,crew:crew};
       });
-      H+='</div>';
-      H+='<div class="crewnote">Each kid\u2019s parents are listed so you know who to look for at drop-off. Highlighted = your area; sorted by distance from Burke.</div>';
-      H+='</div>';
-      var d=ce('div'); d.innerHTML=H; wrap.appendChild(d.firstChild);
-    });
+    }
+    function render(){
+      var v=getV(); if(!v||!wrap) return;
+      wrap.innerHTML='';
+      var crews=buildCrewsFor(v);
+      if(!crews.length){
+        wrap.innerHTML='<p style="color:var(--mut)">Select a family with kids to see their camp crews.</p>'; return;
+      }
+      crews.forEach(function(c,ci){
+        var col=kidColor(c.myKid,ci);
+        var H='<div class="crew"><div class="ch"><div class="who">'+
+          '<div class="av" style="background:'+col+'">'+initials(c.myKid)+'</div>'+
+          '<div><div class="nm">'+esc(c.myKid)+'’s crew</div><div class="pg">'+esc(c.program)+' · age '+c.myAge+'</div></div></div>'+
+          '<div class="cnt"><b>'+c.count+'</b> other kids in this group</div></div>';
+        H+='<div class="crewlist">';
+        c.crew.forEach(function(m){
+          var nearby=(v.state&&m.state===v.state);
+          var par=parentsFor(m.family,m.city);
+          H+='<div class="cmate'+(nearby?' dmv':'')+'">'+
+             '<div class="cm-main"><div class="cm-nm">'+esc(m.name)+(m.age!=null?', '+m.age:'')+'</div>'+
+             (par?'<div class="cm-par">'+esc(par)+'</div>':'')+
+             '<div class="cm-fam">'+esc(m.family)+' · '+esc(m.city.replace(/ ([A-Z]{2})$/,', $1'))+'</div></div>'+
+             '<div class="cm-d">'+m.dist+' mi'+(nearby?'<br>nearby':'')+'</div></div>';
+        });
+        H+='</div>';
+        H+='<div class="crewnote">Parents listed so you know who to look for at drop-off. Highlighted = same state as you; sorted by distance from home.</div>';
+        H+='</div>';
+        var d=ce('div'); d.innerHTML=H; wrap.appendChild(d.firstChild);
+      });
+    }
+    window._refreshCrews=render;
+    render();
   })();
 
   /* ================= YOY ================= */
@@ -1679,10 +1779,10 @@ function rankFor(viewer, k){
     var retPct=Math.round(y.returning/y.y2026.families*100);
     var n2=names[1]||['',0], n3=names[2]||['',0];
     var facts=[
-      {ic:'\uD83D\uDD01',t:'Most of the room is repeat guests',b:y.returning+' of '+y.y2026.families+' families ('+retPct+'%)',d:'were here last year too. This isn\u2019t a crowd of strangers \u2014 it\u2019s a reunion you\u2019re two years into. '+y.newF.length+' families are brand-new this week.'},
-      {ic:'\uD83C\uDFE1',t:'Your drive-home cluster',b:dmvCount+' families from VA / DC / MD',d:'are within a couple hours of Burke \u2014 '+vaCount+' in Virginia alone. The friendships you start here can keep going all year back home.'},
+      {ic:'\uD83D\uDD01',t:'Most of the room is repeat guests',b:y.returning+' of '+y.y2026.families+' families ('+retPct+'%)',d:'were here last year too \u2014 this isn\u2019t a crowd of strangers. '+y.newF.length+' families are brand-new this week.'},
+      {ic:'\uD83C\uDFE1',t:'East Coast heavy week',b:dmvCount+' families from VA / DC / MD',d:'come from the DC-metro area \u2014 '+vaCount+' in Virginia alone. East-Coast proximity means the friendships you start here can keep going all year.'},
       {ic:'\uD83E\uDDD3',t:'Living resort history',b:'The '+vets[0].f+'s, since '+vets[0].first,d:'A parent first came as a kid in the early \u201970s \u2014 50+ years on Lake Champlain. '+legacy+' families on this roster have been coming since before 2005.'},
-      {ic:'\uD83D\uDC65\u200D',t:'Biggest broods',b:big[0].f+', '+big[1].f+' & '+big[2].f,d:'Three families bring four kids each \u2014 the fullest houses on the roster. Yours, with three, is right behind them.'},
+      {ic:'\uD83D\uDC65\u200D',t:'Biggest broods',b:big[0].f+', '+big[1].f+' & '+big[2].f,d:'Three families bring four or more kids each \u2014 the fullest houses on the roster.'},
       {ic:'\uD83D\uDD24',t:'Name twins',b:topName[0]+' \u00D7'+topName[1],d:topName[1]+' different kids answer to '+topName[0]+' this week, with '+n2[0]+' and '+n3[0]+' close behind \u2014 a fun roll-call icebreaker at the dinner table.'},
       {ic:'\u2708\uFE0F',t:'Farthest traveler',b:farth.f+' \u2014 '+farth.d.toLocaleString()+' mi',d:'all the way from '+farth.city+'. Almost everyone else is a short East-Coast hop; this family earned their week.'},
       {ic:'\uD83E\uDDEC',t:'A clan reunion inside your week',b:'The '+clan[0]+'s \u00D7'+clan[1],d:clan[1]+' separate '+clan[0]+' households booked the same week \u2014 an extended family folding their reunion into the resort.'},
