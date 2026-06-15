@@ -78,7 +78,7 @@ a{color:var(--gold-lt)}
   position:fixed; inset:0; z-index:99999;
   display:flex; align-items:center; justify-content:center;
   padding:24px; overflow:hidden; background:#060d18;
-  background-image:linear-gradient(to bottom, rgba(6,13,24,0.75) 0%, rgba(4,9,18,0.88) 100%), url('tp-evening.jpg');
+  background-image:linear-gradient(to bottom, rgba(6,13,24,0.50) 0%, rgba(4,9,18,0.72) 100%), url('tp-evening.jpg');
   background-size:cover; background-position:center;
   transition:opacity .75s cubic-bezier(.4,0,.2,1);
 }
@@ -228,7 +228,7 @@ a{color:var(--gold-lt)}
 /* Hero content */
 .hero-mid{
   flex:1; display:flex; flex-direction:column; justify-content:center;
-  padding:36px 0; position:relative; z-index:4;
+  padding:36px 24px; position:relative; z-index:4;
 }
 .hero-mid h1{
   font-family:var(--serif);
@@ -250,6 +250,12 @@ a{color:var(--gold-lt)}
 .hq-q{font:600 22px/1.25 var(--serif); color:var(--cream); transition:color .2s}
 .hq-item:hover .hq-q{color:var(--gold)}
 .hq-a{font:400 14px/1.5 var(--sans); color:var(--mut)}
+@media(max-width:600px){
+  .hq-item{flex-direction:column; gap:4px; padding:18px 0}
+  .hq-num{margin-top:0; margin-bottom:4px}
+  .hq-q{font-size:20px}
+  .hq-a{padding-left:0}
+}
 
 /* Scroll cue */
 .scrollcue{display:inline-flex; align-items:center; gap:10px; margin-top:28px; color:var(--mut2); font:600 11px/1 var(--sans); letter-spacing:.16em; text-transform:uppercase}
