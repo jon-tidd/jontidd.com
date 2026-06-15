@@ -78,6 +78,8 @@ a{color:var(--gold-lt)}
   position:fixed; inset:0; z-index:99999;
   display:flex; align-items:center; justify-content:center;
   padding:24px; overflow:hidden; background:#060d18;
+  background-image:linear-gradient(to bottom, rgba(6,13,24,0.75) 0%, rgba(4,9,18,0.88) 100%), url('tp-evening.jpg');
+  background-size:cover; background-position:center;
   transition:opacity .75s cubic-bezier(.4,0,.2,1);
 }
 #gate.gone{opacity:0; pointer-events:none}
@@ -173,9 +175,8 @@ a{color:var(--gold-lt)}
 
 .hero-sky{
   position:absolute; inset:0; z-index:0; pointer-events:none;
-  background:linear-gradient(172deg,
-    #040c18 0%, #071424 25%, #0c2038 50%,
-    #112d48 72%, #183a58 88%, #1e4268 100%);
+  background-image:linear-gradient(to bottom, rgba(4,12,24,0.48) 0%, rgba(7,15,28,0.72) 60%, rgba(4,10,20,1) 100%), url('tp-lake.jpg');
+  background-size:cover; background-position:center 35%;
 }
 .hero-sky::after{
   content:''; position:absolute; bottom:0; left:0; right:0; height:200px;
@@ -242,12 +243,12 @@ a{color:var(--gold-lt)}
 
 /* Hero questions intro */
 .hero-qs{margin:26px 0 0; border-top:1px solid rgba(255,255,255,.08); padding-top:4px}
-.hq-item{display:flex; gap:16px; align-items:flex-start; padding:12px 0; border-bottom:1px solid rgba(255,255,255,.04)}
+.hq-item{display:flex; gap:18px; align-items:flex-start; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.06); text-decoration:none}
 .hq-item:last-child{border-bottom:none}
-.hq-num{font:700 10px/1 var(--sans); color:var(--gold); letter-spacing:.2em; flex-shrink:0; margin-top:5px; min-width:22px; opacity:.65}
+.hq-num{font:700 10px/1 var(--sans); color:var(--gold); letter-spacing:.2em; flex-shrink:0; margin-top:8px; min-width:22px; opacity:.65}
 .hq-body{display:flex; flex-direction:column; gap:4px}
 .hq-q{font:600 15px/1.32 var(--serif); color:var(--cream)}
-.hq-a{font:400 12px/1.5 var(--sans); color:var(--mut)}
+.hq-a{font:400 14px/1.5 var(--sans); color:var(--mut)}
 
 /* Scroll cue */
 .scrollcue{display:inline-flex; align-items:center; gap:10px; margin-top:28px; color:var(--mut2); font:600 11px/1 var(--sans); letter-spacing:.16em; text-transform:uppercase}
@@ -267,13 +268,15 @@ a{color:var(--gold-lt)}
 .stat .l{color:var(--mut2); font-size:11.5px; margin-top:8px; line-height:1.45}
 
 /* Hero finder */
-.hero-finder{padding:22px 0 36px; border-top:1px solid rgba(255,255,255,.07); position:relative; z-index:4}
-.hf-label{font:600 12px/1 var(--sans); color:var(--mut); letter-spacing:.04em; margin-bottom:14px}
+.hero-finder{padding:16px 0 40px; position:relative; z-index:4}
+.hf-card{background:linear-gradient(135deg, rgba(201,168,76,.18) 0%, rgba(201,168,76,.08) 50%, rgba(72,170,167,.10) 100%); border:1px solid rgba(201,168,76,.42); border-radius:22px; padding:26px 30px; box-shadow:0 0 0 1px rgba(201,168,76,.07), 0 14px 44px rgba(201,168,76,.15), inset 0 1px 0 rgba(255,255,255,.10); animation:finderGlow 3s ease-in-out infinite}
+@keyframes finderGlow{0%,100%{box-shadow:0 0 0 1px rgba(201,168,76,.07), 0 14px 44px rgba(201,168,76,.15), inset 0 1px 0 rgba(255,255,255,.10)} 50%{box-shadow:0 0 0 1px rgba(201,168,76,.18), 0 18px 56px rgba(201,168,76,.28), inset 0 1px 0 rgba(255,255,255,.14), 0 0 0 5px rgba(201,168,76,.07)}}
+.hf-label{font:700 12px/1 var(--sans); color:var(--gold); letter-spacing:.12em; text-transform:uppercase; margin-bottom:18px}
 .hf-row{display:flex; gap:10px; align-items:center; flex-wrap:wrap}
 .hf-sel{
   flex:1 1 220px; min-width:0; background:rgba(255,255,255,.05); color:var(--cream);
   border:1px solid rgba(201,168,76,.22); border-radius:12px;
-  padding:13px 16px; font:600 14px/1 var(--sans); cursor:pointer;
+  padding:16px 18px; font:700 16px/1 var(--sans); cursor:pointer;
   transition:border-color .2s, box-shadow .2s;
 }
 .hf-sel:focus{outline:none; border-color:var(--gold); box-shadow:0 0 0 3px rgba(201,168,76,.1)}
@@ -578,13 +581,13 @@ a{color:var(--gold-lt)}
 .fact .fb{font-family:var(--serif); font-weight:600; font-size:25px; margin:8px 0 4px; letter-spacing:-.01em; line-height:1.05}
 .fact .fb .u{color:var(--gold-lt)}
 .fact .fd{color:var(--mut); font-size:13px; line-height:1.4}
-#facts{display:flex; flex-direction:column; gap:0}
-.fact{display:flex; align-items:baseline; gap:10px; padding:10px 0; border:none; border-bottom:1px solid rgba(255,255,255,.06); background:transparent; border-radius:0; overflow:visible}
-.fact:last-child{border-bottom:none}
-.fact .ic{font-size:16px; flex-shrink:0; line-height:1; margin:0}
-.fact .ft{font:600 11px/1.3 var(--sans); letter-spacing:.05em; text-transform:uppercase; color:var(--mut2); order:1; flex:0 0 100%}
-.fact .fb{font:700 14px/1.3 var(--sans); color:var(--cream); margin:0; letter-spacing:0; order:2}
-.fact .fd{font:400 12px/1.3 var(--sans); color:var(--mut); text-transform:none; letter-spacing:0; margin-top:0; order:3}
+#facts{display:flex; flex-direction:column; gap:0; max-width:680px}
+.fact{display:grid; grid-template-columns:22px 1fr; grid-template-rows:auto auto; gap:0 10px; padding:6px 0; border:none !important; border-bottom:1px solid rgba(255,255,255,.05) !important; background:transparent !important; border-radius:0 !important; overflow:visible !important}
+.fact:last-child{border-bottom:none !important}
+.fact .ic{grid-column:1; grid-row:1/3; font-size:14px; padding-top:2px; align-self:start}
+.fact .ft{display:none !important}
+.fact .fb{grid-column:2; grid-row:1; font:700 13px/1.3 var(--sans); color:var(--cream)}
+.fact .fd{grid-column:2; grid-row:2; font:400 12px/1.4 var(--sans); color:var(--mut)}
 
 /* ══ FAMILY FINDER ═══════════════════════════════════════════════════════ */
 .family-finder{background:linear-gradient(150deg,rgba(201,168,76,.08),rgba(217,138,72,.03) 60%,transparent),var(--panel); border:1px solid rgba(201,168,76,.2); border-radius:22px; padding:30px 30px 26px; margin-top:28px}
@@ -678,6 +681,12 @@ a{color:var(--gold-lt)}
 
 /* ══ FOOTER ══════════════════════════════════════════════════════════════ */
 .foot{border-top:1px solid rgba(255,255,255,.07); padding:56px 0 82px; color:var(--mut2); font-size:13px}
+.foot-top{display:grid; grid-template-columns:1fr 270px; gap:48px; align-items:start; margin-bottom:28px}
+.foot-intro{font:600 15px/1.6 var(--sans); color:var(--cream); margin:0 0 14px !important}
+.foot-fam-img{width:100%; border-radius:18px; display:block; box-shadow:0 12px 40px rgba(0,0,0,.5)}
+.foot-cartoon{position:relative; padding-bottom:28px}
+.foot-cartoon::after{content:"The Tidd Family"; position:absolute; bottom:0; left:0; right:0; text-align:center; font:600 11px/1 var(--sans); color:var(--mut2); letter-spacing:.12em; text-transform:uppercase}
+@media(max-width:720px){.foot-top{grid-template-columns:1fr} .foot-cartoon{max-width:260px}}
 .foot .fh{font-family:var(--serif); font-size:24px; color:var(--cream); font-weight:600; margin-bottom:16px}
 .foot p{max-width:70ch; margin:10px 0; line-height:1.68}
 .foot .method{background:rgba(255,255,255,.03); border:1px solid rgba(255,255,255,.07); border-radius:16px; padding:20px 22px; margin-top:22px}
@@ -948,10 +957,18 @@ a{color:var(--gold-lt)}
 <!-- ============ FOOTER ============ -->
 <footer class="foot">
   <div class="wrap">
-    <div class="fh">Have a wonderful week.</div>
-    <p>Everything here is built only from the two guest lists you were handed (this year's and last year's). Names, hometowns, and kids' ages and camp groups all come straight off those rosters — information the resort already shares among guests for exactly this reason: so families can find each other.</p>
+    <div class="foot-top">
+      <div class="foot-text">
+        <div class="fh">Have a Wonderful Week!</div>
+        <p class="foot-intro">We (Kathleen, Jon, Mason (7), Miles (5), and Alice (2)) hope to get to know everyone!</p>
+        <p>Everything here is built only from the two guest lists you were handed (this year's and last year's). Names, hometowns, and kids' ages and camp groups all come straight off those rosters information the resort already shares among guests for exactly this reason: so families can find each other.</p>
+      </div>
+      <div class="foot-cartoon">
+        <img src="../images/family.webp" alt="The Tidd family" class="foot-fam-img">
+      </div>
+    </div>
     <div class="method">
-      <p style="margin-bottom:0"><b>How the match score works, in plain terms.</b> For each family, their kids are paired with yours — and each kid can only be claimed once, so a family with multiple well-matched kids scores far higher than one where just one kid happens to be close in age. A shared camp group is worth the most, a neighboring group nearly as much, then age gaps from there. On top of that: living nearby adds points (those are the friendships you can keep up after the week), as does being at the same family stage. All data comes from the guest roster — names, hometowns, kids' ages and camp groups.</p>
+      <p style="margin-bottom:0"><b>How the match score works, in plain terms.</b> For each family, their kids are paired with yours and each kid can only be claimed once, so a family with multiple well-matched kids scores far higher than one where just one kid happens to be close in age. A shared camp group is worth the most, a neighboring group nearly as much, then age gaps from there. Living nearby adds points, as does being at the same family stage. All data comes from the guest roster: names, hometowns, kids' ages and camp groups.</p>
     </div>
   </div>
 </footer>
