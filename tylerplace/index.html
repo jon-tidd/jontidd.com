@@ -1426,13 +1426,15 @@ function rankFor(viewer, k){
         rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){ d.innerHTML=detailHTML(viewer()); d.classList.add('on'); }
         if(window._refreshBanner) window._refreshBanner();
         if(window._refreshCards) window._refreshCards();
-        if(window._refreshCrews) window._refreshCrews(); });
+        if(window._refreshCrews) window._refreshCrews();
+        var banner=$('#youBanner'); if(banner) setTimeout(function(){ banner.scrollIntoView({behavior:'smooth',block:'start'}); },80); });
     }
     var resetBtn=$('#viewerReset');
     if(resetBtn) resetBtn.addEventListener('click',function(){ viewerId=TP.meId; if(sel)sel.value=viewerId; selId=-1; hideTip(); rebuildScores(); renderTop5(); refresh(); var d=$('#famDetail'); if(d){d.innerHTML=detailHTML(viewer());d.classList.add('on');}
       if(window._refreshBanner) window._refreshBanner();
       if(window._refreshCards) window._refreshCards();
-      if(window._refreshCrews) window._refreshCrews(); });
+      if(window._refreshCrews) window._refreshCrews();
+      var banner=$('#youBanner'); if(banner) setTimeout(function(){ banner.scrollIntoView({behavior:'smooth',block:'start'}); },80); });
 
     /* ---------- INIT ---------- */
     rebuildScores(); buildFilters(); renderTop5();
@@ -1797,11 +1799,11 @@ function rankFor(viewer, k){
   /* generic scroll reveals for section heads */
   if(hasGSAP && typeof ScrollTrigger!=='undefined' && !RM){
     gsap.utils.toArray('.section-head').forEach(function(el){
-      gsap.from(el,{y:24,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 85%',once:true}});
+      gsap.from(el,{y:24,opacity:0,duration:.6,ease:'power2.out',scrollTrigger:{trigger:el,start:'top bottom',once:true}});
     });
     ['#youBanner','.crew','.yoycard','.flowcard','.fact','.vet-hero','.vetlist'].forEach(function(sel){
       gsap.utils.toArray(sel).forEach(function(el){
-        gsap.from(el,{y:20,opacity:0,duration:.55,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true}});
+        gsap.from(el,{y:20,opacity:0,duration:.55,ease:'power2.out',scrollTrigger:{trigger:el,start:'top bottom',once:true}});
       });
     });
   }
