@@ -58,7 +58,7 @@ a{color:var(--gold-lt)}
 .badge{display:inline-flex; align-items:center; gap:9px; border:1px solid var(--line); background:rgba(18,29,56,.5);
   padding:8px 14px; border-radius:999px; font:600 12px/1 var(--sans); letter-spacing:.04em; color:var(--mut); backdrop-filter:blur(6px)}
 .badge .dot{width:7px;height:7px;border-radius:50%;background:var(--gold); box-shadow:0 0 10px var(--gold)}
-.hero-mid{flex:1; display:flex; flex-direction:column; justify-content:center; padding:38px 0}
+.hero-mid{flex:1; display:flex; flex-direction:column; justify-content:center; padding-top:38px; padding-bottom:38px}
 .hero-mid h1{font-size:clamp(40px,8.2vw,92px); font-weight:600; letter-spacing:-.025em; max-width:14ch}
 .hero-mid h1 .em{font-style:italic; color:var(--gold-lt)}
 .hero-sub{margin-top:22px; font-size:clamp(16px,2.2vw,20px); color:var(--mut); max-width:50ch}
@@ -66,7 +66,7 @@ a{color:var(--gold-lt)}
 .scrollcue{display:inline-flex; align-items:center; gap:10px; margin-top:30px; color:var(--mut2); font:600 12px/1 var(--sans); letter-spacing:.14em; text-transform:uppercase}
 .scrollcue .arr{width:22px;height:22px;border:1px solid var(--line); border-radius:50%; display:grid; place-items:center; animation:bob 1.8s ease-in-out infinite}
 @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
-.hero-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding:24px 0 38px}
+.hero-stats{display:grid; grid-template-columns:repeat(4,1fr); gap:14px; padding-top:24px; padding-bottom:38px}
 .stat{border-top:1px solid var(--line); padding-top:14px}
 .stat .n{font-family:var(--serif); font-weight:600; font-size:clamp(26px,4.6vw,44px); letter-spacing:-.02em; line-height:1}
 .stat .n.gold{color:var(--gold-lt)} .stat .n.teal{color:var(--teal)}
