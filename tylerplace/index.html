@@ -192,18 +192,26 @@ a{color:var(--gold-lt)}
 
 .hero-sky{
   position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-  background:
-    linear-gradient(to bottom, rgba(4,12,24,0.08) 0%, rgba(4,12,24,0.42) 52%, rgba(4,10,20,0.95) 88%, rgba(4,10,20,1) 100%),
-    url('tp-lake.jpg') center 35%/cover no-repeat;
-  animation:kbHeroBg 28s ease-in-out infinite alternate;
 }
-@keyframes kbHeroBg{
-  0%  {background-position:center,center 35%}
-  100%{background-position:center,52% 32%}
+/* Ken Burns photo layer — mirrors gate-photo-bg approach */
+.hero-photo-bg{
+  position:absolute; inset:-8%; z-index:0;
+  background:url('tp-lake.jpg') center 35%/cover no-repeat;
+  animation:kbHero 32s ease-in-out infinite alternate;
+  will-change:transform;
 }
-/* bottom darkness anchor */
+@keyframes kbHero{
+  0%  {transform:scale(1.00) translate(0%,   0%)}
+  100%{transform:scale(1.10) translate(-2%, -1%)}
+}
+/* Cinematic gradient overlay */
+.hero-sky::before{
+  content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
+  background:linear-gradient(to bottom, rgba(4,12,24,0.08) 0%, rgba(4,12,24,0.42) 52%, rgba(4,10,20,0.92) 88%, rgba(4,10,20,1) 100%);
+}
+/* Bottom darkness anchor */
 .hero-sky::after{
-  content:''; position:absolute; bottom:0; left:0; right:0; height:220px;
+  content:''; position:absolute; bottom:0; left:0; right:0; height:220px; z-index:1; pointer-events:none;
   background:linear-gradient(to top, rgba(4,10,20,1) 0%, rgba(4,10,20,.6) 50%, transparent 100%);
 }
 
@@ -794,6 +802,7 @@ a{color:var(--gold-lt)}
 <!-- ============ HERO ============ -->
 <header class="hero">
   <div class="hero-sky">
+    <div class="hero-photo-bg"></div>
     <div class="hero-sun"></div>
     <canvas class="hero-stars" id="starCanvas"></canvas>
     <div class="hero-horizon"></div>
