@@ -161,13 +161,9 @@ a{color:var(--gold-lt)}
 }
 
 .gate-logo-wrap{
-  margin:0 auto 20px; z-index:1; text-align:center;
+  margin:0 auto 22px; z-index:1; text-align:center;
 }
-.gate-logo-tp{display:inline-block; text-align:center}
-.gate-goose{display:block; width:72px; color:var(--cream); margin:0 auto 12px; opacity:.85}
-.glt-name{font-family:var(--serif); font-size:24px; font-weight:600; letter-spacing:.05em; color:var(--cream); line-height:1}
-.glt-rule{width:32px; height:1px; background:rgba(201,168,76,.55); margin:9px auto}
-.glt-sub{font:700 9px/1 var(--sans); letter-spacing:.30em; text-transform:uppercase; color:var(--gold); opacity:.8}
+.gate-logo-img{display:block; width:200px; margin:0 auto; opacity:.92}
 
 .gate-eyebrow{
   font:700 10px/1 var(--sans); letter-spacing:.28em; text-transform:uppercase;
@@ -828,22 +824,7 @@ a{color:var(--gold-lt)}
   <canvas id="gateCanvas"></canvas>
   <div class="gate-card">
     <div class="gate-logo-wrap">
-      <div class="gate-logo-tp">
-        <svg class="gate-goose" viewBox="0 0 80 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
-          <path d="M38,21 C32,15 19,9 3,5 C9,12 22,17 36,23 Z"/>
-          <path d="M42,21 C48,15 61,9 77,5 C71,12 58,17 44,23 Z"/>
-          <path d="M36,25 C27,31 14,37 2,40 C11,34 24,29 38,27 Z" opacity=".82"/>
-          <path d="M44,25 C53,31 66,37 78,40 C69,34 56,29 42,27 Z" opacity=".82"/>
-          <ellipse cx="40" cy="24" rx="7" ry="4"/>
-          <path d="M37,21 Q35,15 32,10 Q35,8 38,10 Q39,15 41,21 Z"/>
-          <ellipse cx="31" cy="8" rx="5" ry="4"/>
-          <path d="M26,8 L20,7.5 L26,9 Z"/>
-          <path d="M46,24 L54,22 L52,26 L46,26 Z"/>
-        </svg>
-        <div class="glt-name">Tyler Place</div>
-        <div class="glt-rule"></div>
-        <div class="glt-sub">Family Resort</div>
-      </div>
+      <img class="gate-logo-img" src="tp-logo.png" alt="Tyler Place Family Resort">
     </div>
     <h2 class="gate-h">Week 4 · 2026</h2>
     <p class="gate-p">Enter the password to see your week.</p>
