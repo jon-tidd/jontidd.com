@@ -192,22 +192,19 @@ a{color:var(--gold-lt)}
 
 .hero-sky{
   position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-  background: linear-gradient(to bottom, rgba(4,12,24,0.12) 0%, rgba(4,12,24,0.50) 55%, rgba(4,10,20,1) 100%);
+  background:
+    linear-gradient(to bottom, rgba(4,12,24,0.08) 0%, rgba(4,12,24,0.42) 52%, rgba(4,10,20,0.95) 88%, rgba(4,10,20,1) 100%),
+    url('tp-lake.jpg') center 35%/cover no-repeat;
+  animation:kbHeroBg 28s ease-in-out infinite alternate;
 }
-/* Ken Burns lake photo */
-.hero-sky::before{
-  content:''; position:absolute; inset:-6%;
-  background:url('tp-lake.jpg') center 35%/cover no-repeat;
-  animation:kbHero 32s ease-in-out infinite alternate;
-  will-change:transform; z-index:-1;
+@keyframes kbHeroBg{
+  0%  {background-position:center,center 35%}
+  100%{background-position:center,52% 32%}
 }
-@keyframes kbHero{
-  0%  {transform:scale(1.00) translate(0%,  0%)}
-  100%{transform:scale(1.07) translate(0.8%,-0.6%)}
-}
+/* bottom darkness anchor */
 .hero-sky::after{
-  content:''; position:absolute; bottom:0; left:0; right:0; height:260px;
-  background:linear-gradient(to top, rgba(4,12,24,1) 0%, rgba(4,12,24,.7) 40%, transparent 100%);
+  content:''; position:absolute; bottom:0; left:0; right:0; height:220px;
+  background:linear-gradient(to top, rgba(4,10,20,1) 0%, rgba(4,10,20,.6) 50%, transparent 100%);
 }
 
 .hero-water{
