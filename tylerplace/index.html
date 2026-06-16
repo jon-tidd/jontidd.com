@@ -93,6 +93,34 @@ a{color:var(--gold-lt)}
   100%{transform:rotate(var(--r1,35deg)) translate(var(--tx,18px),var(--ty,-26px)); opacity:var(--o1,.32)}
 }
 #gate.gone{opacity:0; pointer-events:none; transition:opacity .6s ease}
+/* Extra particle density */
+.gate-extra-pts{position:absolute;inset:0;z-index:1;pointer-events:none}
+.gate-extra-pts::before,.gate-extra-pts::after{
+  content:'';position:absolute;width:2px;height:2px;border-radius:50%;background:transparent;
+}
+.gate-extra-pts::before{
+  box-shadow:
+    8vw 12vh 0 rgba(201,168,76,.70), 16vw 7vh 0 rgba(201,168,76,.55),
+    24vw 28vh 0 rgba(201,168,76,.65), 33vw 18vh 0 rgba(201,168,76,.50),
+    42vw 9vh 0 rgba(201,168,76,.60), 55vw 31vh 0 rgba(201,168,76,.55),
+    66vw 14vh 0 rgba(201,168,76,.70), 74vw 24vh 0 rgba(201,168,76,.50),
+    82vw 8vh 0 rgba(201,168,76,.60), 90vw 20vh 0 rgba(201,168,76,.65),
+    12vw 52vh 0 rgba(201,168,76,.45), 38vw 65vh 0 rgba(201,168,76,.50),
+    58vw 72vh 0 rgba(201,168,76,.40), 78vw 58vh 0 rgba(201,168,76,.55),
+    20vw 80vh 0 rgba(201,168,76,.45);
+  animation:ptsPulse 3.2s ease-in-out infinite alternate;
+}
+.gate-extra-pts::after{
+  box-shadow:
+    5vw 35vh 0 rgba(72,170,167,.65), 19vw 44vh 0 rgba(72,170,167,.55),
+    30vw 55vh 0 rgba(72,170,167,.60), 45vw 40vh 0 rgba(72,170,167,.50),
+    60vw 48vh 0 rgba(72,170,167,.65), 72vw 38vh 0 rgba(72,170,167,.55),
+    85vw 50vh 0 rgba(72,170,167,.60), 50vw 18vh 0 rgba(72,170,167,.45),
+    10vw 68vh 0 rgba(72,170,167,.55), 88vw 72vh 0 rgba(72,170,167,.50),
+    25vw 88vh 0 rgba(72,170,167,.45), 68vw 82vh 0 rgba(72,170,167,.55);
+  animation:ptsPulse 4.5s ease-in-out infinite alternate-reverse;
+}
+@keyframes ptsPulse{0%{opacity:.45}100%{opacity:1}}
 
 /* gate photo removed — squares only */
 /* Cinematic gradient overlay */
@@ -133,11 +161,12 @@ a{color:var(--gold-lt)}
 }
 
 .gate-logo-wrap{
-  margin:0 auto 24px; z-index:1; text-align:center;
+  margin:0 auto 20px; z-index:1; text-align:center;
 }
 .gate-logo-tp{display:inline-block; text-align:center}
-.glt-name{font-family:var(--serif); font-size:26px; font-weight:600; letter-spacing:.04em; color:var(--cream); line-height:1}
-.glt-rule{width:36px; height:1px; background:rgba(201,168,76,.55); margin:10px auto}
+.gate-goose{display:block; width:72px; color:var(--cream); margin:0 auto 12px; opacity:.85}
+.glt-name{font-family:var(--serif); font-size:24px; font-weight:600; letter-spacing:.05em; color:var(--cream); line-height:1}
+.glt-rule{width:32px; height:1px; background:rgba(201,168,76,.55); margin:9px auto}
 .glt-sub{font:700 9px/1 var(--sans); letter-spacing:.30em; text-transform:uppercase; color:var(--gold); opacity:.8}
 
 .gate-eyebrow{
@@ -181,27 +210,64 @@ a{color:var(--gold-lt)}
 
 .hero-sky{
   position:absolute; inset:0; z-index:0; pointer-events:none; overflow:hidden;
-  background:linear-gradient(180deg, #0e2142 0%, #0a1a30 40%, #070f1c 75%, #040810 100%);
+  background:linear-gradient(
+    180deg,
+    #010108 0%, #030812 18%, #060e1c 42%, #08101a 65%,
+    #160b04 80%, #0e0703 92%, #080502 100%
+  );
+}
+/* Shooting stars */
+.hero-shoot{
+  position:absolute; z-index:2; pointer-events:none;
+  width:130px; height:1.5px;
+  background:linear-gradient(90deg,transparent 0%,rgba(255,255,240,.92) 38%,rgba(255,255,240,.45) 70%,transparent 100%);
+  animation:shootStar var(--sdur,5s) ease-out var(--sdel,0s) infinite;
+  opacity:0;
+}
+@keyframes shootStar{
+  0%  {transform:rotate(-32deg) translateX(-80px); opacity:0}
+  3%  {opacity:.88}
+  24% {transform:rotate(-32deg) translateX(420px); opacity:0}
+  100%{transform:rotate(-32deg) translateX(-80px); opacity:0}
+}
+/* Fire clouds */
+.hero-cloud{
+  position:absolute; z-index:4; pointer-events:none;
+  border-radius:45% 55% 50% 50% / 55% 45% 55% 45%;
+  background:radial-gradient(ellipse 100% 75% at 40% 50%,
+    rgba(215,88,14,.52) 0%, rgba(195,55,8,.25) 45%,
+    rgba(170,40,5,.07) 72%, transparent 100%);
+  filter:blur(14px);
+  animation:cloudDrift var(--cspd,45s) linear var(--cdel,0s) infinite;
+}
+.hero-cloud.hc-wide{
+  background:radial-gradient(ellipse 100% 70% at 55% 50%,
+    rgba(235,105,20,.44) 0%, rgba(210,68,12,.20) 50%,
+    rgba(180,45,6,.06) 75%, transparent 100%);
+  filter:blur(20px);
+}
+@keyframes cloudDrift{
+  0%  {transform:translateX(-35vw)}
+  100%{transform:translateX(125vw)}
 }
 /* hero photo removed */
-/* Aurora glow overlay */
+/* Sunrise glow */
 .hero-sky::before{
   content:''; position:absolute; inset:0; z-index:1; pointer-events:none;
   background:
-    radial-gradient(ellipse 140% 55% at 62% -8%, rgba(72,170,167,.22) 0%, transparent 52%),
-    radial-gradient(ellipse 90% 40% at 22% 15%, rgba(72,170,167,.09) 0%, transparent 48%),
-    radial-gradient(ellipse 70% 35% at 85% 20%, rgba(201,168,76,.07) 0%, transparent 42%);
-  animation:auroraGlow 14s ease-in-out infinite alternate;
+    radial-gradient(ellipse 130% 30% at 50% 100%, rgba(218,92,14,.58) 0%, rgba(188,52,8,.28) 38%, transparent 60%),
+    radial-gradient(ellipse 80% 18% at 48% 100%, rgba(245,155,25,.40) 0%, transparent 36%),
+    radial-gradient(ellipse 44% 10% at 50% 100%, rgba(255,205,55,.28) 0%, transparent 26%);
+  animation:sunriseGlow 9s ease-in-out infinite alternate;
 }
-@keyframes auroraGlow{
-  0%  {opacity:.7;  transform:translate(0%,0%)}
-  50% {opacity:1;   transform:translate(2%,1%)}
-  100%{opacity:.85; transform:translate(-1%,2%)}
+@keyframes sunriseGlow{
+  0%{opacity:.82;transform:scaleX(1)}
+  100%{opacity:1;transform:scaleX(1.03)}
 }
 /* Bottom darkness anchor */
 .hero-sky::after{
-  content:''; position:absolute; bottom:0; left:0; right:0; height:220px; z-index:1; pointer-events:none;
-  background:linear-gradient(to top, rgba(4,10,20,1) 0%, rgba(4,10,20,.6) 50%, transparent 100%);
+  content:''; position:absolute; bottom:0; left:0; right:0; height:160px; z-index:5; pointer-events:none;
+  background:linear-gradient(to top, rgba(4,8,16,1) 0%, rgba(4,8,16,.4) 65%, transparent 100%);
 }
 
 .hero-water{
@@ -217,7 +283,7 @@ a{color:var(--gold-lt)}
 .hero-mountains{
   position:absolute; bottom:0; left:0; right:0; height:110px; z-index:3;
   background:
-    url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,120 0,68 200,18 400,58 600,12 800,52 1000,8 1200,46 1440,22 1440,120' fill='%23162d15' opacity='0.55'/%3E%3Cpolygon points='0,120 0,88 150,55 340,88 530,42 720,80 920,30 1100,65 1280,44 1440,72 1440,120' fill='%23102210' opacity='0.80'/%3E%3C/svg%3E")
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 1440 120' xmlns='http://www.w3.org/2000/svg'%3E%3Cpolygon points='0,120 0,68 200,18 400,58 600,12 800,52 1000,8 1200,46 1440,22 1440,120' fill='%23080806' opacity='0.55'/%3E%3Cpolygon points='0,120 0,88 150,55 340,88 530,42 720,80 920,30 1100,65 1280,44 1440,72 1440,120' fill='%23050504' opacity='0.80'/%3E%3C/svg%3E")
     center bottom/cover no-repeat;
   transform-origin:bottom center;
 }
@@ -263,7 +329,7 @@ a{color:var(--gold-lt)}
 }
 
 /* Hero questions intro */
-.hero-qs{margin:26px 0 0; border-top:1px solid rgba(255,255,255,.08); padding-top:4px}
+.hero-qs{margin:26px 0 0; padding-top:4px}
 .hq-item{display:flex; gap:18px; align-items:flex-start; padding:16px 0; border-bottom:1px solid rgba(255,255,255,.06); text-decoration:none}
 .hq-item:last-child{border-bottom:none}
 .hq-num{font:700 10px/1 var(--sans); color:var(--gold); letter-spacing:.2em; flex-shrink:0; margin-top:8px; min-width:22px; opacity:.65}
@@ -287,7 +353,6 @@ a{color:var(--gold-lt)}
 .hero-stats{
   display:grid; grid-template-columns:repeat(3,1fr);
   padding:22px 0 38px; position:relative; z-index:4;
-  border-top:1px solid rgba(255,255,255,.07);
 }
 .stat{padding:18px 24px; border-right:1px solid rgba(255,255,255,.05)}
 .stat:last-child{border-right:none}
@@ -751,6 +816,7 @@ a{color:var(--gold-lt)}
 <script>window.history.scrollRestoration='manual'; window.scrollTo(0,0);</script>
 
 <div id="gate">
+  <div class="gate-extra-pts"></div>
   <div class="gate-sq sq-g" style="width:64px;height:64px;top:13%;left:8%;--r0:-5deg;--r1:28deg;--tx:16px;--ty:-22px;--o0:.16;--o1:.30;animation-duration:9s"></div>
   <div class="gate-sq sq-t" style="width:44px;height:44px;top:60%;left:5%;--r0:8deg;--r1:-18deg;--tx:-12px;--ty:20px;--o0:.12;--o1:.24;animation-duration:11s;animation-delay:-4s"></div>
   <div class="gate-sq sq-g" style="width:96px;height:96px;top:6%;right:7%;--r0:10deg;--r1:42deg;--tx:-20px;--ty:14px;--o0:.12;--o1:.22;animation-duration:13s;animation-delay:-2s"></div>
@@ -763,13 +829,23 @@ a{color:var(--gold-lt)}
   <div class="gate-card">
     <div class="gate-logo-wrap">
       <div class="gate-logo-tp">
+        <svg class="gate-goose" viewBox="0 0 80 44" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" fill="currentColor">
+          <path d="M38,21 C32,15 19,9 3,5 C9,12 22,17 36,23 Z"/>
+          <path d="M42,21 C48,15 61,9 77,5 C71,12 58,17 44,23 Z"/>
+          <path d="M36,25 C27,31 14,37 2,40 C11,34 24,29 38,27 Z" opacity=".82"/>
+          <path d="M44,25 C53,31 66,37 78,40 C69,34 56,29 42,27 Z" opacity=".82"/>
+          <ellipse cx="40" cy="24" rx="7" ry="4"/>
+          <path d="M37,21 Q35,15 32,10 Q35,8 38,10 Q39,15 41,21 Z"/>
+          <ellipse cx="31" cy="8" rx="5" ry="4"/>
+          <path d="M26,8 L20,7.5 L26,9 Z"/>
+          <path d="M46,24 L54,22 L52,26 L46,26 Z"/>
+        </svg>
         <div class="glt-name">Tyler Place</div>
         <div class="glt-rule"></div>
         <div class="glt-sub">Family Resort</div>
       </div>
     </div>
-    <div class="gate-eyebrow">Private · Tyler Place</div>
-    <h2 class="gate-h">Tyler Place · Week 4</h2>
+    <h2 class="gate-h">Week 4 · 2026</h2>
     <p class="gate-p">Enter the password to see your week.</p>
     <div class="gate-row">
       <input id="gatePw" type="password" placeholder="Password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" inputmode="numeric">
@@ -804,6 +880,16 @@ a{color:var(--gold-lt)}
     <div class="hero-mountains"></div>
     <div class="hero-lake"></div>
     <div class="hero-water"></div>
+    <div class="hero-shoot" style="top:7%;left:18%;--sdel:1.5s;--sdur:5s"></div>
+    <div class="hero-shoot" style="top:13%;left:52%;--sdel:8s;--sdur:4.2s"></div>
+    <div class="hero-shoot" style="top:4%;left:74%;--sdel:14s;--sdur:5.5s"></div>
+    <div class="hero-shoot" style="top:21%;left:32%;--sdel:21s;--sdur:4.8s"></div>
+    <div class="hero-shoot" style="top:9%;left:88%;--sdel:5s;--sdur:6s"></div>
+    <div class="hero-shoot" style="top:17%;left:6%;--sdel:17s;--sdur:4.5s"></div>
+    <div class="hero-cloud" style="width:210px;height:52px;bottom:24%;--cdel:-8s;--cspd:48s"></div>
+    <div class="hero-cloud hc-wide" style="width:310px;height:72px;bottom:20%;--cdel:-22s;--cspd:65s"></div>
+    <div class="hero-cloud" style="width:165px;height:44px;bottom:27%;--cdel:-38s;--cspd:52s"></div>
+    <div class="hero-cloud hc-wide" style="width:260px;height:60px;bottom:22%;--cdel:-48s;--cspd:70s"></div>
   </div>
   <div class="wrap hero-mid">
     <span class="kicker">Week 4 &middot; Lake Champlain, VT</span>
