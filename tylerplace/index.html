@@ -1651,7 +1651,7 @@ function rankFor(viewer, k){
     function kidMatchLine(mks){
       var strong = (mks||[]).filter(function(m){ return m.strong && m.their; });
       if(!strong.length) return '';
-      return strong.slice(0,2).map(function(m){ return esc(m.my)+' ↔ '+esc(m.their)+' ('+m.age+')'; }).join(' · ');
+      return strong.slice(0,2).map(function(m){ return esc(m.my)+' ('+m.my_age+') ↔ '+esc(m.their)+' ('+m.age+')'; }).join(' · ');
     }
     function shortC(c){ return c.replace(/ ([A-Z]{2})$/, ', $1'); }
     function render(){
@@ -1907,7 +1907,7 @@ function rankFor(viewer, k){
       if(!actIds.length&&!query&&!stateFilter) return list;
       return list.filter(function(f){
         if(stateFilter&&f.state!==stateFilter) return false;
-        if(query){var q=query.toLowerCase();if(f.f.toLowerCase().indexOf(q)<0&&f.city.toLowerCase().indexOf(q)<0)return false;}
+        if(query){var q=query.toLowerCase();var searchable=[f.f,f.city].concat(f.adults||[]).concat((f.kids||[]).map(function(k){return k.name;})).join(' ').toLowerCase();if(searchable.indexOf(q)<0)return false;}
         for(var i=0;i<actIds.length;i++){
           var btn=chips&&chips.querySelector('[data-id="'+actIds[i]+'"]');
           if(btn&&btn._fn&&!btn._fn(f)) return false;
@@ -1948,7 +1948,7 @@ function rankFor(viewer, k){
           '<div class="fl-fam">the '+esc(f.f)+' family · '+esc(commaC(f.city))+'</div>'+
           (tags.length?'<div class="fl-tags">'+tags.map(function(t){return '<span class="fl-tag'+(t.hi?' hi':'')+'">' +esc(t.txt)+'</span>';}).join('')+'</div>':'')+
           '<div class="fl-detail" id="fld-'+f.id+'">'+
-            (f.matchedKids.length?f.matchedKids.map(function(m){return '<div style="margin-bottom:6px"><b>'+esc(m.my)+'</b> ↔ '+esc(m.their)+' ('+m.age+')</div>';}).join(''):'')+
+            (f.matchedKids.length?f.matchedKids.map(function(m){return '<div style="margin-bottom:6px"><b>'+esc(m.my)+'</b> ('+m.my_age+') ↔ '+esc(m.their)+' ('+m.age+')</div>';}).join(''):'')+
             (f.reason?'<div style="color:var(--mut);font-size:12px">'+esc(f.reason)+'</div>':'')+
           '</div>'+
         '</div>'+
