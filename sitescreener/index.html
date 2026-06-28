@@ -49,7 +49,10 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 /* notes / favorites / share / sync */
 .starbtn{cursor:pointer;font-size:16px;line-height:1;color:#c9d3d8;background:none;border:0;padding:0;user-select:none}
 .starbtn.on{color:#f2b50a}
-th.fav,td.fav{text-align:center;width:30px}
+th.fav,td.fav{text-align:center;width:46px}
+.starbtn .sc{font-size:11px;color:var(--muted);font-weight:700;margin-left:2px}
+.youpick{font-size:13px;color:var(--navy);font-weight:600;margin-left:12px;white-space:nowrap}
+.youpick select{font:inherit;font-size:13px;padding:3px 6px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
 td.notes{white-space:nowrap;min-width:240px}
 .noteinput{width:168px;max-width:46vw;font:inherit;font-size:12px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);vertical-align:middle}
 .noteinput:focus{outline:2px solid var(--teal);border-color:var(--teal)}
@@ -93,6 +96,7 @@ td.notes{white-space:nowrap;min-width:240px}
 </header>
 <div class="wrap">
 <div class="stat">Showing <b id="cnt">0</b> of <span id="tot">0</span> candidate sites</div>
+<span class="youpick">You: <select id="mepick"><option value="">— pick your name —</option><option>Kathleen</option><option>Ira</option><option>Jim</option><option>Jon</option></select></span>
 <div class="filters">
 <div class="fg"><label>Min building SF</label><input type="number" id="sfmin" value="10000" step="500"></div>
 <div class="fg"><label>Max building SF</label><input type="number" id="sfmax" value="35000" step="500"></div>
@@ -106,7 +110,11 @@ td.notes{white-space:nowrap;min-width:240px}
 <span class="chip on" data-j="Fairfax County">Fairfax Co.</span>
 <span class="chip on" data-j="Alexandria">Alexandria</span></div></div>
 <div class="fg"><label>Building count</label><label class="toggle"><input type="checkbox" id="freestanding" checked> Single building only</label></div>
-<div class="fg"><label>Saved</label><div class="chips"><span class="chip" id="favonly">★ Favorites only</span></div></div>
+<div class="fg"><label>Favorited by</label><div class="chips" id="favby">
+<span class="chip" data-person="Kathleen">Kathleen</span>
+<span class="chip" data-person="Ira">Ira</span>
+<span class="chip" data-person="Jim">Jim</span>
+<span class="chip" data-person="Jon">Jon</span></div></div>
 <div class="fg actions"><button class="btn" id="apply">Apply</button><button class="btn ghost" id="reset">Reset</button><button class="btn ghost" id="csv">CSV</button></div>
 </div>
 <div id="map"></div>
@@ -150,14 +158,23 @@ function money(n){return n?("$"+n.toLocaleString()):"—";}
 function pinSvg(c){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:c,fillOpacity:1,strokeColor:"#fff",strokeWeight:1.4,scale:0.8,anchor:new google.maps.Point(0,0)};}
 
 /* ---------- shared notes + favorites (auto-save / sync) ---------- */
-const SYNC_TOKEN="igce-screener-1", LS_KEY="igce_screener_state_v1";
+const SYNC_TOKEN="igce-screener-1", LS_KEY="igce_screener_state_v1", ME_KEY="igce_screener_me";
+const PEOPLE=["Kathleen","Ira","Jim","Jon"];
 const STATE={notes:{},favs:{}};
-let saveTimer=null, pendingDelta={notes:{},favs:{}}, editingNotePin=null, pendingNoteVal=null;
+let saveTimer=null, pendingDelta={notes:{},favs:[]}, editingNotePin=null, pendingNoteVal=null, ME=null;
 const escHtml=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const escAttr=s=>escHtml(s).replace(/"/g,"&quot;");
 function noteOf(p){return STATE.notes[p]||"";}
-function favOf(p){return !!STATE.favs[p];}
-function loadLocal(){try{const o=JSON.parse(localStorage.getItem(LS_KEY)||"{}");STATE.notes=o.notes||{};STATE.favs=o.favs||{};}catch(e){}}
+function favPeopleOf(p){const o=STATE.favs[p];return o?PEOPLE.filter(n=>o[n]):[];}
+function favCount(p){return favPeopleOf(p).length;}
+function iFav(p){return !!(ME&&STATE.favs[p]&&STATE.favs[p][ME]);}
+function iFavBy(p,person){return !!(STATE.favs[p]&&STATE.favs[p][person]);}
+function favTitle(p){const a=favPeopleOf(p);return a.length?("Favorited by "+a.join(", ")):"Not yet favorited";}
+function starInner(p){const c=favCount(p);return '<span class="sg">'+(iFav(p)?"★":"☆")+'</span>'+(c?'<span class="sc">'+c+'</span>':'');}
+function loadMe(){try{const m=localStorage.getItem(ME_KEY);if(PEOPLE.includes(m))ME=m;}catch(e){}}
+function setMe(name){ME=PEOPLE.includes(name)?name:null;try{ME?localStorage.setItem(ME_KEY,ME):localStorage.removeItem(ME_KEY);}catch(e){}const mp=document.getElementById("mepick");if(mp)mp.value=ME||"";refreshCells();refreshCard();}
+function promptMe(){const mp=document.getElementById("mepick");if(mp){mp.focus();mp.style.outline="2px solid var(--teal)";setTimeout(()=>{mp.style.outline="";},1500);}alert("Pick your name at the top first, so we know who's favoriting.");}
+function loadLocal(){try{const o=JSON.parse(localStorage.getItem(LS_KEY)||"{}");STATE.notes=o.notes||{};const f=o.favs||{};STATE.favs={};for(const p in f){if(f[p]&&typeof f[p]==="object")STATE.favs[p]=f[p];}}catch(e){}}
 function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(STATE));}catch(e){}}
 function setSync(cls,txt){const p=document.getElementById("syncpill");if(p){p.className="syncpill "+cls;p.textContent=txt;}}
 function reflectNote(pin,val){
@@ -165,37 +182,48 @@ function reflectNote(pin,val){
  if(inp&&inp!==document.activeElement)inp.value=val;
  const ct=document.getElementById("iw-note");if(ct&&ct.dataset.pin===pin&&ct!==document.activeElement)ct.value=val;
 }
-function reflectFav(pin,val){
- [...document.querySelectorAll('#tbody [data-fav-pin]')].filter(b=>b.dataset.favPin===pin).forEach(b=>{b.classList.toggle("on",val);b.textContent=val?"★":"☆";});
- const cs=document.getElementById("iw-star");if(cs&&cs.dataset.pin===pin){cs.classList.toggle("on",val);cs.textContent=val?"★":"☆";}
+function reflectFav(pin){
+ [...document.querySelectorAll('#tbody [data-fav-pin]')].filter(b=>b.dataset.favPin===pin).forEach(b=>{b.classList.toggle("on",iFav(pin));b.innerHTML=starInner(pin);b.title=favTitle(pin);});
+ const cs=document.getElementById("iw-star");if(cs&&cs.dataset.pin===pin){cs.classList.toggle("on",iFav(pin));cs.innerHTML=starInner(pin);cs.title=favTitle(pin);}
+ const nm=document.getElementById("iw-favnames");if(nm&&nm.dataset.pin===pin)nm.textContent=favTitle(pin);
 }
 function setNote(pin,val){val=val||"";if(val)STATE.notes[pin]=val;else delete STATE.notes[pin];pendingDelta.notes[pin]=val;saveLocal();reflectNote(pin,val);scheduleSave();}
-function setFav(pin,val){val=!!val;if(val)STATE.favs[pin]=true;else delete STATE.favs[pin];pendingDelta.favs[pin]=val;saveLocal();reflectFav(pin,val);scheduleSave();const fo=document.getElementById("favonly");if(fo&&fo.classList.contains("on"))apply();}
+function toggleFav(pin){
+ if(!ME){promptMe();return;}
+ const on=!iFav(pin);
+ STATE.favs[pin]=STATE.favs[pin]||{};
+ if(on)STATE.favs[pin][ME]=true;else{delete STATE.favs[pin][ME];if(!Object.keys(STATE.favs[pin]).length)delete STATE.favs[pin];}
+ pendingDelta.favs.push({pin,person:ME,on});saveLocal();reflectFav(pin);scheduleSave();
+ if(favFilterActive())apply();
+}
+function favFilterActive(){return !!document.querySelector('#favby .chip.on');}
 function scheduleSave(){setSync("saving","Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(flushSave,800);}
 async function flushSave(){
- const d=pendingDelta;pendingDelta={notes:{},favs:{}};
- if(!Object.keys(d.notes).length&&!Object.keys(d.favs).length)return;
+ const d=pendingDelta;pendingDelta={notes:{},favs:[]};
+ if(!Object.keys(d.notes).length&&!d.favs.length)return;
  try{
   const r=await fetch("/api/notes",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:SYNC_TOKEN,delta:d})});
   const j=await r.json();
   if(j&&j.configured){setSync("ok","Synced ✓");mergeRemote(j);}else setSync("local","Saved on this device");
- }catch(e){Object.assign(pendingDelta.notes,d.notes);Object.assign(pendingDelta.favs,d.favs);setSync("local","Saved on this device");}
+ }catch(e){Object.assign(pendingDelta.notes,d.notes);pendingDelta.favs=d.favs.concat(pendingDelta.favs);setSync("local","Saved on this device");}
 }
 function mergeRemote(j){
- STATE.notes=Object.assign({},j.notes||{});STATE.favs=Object.assign({},j.favs||{});
+ STATE.notes=Object.assign({},j.notes||{});
+ STATE.favs={};const sf=j.favs||{};for(const p in sf)STATE.favs[p]=Object.assign({},sf[p]);
  for(const p in pendingDelta.notes){const v=pendingDelta.notes[p];if(v)STATE.notes[p]=v;else delete STATE.notes[p];}
- for(const p in pendingDelta.favs){if(pendingDelta.favs[p])STATE.favs[p]=true;else delete STATE.favs[p];}
+ pendingDelta.favs.forEach(f=>{STATE.favs[f.pin]=STATE.favs[f.pin]||{};if(f.on)STATE.favs[f.pin][f.person]=true;else{delete STATE.favs[f.pin][f.person];if(!Object.keys(STATE.favs[f.pin]).length)delete STATE.favs[f.pin];}});
  if(editingNotePin!=null&&pendingNoteVal!=null)STATE.notes[editingNotePin]=pendingNoteVal;
  saveLocal();refreshCells();refreshCard();
- const fo=document.getElementById("favonly");if(fo&&fo.classList.contains("on"))apply();
+ if(favFilterActive())apply();
 }
 function refreshCells(){
  document.querySelectorAll('#tbody input[data-note-pin]').forEach(i=>{if(i!==document.activeElement)i.value=noteOf(i.dataset.notePin);});
- document.querySelectorAll('#tbody [data-fav-pin]').forEach(b=>{const v=favOf(b.dataset.favPin);b.classList.toggle("on",v);b.textContent=v?"★":"☆";});
+ document.querySelectorAll('#tbody [data-fav-pin]').forEach(b=>{const p=b.dataset.favPin;b.classList.toggle("on",iFav(p));b.innerHTML=starInner(p);b.title=favTitle(p);});
 }
 function refreshCard(){
  const ct=document.getElementById("iw-note");if(ct&&ct!==document.activeElement)ct.value=noteOf(ct.dataset.pin);
- const cs=document.getElementById("iw-star");if(cs){const v=favOf(cs.dataset.pin);cs.classList.toggle("on",v);cs.textContent=v?"★":"☆";}
+ const cs=document.getElementById("iw-star");if(cs){const p=cs.dataset.pin;cs.classList.toggle("on",iFav(p));cs.innerHTML=starInner(p);cs.title=favTitle(p);}
+ const nm=document.getElementById("iw-favnames");if(nm)nm.textContent=favTitle(nm.dataset.pin);
 }
 async function pull(){
  try{const r=await fetch("/api/notes",{headers:{"Cache-Control":"no-cache"}});const j=await r.json();
@@ -216,7 +244,7 @@ function shareEmail(d){location.href="mailto:?subject="+encodeURIComponent("Site
 async function shareCopy(d,btn){try{await navigator.clipboard.writeText(shareText(d));if(btn){const t=btn.textContent;btn.textContent="Copied ✓";setTimeout(()=>{btn.textContent=t;},1200);}}catch(e){prompt("Copy this:",shareText(d));}}
 async function shareNative(d,btn){if(navigator.share){try{await navigator.share({title:d.addr,text:shareText(d)});return;}catch(e){if(e&&e.name==="AbortError")return;}}shareCopy(d,btn);}
 function wireCard(d){
- const star=document.getElementById("iw-star");if(star)star.onclick=()=>setFav(d.pin,!favOf(d.pin));
+ const star=document.getElementById("iw-star");if(star)star.onclick=()=>toggleFav(d.pin);
  const ta=document.getElementById("iw-note");
  if(ta){ta.addEventListener("focus",()=>{editingNotePin=d.pin;});
   ta.addEventListener("input",()=>{pendingNoteVal=ta.value;setNote(d.pin,ta.value);});
@@ -233,12 +261,12 @@ function initMap(){
  document.getElementById("apply").onclick=apply;
  document.getElementById("reset").onclick=reset;
  document.getElementById("csv").onclick=downloadCsv;
- document.querySelectorAll("#cats .chip,#juris .chip").forEach(ch=>ch.onclick=()=>{ch.classList.toggle("on");apply();});
- const fo=document.getElementById("favonly");if(fo)fo.onclick=()=>{fo.classList.toggle("on");apply();};
+ document.querySelectorAll("#cats .chip,#juris .chip,#favby .chip").forEach(ch=>ch.onclick=()=>{ch.classList.toggle("on");apply();});
+ const mp=document.getElementById("mepick");if(mp){mp.value=ME||"";mp.onchange=()=>setMe(mp.value);}
  document.querySelectorAll("#tbl th").forEach(th=>{if(th.dataset.k)th.onclick=()=>sortBy(th.dataset.k);});
  apply();
  pull();
- setInterval(pull,25000);
+ setInterval(()=>{if(!document.hidden)pull();},30000);
  document.addEventListener("visibilitychange",()=>{if(!document.hidden)pull();});
  const want=new URLSearchParams(location.search).get("pin");
  if(want){const d=DATA.find(x=>x.pin===want);if(d){const idx=DATA.indexOf(d);markers[idx].setMap(map);map.panTo({lat:d.lat,lng:d.lon});map.setZoom(17);openInfo(d,markers[idx]);}}
@@ -259,7 +287,7 @@ function openInfo(d,m){
  <tr><td>Assessed total</td><td>${money(d.apr)}</td></tr>
  <tr><td>Last sale</td><td>${d.saled||"—"} ${d.salep>1000?("· "+money(d.salep)):""}</td></tr>
  </table>
- <div class="cardtools"><span id="iw-star" class="starbtn ${favOf(d.pin)?'on':''}" data-pin="${escAttr(d.pin)}">${favOf(d.pin)?'★':'☆'}</span><span style="font-size:12px;color:var(--muted)">Favorite</span></div>
+ <div class="cardtools"><span id="iw-star" class="starbtn ${iFav(d.pin)?'on':''}" data-pin="${escAttr(d.pin)}" title="${escAttr(favTitle(d.pin))}">${starInner(d.pin)}</span><span id="iw-favnames" data-pin="${escAttr(d.pin)}" style="font-size:12px;color:var(--muted)">${escHtml(favTitle(d.pin))}</span></div>
  <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" placeholder="Add a shared note…">${escHtml(noteOf(d.pin))}</textarea>
  <div class="share"><a id="iw-sms">Text</a><a id="iw-email">Email</a><button id="iw-copy">Copy</button></div>
  <div class="links">
@@ -275,8 +303,8 @@ function apply(){
  pkmin=+document.getElementById("pkmin").value||0,aprmax=+document.getElementById("aprmax").value||1e12,
  fs=document.getElementById("freestanding").checked,
  cats=onChips("#cats").map(c=>c.dataset.c),jur=onChips("#juris").map(c=>c.dataset.j);
- const favonly=document.getElementById("favonly")&&document.getElementById("favonly").classList.contains("on");
- filtered=DATA.filter(d=>d.sf>=sfmin&&d.sf<=sfmax&&d.park>=pkmin&&d.apr<=aprmax&&cats.includes(d.cat)&&jur.includes(d.juris)&&(!fs||d.fp<=1)&&(!favonly||favOf(d.pin)));
+ const favBy=[...document.querySelectorAll("#favby .chip.on")].map(c=>c.dataset.person);
+ filtered=DATA.filter(d=>d.sf>=sfmin&&d.sf<=sfmax&&d.park>=pkmin&&d.apr<=aprmax&&cats.includes(d.cat)&&jur.includes(d.juris)&&(!fs||d.fp<=1)&&(!favBy.length||favBy.some(pn=>iFavBy(d.pin,pn))));
  markers.forEach((m,i)=>m.setMap(filtered.includes(DATA[i])?map:null));
  document.getElementById("cnt").textContent=filtered.length;renderTable();
 }
@@ -297,11 +325,11 @@ function renderTable(){
  <td>${d.cov?(d.cov*100).toFixed(0)+"%":"—"}</td><td>${d.stories||"—"}</td>
  <td><span class="catpill" style="background:${CATCOLOR[d.cat]}">${d.zone}</span></td>
  <td>${money(d.apr)}</td><td>${d.saled||"—"}</td><td>${d.salep>1000?money(d.salep):"—"}</td>
- <td class="fav"><span class="starbtn ${favOf(d.pin)?'on':''}" data-fav-pin="${escAttr(d.pin)}">${favOf(d.pin)?'★':'☆'}</span></td>
+ <td class="fav"><span class="starbtn ${iFav(d.pin)?'on':''}" data-fav-pin="${escAttr(d.pin)}" title="${escAttr(favTitle(d.pin))}">${starInner(d.pin)}</span></td>
  <td class="notes"><input class="noteinput" data-note-pin="${escAttr(d.pin)}" value="${escAttr(noteOf(d.pin))}" placeholder="Add note…"><button class="sharebtn" data-share-pin="${escAttr(d.pin)}" title="Share">⤴</button></td></tr>`).join("");
  document.querySelectorAll("#tbody tr.row").forEach(tr=>{
   tr.onclick=()=>{const d=DATA.find(x=>x.pin===tr.dataset.pin);const m=markers[DATA.indexOf(d)];map.panTo({lat:d.lat,lng:d.lon});if(map.getZoom()<14)map.setZoom(16);openInfo(d,m);};
-  const star=tr.querySelector("[data-fav-pin]");if(star)star.addEventListener("click",e=>{e.stopPropagation();const p=star.dataset.favPin;setFav(p,!favOf(p));});
+  const star=tr.querySelector("[data-fav-pin]");if(star)star.addEventListener("click",e=>{e.stopPropagation();toggleFav(star.dataset.favPin);});
   const inp=tr.querySelector("input[data-note-pin]");
   if(inp){inp.addEventListener("click",e=>e.stopPropagation());
    inp.addEventListener("focus",()=>{editingNotePin=inp.dataset.notePin;});
@@ -312,14 +340,15 @@ function renderTable(){
 }
 function highlightRow(pin){document.querySelectorAll("#tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.pin===pin));}
 function downloadCsv(){
- const cols=["juris","addr","city","zip","owner","pin","sf","lot","park","fp","stories","cov","zone","cat","apr","saled","salep","fav","note"];
- const csv=[cols.join(",")].concat(filtered.map(d=>cols.map(k=>{let v=k==="fav"?(favOf(d.pin)?"yes":""):k==="note"?noteOf(d.pin):d[k];if(v==null)v="";if(typeof v==="string"&&(v.includes(",")||v.includes('"')||v.includes("\n")))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(","))).join("\n");
+ const cols=["juris","addr","city","zip","owner","pin","sf","lot","park","fp","stories","cov","zone","cat","apr","saled","salep","fav_count","favorited_by","note"];
+ const csv=[cols.join(",")].concat(filtered.map(d=>cols.map(k=>{let v=k==="fav_count"?favCount(d.pin):k==="favorited_by"?favPeopleOf(d.pin).join("; "):k==="note"?noteOf(d.pin):d[k];if(v==null)v="";if(typeof v==="string"&&(v.includes(",")||v.includes('"')||v.includes("\n")))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(","))).join("\n");
  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="igce_sites_filtered.csv";a.click();
 }
 /* ---- gate ---- */
 function boot(){
  if(booted)return; booted=true;
  loadLocal();
+ loadMe();
  document.getElementById("tot").textContent=DATA.length;
  const s=document.createElement("script");
  s.src="https://maps.googleapis.com/maps/api/js?key="+KEY+"&callback=initMap&loading=async";

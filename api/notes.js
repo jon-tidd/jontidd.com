@@ -3,19 +3,21 @@
 // Zero-dependency. Persists to a Vercel KV / Upstash Redis store when its
 // REST credentials are present in the environment; otherwise it responds with
 // { configured:false } so the client silently falls back to per-device
-// localStorage. To turn on shared sync, connect a Vercel KV (or Upstash Redis)
-// store to this project — that injects KV_REST_API_URL + KV_REST_API_TOKEN —
-// and redeploy. No code change required.
+// localStorage. To turn on shared sync, set the REST URL + token env vars
+// (any of the KV_*/UPSTASH_*/REDIS_* names below) and redeploy. No code change.
 //
 // Data model (avoids whole-blob clobbering under concurrent edits):
-//   HASH  sitescreener:notes   field=<pin>  value=<note text>
-//   HASH  sitescreener:favs    field=<pin>  value="1"
+//   HASH  sitescreener:notes   field=<pin>                 value=<note text>
+//   HASH  sitescreener:favs    field=<pin><SEP><person>    value="1"
 //   STR   sitescreener:updatedAt
+// Per-person favorite fields mean two people favoriting the same site never
+// overwrite each other. SEP is a control char that never appears in pins/names.
 
 const KV_URL   = process.env.KV_REST_API_URL   || process.env.UPSTASH_REDIS_REST_URL   || process.env.REDIS_REST_API_URL;
 const KV_TOKEN = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN || process.env.REDIS_REST_API_TOKEN;
 const WRITE_TOKEN = process.env.SCREENER_TOKEN || ""; // if set, POSTs must include a matching token
 const NS = "sitescreener";
+const SEP = String.fromCharCode(1); // separates pin from person in the favs hash field name
 const configured = !!(KV_URL && KV_TOKEN);
 
 async function pipe(cmds) {
@@ -42,9 +44,15 @@ async function getState() {
     ["GET", NS + ":updatedAt"],
   ]);
   const notes = arrToObj(out[0] && out[0].result);
+  // favs hash fields are "<pin><SEP><person>" -> "1"; rebuild as { pin: { person: true } }
   const fa = arrToObj(out[1] && out[1].result);
   const favs = {};
-  for (const k in fa) favs[k] = true;
+  for (const k in fa) {
+    const i = k.indexOf(SEP);
+    if (i < 0) continue;
+    const pin = k.slice(0, i), person = k.slice(i + SEP.length);
+    (favs[pin] = favs[pin] || {})[person] = true;
+  }
   const ua = out[2] && out[2].result;
   return { notes, favs, updatedAt: +ua || 0 };
 }
@@ -81,8 +89,11 @@ module.exports = async (req, res) => {
         const v = delta.notes[p];
         cmds.push(v ? ["HSET", NS + ":notes", p, String(v).slice(0, 2000)] : ["HDEL", NS + ":notes", p]);
       }
-      if (delta.favs) for (const p in delta.favs) {
-        cmds.push(delta.favs[p] ? ["HSET", NS + ":favs", p, "1"] : ["HDEL", NS + ":favs", p]);
+      // delta.favs is an array of { pin, person, on }
+      if (Array.isArray(delta.favs)) for (const f of delta.favs) {
+        if (!f || !f.pin || !f.person) continue;
+        const field = f.pin + SEP + f.person;
+        cmds.push(f.on ? ["HSET", NS + ":favs", field, "1"] : ["HDEL", NS + ":favs", field]);
       }
       cmds.push(["SET", NS + ":updatedAt", String(Date.now())]);
       if (cmds.length) await pipe(cmds);
