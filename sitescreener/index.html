@@ -79,6 +79,12 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 .lb-z{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);display:flex;gap:12px;align-items:center;color:#fff;font-size:13px;font-weight:600;background:rgba(0,0,0,.5);padding:7px 14px;border-radius:24px;max-width:92vw}
 .lb-z button{width:36px;height:36px;border-radius:50%;border:0;background:#fff;color:#11353f;font-size:22px;font-weight:700;cursor:pointer;flex:none}
 .lb-z .lb-cap{font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:48vw}
+.lb-nav{position:absolute;top:50%;transform:translateY(-50%);font-size:38px;color:#fff;background:rgba(0,0,0,.35);border:0;cursor:pointer;width:46px;height:64px;line-height:1;border-radius:6px}
+.lb-prev{left:8px}.lb-next{right:8px}
+.iw .gallery{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:6px 0 8px;-webkit-overflow-scrolling:touch;border-radius:6px;scrollbar-width:none}
+.iw .gallery::-webkit-scrollbar{display:none}
+.iw .gimg{flex:0 0 92%;scroll-snap-align:center;width:92%;height:150px;object-fit:cover;border-radius:6px;background:#dde3e6;cursor:zoom-in;display:block}
+@media (max-width:480px){.iw .gimg{height:120px}}
 .iw textarea.iwnote{width:100%;min-height:44px;font:inherit;font-size:12px;padding:6px;border:1px solid var(--line);border-radius:6px;resize:vertical;color:var(--ink)}
 .iw textarea.iwnote:focus{outline:2px solid var(--teal);border-color:var(--teal)}
 .iw .share{display:flex;gap:8px;margin-top:8px}
@@ -178,11 +184,23 @@ let map,info,markers=[],filtered=[],sortKey="usable",sortDir=-1,selPin=null,boot
 function totalVotes(){let n=0;for(const p in STATE.favs)n+=Object.keys(STATE.favs[p]).length;return n;}
 function aerialUrl(d){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=18&size=600x320&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
 function aerialUrlZ(d,z){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=${z}&size=640x640&scale=2&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
-let lbD=null,lbZ=19;
-function openLightbox(d){lbD=d;lbZ=19;const cap=document.getElementById("lb-cap");if(cap)cap.textContent=(bizName(d)||d.addr);lbApply();const lb=document.getElementById("lightbox");if(lb)lb.style.display="flex";}
-function lbApply(){const im=document.getElementById("lb-img");if(im&&lbD)im.src=aerialUrlZ(lbD,lbZ);const z=document.getElementById("lb-lvl");if(z)z.textContent="z"+lbZ;}
-function lbZoom(delta){lbZ=Math.max(16,Math.min(21,lbZ+delta));lbApply();}
+function svUrl(d,h,fov){fov=fov||80;return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${d.lat},${d.lon}&heading=${h}&pitch=6&fov=${fov}&key=${KEY}`;}
+function gallery(d){const g=[{kind:"aerial",label:"Aerial"}];[0,90,180,270].forEach(h=>g.push({kind:"sv",h,label:"Street "+h+"°"}));return g;}
+function thumbSrc(d,it){return it.kind==="aerial"?aerialUrl(d):svUrl(d,it.h,80);}
+let lbD=null,lbList=[],lbIdx=0;
+function openLightbox(d,idx){lbD=d;lbList=gallery(d).map(it=>Object.assign({z:19,fov:70},it));lbIdx=idx||0;lbRender();const lb=document.getElementById("lightbox");if(lb)lb.style.display="flex";}
+function lbRender(){if(!lbD)return;const it=lbList[lbIdx];const im=document.getElementById("lb-img");if(im)im.src=it.kind==="aerial"?aerialUrlZ(lbD,it.z):svUrl(lbD,it.h,it.fov);
+ const cap=document.getElementById("lb-cap");if(cap)cap.textContent=(bizName(lbD)||lbD.addr)+" · "+it.label;
+ const lvl=document.getElementById("lb-lvl");if(lvl)lvl.textContent=it.kind==="aerial"?("z"+it.z):(it.fov+"°");
+ const multi=lbList.length>1;["lb-prev","lb-next"].forEach(id=>{const b=document.getElementById(id);if(b)b.style.visibility=multi?"visible":"hidden";});}
+function lbNav(delta){if(!lbList.length)return;lbIdx=(lbIdx+delta+lbList.length)%lbList.length;lbRender();}
+function lbZoom(delta){const it=lbList[lbIdx];if(!it)return;if(it.kind==="aerial")it.z=Math.max(16,Math.min(21,it.z+delta));else it.fov=Math.max(25,Math.min(110,it.fov-delta*10));lbRender();}
 function closeLightbox(){const lb=document.getElementById("lightbox");if(lb)lb.style.display="none";lbD=null;}
+/* ----- map focus: grey other pins, zoom to selected ----- */
+function greyPin(){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:"#aab4ba",fillOpacity:.5,strokeColor:"#fff",strokeWeight:1,scale:0.62,anchor:new google.maps.Point(0,0)};}
+function selIcon(d){const i=pinSvg(CATCOLOR[d.cat]||"#7a8893");i.scale=1.2;i.strokeWeight=2.4;return i;}
+function restoreIcons(){markers.forEach((m,i)=>m.setIcon(pinSvg(CATCOLOR[DATA[i].cat]||"#7a8893")));}
+function focusMarker(d){const idx=DATA.indexOf(d);markers.forEach((m,i)=>{if(m.getMap())m.setIcon(i===idx?selIcon(d):greyPin());});const mk=markers[idx];if(mk){mk.setMap(map);mk.setIcon(selIcon(d));}map.panTo({lat:d.lat,lng:d.lon});map.setZoom(18);}
 function fmt(n){return (n||n===0)?n.toLocaleString():"—";}
 function money(n){return n?("$"+n.toLocaleString()):"—";}
 function pinSvg(c){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:c,fillOpacity:1,strokeColor:"#fff",strokeWeight:1.4,scale:0.8,anchor:new google.maps.Point(0,0)};}
@@ -286,12 +304,13 @@ function wireCard(d){
  const a=document.getElementById("iw-sms");if(a)a.onclick=()=>shareSms(d);
  const b=document.getElementById("iw-email");if(b)b.onclick=()=>shareEmail(d);
  const c=document.getElementById("iw-copy");if(c)c.onclick=()=>shareCopy(d,c);
- const im=document.getElementById("iw-img");if(im)im.onclick=()=>openLightbox(d);
+ const gal=document.getElementById("iw-gallery");if(gal)gal.querySelectorAll(".gimg").forEach(im=>im.onclick=()=>openLightbox(d,+im.dataset.gi));
 }
 function initMap(){
  map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:true,streetViewControl:false,styles:[{featureType:"poi",stylers:[{visibility:"off"}]}]});
  new google.maps.Polygon({paths:BOUNDARY.map(p=>({lat:p[0],lng:p[1]})),map,strokeColor:"#0b5e6a",strokeWeight:2.5,strokeOpacity:.9,fillColor:"#0f7d8c",fillOpacity:.05});
  info=new google.maps.InfoWindow({maxWidth:320});
+ google.maps.event.addListener(info,"closeclick",()=>{restoreIcons();selPin=null;highlightRow(null);});
  DATA.forEach((d,i)=>{const m=new google.maps.Marker({position:{lat:d.lat,lng:d.lon},map:null,icon:pinSvg(CATCOLOR[d.cat]||"#7a8893"),title:(bizName(d)?d.addr+" — "+bizName(d):d.addr)});m.addListener("click",()=>openInfo(d,m));markers.push(m);});
  document.getElementById("apply").onclick=apply;
  document.getElementById("reset").onclick=reset;
@@ -302,6 +321,8 @@ function initMap(){
  const lbx=document.getElementById("lb-x");if(lbx)lbx.onclick=closeLightbox;
  const lbi=document.getElementById("lb-in");if(lbi)lbi.onclick=()=>lbZoom(1);
  const lbo=document.getElementById("lb-out");if(lbo)lbo.onclick=()=>lbZoom(-1);
+ const lbp=document.getElementById("lb-prev");if(lbp)lbp.onclick=()=>lbNav(-1);
+ const lbn=document.getElementById("lb-next");if(lbn)lbn.onclick=()=>lbNav(1);
  const lb=document.getElementById("lightbox");if(lb)lb.onclick=e=>{if(e.target.id==="lightbox")closeLightbox();};
  document.addEventListener("keydown",e=>{if(e.key==="Escape")closeLightbox();});
  apply();
@@ -321,7 +342,7 @@ function bizCard(d){
 function openInfo(d,m){
  const st=d.stories?`${d.stories}-story`:"n/a";
  const c=`<div class="iw"><h3>${escHtml(d.addr)}</h3><div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>${bizCard(d)}
- <img id="iw-img" loading="lazy" src="${aerialUrl(d)}" title="Tap to enlarge / zoom" style="cursor:zoom-in" onerror="this.style.display='none'">
+ <div class="gallery" id="iw-gallery">${gallery(d).map((it,i)=>`<img class="gimg" data-gi="${i}" loading="lazy" src="${thumbSrc(d,it)}" alt="${it.label}" title="Swipe for more · tap to enlarge" onerror="this.remove()">`).join("")}</div>
  <table>
  <tr><td>Usable SF</td><td><b>${fmt(usableOf(d))}</b> ${d.stories?`(${d.stories}×${fmt(d.sf)})`:"(1 floor assumed)"}</td></tr>
  <tr><td>Footprint SF</td><td>${fmt(d.sf)}</td></tr>
@@ -339,7 +360,7 @@ function openInfo(d,m){
  <a href="https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lon}" target="_blank">Map / who's here</a>
  <a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lon}" target="_blank">Street View</a>
  </div></div>`;
- info.setContent(c);info.open(map,m);selPin=d.pin;highlightRow(d.pin);
+ info.setContent(c);info.open(map,m);selPin=d.pin;highlightRow(d.pin);focusMarker(d);
  google.maps.event.addListenerOnce(info,"domready",()=>wireCard(d));
 }
 function onChips(sel){return [...document.querySelectorAll(sel+" .chip.on")];}
@@ -352,6 +373,7 @@ function apply(){
  const minv=+(document.getElementById("minvotes")||{}).value||0;
  filtered=DATA.filter(d=>usableOf(d)>=sfmin&&usableOf(d)<=sfmax&&d.park>=pkmin&&d.apr<=aprmax&&cats.includes(d.cat)&&jur.includes(d.juris)&&(!fs||d.fp<=1)&&(!favBy.length||favBy.some(pn=>iFavBy(d.pin,pn)))&&favCount(d.pin)>=minv);
  markers.forEach((m,i)=>m.setMap(filtered.includes(DATA[i])?map:null));
+ restoreIcons();
  document.getElementById("cnt").textContent=filtered.length;renderTable();
 }
 function reset(){
@@ -380,7 +402,7 @@ function renderTable(){
  <td class="votes" data-votes-pin="${escAttr(d.pin)}">${favCount(d.pin)}</td>
  <td class="notes"><input class="noteinput" data-note-pin="${escAttr(d.pin)}" value="${escAttr(noteOf(d.pin))}" placeholder="Add note…"><button class="sharebtn" data-share-pin="${escAttr(d.pin)}" title="Share">⤴</button></td></tr>`).join("");
  document.querySelectorAll("#tbody tr.row").forEach(tr=>{
-  tr.onclick=()=>{const d=DATA.find(x=>x.pin===tr.dataset.pin);const m=markers[DATA.indexOf(d)];map.panTo({lat:d.lat,lng:d.lon});if(map.getZoom()<14)map.setZoom(16);openInfo(d,m);};
+  tr.onclick=()=>{const d=DATA.find(x=>x.pin===tr.dataset.pin);openInfo(d,markers[DATA.indexOf(d)]);};
   tr.querySelectorAll("[data-vote-pin]").forEach(el=>el.addEventListener("click",e=>{e.stopPropagation();toggleVote(el.dataset.votePin,el.dataset.votePerson);}));
   const inp=tr.querySelector("input[data-note-pin]");
   if(inp){inp.addEventListener("click",e=>e.stopPropagation());
@@ -426,7 +448,9 @@ document.getElementById("pw").addEventListener("keydown",e=>{if(e.key==="Enter")
 </script>
 <div id="lightbox" class="lb" style="display:none">
  <button class="lb-x" id="lb-x" title="Close">&times;</button>
- <div class="lb-imgwrap"><img id="lb-img" alt="Aerial view"></div>
+ <button class="lb-nav lb-prev" id="lb-prev" title="Previous">&lsaquo;</button>
+ <button class="lb-nav lb-next" id="lb-next" title="Next">&rsaquo;</button>
+ <div class="lb-imgwrap"><img id="lb-img" alt="Site view"></div>
  <div class="lb-z"><button id="lb-out" title="Zoom out">&minus;</button><span id="lb-lvl">z19</span><button id="lb-in" title="Zoom in">+</button><span id="lb-cap" class="lb-cap"></span></div>
 </div>
 </body></html>
