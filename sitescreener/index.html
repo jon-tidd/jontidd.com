@@ -184,9 +184,23 @@ let map,info,markers=[],filtered=[],sortKey="usable",sortDir=-1,selPin=null,boot
 function totalVotes(){let n=0;for(const p in STATE.favs)n+=Object.keys(STATE.favs[p]).length;return n;}
 function aerialUrl(d){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=18&size=600x320&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
 function aerialUrlZ(d,z){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=${z}&size=640x640&scale=2&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
-function svUrl(d,h,fov){fov=fov||80;return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${d.lat},${d.lon}&heading=${h}&pitch=6&fov=${fov}&key=${KEY}`;}
-function gallery(d){const g=[{kind:"aerial",label:"Aerial"}];[0,90,180,270].forEach(h=>g.push({kind:"sv",h,label:"Street "+h+"°"}));return g;}
-function thumbSrc(d,it){return it.kind==="aerial"?aerialUrl(d):svUrl(d,it.h,80);}
+function svUrl(d,h,fov){fov=fov||82;return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${d.lat},${d.lon}&heading=${h}&pitch=2&fov=${fov}&source=outdoor&key=${KEY}`;}
+const SVHEAD={}; // pin -> headings facing the building (after metadata); [] = no outdoor view
+function svHeadings(d){return SVHEAD[d.pin]||[0,90,180,270];}
+function gallery(d){const g=[];const hs=svHeadings(d);hs.forEach((h,i)=>g.push({kind:"sv",h,label:(hs.length<=3&&i===0)?"Storefront":"Street "+Math.round(h)+"°"}));g.push({kind:"aerial",label:"Aerial (top-down)"});return g;}
+function thumbSrc(d,it){return it.kind==="aerial"?aerialUrl(d):svUrl(d,it.h,82);}
+function bearing(aLat,aLng,bLat,bLng){const R=x=>x*Math.PI/180,D=x=>x*180/Math.PI;const y=Math.sin(R(bLng-aLng))*Math.cos(R(bLat));const x=Math.cos(R(aLat))*Math.sin(R(bLat))-Math.sin(R(aLat))*Math.cos(R(bLat))*Math.cos(R(bLng-aLng));return (D(Math.atan2(y,x))+360)%360;}
+function buildGimgs(d){return gallery(d).map((it,i)=>`<img class="gimg" data-gi="${i}" loading="lazy" src="${thumbSrc(d,it)}" alt="${it.label}" title="Swipe for more · tap to enlarge" onerror="this.remove()">`).join("");}
+function wireGimgs(d,el){el.querySelectorAll(".gimg").forEach(im=>im.onclick=()=>openLightbox(d,+im.dataset.gi));}
+function refreshGallery(d){const gal=document.getElementById("iw-gallery");if(!gal||gal.dataset.pin!==d.pin)return;gal.innerHTML=buildGimgs(d);wireGimgs(d,gal);}
+async function loadSvHeading(d){
+ if(SVHEAD[d.pin])return;
+ try{const r=await fetch(`https://maps.googleapis.com/maps/api/streetview/metadata?location=${d.lat},${d.lon}&source=outdoor&key=${KEY}`);const j=await r.json();
+  if(j&&j.status==="OK"&&j.location){const h=bearing(j.location.lat,j.location.lng,d.lat,d.lon);SVHEAD[d.pin]=[h,(h-40+360)%360,(h+40)%360];}
+  else SVHEAD[d.pin]=[];
+  refreshGallery(d);
+ }catch(e){/* CORS/offline: keep the optimistic outdoor cardinal views */}
+}
 let lbD=null,lbList=[],lbIdx=0;
 function openLightbox(d,idx){lbD=d;lbList=gallery(d).map(it=>Object.assign({z:19,fov:70},it));lbIdx=idx||0;lbRender();const lb=document.getElementById("lightbox");if(lb)lb.style.display="flex";}
 function lbRender(){if(!lbD)return;const it=lbList[lbIdx];const im=document.getElementById("lb-img");if(im)im.src=it.kind==="aerial"?aerialUrlZ(lbD,it.z):svUrl(lbD,it.h,it.fov);
@@ -304,7 +318,7 @@ function wireCard(d){
  const a=document.getElementById("iw-sms");if(a)a.onclick=()=>shareSms(d);
  const b=document.getElementById("iw-email");if(b)b.onclick=()=>shareEmail(d);
  const c=document.getElementById("iw-copy");if(c)c.onclick=()=>shareCopy(d,c);
- const gal=document.getElementById("iw-gallery");if(gal)gal.querySelectorAll(".gimg").forEach(im=>im.onclick=()=>openLightbox(d,+im.dataset.gi));
+ const gal=document.getElementById("iw-gallery");if(gal){wireGimgs(d,gal);loadSvHeading(d);}
 }
 function initMap(){
  map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:true,streetViewControl:false,styles:[{featureType:"poi",stylers:[{visibility:"off"}]}]});
@@ -342,7 +356,7 @@ function bizCard(d){
 function openInfo(d,m){
  const st=d.stories?`${d.stories}-story`:"n/a";
  const c=`<div class="iw"><h3>${escHtml(d.addr)}</h3><div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>${bizCard(d)}
- <div class="gallery" id="iw-gallery">${gallery(d).map((it,i)=>`<img class="gimg" data-gi="${i}" loading="lazy" src="${thumbSrc(d,it)}" alt="${it.label}" title="Swipe for more · tap to enlarge" onerror="this.remove()">`).join("")}</div>
+ <div class="gallery" id="iw-gallery" data-pin="${escAttr(d.pin)}">${buildGimgs(d)}</div>
  <table>
  <tr><td>Usable SF</td><td><b>${fmt(usableOf(d))}</b> ${d.stories?`(${d.stories}×${fmt(d.sf)})`:"(1 floor assumed)"}</td></tr>
  <tr><td>Footprint SF</td><td>${fmt(d.sf)}</td></tr>
