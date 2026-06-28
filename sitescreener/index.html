@@ -46,6 +46,22 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 .iw table{min-width:0;width:100%;font-size:12px}
 .iw td{padding:3px 4px;border:0;white-space:normal}.iw td:first-child{color:var(--muted);width:48%}
 .iw .links{margin-top:8px;font-size:12px}.iw a{color:var(--teal-d);text-decoration:none;font-weight:600;margin-right:12px}
+/* notes / favorites / share / sync */
+.starbtn{cursor:pointer;font-size:16px;line-height:1;color:#c9d3d8;background:none;border:0;padding:0;user-select:none}
+.starbtn.on{color:#f2b50a}
+th.fav,td.fav{text-align:center;width:30px}
+td.notes{white-space:nowrap;min-width:240px}
+.noteinput{width:168px;max-width:46vw;font:inherit;font-size:12px;padding:4px 6px;border:1px solid var(--line);border-radius:5px;background:#fff;color:var(--ink);vertical-align:middle}
+.noteinput:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.sharebtn{cursor:pointer;border:1px solid var(--line);background:#fff;border-radius:5px;font-size:12px;padding:3px 7px;color:var(--teal-d);font-weight:700;margin-left:5px;vertical-align:middle}
+.syncpill{float:right;font-size:11px;font-weight:600;color:var(--muted);background:#eef3f4;border:1px solid var(--line);border-radius:10px;padding:2px 9px}
+.syncpill.ok{color:#1d7a3a}.syncpill.local{color:#9a6b00}.syncpill.saving{color:var(--teal-d)}
+.iw .cardtools{display:flex;align-items:center;gap:8px;margin:9px 0 5px}
+.iw .cardtools .starbtn{font-size:20px}
+.iw textarea.iwnote{width:100%;min-height:44px;font:inherit;font-size:12px;padding:6px;border:1px solid var(--line);border-radius:6px;resize:vertical;color:var(--ink)}
+.iw textarea.iwnote:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.iw .share{display:flex;gap:8px;margin-top:8px}
+.iw .share a,.iw .share button{flex:1;text-align:center;border:1px solid var(--teal);background:#fff;color:var(--teal-d);border-radius:6px;padding:6px 0;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}
 /* gate */
 #gate{position:fixed;inset:0;background:linear-gradient(160deg,#11353f,#0f7d8c);z-index:9999;display:flex;align-items:center;justify-content:center;padding:20px}
 .gatecard{background:#fff;border-radius:14px;padding:28px 26px;max-width:340px;width:100%;text-align:center;box-shadow:0 12px 40px rgba(0,0,0,.3)}
@@ -90,6 +106,7 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 <span class="chip on" data-j="Fairfax County">Fairfax Co.</span>
 <span class="chip on" data-j="Alexandria">Alexandria</span></div></div>
 <div class="fg"><label>Building count</label><label class="toggle"><input type="checkbox" id="freestanding" checked> Single building only</label></div>
+<div class="fg"><label>Saved</label><div class="chips"><span class="chip" id="favonly">★ Favorites only</span></div></div>
 <div class="fg actions"><button class="btn" id="apply">Apply</button><button class="btn ghost" id="reset">Reset</button><button class="btn ghost" id="csv">CSV</button></div>
 </div>
 <div id="map"></div>
@@ -99,7 +116,7 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 <span><i class="dot" style="background:#7a8893"></i> Other/PD</span>
 <span style="margin-left:auto">Parking is a coverage-based estimate, not a stall count.</span>
 </div>
-<div class="tablecard"><div class="hd">Candidate sites</div><div class="scroll">
+<div class="tablecard"><div class="hd">Candidate sites <span class="syncpill local" id="syncpill">Local</span></div><div class="scroll">
 <table id="tbl"><thead><tr>
 <th data-k="addr">Address <span class="ar">&#9650;&#9660;</span></th>
 <th data-k="city">City</th>
@@ -113,6 +130,8 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 <th data-k="apr">Assessed <span class="ar">&#9650;&#9660;</span></th>
 <th data-k="saled">Last sale <span class="ar">&#9650;&#9660;</span></th>
 <th data-k="salep">Price</th>
+<th class="fav">★</th>
+<th>Notes</th>
 </tr></thead><tbody id="tbody"></tbody></table>
 </div></div>
 <div class="note"><b>Scope:</b> Fairfax County + City of Alexandria. Arlington's in-boundary sliver and the Prince William (Woodbridge) tail are excluded (low yield for freestanding flex, thinner open data).
@@ -129,6 +148,83 @@ function aerialUrl(d){return `https://maps.googleapis.com/maps/api/staticmap?cen
 function fmt(n){return (n||n===0)?n.toLocaleString():"—";}
 function money(n){return n?("$"+n.toLocaleString()):"—";}
 function pinSvg(c){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:c,fillOpacity:1,strokeColor:"#fff",strokeWeight:1.4,scale:0.8,anchor:new google.maps.Point(0,0)};}
+
+/* ---------- shared notes + favorites (auto-save / sync) ---------- */
+const SYNC_TOKEN="igce-screener-1", LS_KEY="igce_screener_state_v1";
+const STATE={notes:{},favs:{}};
+let saveTimer=null, pendingDelta={notes:{},favs:{}}, editingNotePin=null, pendingNoteVal=null;
+const escHtml=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
+const escAttr=s=>escHtml(s).replace(/"/g,"&quot;");
+function noteOf(p){return STATE.notes[p]||"";}
+function favOf(p){return !!STATE.favs[p];}
+function loadLocal(){try{const o=JSON.parse(localStorage.getItem(LS_KEY)||"{}");STATE.notes=o.notes||{};STATE.favs=o.favs||{};}catch(e){}}
+function saveLocal(){try{localStorage.setItem(LS_KEY,JSON.stringify(STATE));}catch(e){}}
+function setSync(cls,txt){const p=document.getElementById("syncpill");if(p){p.className="syncpill "+cls;p.textContent=txt;}}
+function reflectNote(pin,val){
+ const inp=[...document.querySelectorAll('#tbody input[data-note-pin]')].find(i=>i.dataset.notePin===pin);
+ if(inp&&inp!==document.activeElement)inp.value=val;
+ const ct=document.getElementById("iw-note");if(ct&&ct.dataset.pin===pin&&ct!==document.activeElement)ct.value=val;
+}
+function reflectFav(pin,val){
+ [...document.querySelectorAll('#tbody [data-fav-pin]')].filter(b=>b.dataset.favPin===pin).forEach(b=>{b.classList.toggle("on",val);b.textContent=val?"★":"☆";});
+ const cs=document.getElementById("iw-star");if(cs&&cs.dataset.pin===pin){cs.classList.toggle("on",val);cs.textContent=val?"★":"☆";}
+}
+function setNote(pin,val){val=val||"";if(val)STATE.notes[pin]=val;else delete STATE.notes[pin];pendingDelta.notes[pin]=val;saveLocal();reflectNote(pin,val);scheduleSave();}
+function setFav(pin,val){val=!!val;if(val)STATE.favs[pin]=true;else delete STATE.favs[pin];pendingDelta.favs[pin]=val;saveLocal();reflectFav(pin,val);scheduleSave();const fo=document.getElementById("favonly");if(fo&&fo.classList.contains("on"))apply();}
+function scheduleSave(){setSync("saving","Saving…");clearTimeout(saveTimer);saveTimer=setTimeout(flushSave,800);}
+async function flushSave(){
+ const d=pendingDelta;pendingDelta={notes:{},favs:{}};
+ if(!Object.keys(d.notes).length&&!Object.keys(d.favs).length)return;
+ try{
+  const r=await fetch("/api/notes",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({token:SYNC_TOKEN,delta:d})});
+  const j=await r.json();
+  if(j&&j.configured){setSync("ok","Synced ✓");mergeRemote(j);}else setSync("local","Saved on this device");
+ }catch(e){Object.assign(pendingDelta.notes,d.notes);Object.assign(pendingDelta.favs,d.favs);setSync("local","Saved on this device");}
+}
+function mergeRemote(j){
+ STATE.notes=Object.assign({},j.notes||{});STATE.favs=Object.assign({},j.favs||{});
+ for(const p in pendingDelta.notes){const v=pendingDelta.notes[p];if(v)STATE.notes[p]=v;else delete STATE.notes[p];}
+ for(const p in pendingDelta.favs){if(pendingDelta.favs[p])STATE.favs[p]=true;else delete STATE.favs[p];}
+ if(editingNotePin!=null&&pendingNoteVal!=null)STATE.notes[editingNotePin]=pendingNoteVal;
+ saveLocal();refreshCells();refreshCard();
+ const fo=document.getElementById("favonly");if(fo&&fo.classList.contains("on"))apply();
+}
+function refreshCells(){
+ document.querySelectorAll('#tbody input[data-note-pin]').forEach(i=>{if(i!==document.activeElement)i.value=noteOf(i.dataset.notePin);});
+ document.querySelectorAll('#tbody [data-fav-pin]').forEach(b=>{const v=favOf(b.dataset.favPin);b.classList.toggle("on",v);b.textContent=v?"★":"☆";});
+}
+function refreshCard(){
+ const ct=document.getElementById("iw-note");if(ct&&ct!==document.activeElement)ct.value=noteOf(ct.dataset.pin);
+ const cs=document.getElementById("iw-star");if(cs){const v=favOf(cs.dataset.pin);cs.classList.toggle("on",v);cs.textContent=v?"★":"☆";}
+}
+async function pull(){
+ try{const r=await fetch("/api/notes",{headers:{"Cache-Control":"no-cache"}});const j=await r.json();
+  if(j&&j.configured){mergeRemote(j);setSync("ok","Synced ✓");}else setSync("local","Saved on this device");
+ }catch(e){setSync("local","Saved on this device");}
+}
+/* ---------- sharing ---------- */
+function shareUrl(d){return location.origin+location.pathname+"?pin="+encodeURIComponent(d.pin);}
+function shareText(d){
+ const L=[d.addr+", "+d.city+" "+d.zip,
+  "Bldg "+fmt(d.sf)+" SF · ~"+fmt(d.park)+" parking · Assessed "+money(d.apr),
+  "Zone "+d.zone+" · "+d.cat+" · "+d.juris];
+ const nt=noteOf(d.pin);if(nt)L.push("Note: "+nt);
+ L.push(shareUrl(d));return L.join("\n");
+}
+function shareSms(d){location.href="sms:?&body="+encodeURIComponent(shareText(d));}
+function shareEmail(d){location.href="mailto:?subject="+encodeURIComponent("Site: "+d.addr)+"&body="+encodeURIComponent(shareText(d));}
+async function shareCopy(d,btn){try{await navigator.clipboard.writeText(shareText(d));if(btn){const t=btn.textContent;btn.textContent="Copied ✓";setTimeout(()=>{btn.textContent=t;},1200);}}catch(e){prompt("Copy this:",shareText(d));}}
+async function shareNative(d,btn){if(navigator.share){try{await navigator.share({title:d.addr,text:shareText(d)});return;}catch(e){if(e&&e.name==="AbortError")return;}}shareCopy(d,btn);}
+function wireCard(d){
+ const star=document.getElementById("iw-star");if(star)star.onclick=()=>setFav(d.pin,!favOf(d.pin));
+ const ta=document.getElementById("iw-note");
+ if(ta){ta.addEventListener("focus",()=>{editingNotePin=d.pin;});
+  ta.addEventListener("input",()=>{pendingNoteVal=ta.value;setNote(d.pin,ta.value);});
+  ta.addEventListener("blur",()=>{editingNotePin=null;pendingNoteVal=null;});}
+ const a=document.getElementById("iw-sms");if(a)a.onclick=()=>shareSms(d);
+ const b=document.getElementById("iw-email");if(b)b.onclick=()=>shareEmail(d);
+ const c=document.getElementById("iw-copy");if(c)c.onclick=()=>shareCopy(d,c);
+}
 function initMap(){
  map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:true,streetViewControl:false,styles:[{featureType:"poi",stylers:[{visibility:"off"}]}]});
  new google.maps.Polygon({paths:BOUNDARY.map(p=>({lat:p[0],lng:p[1]})),map,strokeColor:"#0b5e6a",strokeWeight:2.5,strokeOpacity:.9,fillColor:"#0f7d8c",fillOpacity:.05});
@@ -138,8 +234,14 @@ function initMap(){
  document.getElementById("reset").onclick=reset;
  document.getElementById("csv").onclick=downloadCsv;
  document.querySelectorAll("#cats .chip,#juris .chip").forEach(ch=>ch.onclick=()=>{ch.classList.toggle("on");apply();});
+ const fo=document.getElementById("favonly");if(fo)fo.onclick=()=>{fo.classList.toggle("on");apply();};
  document.querySelectorAll("#tbl th").forEach(th=>{if(th.dataset.k)th.onclick=()=>sortBy(th.dataset.k);});
  apply();
+ pull();
+ setInterval(pull,25000);
+ document.addEventListener("visibilitychange",()=>{if(!document.hidden)pull();});
+ const want=new URLSearchParams(location.search).get("pin");
+ if(want){const d=DATA.find(x=>x.pin===want);if(d){const idx=DATA.indexOf(d);markers[idx].setMap(map);map.panTo({lat:d.lat,lng:d.lon});map.setZoom(17);openInfo(d,markers[idx]);}}
 }
 window.gm_authFailure=()=>{document.getElementById("map").innerHTML='<div style="padding:24px;font-size:13px;color:#b00">Google Maps could not authorize this key. Confirm Maps JavaScript API is enabled and the key restriction allows this page.</div>';};
 function bizLink(d){return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(d.addr+" "+d.city+" VA")}`;}
@@ -157,11 +259,15 @@ function openInfo(d,m){
  <tr><td>Assessed total</td><td>${money(d.apr)}</td></tr>
  <tr><td>Last sale</td><td>${d.saled||"—"} ${d.salep>1000?("· "+money(d.salep)):""}</td></tr>
  </table>
+ <div class="cardtools"><span id="iw-star" class="starbtn ${favOf(d.pin)?'on':''}" data-pin="${escAttr(d.pin)}">${favOf(d.pin)?'★':'☆'}</span><span style="font-size:12px;color:var(--muted)">Favorite</span></div>
+ <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" placeholder="Add a shared note…">${escHtml(noteOf(d.pin))}</textarea>
+ <div class="share"><a id="iw-sms">Text</a><a id="iw-email">Email</a><button id="iw-copy">Copy</button></div>
  <div class="links">
  <a href="https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lon}" target="_blank">Map / who's here</a>
  <a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lon}" target="_blank">Street View</a>
  </div></div>`;
  info.setContent(c);info.open(map,m);selPin=d.pin;highlightRow(d.pin);
+ google.maps.event.addListenerOnce(info,"domready",()=>wireCard(d));
 }
 function onChips(sel){return [...document.querySelectorAll(sel+" .chip.on")];}
 function apply(){
@@ -169,7 +275,8 @@ function apply(){
  pkmin=+document.getElementById("pkmin").value||0,aprmax=+document.getElementById("aprmax").value||1e12,
  fs=document.getElementById("freestanding").checked,
  cats=onChips("#cats").map(c=>c.dataset.c),jur=onChips("#juris").map(c=>c.dataset.j);
- filtered=DATA.filter(d=>d.sf>=sfmin&&d.sf<=sfmax&&d.park>=pkmin&&d.apr<=aprmax&&cats.includes(d.cat)&&jur.includes(d.juris)&&(!fs||d.fp<=1));
+ const favonly=document.getElementById("favonly")&&document.getElementById("favonly").classList.contains("on");
+ filtered=DATA.filter(d=>d.sf>=sfmin&&d.sf<=sfmax&&d.park>=pkmin&&d.apr<=aprmax&&cats.includes(d.cat)&&jur.includes(d.juris)&&(!fs||d.fp<=1)&&(!favonly||favOf(d.pin)));
  markers.forEach((m,i)=>m.setMap(filtered.includes(DATA[i])?map:null));
  document.getElementById("cnt").textContent=filtered.length;renderTable();
 }
@@ -189,18 +296,30 @@ function renderTable(){
  <td>${fmt(d.sf)}</td><td>${fmt(d.lot)}</td><td>~${fmt(d.park)}</td>
  <td>${d.cov?(d.cov*100).toFixed(0)+"%":"—"}</td><td>${d.stories||"—"}</td>
  <td><span class="catpill" style="background:${CATCOLOR[d.cat]}">${d.zone}</span></td>
- <td>${money(d.apr)}</td><td>${d.saled||"—"}</td><td>${d.salep>1000?money(d.salep):"—"}</td></tr>`).join("");
- document.querySelectorAll("#tbody tr.row").forEach(tr=>tr.onclick=()=>{const d=DATA.find(x=>x.pin===tr.dataset.pin);const m=markers[DATA.indexOf(d)];map.panTo({lat:d.lat,lng:d.lon});if(map.getZoom()<14)map.setZoom(16);openInfo(d,m);});
+ <td>${money(d.apr)}</td><td>${d.saled||"—"}</td><td>${d.salep>1000?money(d.salep):"—"}</td>
+ <td class="fav"><span class="starbtn ${favOf(d.pin)?'on':''}" data-fav-pin="${escAttr(d.pin)}">${favOf(d.pin)?'★':'☆'}</span></td>
+ <td class="notes"><input class="noteinput" data-note-pin="${escAttr(d.pin)}" value="${escAttr(noteOf(d.pin))}" placeholder="Add note…"><button class="sharebtn" data-share-pin="${escAttr(d.pin)}" title="Share">⤴</button></td></tr>`).join("");
+ document.querySelectorAll("#tbody tr.row").forEach(tr=>{
+  tr.onclick=()=>{const d=DATA.find(x=>x.pin===tr.dataset.pin);const m=markers[DATA.indexOf(d)];map.panTo({lat:d.lat,lng:d.lon});if(map.getZoom()<14)map.setZoom(16);openInfo(d,m);};
+  const star=tr.querySelector("[data-fav-pin]");if(star)star.addEventListener("click",e=>{e.stopPropagation();const p=star.dataset.favPin;setFav(p,!favOf(p));});
+  const inp=tr.querySelector("input[data-note-pin]");
+  if(inp){inp.addEventListener("click",e=>e.stopPropagation());
+   inp.addEventListener("focus",()=>{editingNotePin=inp.dataset.notePin;});
+   inp.addEventListener("input",()=>{pendingNoteVal=inp.value;setNote(inp.dataset.notePin,inp.value);});
+   inp.addEventListener("blur",()=>{editingNotePin=null;pendingNoteVal=null;});}
+  const sh=tr.querySelector("[data-share-pin]");if(sh)sh.addEventListener("click",e=>{e.stopPropagation();const d=DATA.find(x=>x.pin===sh.dataset.sharePin);shareNative(d,sh);});
+ });
 }
 function highlightRow(pin){document.querySelectorAll("#tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.pin===pin));}
 function downloadCsv(){
- const cols=["juris","addr","city","zip","owner","pin","sf","lot","park","fp","stories","cov","zone","cat","apr","saled","salep"];
- const csv=[cols.join(",")].concat(filtered.map(d=>cols.map(k=>{let v=d[k];if(v==null)v="";if(typeof v==="string"&&(v.includes(",")||v.includes('"')))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(","))).join("\n");
+ const cols=["juris","addr","city","zip","owner","pin","sf","lot","park","fp","stories","cov","zone","cat","apr","saled","salep","fav","note"];
+ const csv=[cols.join(",")].concat(filtered.map(d=>cols.map(k=>{let v=k==="fav"?(favOf(d.pin)?"yes":""):k==="note"?noteOf(d.pin):d[k];if(v==null)v="";if(typeof v==="string"&&(v.includes(",")||v.includes('"')||v.includes("\n")))v='"'+v.replace(/"/g,'""')+'"';return v;}).join(","))).join("\n");
  const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="igce_sites_filtered.csv";a.click();
 }
 /* ---- gate ---- */
 function boot(){
  if(booted)return; booted=true;
+ loadLocal();
  document.getElementById("tot").textContent=DATA.length;
  const s=document.createElement("script");
  s.src="https://maps.googleapis.com/maps/api/js?key="+KEY+"&callback=initMap&loading=async";
