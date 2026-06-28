@@ -38,7 +38,8 @@ tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!
 .catpill{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:10px;color:#fff}
 .note{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5;border-top:1px dashed var(--line);padding-top:12px}
 .iw{font-family:-apple-system,sans-serif;max-width:300px}
-.iw img{width:100%;height:160px;object-fit:cover;border-radius:6px;background:#dde3e6;display:block;margin-bottom:8px}
+.iw img{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#dde3e6;display:block;margin:6px 0 8px}
+@media (max-width:480px){.iw img{height:96px}}
 .iw h3{margin:0 0 2px;font-size:15px;color:var(--navy);font-family:Cambria,Georgia,serif}
 .iw .biz{font-size:12.5px;color:var(--teal-d);font-weight:700;margin:-2px 0 4px}
 .iw .meta{font-size:12px;color:var(--muted);margin-bottom:7px}
@@ -131,7 +132,7 @@ function pinSvg(c){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10
 function initMap(){
  map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:true,streetViewControl:false,styles:[{featureType:"poi",stylers:[{visibility:"off"}]}]});
  new google.maps.Polygon({paths:BOUNDARY.map(p=>({lat:p[0],lng:p[1]})),map,strokeColor:"#0b5e6a",strokeWeight:2.5,strokeOpacity:.9,fillColor:"#0f7d8c",fillOpacity:.05});
- info=new google.maps.InfoWindow();
+ info=new google.maps.InfoWindow({maxWidth:320});
  DATA.forEach((d,i)=>{const m=new google.maps.Marker({position:{lat:d.lat,lng:d.lon},map:null,icon:pinSvg(CATCOLOR[d.cat]||"#7a8893"),title:d.addr});m.addListener("click",()=>openInfo(d,m));markers.push(m);});
  document.getElementById("apply").onclick=apply;
  document.getElementById("reset").onclick=reset;
@@ -145,8 +146,8 @@ function bizLink(d){return `https://www.google.com/maps/search/?api=1&query=${en
 function openInfo(d,m){
  const st=d.stories?`${d.stories}-story`:"n/a";
  const biz=d.owner?`<div class="biz">${d.owner}</div>`:`<div class="biz" style="color:#7a8893;font-weight:600">Business: <a href="${bizLink(d)}" target="_blank" style="color:#0b5e6a">look up &#8599;</a></div>`;
- const c=`<div class="iw"><img loading="lazy" src="${aerialUrl(d)}" onerror="this.style.display='none'">
- <h3>${d.addr}</h3>${biz}<div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>
+ const c=`<div class="iw"><h3>${d.addr}</h3>${biz}<div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>
+ <img loading="lazy" src="${aerialUrl(d)}" onerror="this.style.display='none'">
  <table>
  <tr><td>Building SF (footprint)</td><td><b>${fmt(d.sf)}</b></td></tr>
  <tr><td>Lot SF</td><td>${fmt(d.lot)} (${d.cov?(d.cov*100).toFixed(0):"?"}% cov)</td></tr>
