@@ -453,6 +453,19 @@ section{position:relative;z-index:1;padding:120px 24px}
 .tp-line{font-family:'JetBrains Mono',monospace;font-size:11px;color:#f3dca6;letter-spacing:.02em}
 .tp-badge{position:absolute;top:14px;left:16px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#e8c877;background:rgba(8,12,22,.6);border:1px solid rgba(232,200,119,.3);padding:4px 9px;border-radius:5px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 
+/* ── Screenshot carousel (real captures) ── */
+.cc{position:absolute;inset:0;overflow:hidden;background:#0a0b10}
+.cc-slides{position:absolute;inset:0}
+.cc-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0;transition:opacity .8s ease}
+.cc-slide.is-active{opacity:1}
+.cc::after{content:'';position:absolute;left:0;right:0;bottom:0;height:54px;background:linear-gradient(transparent,rgba(0,0,0,.45));pointer-events:none;z-index:3}
+.cc-dots{position:absolute;bottom:11px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:4}
+.cc-dot{width:6px;height:6px;padding:0;border:none;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .3s,width .3s,border-radius .3s}
+.cc-dot:hover{background:rgba(255,255,255,.7)}
+.cc-dot.is-active{background:#fff;width:17px;border-radius:3px}
+/* single-image thumbnail (Battleplan) */
+.card-shot{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top}
+
 /* ═══ ABOUT ═══ */
 .about-content{max-width:720px;margin:0 auto;text-align:center}
 .about-content p{font-size:17px;color:#a1a1aa;line-height:1.8;margin-bottom:16px}
@@ -779,18 +792,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
       </div>
       <div class="card-media">
-        <div class="bp-demo">
-          <div class="bp-bar">
-            <span class="bp-doc">◳ Q3 Battleplan</span>
-            <span class="bp-presence"><i>JT</i><i>AK</i><i>MR</i><b></b>3 live</span>
-          </div>
-          <div class="bp-rows">
-            <div class="bp-row"><span class="bp-check on">✓</span><span class="bp-task done">Lock pricing tiers</span><span class="bp-owner">AK</span></div>
-            <div class="bp-row"><span class="bp-check off">✓</span><span class="bp-task">Finalize investor deck<span class="bp-caret" data-who="Maya"></span></span><span class="bp-owner">JT</span></div>
-            <div class="bp-row"><span class="bp-check off">✓</span><span class="bp-task">Book 3 customer discovery calls</span><span class="bp-owner">MR</span></div>
-          </div>
-          <div class="bp-sync"><span class="bp-spin">⟳</span>Auto-synced from Monday strategy call · 2m ago</div>
-        </div>
+        <img class="card-shot" src="images/cards/battleplan.jpg" alt="Startup Battleplan — the founders' 90-day operating plan, with names redacted" loading="lazy">
       </div>
       <div class="card-body">
         <p class="desc">A custom project-management cockpit for running a startup end to end — <strong>purpose-built</strong> instead of bent out of a generic tool. Everyone works inside the same living plan, at the same time.</p>
@@ -814,30 +816,16 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
       </div>
       <div class="card-media">
-        <div class="ss-demo">
-          <div class="ss-top"><span class="ss-dot"></span>SITE SCREENER<span class="ss-tag">STEALTH</span></div>
-          <div class="ss-body">
-            <div class="ss-rail">
-              <div class="ss-rail-h">CRITERIA · 12</div>
-              <div class="ss-red" style="width:100%"></div>
-              <div class="ss-red" style="width:72%"></div>
-              <div class="ss-red" style="width:88%"></div>
-              <div class="ss-red" style="width:60%"></div>
-              <div class="ss-red" style="width:80%"></div>
-            </div>
-            <div class="ss-map">
-              <span class="ss-parcel" style="left:14%;top:18%;width:30%;height:34%"></span>
-              <span class="ss-parcel" style="left:52%;top:30%;width:34%;height:40%"></span>
-              <span class="ss-parcel" style="left:22%;top:58%;width:24%;height:26%"></span>
-              <span class="ss-pin g" style="left:24%;top:30%"><span>94</span></span>
-              <span class="ss-pin a" style="left:62%;top:46%"><span>88</span></span>
-              <span class="ss-pin r" style="left:30%;top:64%"><span>71</span></span>
-              <span class="ss-scan"></span>
-            </div>
+        <div class="cc" data-carousel>
+          <div class="cc-slides">
+            <img class="cc-slide is-active" src="images/cards/ss-1-map.jpg" alt="Interactive map with color-coded, scored sites" loading="lazy">
+            <img class="cc-slide" src="images/cards/ss-2-tooltip.jpg" alt="Site detail with live Google satellite aerial and Street View links" loading="lazy">
+            <img class="cc-slide" src="images/cards/ss-3-table.jpg" alt="Ranked, sortable table of candidate properties" loading="lazy">
           </div>
-          <div class="ss-list">
-            <div class="ss-li"><b>#1</b><span class="ss-red" style="width:55%"></span><em>94</em></div>
-            <div class="ss-li"><b>#2</b><span class="ss-red" style="width:42%"></span><em>88</em></div>
+          <div class="cc-dots">
+            <button type="button" class="cc-dot is-active" aria-label="Map view"></button>
+            <button type="button" class="cc-dot" aria-label="Site detail"></button>
+            <button type="button" class="cc-dot" aria-label="Property table"></button>
           </div>
         </div>
       </div>
@@ -846,8 +834,8 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         <div class="card-tech">
           <strong>Multi-criteria scoring</strong> over public datasets · interactive map with color-coded results · filterable, weighted criteria · ranked shortlist with drill-down detail. Built as a fast, <strong>no-dependency static app</strong> behind an access gate.
         </div>
-        <span class="card-meta">Stealth project · preview redacted</span>
-        <p class="card-disclaimer">Screenshot intentionally abstracted to protect an unannounced venture.</p>
+        <span class="card-meta">Stealth venture · live tool</span>
+        <p class="card-disclaimer">Live screenshots. The organization and end-use are intentionally withheld.</p>
       </div>
     </article>
 
@@ -864,13 +852,16 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
       </div>
       <div class="card-media">
-        <div class="tp-demo">
-          <img class="tp-bg" src="tylerplace/tp-evening.jpg" alt="Tyler Place Family Resort at dusk" loading="lazy">
-          <div class="tp-veil"></div>
-          <span class="tp-badge">Family Matching Engine</span>
-          <div class="tp-cap">
-            <img class="tp-logo" src="tylerplace/tp-logo.png" alt="Tyler Place Family Resort">
-            <div class="tp-line">Your 5 best-matched families · 74 on the map</div>
+        <div class="cc" data-carousel>
+          <div class="cc-slides">
+            <img class="cc-slide is-active" src="images/cards/tp-1-top5.jpg" alt="Your top-5 best-matched families" loading="lazy">
+            <img class="cc-slide" src="images/cards/tp-2-map.jpg" alt="The whole roster on one US map, colored by match strength" loading="lazy">
+            <img class="cc-slide" src="images/cards/tp-3-list.jpg" alt="All 74 families, searchable and sortable" loading="lazy">
+          </div>
+          <div class="cc-dots">
+            <button type="button" class="cc-dot is-active" aria-label="Top 5 matches"></button>
+            <button type="button" class="cc-dot" aria-label="Roster map"></button>
+            <button type="button" class="cc-dot" aria-label="Family list"></button>
           </div>
         </div>
       </div>
@@ -1165,6 +1156,25 @@ if(form){
     .catch(()=>{formStatus.textContent='Something went wrong. Try again?';formStatus.style.color='#f87171';formStatus.style.display='block'});
   });
 }
+
+// ── Screenshot Carousels (fade + dots, auto-advance, pause on hover) ──
+document.querySelectorAll('[data-carousel]').forEach((cc,ci)=>{
+  const slides=[...cc.querySelectorAll('.cc-slide')];
+  const dots=[...cc.querySelectorAll('.cc-dot')];
+  if(slides.length<2)return;
+  let i=0,timer=null;
+  function go(n){
+    slides[i].classList.remove('is-active');if(dots[i])dots[i].classList.remove('is-active');
+    i=(n+slides.length)%slides.length;
+    slides[i].classList.add('is-active');if(dots[i])dots[i].classList.add('is-active');
+  }
+  function start(){stop();timer=setInterval(()=>go(i+1),3600+ci*150)}
+  function stop(){if(timer){clearInterval(timer);timer=null}}
+  dots.forEach((d,n)=>d.addEventListener('click',e=>{e.preventDefault();e.stopPropagation();go(n);start()}));
+  cc.addEventListener('mouseenter',stop);
+  cc.addEventListener('mouseleave',start);
+  start();
+});
 
 // ── Scroll Reveal ──
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}})},{threshold:.1,rootMargin:'0px 0px -40px 0px'});
