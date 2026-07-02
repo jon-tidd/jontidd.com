@@ -37,7 +37,7 @@ td{padding:9px 10px;border-bottom:1px solid #eef1f3;white-space:nowrap}
 tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!important}
 .catpill{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:10px;color:#fff}
 .note{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5;border-top:1px dashed var(--line);padding-top:12px}
-.iw{font-family:-apple-system,sans-serif;max-width:300px}
+.iw{font-family:-apple-system,sans-serif;width:min(94vw,600px);max-width:600px}
 .iw img{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#dde3e6;display:block;margin:6px 0 8px}
 @media (max-width:480px){.iw img{height:96px}}
 .iw h3{margin:0 0 2px;font-size:15px;color:var(--navy);font-family:Cambria,Georgia,serif}
@@ -83,8 +83,7 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 .lb-prev{left:8px}.lb-next{right:8px}
 .iw .gallery{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:6px 0 8px;-webkit-overflow-scrolling:touch;border-radius:6px;scrollbar-width:none}
 .iw .gallery::-webkit-scrollbar{display:none}
-.iw .gimg{flex:0 0 92%;scroll-snap-align:center;width:92%;height:150px;object-fit:cover;border-radius:6px;background:#dde3e6;cursor:zoom-in;display:block}
-@media (max-width:480px){.iw .gimg{height:120px}}
+.iw .gimg{flex:0 0 92%;scroll-snap-align:center;width:92%;aspect-ratio:16/10;height:auto;object-fit:cover;border-radius:6px;background:#dde3e6;cursor:zoom-in;display:block}
 .iw textarea.iwnote{width:100%;min-height:44px;font:inherit;font-size:12px;padding:6px;border:1px solid var(--line);border-radius:6px;resize:vertical;color:var(--ink)}
 .iw textarea.iwnote:focus{outline:2px solid var(--teal);border-color:var(--teal)}
 .iw .share{display:flex;gap:8px;margin-top:8px}
@@ -184,11 +183,13 @@ let map,info,markers=[],filtered=[],sortKey="usable",sortDir=-1,selPin=null,boot
 function totalVotes(){let n=0;for(const p in STATE.favs)n+=Object.keys(STATE.favs[p]).length;return n;}
 function aerialUrl(d){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=18&size=600x320&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
 function aerialUrlZ(d,z){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=${z}&size=640x640&scale=2&maptype=satellite&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
+function roadUrl(d){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=18&size=640x400&scale=2&maptype=roadmap&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
+function roadUrlZ(d,z){return `https://maps.googleapis.com/maps/api/staticmap?center=${d.lat},${d.lon}&zoom=${z}&size=640x640&scale=2&maptype=roadmap&markers=color:red%7C${d.lat},${d.lon}&key=${KEY}`;}
 function svUrl(d,h,fov){fov=fov||82;return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${d.lat},${d.lon}&heading=${h}&pitch=2&fov=${fov}&source=outdoor&key=${KEY}`;}
 const SVHEAD={}; // pin -> headings facing the building (after metadata); [] = no outdoor view
 function svHeadings(d){return SVHEAD[d.pin]||[0,90,180,270];}
-function gallery(d){const g=[];const hs=svHeadings(d);hs.forEach((h,i)=>g.push({kind:"sv",h,label:(hs.length<=3&&i===0)?"Storefront":"Street "+Math.round(h)+"°"}));g.push({kind:"aerial",label:"Aerial (top-down)"});return g;}
-function thumbSrc(d,it){return it.kind==="aerial"?aerialUrl(d):svUrl(d,it.h,82);}
+function gallery(d){const g=[];const hs=svHeadings(d);if(hs.length)g.push({kind:"sv",h:hs[0],label:"Storefront"});g.push({kind:"road",label:"Map · streets & neighbors"});g.push({kind:"aerial",label:"Aerial (top-down)"});hs.slice(1).forEach(h=>g.push({kind:"sv",h,label:"Street "+Math.round(h)+"°"}));return g;}
+function thumbSrc(d,it){return it.kind==="aerial"?aerialUrl(d):it.kind==="road"?roadUrl(d):svUrl(d,it.h,82);}
 function bearing(aLat,aLng,bLat,bLng){const R=x=>x*Math.PI/180,D=x=>x*180/Math.PI;const y=Math.sin(R(bLng-aLng))*Math.cos(R(bLat));const x=Math.cos(R(aLat))*Math.sin(R(bLat))-Math.sin(R(aLat))*Math.cos(R(bLat))*Math.cos(R(bLng-aLng));return (D(Math.atan2(y,x))+360)%360;}
 function buildGimgs(d){return gallery(d).map((it,i)=>`<img class="gimg" data-gi="${i}" loading="lazy" src="${thumbSrc(d,it)}" alt="${it.label}" title="Swipe for more · tap to enlarge" onerror="this.remove()">`).join("");}
 function wireGimgs(d,el){el.querySelectorAll(".gimg").forEach(im=>im.onclick=()=>openLightbox(d,+im.dataset.gi));}
@@ -203,12 +204,12 @@ async function loadSvHeading(d){
 }
 let lbD=null,lbList=[],lbIdx=0;
 function openLightbox(d,idx){lbD=d;lbList=gallery(d).map(it=>Object.assign({z:19,fov:70},it));lbIdx=idx||0;lbRender();const lb=document.getElementById("lightbox");if(lb)lb.style.display="flex";}
-function lbRender(){if(!lbD)return;const it=lbList[lbIdx];const im=document.getElementById("lb-img");if(im)im.src=it.kind==="aerial"?aerialUrlZ(lbD,it.z):svUrl(lbD,it.h,it.fov);
+function lbRender(){if(!lbD)return;const it=lbList[lbIdx];const im=document.getElementById("lb-img");const zk=(it.kind==="aerial"||it.kind==="road");if(im)im.src=it.kind==="aerial"?aerialUrlZ(lbD,it.z):it.kind==="road"?roadUrlZ(lbD,it.z):svUrl(lbD,it.h,it.fov);
  const cap=document.getElementById("lb-cap");if(cap)cap.textContent=(bizName(lbD)||lbD.addr)+" · "+it.label;
- const lvl=document.getElementById("lb-lvl");if(lvl)lvl.textContent=it.kind==="aerial"?("z"+it.z):(it.fov+"°");
+ const lvl=document.getElementById("lb-lvl");if(lvl)lvl.textContent=zk?("z"+it.z):(it.fov+"°");
  const multi=lbList.length>1;["lb-prev","lb-next"].forEach(id=>{const b=document.getElementById(id);if(b)b.style.visibility=multi?"visible":"hidden";});}
 function lbNav(delta){if(!lbList.length)return;lbIdx=(lbIdx+delta+lbList.length)%lbList.length;lbRender();}
-function lbZoom(delta){const it=lbList[lbIdx];if(!it)return;if(it.kind==="aerial")it.z=Math.max(16,Math.min(21,it.z+delta));else it.fov=Math.max(25,Math.min(110,it.fov-delta*10));lbRender();}
+function lbZoom(delta){const it=lbList[lbIdx];if(!it)return;if(it.kind==="aerial"||it.kind==="road")it.z=Math.max(16,Math.min(21,it.z+delta));else it.fov=Math.max(25,Math.min(110,it.fov-delta*10));lbRender();}
 function closeLightbox(){const lb=document.getElementById("lightbox");if(lb)lb.style.display="none";lbD=null;}
 /* ----- map focus: grey other pins, zoom to selected ----- */
 function greyPin(){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:"#aab4ba",fillOpacity:.5,strokeColor:"#fff",strokeWeight:1,scale:0.62,anchor:new google.maps.Point(0,0)};}
@@ -374,6 +375,7 @@ function openInfo(d,m){
  <a href="https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lon}" target="_blank">Map / who's here</a>
  <a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lon}" target="_blank">Street View</a>
  </div></div>`;
+ info.setOptions({maxWidth:Math.min(Math.round((window.innerWidth||360)*0.94),640)});
  info.setContent(c);info.open(map,m);selPin=d.pin;highlightRow(d.pin);focusMarker(d);
  google.maps.event.addListenerOnce(info,"domready",()=>wireCard(d));
 }
