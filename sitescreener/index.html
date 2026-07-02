@@ -115,13 +115,13 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 <header>
 <div class="eyebrow">Ira Gordon Center of Excellence · Site Acquisition</div>
 <h1>NoVA Flex / Industrial Site Screener</h1>
-<div class="sub">Freestanding commercial &amp; industrial buildings in your boundary, 9k–37k SF footprint, with estimated parking and current business where known. Tap a pin or row.</div>
+<div class="sub">Freestanding commercial &amp; industrial buildings in your boundary, ~10–30k SF usable, with estimated parking and current business where known. Tap a pin or row.</div>
 </header>
 <div class="wrap">
 <div class="stat">Showing <b id="cnt">0</b> of <span id="tot">0</span> candidate sites</div>
 <div class="filters">
 <div class="fg"><label>Min usable SF</label><input type="number" id="sfmin" value="10000" step="500"></div>
-<div class="fg"><label>Max usable SF</label><input type="number" id="sfmax" value="35000" step="500"></div>
+<div class="fg"><label>Max usable SF</label><input type="number" id="sfmax" value="30000" step="500"></div>
 <div class="fg"><label>Min est. parking</label><input type="number" id="pkmin" value="80" step="5"></div>
 <div class="fg"><label>Max assessed $</label><input type="number" id="aprmax" value="15000000" step="500000"></div>
 <div class="fg"><label>Use category</label><div class="chips" id="cats">
@@ -394,7 +394,7 @@ function apply(){
  document.getElementById("cnt").textContent=filtered.length;renderTable();
 }
 function reset(){
- document.getElementById("sfmin").value=10000;document.getElementById("sfmax").value=35000;document.getElementById("pkmin").value=80;
+ document.getElementById("sfmin").value=10000;document.getElementById("sfmax").value=30000;document.getElementById("pkmin").value=80;
  document.getElementById("aprmax").value=15000000;document.getElementById("freestanding").checked=true;
  const mv=document.getElementById("minvotes");if(mv)mv.value=0;
  document.querySelectorAll("#favby .chip").forEach(c=>c.classList.remove("on"));
