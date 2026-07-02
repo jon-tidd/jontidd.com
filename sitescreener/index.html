@@ -61,10 +61,17 @@ td.notes{white-space:nowrap;min-width:240px}
 .syncpill.ok{color:#1d7a3a}.syncpill.local{color:#9a6b00}.syncpill.saving{color:var(--teal-d)}
 td.score,th[data-k="score"]{text-align:center}
 .scorebadge{display:inline-block;min-width:28px;padding:2px 7px;border-radius:10px;font-weight:800;font-size:12px;color:#fff}
-.sc-hi{background:#1d7a3a}.sc-mid{background:#b7791f}.sc-lo{background:#8a97a0}
-.iw .scoreline{display:flex;align-items:center;gap:9px;margin:7px 0 2px;flex-wrap:wrap}
-.iw .scoreline .scorebadge{font-size:13px;padding:3px 10px}
-.iw .scorewhy{font-size:12px;color:var(--muted)}
+.sc-top{background:#14532d}.sc-hi{background:#2f9e44}.sc-mid{background:#b7791f}.sc-lo{background:#9aa7b0}
+.iw .scoreline{display:flex;align-items:center;gap:9px;margin:8px 0 4px;flex-wrap:wrap}
+.iw .scoreline .scorebadge{font-size:14px;padding:3px 11px}
+.iw .rec{font-size:12.5px;font-weight:700;color:var(--navy)}
+.iw .flags{display:flex;gap:6px;flex-wrap:wrap;margin:2px 0 4px}
+.iw .flag{font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;background:#eef3f4;color:var(--muted);border:1px solid var(--line)}
+.iw .flag-pass{background:#e4f5ea;color:#1d7a3a;border-color:#bfe6cd}
+.iw .flag-conditional{background:#fdf3e0;color:#9a6b00;border-color:#f0dcae}
+.iw .flag-fail{background:#fbe9e7;color:#b23b2f;border-color:#f2c7c0}
+.iw .breakdown{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted);margin:2px 0 4px}
+.iw .breakdown b{color:var(--navy)}
 .iw .cardtools{display:flex;align-items:center;gap:8px;margin:9px 0 5px}
 .iw .cardtools .starbtn{font-size:20px}
 .dot2{display:inline-block;width:14px;height:14px;border-radius:50%;border:2px solid #c2ccd2;background:#fff;cursor:pointer;vertical-align:middle}
@@ -177,7 +184,7 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 <th>Notes</th>
 </tr></thead><tbody id="tbody"></tbody></table>
 </div></div>
-<div class="note"><b>Fit score (0–100):</b> our predicted match to the brief — a weighted blend of usable-size fit (peaks ~14–26k SF, 30%), parking (22%), price per usable SF (20%), lot room / low coverage (12%), zoning (8%), and freestanding (8%). A heuristic prediction to rank leads, <em>not</em> a recommendation; hover a score for its top +/− factors.
+<div class="note"><b>IGCE Fit score (0–100):</b> weighted match to the property-scanner brief — radiation-vault structural suitability (20), building size 15–30k SF ideal (15), lot/parking (15), highway access to I-95/395/495 (15), zoning (10), construction era (10), surroundings (8), off-market signal (7). Hard disqualifiers force 0 (usable &lt;10k, vault-fail with no lot for an addition, lot &lt;1ac &amp; parking &lt;60, &gt;3mi from an interchange & &gt;5mi from centroid, residential zoning). Bands: 80+ cold-call priority · 65–79 site visit · 50–64 watch · &lt;50 skip. <b>Proxy caveats:</b> vault, construction era, and off-market are inferred from use-category/zone/stories/sale-date (no year-built, ceiling-height, floor-loading, or listing feeds in this dataset), and highway distance is straight-line to approximate interstate routes — treat as a triage rank, then verify. Hover any score for its top +/− factors.
 <b>Scope:</b> Fairfax County + City of Alexandria. Arlington's in-boundary sliver and the Prince William (Woodbridge) tail are excluded (low yield for freestanding flex, thinner open data).
 <b>Business / owner:</b> populated for Alexandria from the city assessor's property name; Fairfax withholds owner names in open GIS, so those show a "Who's here?" lookup link (enable Places API on the key and these can auto-fill).
 <b>Data:</b> Fairfax County GIS &amp; City of Alexandria GIS — parcels, assessed values, zoning, footprints; Fairfax adds sales history, Alexandria adds stories. Building SF is footprint area. Parking est = (lot − footprint) ÷ 325 sf/space; verify by aerial. Footprint layers refresh on multi-year cycles. Not a substitute for survey, title, or zoning confirmation. The password gate here is a light client-side lock; a server-side lock is set at the host.</div>
@@ -238,31 +245,47 @@ let saveTimer=null, pendingDelta={notes:{},favs:[]}, editingNotePin=null, pendin
 const escHtml=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const escAttr=s=>escHtml(s).replace(/"/g,"&quot;");
 function usableOf(d){return GBA[d.pin]||d.sf*(d.stories||1);}
-/* ---------- Fit score: predicted match to the Center-of-Excellence brief ---------- */
-function sizeFit(u){if(u>=14000&&u<=26000)return 1;if(u<14000)return Math.max(0,(u-6000)/8000);return Math.max(0,(38000-u)/12000);}
-function scoreParts(d){
- const u=usableOf(d);
- const ppsf=(d.apr&&u)?d.apr/u:99999;
- return {
-  size:sizeFit(u),
-  park:Math.max(0,Math.min(1,d.park/180)),
-  value:Math.max(0,Math.min(1,(550-ppsf)/400)),
-  cov:(d.cov!=null)?Math.max(0,Math.min(1,(0.55-d.cov)/0.4)):0.5,
-  zone:(d.cat==="Industrial"||d.cat==="Commercial")?1:0.4,
-  single:(d.fp<=1)?1:0.4
- };
-}
-const SCOREW={size:0.30,park:0.22,value:0.20,cov:0.12,zone:0.08,single:0.08};
-function fitScore(d){const p=scoreParts(d);let s=0;for(const k in SCOREW)s+=SCOREW[k]*p[k];return Math.round(100*s);}
-function scoreClass(s){return s>=70?"sc-hi":s>=50?"sc-mid":"sc-lo";}
-function scoreWhy(d){
- const p=scoreParts(d),L={size:"size fit",park:"parking",value:"price/SF",cov:"lot room",zone:"zoning",single:"freestanding"};
- const a=Object.keys(p).map(k=>({k,v:p[k]}));
- const pos=a.filter(x=>x.v>=0.66).sort((x,y)=>y.v-x.v).slice(0,2).map(x=>L[x.k]);
- const neg=a.filter(x=>x.v<=0.4).sort((x,y)=>x.v-y.v).slice(0,2).map(x=>L[x.k]);
- let s="";if(pos.length)s+="↑ "+pos.join(", ");if(neg.length)s+=(s?"   ":"")+"↓ "+neg.join(", ");
- return s||"mixed factors";
-}
+/* ---------- IGCE Fit score (per the property-scanner brief) ---------- */
+const IGCE_CENTROID=[38.82,-77.19];
+/* approximate I-495 / I-95 / I-395 route vertices [lat,lon] in the target corridor */
+const HWYS=[
+ [[38.925,-77.225],[38.882,-77.230],[38.845,-77.232],[38.812,-77.229],[38.788,-77.171],[38.792,-77.140],[38.793,-77.075],[38.790,-77.035]],
+ [[38.788,-77.171],[38.760,-77.176],[38.735,-77.190],[38.705,-77.220]],
+ [[38.788,-77.171],[38.803,-77.168],[38.812,-77.150],[38.812,-77.128],[38.820,-77.100],[38.838,-77.085],[38.858,-77.055]]
+];
+function toRadn(x){return x*Math.PI/180;}
+function haversineMi(a,b){const R=3958.8,dLa=toRadn(b[0]-a[0]),dLo=toRadn(b[1]-a[1]),la1=toRadn(a[0]),la2=toRadn(b[0]);const h=Math.sin(dLa/2)**2+Math.cos(la1)*Math.cos(la2)*Math.sin(dLo/2)**2;return 2*R*Math.asin(Math.sqrt(h));}
+function distSegMi(p,a,b){const ref=toRadn((a[0]+b[0])/2),X=lo=>toRadn(lo)*Math.cos(ref)*3958.8,Y=la=>toRadn(la)*3958.8;
+ const px=X(p[1]),py=Y(p[0]),ax=X(a[1]),ay=Y(a[0]),bx=X(b[1]),by=Y(b[0]),dx=bx-ax,dy=by-ay,L2=dx*dx+dy*dy;
+ let t=L2?((px-ax)*dx+(py-ay)*dy)/L2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy));}
+function hwyMiles(d){let m=1e9;for(const ln of HWYS)for(let i=0;i<ln.length-1;i++)m=Math.min(m,distSegMi([d.lat,d.lon],ln[i],ln[i+1]));return m;}
+function isInd(d){return d.cat==="Industrial"||(d.zone&&d.zone.charAt(0)==="I");}
+/* sub-scores 0-10 */
+function sc_size(d){const u=usableOf(d);if(u>=20000&&u<=30000)return 10;if(u>=15000&&u<20000)return 8;if(u>30000&&u<=35000)return 8;if(u>35000&&u<=50000)return 6;if(u>50000&&u<=75000)return 4;if(u>=12000&&u<15000)return 6;return u>75000?1:2;}
+function effStories(d){return d.stories||Math.max(1,Math.round(usableOf(d)/(d.sf||usableOf(d)||1)));}
+function sc_vault(d){const ac=(d.lot||0)/43560,st=effStories(d);if(isInd(d)){if(st<=1)return 8;if(st===2)return 6;return ac>3?4:3;}if(st<=1)return 5;return ac>3?4:3;}
+function sc_parklot(d){const p=d.park||0,ac=(d.lot||0)/43560;const byP=p>=100?10:p>=80?7:p>=60?4:p>=40?2:0;const byL=ac>3?10:ac>=2?7:ac>=1.5?4:ac>=1?2:0;return Math.max(byP,byL);}
+function sc_access(d){const mi=hwyMiles(d);return mi<0.5?10:mi<1?8:mi<2?6:mi<3?4:2;}
+function sc_zone(d){const z=(d.zone||"").toUpperCase();if(/^I-?5/.test(z))return 10;if(/^I-?4/.test(z))return 8;if(z.charAt(0)==="I")return 8;if(/^C-?[45]/.test(z))return 6;if(/^C-?[23]/.test(z))return 4;if(z.charAt(0)==="C")return 5;if(z.charAt(0)==="R")return 0;if(/^(PD|MU|CDD|OCM|PRM|W-)/.test(z))return 2;return 4;}
+function sc_era(d){const st=effStories(d);if(isInd(d))return st<=1?8:7;return 3;}
+function sc_area(d){const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let s=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))s++;return Math.min(8,s);}
+function sc_offmkt(d){const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;let s=hold==null?6:(hold>15?10:hold>=10?8:6);const o=(d.owner||"").toUpperCase();if(/REIT|FUND|\bLP\b/.test(o))s=Math.min(s,4);return s;}
+const IGCE_F=[["Size","size",sc_size,15],["Vault","vault",sc_vault,20],["Parking/Lot","parking",sc_parklot,15],["Access","access",sc_access,15],["Zoning","zoning",sc_zone,10],["Construction","era",sc_era,10],["Surroundings","area",sc_area,8],["Off-market","offmkt",sc_offmkt,7]];
+function igceDisq(d){const u=usableOf(d),ac=(d.lot||0)/43560,mi=hwyMiles(d),cen=haversineMi([d.lat,d.lon],IGCE_CENTROID),z=(d.zone||"").toUpperCase();
+ if(u<10000)return "too small (<10k SF)";
+ if(sc_vault(d)<=2&&ac<1.5)return "vault fail, no lot for addition";
+ if(ac<1&&(d.park||0)<60)return "lot <1ac & parking <60";
+ if(mi>3&&cen>5)return "too far from I-95/395/495";
+ if(z.charAt(0)==="R")return "residential zoning";
+ return null;}
+function fitBreakdown(d){return IGCE_F.map(f=>({name:f[0],pts:Math.round(f[2](d)*f[3]/10),max:f[3]}));}
+function fitScore(d){if(igceDisq(d))return 0;let t=0;for(const f of IGCE_F)t+=f[2](d)*f[3]/10;return Math.round(t);}
+function vaultFlag(d){const v=sc_vault(d);return v>=8?"Pass":v>=4?"Conditional":"Fail";}
+function parkFlag(d){const p=d.park||0;return p>=100?"Target":p>=80?"Marginal":"Fail";}
+function offFlag(d){const s=sc_offmkt(d);return s>=8?"High":s>=6?"Medium":"Low";}
+function recAction(d){if(igceDisq(d))return "Skip — disqualified";const s=fitScore(d);return s>=80?"Cold-call priority":s>=65?"Site visit":s>=50?"Watch":"Skip";}
+function scoreClass(s){return s>=80?"sc-top":s>=65?"sc-hi":s>=50?"sc-mid":"sc-lo";}
+function scoreWhy(d){const dq=igceDisq(d);if(dq)return "Disqualified: "+dq;const b=fitBreakdown(d).slice().sort((a,c)=>(c.pts/c.max)-(a.pts/a.max));return "↑ "+b.slice(0,2).map(x=>x.name).join(", ")+"   ↓ "+b.slice(-2).map(x=>x.name).join(", ");}
 function noteOf(p){return STATE.notes[p]||"";}
 function iFavBy(p,person){return !!(STATE.favs[p]&&STATE.favs[p][person]);}
 function favPeopleOf(p){const o=STATE.favs[p];return o?PEOPLE.filter(n=>o[n]):[];}
@@ -389,9 +412,11 @@ function bizCard(d){
  return `<div class="biz" style="color:#7a8893;font-weight:600">Business: <a href="${bizLink(d)}" target="_blank" style="color:#0b5e6a">look up ↗</a></div>`;
 }
 function openInfo(d,m){
- const st=d.stories?`${d.stories}-story`:"n/a";
+ const st=d.stories?`${d.stories}-story`:(effStories(d)>1?`~${effStories(d)} floors (est.)`:"1-story (est.)");
  const c=`<div class="iw"><h3>${escHtml(d.addr)}</h3><div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>${bizCard(d)}
- <div class="scoreline"><span class="scorebadge ${scoreClass(fitScore(d))}">Fit ${fitScore(d)}/100</span><span class="scorewhy">${escHtml(scoreWhy(d))}</span></div>
+ <div class="scoreline"><span class="scorebadge ${scoreClass(fitScore(d))}">Fit ${fitScore(d)}/100</span><span class="rec">${escHtml(recAction(d))}</span></div>
+ <div class="flags"><span class="flag flag-${vaultFlag(d).toLowerCase()}">Vault ${vaultFlag(d)}</span><span class="flag">Parking ${parkFlag(d)}</span><span class="flag">Off-mkt ${offFlag(d)}</span></div>
+ <div class="breakdown">${fitBreakdown(d).map(x=>`<span><b>${x.pts}</b>/${x.max} ${x.name}</span>`).join("")}</div>
  <div class="gallery" id="iw-gallery" data-pin="${escAttr(d.pin)}">${buildGimgs(d)}</div>
  <table>
  <tr><td>Usable SF</td><td><b>${fmt(usableOf(d))}</b> ${GBA[d.pin]?'<em class="guess">(researched)</em>':(d.stories?`(${d.stories}×${fmt(d.sf)})`:"(1 floor assumed)")}</td></tr>
@@ -466,9 +491,15 @@ function renderTable(){
 }
 function highlightRow(pin){document.querySelectorAll("#tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.pin===pin));}
 function downloadCsv(){
- const head=["fit_score","juris","addr","city","zip","business_or_guess","is_guess","pin","footprint_sf","usable_sf","lot","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
+ const head=["fit_score","recommended","vault_flag","parking_flag","off_market","hwy_miles","juris","addr","city","zip","business_or_guess","is_guess","pin","footprint_sf","usable_sf","lot_acres","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
  const val=(d,k)=>{
   if(k==="fit_score")return fitScore(d);
+  if(k==="recommended")return recAction(d);
+  if(k==="vault_flag")return vaultFlag(d);
+  if(k==="parking_flag")return parkFlag(d);
+  if(k==="off_market")return offFlag(d);
+  if(k==="hwy_miles")return hwyMiles(d).toFixed(2);
+  if(k==="lot_acres")return ((d.lot||0)/43560).toFixed(2);
   if(k==="business_or_guess")return d.owner||GUESS[d.pin]||"";
   if(k==="is_guess")return (!d.owner&&GUESS[d.pin])?"guess":(d.owner?"record":"");
   if(k==="footprint_sf")return d.sf;
