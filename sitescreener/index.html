@@ -244,7 +244,14 @@ const STATE={notes:{},favs:{}};
 let saveTimer=null, pendingDelta={notes:{},favs:[]}, editingNotePin=null, pendingNoteVal=null;
 const escHtml=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const escAttr=s=>escHtml(s).replace(/"/g,"&quot;");
-function usableOf(d){return GBA[d.pin]||d.sf*(d.stories||1);}
+/* ENRICH: researched building facts. pin -> {yb:year built, st:stories, cl:clear ceiling ft, ow:owner of record, ot:"private"|"llc"|"institutional", ls:actively listed (bool), nt:note} */
+const ENRICH = {};
+/* EXTRA: researched comparable records (brief comps not in the county pull); appended to DATA at boot */
+const EXTRA = [];
+/* INTERCHANGES: real I-95/I-395/I-495 interchange coordinates. [{name,route,lat,lon}] */
+const INTERCHANGES = [];
+function enrichOf(d){return ENRICH[d.pin]||{};}
+function usableOf(d){return GBA[d.pin]||d.sf*(d.stories||enrichOf(d).st||1);}
 /* ---------- IGCE Fit score (per the property-scanner brief) ---------- */
 const IGCE_CENTROID=[38.82,-77.19];
 /* approximate I-495 / I-95 / I-395 route vertices [lat,lon] in the target corridor */
@@ -258,18 +265,47 @@ function haversineMi(a,b){const R=3958.8,dLa=toRadn(b[0]-a[0]),dLo=toRadn(b[1]-a
 function distSegMi(p,a,b){const ref=toRadn((a[0]+b[0])/2),X=lo=>toRadn(lo)*Math.cos(ref)*3958.8,Y=la=>toRadn(la)*3958.8;
  const px=X(p[1]),py=Y(p[0]),ax=X(a[1]),ay=Y(a[0]),bx=X(b[1]),by=Y(b[0]),dx=bx-ax,dy=by-ay,L2=dx*dx+dy*dy;
  let t=L2?((px-ax)*dx+(py-ay)*dy)/L2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy));}
-function hwyMiles(d){let m=1e9;for(const ln of HWYS)for(let i=0;i<ln.length-1;i++)m=Math.min(m,distSegMi([d.lat,d.lon],ln[i],ln[i+1]));return m;}
+function hwyMiles(d){
+ if(INTERCHANGES.length){let m=1e9,nm=null;for(const ic of INTERCHANGES){const mi=haversineMi([d.lat,d.lon],[ic.lat,ic.lon]);if(mi<m){m=mi;nm=ic;}}d.__ic=nm;return m;}
+ let m=1e9;for(const ln of HWYS)for(let i=0;i<ln.length-1;i++)m=Math.min(m,distSegMi([d.lat,d.lon],ln[i],ln[i+1]));return m;}
+function nearestIc(d){hwyMiles(d);return d.__ic;}
 function isInd(d){return d.cat==="Industrial"||(d.zone&&d.zone.charAt(0)==="I");}
 /* sub-scores 0-10 */
 function sc_size(d){const u=usableOf(d);if(u>=20000&&u<=30000)return 10;if(u>=15000&&u<20000)return 8;if(u>30000&&u<=35000)return 8;if(u>35000&&u<=50000)return 6;if(u>50000&&u<=75000)return 4;if(u>=12000&&u<15000)return 6;return u>75000?1:2;}
-function effStories(d){return d.stories||Math.max(1,Math.round(usableOf(d)/(d.sf||usableOf(d)||1)));}
-function sc_vault(d){const ac=(d.lot||0)/43560,st=effStories(d);if(isInd(d)){if(st<=1)return 8;if(st===2)return 6;return ac>3?4:3;}if(st<=1)return 5;return ac>3?4:3;}
+function effStories(d){const e=enrichOf(d);if(d.stories)return d.stories;if(e.st)return e.st;const u=GBA[d.pin];return u?Math.max(1,Math.round(u/(d.sf||u))):1;}
+function sc_vault(d){
+ const ac=(d.lot||0)/43560,st=effStories(d),e=enrichOf(d),cl=e.cl||null;
+ if(isInd(d)){
+  if(st<=1){if(cl!=null){if(cl>=20)return 10;if(cl>=14)return 7;return 6;}return 8;}
+  if(st===2)return 6;
+  return ac>3?4:3;
+ }
+ if(st<=1)return 5;
+ if(st===2)return 4;
+ return ac>3?4:3;
+}
 function sc_parklot(d){const p=d.park||0,ac=(d.lot||0)/43560;const byP=p>=100?10:p>=80?7:p>=60?4:p>=40?2:0;const byL=ac>3?10:ac>=2?7:ac>=1.5?4:ac>=1?2:0;return Math.max(byP,byL);}
 function sc_access(d){const mi=hwyMiles(d);return mi<0.5?10:mi<1?8:mi<2?6:mi<3?4:2;}
 function sc_zone(d){const z=(d.zone||"").toUpperCase();if(/^I-?5/.test(z))return 10;if(/^I-?4/.test(z))return 8;if(z.charAt(0)==="I")return 8;if(/^C-?[45]/.test(z))return 6;if(/^C-?[23]/.test(z))return 4;if(z.charAt(0)==="C")return 5;if(z.charAt(0)==="R")return 0;if(/^(PD|MU|CDD|OCM|PRM|W-)/.test(z))return 2;return 4;}
-function sc_era(d){const st=effStories(d);if(isInd(d))return st<=1?8:7;return 3;}
+function sc_era(d){
+ const yb=enrichOf(d).yb||null,st=effStories(d);
+ if(isInd(d)){
+  if(yb){if(yb<1990)return 9;if(yb<=2010)return 7;return 6;}
+  return st<=1?8:7;
+ }
+ return 3;
+}
 function sc_area(d){const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let s=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))s++;return Math.min(8,s);}
-function sc_offmkt(d){const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;let s=hold==null?6:(hold>15?10:hold>=10?8:6);const o=(d.owner||"").toUpperCase();if(/REIT|FUND|\bLP\b/.test(o))s=Math.min(s,4);return s;}
+function sc_offmkt(d){
+ const e=enrichOf(d);
+ if(e.ls===true)return 1; // actively listed — the opposite of off-market
+ const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;
+ let s=hold==null?6:(hold>15?10:hold>=10?8:6);
+ const o=((e.ow||d.owner||"")+"").toUpperCase();
+ if(e.ot==="institutional"||/REIT|FUND|\bLP\b|TRUST COMPANY/.test(o))s=Math.min(s,4);
+ if(e.ot==="private")s=Math.min(10,s+1);
+ return s;
+}
 const IGCE_F=[["Size","size",sc_size,15],["Vault","vault",sc_vault,20],["Parking/Lot","parking",sc_parklot,15],["Access","access",sc_access,15],["Zoning","zoning",sc_zone,10],["Construction","era",sc_era,10],["Surroundings","area",sc_area,8],["Off-market","offmkt",sc_offmkt,7]];
 function igceDisq(d){const u=usableOf(d),ac=(d.lot||0)/43560,mi=hwyMiles(d),cen=haversineMi([d.lat,d.lon],IGCE_CENTROID),z=(d.zone||"").toUpperCase();
  if(u<10000)return "too small (<10k SF)";
@@ -427,6 +463,11 @@ function openInfo(d,m){
  <tr><td>Zoning</td><td>${d.zone} · ${d.cat}</td></tr>
  <tr><td>Assessed total</td><td>${money(d.apr)}</td></tr>
  <tr><td>Last sale</td><td>${d.saled||"—"} ${d.salep>1000?("· "+money(d.salep)):""}</td></tr>
+ ${enrichOf(d).yb?`<tr><td>Year built</td><td>${enrichOf(d).yb}</td></tr>`:""}
+ ${enrichOf(d).cl?`<tr><td>Clear height</td><td>~${enrichOf(d).cl}′</td></tr>`:""}
+ ${enrichOf(d).ow?`<tr><td>Owner of record</td><td>${escHtml(enrichOf(d).ow)}${enrichOf(d).ot?` <span style="color:var(--muted)">(${enrichOf(d).ot})</span>`:""}</td></tr>`:""}
+ ${enrichOf(d).nt?`<tr><td>Notes (research)</td><td>${escHtml(enrichOf(d).nt)}</td></tr>`:""}
+ <tr><td>Interstate access</td><td>${hwyMiles(d).toFixed(1)} mi${nearestIc(d)?` · ${escHtml(nearestIc(d).name)} (${nearestIc(d).route})`:""}</td></tr>
  </table>
  <div class="cardvotes" id="iw-votes" data-pin="${escAttr(d.pin)}"><span class="vlabel">Votes</span>${voteChips(d.pin)}<b id="iw-vcount">${favCount(d.pin)}</b><span class="vof">/4</span></div>
  <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" placeholder="Add a shared note…">${escHtml(noteOf(d.pin))}</textarea>
@@ -491,7 +532,7 @@ function renderTable(){
 }
 function highlightRow(pin){document.querySelectorAll("#tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.pin===pin));}
 function downloadCsv(){
- const head=["fit_score","recommended","vault_flag","parking_flag","off_market","hwy_miles","juris","addr","city","zip","business_or_guess","is_guess","pin","footprint_sf","usable_sf","lot_acres","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
+ const head=["fit_score","recommended","vault_flag","parking_flag","off_market","hwy_miles","nearest_exit","juris","addr","city","zip","business_or_guess","is_guess","owner_of_record","year_built","clear_height_ft","actively_listed","pin","footprint_sf","usable_sf","lot_acres","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
  const val=(d,k)=>{
   if(k==="fit_score")return fitScore(d);
   if(k==="recommended")return recAction(d);
@@ -499,6 +540,11 @@ function downloadCsv(){
   if(k==="parking_flag")return parkFlag(d);
   if(k==="off_market")return offFlag(d);
   if(k==="hwy_miles")return hwyMiles(d).toFixed(2);
+  if(k==="nearest_exit"){const ic=nearestIc(d);return ic?ic.name+" ("+ic.route+")":"";}
+  if(k==="owner_of_record")return enrichOf(d).ow||"";
+  if(k==="year_built")return enrichOf(d).yb||"";
+  if(k==="clear_height_ft")return enrichOf(d).cl||"";
+  if(k==="actively_listed")return enrichOf(d).ls===true?"yes":enrichOf(d).ls===false?"no":"";
   if(k==="lot_acres")return ((d.lot||0)/43560).toFixed(2);
   if(k==="business_or_guess")return d.owner||GUESS[d.pin]||"";
   if(k==="is_guess")return (!d.owner&&GUESS[d.pin])?"guess":(d.owner?"record":"");
@@ -515,6 +561,7 @@ function downloadCsv(){
 /* ---- gate ---- */
 function boot(){
  if(booted)return; booted=true;
+ EXTRA.forEach(r=>{if(!DATA.some(x=>x.pin===r.pin))DATA.push(r);});
  loadLocal();
  document.getElementById("tot").textContent=DATA.length;
  const s=document.createElement("script");
