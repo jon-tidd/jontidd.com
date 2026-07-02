@@ -458,6 +458,7 @@ section{position:relative;z-index:1;padding:120px 24px}
 .cc-slides{position:absolute;inset:0}
 .cc-slide{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:0;transition:opacity .8s ease}
 .cc-slide.is-active{opacity:1}
+.cc-slide.align-left{object-position:left top}
 .cc::after{content:'';position:absolute;left:0;right:0;bottom:0;height:54px;background:linear-gradient(transparent,rgba(0,0,0,.45));pointer-events:none;z-index:3}
 .cc-dots{position:absolute;bottom:11px;left:0;right:0;display:flex;justify-content:center;gap:6px;z-index:4}
 .cc-dot{width:6px;height:6px;padding:0;border:none;border-radius:50%;background:rgba(255,255,255,.4);cursor:pointer;transition:background .3s,width .3s,border-radius .3s}
@@ -809,7 +810,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-border"></div>
       <div class="card-header">
         <span class="proj-label">Project #5</span>
-        <div class="card-question">"What if you could screen thousands of real-world sites against a dozen criteria — and instantly rank the best few?"</div>
+        <div class="card-question">"What if you could screen thousands of real-world sites — and have an engine tell you exactly which ones to pursue first?"</div>
         <div class="card-title-row">
           <h3>Site Screener</h3>
           <span class="card-status"><span class="card-status-dot"></span>Stealth</span>
@@ -819,20 +820,20 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         <div class="cc" data-carousel>
           <div class="cc-slides">
             <img class="cc-slide is-active" src="images/cards/ss-1-map.jpg" alt="Interactive map with color-coded, scored sites" loading="lazy">
-            <img class="cc-slide" src="images/cards/ss-2-tooltip.jpg" alt="Site detail with live Google satellite aerial and Street View links" loading="lazy">
-            <img class="cc-slide" src="images/cards/ss-3-table.jpg" alt="Ranked, sortable table of candidate properties" loading="lazy">
+            <img class="cc-slide" src="images/cards/ss-2-tooltip.jpg" alt="Site detail card with a 92/100 fit score, sub-score breakdown and recommended next action" loading="lazy">
+            <img class="cc-slide align-left" src="images/cards/ss-3-table.jpg" alt="Candidate table ranked by fit score, best matches first" loading="lazy">
           </div>
           <div class="cc-dots">
             <button type="button" class="cc-dot is-active" aria-label="Map view"></button>
-            <button type="button" class="cc-dot" aria-label="Site detail"></button>
-            <button type="button" class="cc-dot" aria-label="Property table"></button>
+            <button type="button" class="cc-dot" aria-label="Fit score detail"></button>
+            <button type="button" class="cc-dot" aria-label="Ranked table"></button>
           </div>
         </div>
       </div>
       <div class="card-body">
-        <p class="desc">A geospatial screening engine for an early-stage venture. It ingests <strong>public-records data</strong>, scores every candidate location against a stack of weighted criteria, and surfaces a <strong>ranked shortlist on an interactive map</strong>. <em>(What it's screening for stays under wraps.)</em></p>
+        <p class="desc">A geospatial screening engine for an early-stage venture, with a <strong>recommendation engine built in</strong>. It ingests <strong>public-records data</strong>, scores every candidate <strong>0–100 against weighted criteria</strong>, and tells the team which sites to pursue first — ranked on an interactive map. <em>(What it's screening for stays under wraps.)</em></p>
         <div class="card-tech">
-          <strong>Multi-criteria scoring</strong> over public datasets · interactive map with color-coded results · filterable, weighted criteria · ranked shortlist with drill-down detail. Built as a fast, <strong>no-dependency static app</strong> behind an access gate.
+          <strong>Recommendation engine</strong> — eight weighted criteria roll up to a 0–100 fit score, hard disqualifiers auto-zero fatal flaws, and every site gets a <strong>verdict: pursue now, visit, watch, or skip</strong>. Interactive map with color-coded results · drill-down sub-score breakdowns · <strong>shared votes &amp; notes</strong> for the founding team. A fast, <strong>no-dependency static app</strong> behind an access gate.
         </div>
         <span class="card-meta">Stealth venture · live tool</span>
         <p class="card-disclaimer">Live screenshots. The organization and end-use are intentionally withheld.</p>
