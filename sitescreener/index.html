@@ -37,7 +37,7 @@ td{padding:9px 10px;border-bottom:1px solid #eef1f3;white-space:nowrap}
 tr.row{cursor:pointer}tr.row:hover{background:#f0f7f8}tr.sel{background:#dceef1!important}
 .catpill{font-size:10.5px;font-weight:700;padding:2px 7px;border-radius:10px;color:#fff}
 .note{font-size:11.5px;color:var(--muted);margin-top:14px;line-height:1.5;border-top:1px dashed var(--line);padding-top:12px}
-.iw{font-family:-apple-system,sans-serif;width:min(94vw,600px);max-width:600px}
+.iw{font-family:-apple-system,sans-serif;width:min(calc(100vw - 96px),600px);max-width:600px}
 .iw img{width:100%;height:120px;object-fit:cover;border-radius:6px;background:#dde3e6;display:block;margin:6px 0 8px}
 @media (max-width:480px){.iw img{height:96px}}
 .iw h3{margin:0 0 2px;font-size:15px;color:var(--navy);font-family:Cambria,Georgia,serif}
@@ -96,7 +96,9 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 .lb-prev{left:8px}.lb-next{right:8px}
 .iw .gallery{display:flex;gap:6px;overflow-x:auto;scroll-snap-type:x mandatory;margin:6px 0 8px;-webkit-overflow-scrolling:touch;border-radius:6px;scrollbar-width:none}
 .iw .gallery::-webkit-scrollbar{display:none}
-.iw .gimg{flex:0 0 92%;scroll-snap-align:center;width:92%;aspect-ratio:16/10;height:auto;object-fit:cover;border-radius:6px;background:#dde3e6;cursor:zoom-in;display:block}
+.iw .gimg{flex:0 0 100%;scroll-snap-align:center;width:100%;aspect-ratio:16/10;height:auto;object-fit:cover;border-radius:6px;background:#dde3e6;cursor:zoom-in;display:block}
+.mapbtn{background:#fff;border:0;border-radius:3px;box-shadow:0 1px 4px rgba(0,0,0,.3);color:#565656;cursor:pointer;font:600 13px/1 -apple-system,Roboto,Arial,sans-serif;margin:10px 10px 0 0;padding:9px 12px}
+.mapbtn.on{color:#0b5e6a;font-weight:800}
 .iw textarea.iwnote{width:100%;min-height:44px;font:inherit;font-size:12px;padding:6px;border:1px solid var(--line);border-radius:6px;resize:vertical;color:var(--ink)}
 .iw textarea.iwnote:focus{outline:2px solid var(--teal);border-color:var(--teal)}
 .iw .share{display:flex;gap:8px;margin-top:8px}
@@ -155,9 +157,12 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 </div>
 <div id="map"></div>
 <div class="legend">
-<span><i class="dot" style="background:#2563a8"></i> Commercial</span>
-<span><i class="dot" style="background:#d2761e"></i> Industrial</span>
-<span><i class="dot" style="background:#7a8893"></i> Other/PD</span>
+<span><b>Pin number = IGCE fit</b></span>
+<span><i class="dot" style="background:#14532d"></i> 85+ prime</span>
+<span><i class="dot" style="background:#2f9e44"></i> 70–84</span>
+<span><i class="dot" style="background:#e0b400"></i> 55–69</span>
+<span><i class="dot" style="background:#e8760a"></i> 50–54</span>
+<span><i class="dot" style="background:#b23b2f"></i> &lt;50</span>
 <span style="margin-left:auto">Parking is a coverage-based estimate, not a stall count.</span>
 </div>
 <div class="tablecard"><div class="hd">Candidate sites <span class="syncpill local" id="syncpill">Local</span></div><div class="scroll">
@@ -227,10 +232,17 @@ function lbNav(delta){if(!lbList.length)return;lbIdx=(lbIdx+delta+lbList.length)
 function lbZoom(delta){const it=lbList[lbIdx];if(!it)return;if(it.kind==="aerial"||it.kind==="road")it.z=Math.max(16,Math.min(21,it.z+delta));else it.fov=Math.max(25,Math.min(110,it.fov-delta*10));lbRender();}
 function closeLightbox(){const lb=document.getElementById("lightbox");if(lb)lb.style.display="none";lbD=null;}
 /* ----- map focus: grey other pins, zoom to selected ----- */
-function greyPin(){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:"#aab4ba",fillOpacity:.5,strokeColor:"#fff",strokeWeight:1,scale:0.62,anchor:new google.maps.Point(0,0)};}
-function selIcon(d){const i=pinSvg(CATCOLOR[d.cat]||"#7a8893");i.scale=1.2;i.strokeWeight=2.4;return i;}
-function restoreIcons(){markers.forEach((m,i)=>m.setIcon(pinSvg(CATCOLOR[DATA[i].cat]||"#7a8893")));}
-function focusMarker(d){const idx=DATA.indexOf(d);markers.forEach((m,i)=>{if(m.getMap())m.setIcon(i===idx?selIcon(d):greyPin());});const mk=markers[idx];if(mk){mk.setMap(map);mk.setIcon(selIcon(d));}map.panTo({lat:d.lat,lng:d.lon});map.setZoom(18);}
+/* heat-map score pins: pin color = fit score (red -> yellow -> dark green), number inside */
+function heatColor(s){if(s<45)return "#b23b2f";const t=Math.min(1,(s-45)/50);const h=Math.round(t*140),l=Math.round(46-t*13);return `hsl(${h},72%,${l}%)`;}
+function applyPin(m,d,mode){
+ const s=fitScore(d);
+ if(mode==="grey"){m.setIcon({path:google.maps.SymbolPath.CIRCLE,scale:10,fillColor:"#b6bfc6",fillOpacity:.45,strokeColor:"#fff",strokeWeight:1});m.setLabel(null);return;}
+ const sel=mode==="sel";
+ m.setIcon({path:google.maps.SymbolPath.CIRCLE,scale:sel?17:13,fillColor:heatColor(s),fillOpacity:1,strokeColor:"#fff",strokeWeight:sel?3:2});
+ m.setLabel({text:String(s),color:"#fff",fontSize:sel?"13px":"11px",fontWeight:"800"});
+}
+function restoreIcons(){markers.forEach((m,i)=>applyPin(m,DATA[i],"norm"));}
+function focusMarker(d){const idx=DATA.indexOf(d);markers.forEach((m,i)=>{if(m.getMap())applyPin(m,DATA[i],i===idx?"sel":"grey");});const mk=markers[idx];if(mk){mk.setMap(map);applyPin(mk,d,"sel");}map.panTo({lat:d.lat,lng:d.lon});map.setZoom(18);}
 function fmt(n){return (n||n===0)?n.toLocaleString():"—";}
 function money(n){return n?("$"+n.toLocaleString()):"—";}
 function pinSvg(c){return {path:"M 0,0 C -2,-20 -10,-22 -10,-30 A 10,10 0 1,1 10,-30 C 10,-22 2,-20 0,0 z",fillColor:c,fillOpacity:1,strokeColor:"#fff",strokeWeight:1.4,scale:0.8,anchor:new google.maps.Point(0,0)};}
@@ -244,7 +256,14 @@ const STATE={notes:{},favs:{}};
 let saveTimer=null, pendingDelta={notes:{},favs:[]}, editingNotePin=null, pendingNoteVal=null;
 const escHtml=s=>String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 const escAttr=s=>escHtml(s).replace(/"/g,"&quot;");
-function usableOf(d){return GBA[d.pin]||d.sf*(d.stories||1);}
+/* ENRICH: researched building facts. pin -> {yb:year built, st:stories, cl:clear ceiling ft, ow:owner of record, ot:"private"|"llc"|"institutional", ls:actively listed (bool), nt:note} */
+const ENRICH = {"0811 09  0028": {"yb": 1979, "nt": "28,920 SF flex/office bldg in Pickett Rd industrial area (Transurban tenant); sold 2008 for $4.3M; PropertyShark/CommercialCafe show office-for-lease pages"}, "0993 01  0043": {"yb": 1980, "nt": "9,545 SF auto/truck repair garage (Ryder maintenance) on 3.74 ac; last sale ~$1.1M; no active listing found"}, "0493 22  0003C": {"yb": 1979, "ls": true, "nt": "15,000 RSF low-rise office in professional campus near Inova Fairfax; occupied/managed by GC Hughes & Smith; LoopNet/OfficeSpace lease listings"}, "0902 01  0050": {"yb": 1979, "ls": true, "nt": "Spring Mall Square retail strip center on 1.83 ac, new facade; active Crexi/LoopNet/CBRE retail-for-lease listings"}, "0294 01  0001B": {"yb": 1985, "st": 12, "ow": "B.F. Saul Company", "ot": "institutional", "ls": true, "nt": "360,854 SF Class A 12-story Tysons office tower; office space actively for lease (LoopNet/B.F. Saul)"}, "1072 01  0048A": {"nt": "Fresenius dialysis clinic (Suite 100) in Lorton Station Town Center medical/retail buildings; no property details or listing found"}, "0493 09  0007A": {"ls": true, "nt": "'Dewberry Four' Class A office in Dewberry HQ campus, office for lease on LoopNet; adjacent 8401 HQ is a 6-story built 1981"}, "0492 37      B": {"yb": 1999, "st": 10, "ow": "COPT Defense Properties", "ot": "institutional", "ls": true, "nt": "Metro Place II, 240,400 SF Class A office at Dunn Loring Metro; COPT bought ~$83M (2015); Cushman & Wakefield lease listings active"}, "0902 01  0011D": {"yb": 1985, "ow": "6579 Amherst Realty LLC", "ot": "llc", "nt": "Nissan dealership service-station building (service bays), 20,476 SF finished on 90,824 SF lot; sold by Leckner Nissan Three LLC Jan 2019"}, "0911 31  0001B": {"ow": "CSHV Metro Park LLC", "ot": "institutional", "ls": true, "nt": "Metro Park 4 office, part of 7-building 1,158,000 SF LEED campus near Franconia-Springfield; Avison Young lease + Showcase sale pages active"}, "0392 11  0084": {"nt": "No public listing or property-record data found for this address; surrounding George Washington Rd parcels are residential (avg built 1999)"}, "0294 07030007": {"ow": "PS Business Parks / Link Parks (Blackstone)", "ot": "institutional", "ls": true, "nt": "'Northampton' 150,736 SF Class B office in WestPark Business Campus, Tysons; multiple Link Parks suite availabilities active"}, "0491 19      A": {"yb": 1981, "ow": "Link Logistics Real Estate (Blackstone)", "ot": "institutional", "ls": true, "nt": "Flex warehouse/office in 12-building 'Prosperity at Merrifield' park, 57,679 SF bldg, renovated 2010; active LoopNet flex listing, Link Logistics leasing"}, "0702 01  0001A": {"yb": 1970, "st": 6, "ls": true, "nt": "Heritage I, 82,000 SF Class C 6-story medical/office complex, renovated 2018; ~33K SF actively for lease via Cushman & Wakefield"}, "0293 01  0047": {"ow": "Fairfax County Board of Supervisors", "ot": "institutional", "ls": false, "nt": "Former Container Store big-box retail, 19,260 SF on 1.87 ac at Spring Hill Metro; county bought $16.6M in 2019 from JBG Smith affiliate; PARC events venue close"}, "0912 01  0036C": {"yb": 2001, "ow": "Federal Realty Investment Trust", "ot": "institutional", "ls": true, "nt": "162,037 SF office 'Building T' at Kingstowne Towne Center (FRT bought center 2022); office suites listed for lease; proposed office-to-residential conversion pe"}, "069.01-01-04": {"yb": 1977, "ow": "Arcland Property Company", "ot": "llc", "nt": "~281,000 SF self-storage warehouse (~3,100 units, Self Storage Plus brand); Arcland acquired off-market Nov 2022 for $36.5M"}, "0382 02  0082A": {"nt": "25,500 SF retail center 100% leased to Walgreens + Petco; sold Dec 2020 for $17M (seller JBG Smith, buyer undisclosed)"}, "0802 09  0002": {"yb": 1977, "ow": "5740 General Washington Dr LLC", "ot": "llc", "ls": false, "nt": "18,496 SF owner-occupied HQ/shop of Michael & Son (plumbing/HVAC contractor) on 84K SF lot in Bren Mar industrial corridor; LoopNet shows property-record page o"}, "0704 10  0010C": {"nt": "Part of Forbes Pl office cluster off Braddock Rd/I-495 (adjacent 8001 Forbes Bldg is 1970 Class B office, Stout & Teague managed); Inova Juniper clinic tenant; "}, "067.03-01-12": {"ls": false, "nt": "Multi-tenant industrial/warehouse strip (820-828 S Pickett); prior LoopNet industrial listing marked 'no longer advertised'; neighboring Pickett St warehouses r"}, "0704 10  0010A3": {"yb": 1962, "nt": "Connors Business Center small-bay warehouse/flex units with drive-in access and fenced truck/van parking; part of 5270-5280 Port Royal industrial complex (121,6"}, "0804 01  0005D": {"yb": 1988, "st": 5, "ow": "BGP Enterprises", "ot": "institutional", "ls": true, "nt": "135,604 SF 5-story Class B office (Springfield Corporate Center); BGP bought 2021 for $29.3M from Artemis/MRP; medical-office space actively marketed for lease "}, "0293 01  0044": {"yb": 1974, "ow": "Safford Automotive Group", "ot": "llc", "nt": "Owner-operated Alfa Romeo/Maserati dealership (showroom plus service bays) on Rt 7 in Tysons"}, "0493 01  0102": {"ls": false, "nt": "Existing VCA SouthPaws 24/7 specialty/ER veterinary hospital with MRI/CT/fluoroscopy (direct competitor site); LoopNet shows property-record page only, no activ"}, "0403 01  0002A": {"ls": false, "nt": "28,800 SF multi-tenant retail strip on 2.35 ac (Taco Bamba, Idylwood Grill, salon); 2023 $29K MLS sale was the salon business only; sources state property itsel"}, "0804 01  0009": {"yb": 1954, "st": 1, "ow": "Maria & Constantine Marinakos", "ot": "private", "nt": "15,810 SF one-story masonry building (PaperMoon club) on 1.2 ac; private family owners of record per NeighborWho"}, "0393 02  0004D": {"ow": "Navy Federal Credit Union", "ot": "institutional", "nt": "Vienna Technology Park / Tysons Edge business-park building across from NFCU HQ; NFCU bought adjacent 901 Follin (100K SF, $12M) as campus expansion 'insurance "}, "0392 02  0050A": {"nt": "Freestanding CVS, 11,643 SF retail on 1.06 ac; TopHap record shows 'built 1925' (likely parcel data artifact, not the CVS building); last sold 2014"}, "0291 01  0017B": {"nt": "Audi Tysons Corner dealership (Penske Automotive-operated) showroom/service building on Rt 7; no year-built or owner-of-record found"}, "0493 01  0145A": {"nt": "Freestanding retail box (Dollar Tree) in Merrifield corridor; LoopNet has property-record and legacy listing pages but no details surfaced"}, "0294 10  0003B1": {"yb": 2016, "st": 18, "ow": "Lerner Enterprises", "ot": "llc", "ls": true, "nt": "476,913 SF 18-story Class A trophy office tower (LEED Platinum, delivered 2015-16, Lerner/KPF/Whiting-Turner); multi-tenant with office space actively listed fo"}, "0711 20  0005": {"ow": "Beatty Development Corp (Beatty Management Co)", "ot": "llc", "nt": "138,000 SF Safeway-anchored community shopping center (Petco, Dollar Tree, Advance Auto); Beatty leasing flyer dated Oct 2025 suggests inline retail space avail"}, "0912 01  0036H": {"yb": 2006, "ls": true, "nt": "156,251 SF Class A office, Kingstowne Towne Center Building K (developed by Halle Companies; sources give year built 2005-2007); office space actively marketed "}, "069.01-01-05": {"yb": 1986, "ow": "Arcland Property Company", "ot": "llc", "nt": "American Self Storage / Self Storage Plus drive-up storage facility on ~9 ac Eisenhower Ave site (facility records under 4551 Eisenhower, adjacent parcel); Arcl"}, "0694 18      Z": {"yb": 1985, "ls": true, "nt": "Lyngate Ct office condo complex (~48,888 SF, built 1985; parcel record covers 5240-5252 Lyngate); LDS mission office occupies 5242; other suites in same complex"}};
+/* EXTRA: researched comparable records (brief comps not in the county pull); appended to DATA at boot */
+const EXTRA = [];
+/* INTERCHANGES: real I-95/I-395/I-495 interchange coordinates. [{name,route,lat,lon}] */
+const INTERCHANGES = [];
+function enrichOf(d){return ENRICH[d.pin]||{};}
+function usableOf(d){return GBA[d.pin]||d.sf*(d.stories||enrichOf(d).st||1);}
 /* ---------- IGCE Fit score (per the property-scanner brief) ---------- */
 const IGCE_CENTROID=[38.82,-77.19];
 /* approximate I-495 / I-95 / I-395 route vertices [lat,lon] in the target corridor */
@@ -258,18 +277,47 @@ function haversineMi(a,b){const R=3958.8,dLa=toRadn(b[0]-a[0]),dLo=toRadn(b[1]-a
 function distSegMi(p,a,b){const ref=toRadn((a[0]+b[0])/2),X=lo=>toRadn(lo)*Math.cos(ref)*3958.8,Y=la=>toRadn(la)*3958.8;
  const px=X(p[1]),py=Y(p[0]),ax=X(a[1]),ay=Y(a[0]),bx=X(b[1]),by=Y(b[0]),dx=bx-ax,dy=by-ay,L2=dx*dx+dy*dy;
  let t=L2?((px-ax)*dx+(py-ay)*dy)/L2:0;t=Math.max(0,Math.min(1,t));return Math.hypot(px-(ax+t*dx),py-(ay+t*dy));}
-function hwyMiles(d){let m=1e9;for(const ln of HWYS)for(let i=0;i<ln.length-1;i++)m=Math.min(m,distSegMi([d.lat,d.lon],ln[i],ln[i+1]));return m;}
+function hwyMiles(d){
+ if(INTERCHANGES.length){let m=1e9,nm=null;for(const ic of INTERCHANGES){const mi=haversineMi([d.lat,d.lon],[ic.lat,ic.lon]);if(mi<m){m=mi;nm=ic;}}d.__ic=nm;return m;}
+ let m=1e9;for(const ln of HWYS)for(let i=0;i<ln.length-1;i++)m=Math.min(m,distSegMi([d.lat,d.lon],ln[i],ln[i+1]));return m;}
+function nearestIc(d){hwyMiles(d);return d.__ic;}
 function isInd(d){return d.cat==="Industrial"||(d.zone&&d.zone.charAt(0)==="I");}
 /* sub-scores 0-10 */
 function sc_size(d){const u=usableOf(d);if(u>=20000&&u<=30000)return 10;if(u>=15000&&u<20000)return 8;if(u>30000&&u<=35000)return 8;if(u>35000&&u<=50000)return 6;if(u>50000&&u<=75000)return 4;if(u>=12000&&u<15000)return 6;return u>75000?1:2;}
-function effStories(d){return d.stories||Math.max(1,Math.round(usableOf(d)/(d.sf||usableOf(d)||1)));}
-function sc_vault(d){const ac=(d.lot||0)/43560,st=effStories(d);if(isInd(d)){if(st<=1)return 8;if(st===2)return 6;return ac>3?4:3;}if(st<=1)return 5;return ac>3?4:3;}
+function effStories(d){const e=enrichOf(d);if(d.stories)return d.stories;if(e.st)return e.st;const u=GBA[d.pin];return u?Math.max(1,Math.round(u/(d.sf||u))):1;}
+function sc_vault(d){
+ const ac=(d.lot||0)/43560,st=effStories(d),e=enrichOf(d),cl=e.cl||null;
+ if(isInd(d)){
+  if(st<=1){if(cl!=null){if(cl>=20)return 10;if(cl>=14)return 7;return 6;}return 8;}
+  if(st===2)return 6;
+  return ac>3?4:3;
+ }
+ if(st<=1)return 5;
+ if(st===2)return 4;
+ return ac>3?4:3;
+}
 function sc_parklot(d){const p=d.park||0,ac=(d.lot||0)/43560;const byP=p>=100?10:p>=80?7:p>=60?4:p>=40?2:0;const byL=ac>3?10:ac>=2?7:ac>=1.5?4:ac>=1?2:0;return Math.max(byP,byL);}
 function sc_access(d){const mi=hwyMiles(d);return mi<0.5?10:mi<1?8:mi<2?6:mi<3?4:2;}
 function sc_zone(d){const z=(d.zone||"").toUpperCase();if(/^I-?5/.test(z))return 10;if(/^I-?4/.test(z))return 8;if(z.charAt(0)==="I")return 8;if(/^C-?[45]/.test(z))return 6;if(/^C-?[23]/.test(z))return 4;if(z.charAt(0)==="C")return 5;if(z.charAt(0)==="R")return 0;if(/^(PD|MU|CDD|OCM|PRM|W-)/.test(z))return 2;return 4;}
-function sc_era(d){const st=effStories(d);if(isInd(d))return st<=1?8:7;return 3;}
+function sc_era(d){
+ const yb=enrichOf(d).yb||null,st=effStories(d);
+ if(isInd(d)){
+  if(yb){if(yb<1990)return 9;if(yb<=2010)return 7;return 6;}
+  return st<=1?8:7;
+ }
+ return 3;
+}
 function sc_area(d){const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let s=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))s++;return Math.min(8,s);}
-function sc_offmkt(d){const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;let s=hold==null?6:(hold>15?10:hold>=10?8:6);const o=(d.owner||"").toUpperCase();if(/REIT|FUND|\bLP\b/.test(o))s=Math.min(s,4);return s;}
+function sc_offmkt(d){
+ const e=enrichOf(d);
+ if(e.ls===true)return 1; // actively listed — the opposite of off-market
+ const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;
+ let s=hold==null?6:(hold>15?10:hold>=10?8:6);
+ const o=((e.ow||d.owner||"")+"").toUpperCase();
+ if(e.ot==="institutional"||/REIT|FUND|\bLP\b|TRUST COMPANY/.test(o))s=Math.min(s,4);
+ if(e.ot==="private")s=Math.min(10,s+1);
+ return s;
+}
 const IGCE_F=[["Size","size",sc_size,15],["Vault","vault",sc_vault,20],["Parking/Lot","parking",sc_parklot,15],["Access","access",sc_access,15],["Zoning","zoning",sc_zone,10],["Construction","era",sc_era,10],["Surroundings","area",sc_area,8],["Off-market","offmkt",sc_offmkt,7]];
 function igceDisq(d){const u=usableOf(d),ac=(d.lot||0)/43560,mi=hwyMiles(d),cen=haversineMi([d.lat,d.lon],IGCE_CENTROID),z=(d.zone||"").toUpperCase();
  if(u<10000)return "too small (<10k SF)";
@@ -379,11 +427,21 @@ function wireCard(d){
  const gal=document.getElementById("iw-gallery");if(gal){wireGimgs(d,gal);loadSvHeading(d);}
 }
 function initMap(){
- map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:true,streetViewControl:false,styles:[{featureType:"poi",stylers:[{visibility:"off"}]}]});
+ const poiStyles=[{featureType:"poi",stylers:[{visibility:"off"}]}];
+ map=new google.maps.Map(document.getElementById("map"),{center:{lat:38.83,lng:-77.18},zoom:11,mapTypeControl:false,streetViewControl:false,styles:poiStyles});
+ if(map.controls&&google.maps.ControlPosition){
+  let satOn=false,poiOn=false;
+  const mb=document.createElement("button");mb.className="mapbtn";mb.type="button";mb.textContent="Satellite";
+  mb.onclick=()=>{satOn=!satOn;map.setMapTypeId(satOn?"hybrid":"roadmap");mb.textContent=satOn?"Map view":"Satellite";mb.classList.toggle("on",satOn);};
+  const pb=document.createElement("button");pb.className="mapbtn";pb.type="button";pb.textContent="Nearby names";
+  pb.onclick=()=>{poiOn=!poiOn;map.setOptions({styles:poiOn?[]:poiStyles});pb.classList.toggle("on",poiOn);};
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(mb);
+  map.controls[google.maps.ControlPosition.TOP_RIGHT].push(pb);
+ }
  new google.maps.Polygon({paths:BOUNDARY.map(p=>({lat:p[0],lng:p[1]})),map,strokeColor:"#0b5e6a",strokeWeight:2.5,strokeOpacity:.9,fillColor:"#0f7d8c",fillOpacity:.05});
  info=new google.maps.InfoWindow({maxWidth:320});
  google.maps.event.addListener(info,"closeclick",()=>{restoreIcons();selPin=null;highlightRow(null);});
- DATA.forEach((d,i)=>{const m=new google.maps.Marker({position:{lat:d.lat,lng:d.lon},map:null,icon:pinSvg(CATCOLOR[d.cat]||"#7a8893"),title:(bizName(d)?d.addr+" — "+bizName(d):d.addr)});m.addListener("click",()=>openInfo(d,m));markers.push(m);});
+ DATA.forEach((d,i)=>{const m=new google.maps.Marker({position:{lat:d.lat,lng:d.lon},map:null,title:`Fit ${fitScore(d)} — ${d.addr}${bizName(d)?" — "+bizName(d):""}`});applyPin(m,d,"norm");m.addListener("click",()=>openInfo(d,m));markers.push(m);});
  document.getElementById("apply").onclick=apply;
  document.getElementById("reset").onclick=reset;
  document.getElementById("csv").onclick=downloadCsv;
@@ -427,6 +485,11 @@ function openInfo(d,m){
  <tr><td>Zoning</td><td>${d.zone} · ${d.cat}</td></tr>
  <tr><td>Assessed total</td><td>${money(d.apr)}</td></tr>
  <tr><td>Last sale</td><td>${d.saled||"—"} ${d.salep>1000?("· "+money(d.salep)):""}</td></tr>
+ ${enrichOf(d).yb?`<tr><td>Year built</td><td>${enrichOf(d).yb}</td></tr>`:""}
+ ${enrichOf(d).cl?`<tr><td>Clear height</td><td>~${enrichOf(d).cl}′</td></tr>`:""}
+ ${enrichOf(d).ow?`<tr><td>Owner of record</td><td>${escHtml(enrichOf(d).ow)}${enrichOf(d).ot?` <span style="color:var(--muted)">(${enrichOf(d).ot})</span>`:""}</td></tr>`:""}
+ ${enrichOf(d).nt?`<tr><td>Notes (research)</td><td>${escHtml(enrichOf(d).nt)}</td></tr>`:""}
+ <tr><td>Interstate access</td><td>${hwyMiles(d).toFixed(1)} mi${nearestIc(d)?` · ${escHtml(nearestIc(d).name)} (${nearestIc(d).route})`:""}</td></tr>
  </table>
  <div class="cardvotes" id="iw-votes" data-pin="${escAttr(d.pin)}"><span class="vlabel">Votes</span>${voteChips(d.pin)}<b id="iw-vcount">${favCount(d.pin)}</b><span class="vof">/4</span></div>
  <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" placeholder="Add a shared note…">${escHtml(noteOf(d.pin))}</textarea>
@@ -435,7 +498,7 @@ function openInfo(d,m){
  <a href="https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lon}" target="_blank">Map / who's here</a>
  <a href="https://www.google.com/maps/@?api=1&map_action=pano&viewpoint=${d.lat},${d.lon}" target="_blank">Street View</a>
  </div></div>`;
- info.setOptions({maxWidth:Math.min(Math.round((window.innerWidth||360)*0.94),640)});
+ info.setOptions({maxWidth:Math.min((window.innerWidth||360)-70,640)});
  info.setContent(c);info.open(map,m);selPin=d.pin;highlightRow(d.pin);focusMarker(d);
  google.maps.event.addListenerOnce(info,"domready",()=>wireCard(d));
 }
@@ -491,7 +554,7 @@ function renderTable(){
 }
 function highlightRow(pin){document.querySelectorAll("#tbody tr").forEach(tr=>tr.classList.toggle("sel",tr.dataset.pin===pin));}
 function downloadCsv(){
- const head=["fit_score","recommended","vault_flag","parking_flag","off_market","hwy_miles","juris","addr","city","zip","business_or_guess","is_guess","pin","footprint_sf","usable_sf","lot_acres","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
+ const head=["fit_score","recommended","vault_flag","parking_flag","off_market","hwy_miles","nearest_exit","juris","addr","city","zip","business_or_guess","is_guess","owner_of_record","year_built","clear_height_ft","actively_listed","pin","footprint_sf","usable_sf","lot_acres","park","fp","stories","cov","zone","cat","apr","saled","salep","Ira","Kathleen","Jim","Jon","votes","note"];
  const val=(d,k)=>{
   if(k==="fit_score")return fitScore(d);
   if(k==="recommended")return recAction(d);
@@ -499,6 +562,11 @@ function downloadCsv(){
   if(k==="parking_flag")return parkFlag(d);
   if(k==="off_market")return offFlag(d);
   if(k==="hwy_miles")return hwyMiles(d).toFixed(2);
+  if(k==="nearest_exit"){const ic=nearestIc(d);return ic?ic.name+" ("+ic.route+")":"";}
+  if(k==="owner_of_record")return enrichOf(d).ow||"";
+  if(k==="year_built")return enrichOf(d).yb||"";
+  if(k==="clear_height_ft")return enrichOf(d).cl||"";
+  if(k==="actively_listed")return enrichOf(d).ls===true?"yes":enrichOf(d).ls===false?"no":"";
   if(k==="lot_acres")return ((d.lot||0)/43560).toFixed(2);
   if(k==="business_or_guess")return d.owner||GUESS[d.pin]||"";
   if(k==="is_guess")return (!d.owner&&GUESS[d.pin])?"guess":(d.owner?"record":"");
@@ -515,6 +583,7 @@ function downloadCsv(){
 /* ---- gate ---- */
 function boot(){
  if(booted)return; booted=true;
+ EXTRA.forEach(r=>{if(!DATA.some(x=>x.pin===r.pin))DATA.push(r);});
  loadLocal();
  document.getElementById("tot").textContent=DATA.length;
  const s=document.createElement("script");
