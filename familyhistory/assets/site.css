@@ -204,35 +204,49 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
 /* ═══ FLIP-BOOK (reusable: books & multi-page letters) ═══ */
-.flipbook{--fb-max:560px;margin:8px auto 0;max-width:calc(var(--fb-max) + 40px)}
+.flipbook{--fb-max:600px;margin:8px auto 0;max-width:calc(var(--fb-max) + 40px)}
 .flipbook .fb-page{display:none}
 .fb-stage{position:relative;perspective:2200px;background:
   radial-gradient(120% 120% at 50% 0%,rgba(30,24,12,.5),rgba(8,11,18,.7));
-  border:1px solid var(--line);border-radius:16px;padding:clamp(14px,2.4vw,26px);overflow:hidden}
+  border:1px solid var(--line);border-radius:16px;padding:clamp(14px,2.4vw,24px);overflow:hidden}
 .fb-paper{position:relative;margin:0 auto;max-width:var(--fb-max);border-radius:4px;
   background:#f4ecd8;box-shadow:0 18px 44px rgba(0,0,0,.55),0 2px 0 rgba(0,0,0,.3);
   transform-style:preserve-3d;transition:transform .5s cubic-bezier(.3,.8,.4,1)}
-.fb-paper img{width:100%;display:block;border-radius:4px;background:#f4ecd8}
-.fb-paper.turn-next{transform:rotateY(-14deg)}
-.fb-paper.turn-prev{transform:rotateY(14deg)}
-.fb-stage::before,.fb-stage::after{content:'';position:absolute;top:0;bottom:0;width:26px;pointer-events:none;z-index:2}
-.fb-stage::before{left:0;background:linear-gradient(90deg,rgba(0,0,0,.35),transparent)}
-.fb-stage::after{right:0;background:linear-gradient(270deg,rgba(0,0,0,.35),transparent)}
-.fb-controls{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px;flex-wrap:wrap}
-.fb-arrow{width:46px;height:46px;flex:none;border-radius:50%;cursor:pointer;font-size:20px;line-height:1;
-  color:var(--fg);background:rgba(255,255,255,.05);border:1px solid var(--line);transition:.2s}
-.fb-arrow:hover{color:var(--gold-bright);border-color:var(--gold);transform:translateY(-2px)}
-.fb-arrow:disabled{opacity:.3;cursor:default;transform:none}
-.fb-count{font-family:var(--mono);font-size:calc(13px*var(--scale));color:var(--fg-soft);min-width:120px;text-align:center}
-.fb-count b{color:var(--gold-bright)}
-.fb-read{font-family:var(--sans);font-weight:600;font-size:calc(15px*var(--scale));cursor:pointer;
-  padding:11px 18px;border-radius:12px;color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));border:none;
-  display:inline-flex;align-items:center;gap:8px;transition:.2s}
-.fb-read:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(212,168,70,.34)}
-.fb-cap{text-align:center;color:var(--fg-mute);font-size:calc(14px*var(--scale));margin-top:12px}
-.fb-dots{display:flex;gap:7px;justify-content:center;margin-top:12px}
-.fb-dots button{width:9px;height:9px;border-radius:50%;border:none;cursor:pointer;padding:0;background:rgba(255,255,255,.3)}
-.fb-dots button.on{background:var(--gold-bright);width:24px;border-radius:5px}
+/* cap the page height so the whole page + its overlay arrows stay in view */
+.fb-paper img{display:block;max-width:100%;max-height:78vh;width:auto;margin:0 auto;border-radius:4px;background:#f4ecd8}
+.fb-paper.turn-next{transform:rotateY(-13deg)}
+.fb-paper.turn-prev{transform:rotateY(13deg)}
+
+/* overlay controls sit ON the page, so you never scroll below to advance */
+.fb-nav{position:absolute;top:50%;transform:translateY(-50%);z-index:5;width:48px;height:48px;border:none;
+  border-radius:50%;cursor:pointer;font-size:26px;line-height:1;color:#1a1205;background:rgba(240,207,133,.94);
+  box-shadow:0 5px 16px rgba(0,0,0,.45);transition:.18s;display:flex;align-items:center;justify-content:center}
+.fb-nav:hover:not(:disabled){background:var(--gold-bright);transform:translateY(-50%) scale(1.1)}
+.fb-nav.prev{left:14px} .fb-nav.next{right:14px}
+.fb-nav:disabled{opacity:.28;cursor:default}
+.fb-counter{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:5;font-family:var(--mono);
+  font-size:13px;color:#f4ecd8;background:rgba(10,14,23,.72);padding:6px 14px;border-radius:100px}
+.fb-counter b{color:var(--gold-bright)}
+.fb-toggle{position:absolute;top:16px;right:16px;z-index:5;font-family:var(--sans);font-weight:600;font-size:13px;
+  cursor:pointer;padding:9px 13px;border-radius:11px;color:#1a1205;background:rgba(240,207,133,.94);border:none;
+  box-shadow:0 4px 12px rgba(0,0,0,.35);transition:.18s}
+.fb-toggle:hover{background:var(--gold-bright);transform:translateY(-1px)}
+.fb-cap{text-align:center;color:var(--fg-mute);font-size:calc(14px*var(--scale));margin-top:14px}
+
+/* in-frame typed transcription */
+.fb-textview{display:none;max-height:min(76vh,760px);overflow-y:auto;padding:clamp(20px,3.4vw,40px);
+  color:#241a0c;font-size:calc(17px*var(--scale));line-height:1.72}
+.fb-paper.is-text img{display:none}
+.fb-paper.is-text .fb-textview{display:block}
+.fb-textview h4{font-family:var(--serif);color:#5a3d12;font-size:1.35em;margin:0 0 4px;line-height:1.15}
+.fb-textview .rd-src{font-family:var(--mono);font-size:.7em;letter-spacing:.04em;color:#7a5a2e;text-transform:uppercase;margin-bottom:18px}
+.fb-textview p{margin:0 0 .9em}
+.fb-textview em{color:#5a3d12;font-style:italic}
+.fb-textview strong{color:#1a1205}
+.fb-textview .rd-note{color:#7a5a2e;font-size:.85em;border-top:1px solid rgba(0,0,0,.16);padding-top:12px;margin-top:6px}
+.fb-enlarge{margin-top:10px;font-family:var(--sans);font-weight:600;font-size:calc(14px*var(--scale));cursor:pointer;
+  padding:9px 15px;border-radius:9px;color:#f4ecd8;background:#3a2f18;border:none}
+.fb-enlarge:hover{background:#5a3d12}
 
 /* ═══ TRANSCRIPT READER (accessible, text-size slider) ═══ */
 .reader{position:fixed;inset:0;z-index:500;display:none;flex-direction:column;

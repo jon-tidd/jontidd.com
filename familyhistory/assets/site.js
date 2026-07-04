@@ -225,44 +225,51 @@
         return {src:img?img.getAttribute('src'):'', alt:img?img.alt:'',
                 cap:p.dataset.cap||'', text:t?t.textContent:''};
       });
-      var i=0;
+      var i=0, view='img';
       var stage=document.createElement('div'); stage.className='fb-stage';
       var paper=document.createElement('div'); paper.className='fb-paper';
-      var im=document.createElement('img'); paper.appendChild(im); stage.appendChild(paper);
-      var cap=document.createElement('div'); cap.className='fb-cap';
-      var controls=document.createElement('div'); controls.className='fb-controls';
-      controls.innerHTML='<button class="fb-arrow fb-prev" aria-label="Previous page">‹</button>'+
-        '<span class="fb-count"></span>'+
-        '<button class="fb-arrow fb-next" aria-label="Next page">›</button>'+
-        '<button class="fb-read">📖 Read the text</button>';
-      var dots=document.createElement('div'); dots.className='fb-dots';
-      data.forEach(function(_,k){ var b=document.createElement('button'); b.setAttribute('aria-label','Page '+(k+1));
-        b.addEventListener('click',function(){ go(k); }); dots.appendChild(b); });
-      fb.appendChild(stage); fb.appendChild(cap); fb.appendChild(controls); fb.appendChild(dots);
-      var prev=controls.querySelector('.fb-prev'), next=controls.querySelector('.fb-next'),
-          count=controls.querySelector('.fb-count'), read=controls.querySelector('.fb-read');
+      var im=document.createElement('img'); paper.appendChild(im);
+      var tv=document.createElement('div'); tv.className='fb-textview'; paper.appendChild(tv);
+      stage.appendChild(paper);
+      // overlay controls (sit ON the page, so you never scroll below to advance)
+      var prev=mk('button','fb-nav prev','‹'), next=mk('button','fb-nav next','›');
+      prev.setAttribute('aria-label','Previous page'); next.setAttribute('aria-label','Next page');
+      var counter=mk('div','fb-counter',''), toggle=mk('button','fb-toggle','');
+      toggle.setAttribute('aria-label','Switch between the scan and the typed transcription');
+      stage.appendChild(prev); stage.appendChild(next); stage.appendChild(counter); stage.appendChild(toggle);
+      var cap=mk('div','fb-cap','');
+      fb.appendChild(stage); fb.appendChild(cap);
       function render(){
         im.src=data[i].src; im.alt=data[i].alt;
+        counter.innerHTML='<b>'+(i+1)+'</b> / '+data.length;
         cap.textContent=data[i].cap;
-        count.innerHTML='<b>'+(i+1)+'</b> / '+data.length;
         prev.disabled=i===0; next.disabled=i===data.length-1;
-        [].forEach.call(dots.children,function(b,k){ b.classList.toggle('on',k===i); });
-        read.style.display = data[i].text ? '' : 'none';
+        var hasText=!!data[i].text;
+        toggle.style.display=hasText?'':'none';
+        if(view==='text' && hasText){
+          paper.classList.add('is-text');
+          tv.innerHTML=data[i].text+'<button class="fb-enlarge" type="button">⤢ Larger text</button>';
+          tv.querySelector('.fb-enlarge').onclick=function(){ openReader(title+' · page '+(i+1), data[i].text); };
+          toggle.innerHTML='🖼 Scan';
+        } else {
+          paper.classList.remove('is-text'); toggle.innerHTML='📖 Text';
+        }
       }
       function go(n,dir){
-        n=Math.max(0,Math.min(data.length-1,n)); if(n===i && dir===undefined) { render(); return; }
-        if(!reduce && dir){ paper.classList.add(dir>0?'turn-next':'turn-prev');
+        n=Math.max(0,Math.min(data.length-1,n)); if(n===i) return;
+        if(!reduce && dir && view==='img'){ paper.classList.add(dir>0?'turn-next':'turn-prev');
           setTimeout(function(){ i=n; render(); paper.classList.remove('turn-next','turn-prev'); },150); }
         else { i=n; render(); }
       }
       prev.addEventListener('click',function(){ go(i-1,-1); });
       next.addEventListener('click',function(){ go(i+1,1); });
-      read.addEventListener('click',function(){ openReader(title+' · page '+(i+1), data[i].text); });
+      toggle.addEventListener('click',function(){ view=view==='text'?'img':'text'; render(); });
       fb.setAttribute('tabindex','0');
       fb.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft')go(i-1,-1); if(e.key==='ArrowRight')go(i+1,1); });
       render();
     });
   }
+  function mk(tag,cls,html){ var e=document.createElement(tag); e.className=cls; e.innerHTML=html; return e; }
 
   /* ---------- transcript buttons on any image (data-transcript) ---------- */
   function initTranscriptButtons(){

@@ -49,11 +49,11 @@
     <div class="kicker" data-reveal>Chapter III · Living Maps</div>
     <h1 class="display" data-reveal>Watch the Family<br><span class="grad-text">Move</span></h1>
     <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin-top:22px">
-      Two maps that don't sit still. Press <strong>play</strong> on the world map and the whole
-      journey unspools, from the first humans leaving Africa to the family's spread across twenty
-      countries today. The U.S. map picks up the story in 1637 and carries it to the present. The
-      glowing lines show <strong>which way people moved</strong>; watch for the popups that mark the
-      big moments along the way.
+      Two maps you drive yourself. Choose <strong>“step through the journey”</strong> and walk the
+      world map forward one moment at a time with the arrows, from the first humans leaving Africa to
+      the family's spread across twenty countries today. The U.S. map picks up the story in 1637 and
+      carries it to the present. The glowing lines show <strong>which way people moved</strong>; watch
+      for the popups that mark the big moments along the way.
     </p>
   </div>
 </header>
@@ -69,7 +69,7 @@
         </div>
         <div class="map-modes" id="worldModes">
           <button class="on" data-mode="today">Today's concentration</button>
-          <button data-mode="play">▶ Play the journey</button>
+          <button data-mode="play">Step through the journey →</button>
         </div>
       </div>
 
@@ -82,12 +82,9 @@
       </div>
 
       <div class="map-controls" id="worldControls" hidden>
-        <button class="play-btn" id="worldPlay">▶</button>
-        <input type="range" id="worldScrub" min="0" max="8" value="0" step="1" aria-label="World timeline">
-        <div class="loop-toggle">
-          <button class="on" id="worldLoop" data-loop="1">↻ Loop</button>
-          <button id="worldOnce" data-loop="0">→ Once</button>
-        </div>
+        <button class="step-arrow" id="worldPrev" aria-label="Previous step">‹ Back</button>
+        <span class="map-step" id="worldStep"></span>
+        <button class="step-arrow" id="worldNext" aria-label="Next step">Next ›</button>
       </div>
       <div class="map-legend"><span class="legcue">↝ flow shows direction of migration</span>
         <span class="leg-note" id="worldEraLabel">Present day</span></div>
@@ -106,7 +103,7 @@
         </div>
         <div class="map-modes" id="usModes">
           <button class="on" data-mode="today">Today's concentration</button>
-          <button data-mode="play">▶ Play the history</button>
+          <button data-mode="play">Step through the story →</button>
         </div>
       </div>
 
@@ -119,12 +116,9 @@
       </div>
 
       <div class="map-controls" id="usControls" hidden>
-        <button class="play-btn" id="usPlay">▶</button>
-        <input type="range" id="usScrub" min="0" max="4" value="0" step="1" aria-label="US timeline">
-        <div class="loop-toggle">
-          <button class="on" id="usLoop" data-loop="1">↻ Loop</button>
-          <button id="usOnce" data-loop="0">→ Once</button>
-        </div>
+        <button class="step-arrow" id="usPrev" aria-label="Previous step">‹ Back</button>
+        <span class="map-step" id="usStep"></span>
+        <button class="step-arrow" id="usNext" aria-label="Next step">Next ›</button>
       </div>
       <div class="map-legend"><span>Fewer Tidds</span><i class="legbar us-leg"></i><span>More Tidds</span>
         <span class="leg-note" id="usEraLabel">Present day</span></div>
@@ -210,20 +204,14 @@
 .moment span{display:block;font-size:calc(14.5px*var(--scale));color:var(--fg-soft);line-height:1.5}
 .map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);color:var(--gold);letter-spacing:.1em;background:rgba(8,11,18,.6)}
-.map-controls{display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap}
-.play-btn{width:52px;height:52px;flex:none;border-radius:50%;cursor:pointer;font-size:20px;
-  color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));border:none;
-  box-shadow:0 6px 18px rgba(212,168,70,.4)}
-.map-controls input[type=range]{flex:1;min-width:180px;height:6px;-webkit-appearance:none;appearance:none;
-  background:linear-gradient(90deg,var(--gold) 0%,rgba(255,255,255,.1) 0%);border-radius:6px;outline:none}
-.map-controls input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
-  border-radius:50%;background:var(--gold-bright);cursor:pointer;box-shadow:0 0 0 4px rgba(212,168,70,.25)}
-.map-controls input[type=range]::-moz-range-thumb{width:22px;height:22px;border:none;border-radius:50%;
-  background:var(--gold-bright);cursor:pointer}
-.loop-toggle{display:flex;gap:4px;border:1px solid var(--line);border-radius:11px;padding:3px}
-.loop-toggle button{font-size:calc(13px*var(--scale));font-weight:600;padding:8px 13px;border-radius:8px;
-  cursor:pointer;color:var(--fg-soft);background:transparent;border:none;transition:.2s}
-.loop-toggle button.on{color:#1a1205;background:var(--gold)}
+.map-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:18px;flex-wrap:wrap}
+.step-arrow{font-family:var(--sans);font-weight:600;font-size:calc(15px*var(--scale));cursor:pointer;
+  padding:12px 22px;border-radius:12px;color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));
+  border:none;box-shadow:0 5px 16px rgba(212,168,70,.32);transition:.18s}
+.step-arrow:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 9px 24px rgba(212,168,70,.4)}
+.step-arrow:disabled{opacity:.35;cursor:default;background:rgba(255,255,255,.08);color:var(--fg-mute);box-shadow:none}
+.map-step{font-family:var(--mono);font-size:calc(14px*var(--scale));color:var(--fg-soft);min-width:110px;text-align:center}
+.map-step b{color:var(--gold-bright);font-size:1.15em}
 .map-legend{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap;
   font-family:var(--mono);font-size:calc(12px*var(--scale));color:var(--fg-mute)}
 .legbar{width:180px;height:12px;border-radius:6px;display:inline-block}
