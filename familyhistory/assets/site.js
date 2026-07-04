@@ -171,6 +171,111 @@
     });
   }
 
+  /* ---------- accessible transcript reader (shared) ---------- */
+  var readerEl;
+  function buildReader(){
+    if(readerEl) return readerEl;
+    readerEl = document.createElement('div');
+    readerEl.className='reader'; readerEl.setAttribute('aria-hidden','true');
+    readerEl.innerHTML =
+      '<div class="reader-bar">'+
+        '<span class="reader-title"></span>'+
+        '<label class="reader-size"><span class="a-sm">A</span>'+
+          '<input type="range" min="0.85" max="2.6" step="0.05" value="1.2" aria-label="Text size">'+
+          '<span class="a-lg">A</span></label>'+
+        '<button class="reader-close" aria-label="Close reader">✕</button>'+
+      '</div>'+
+      '<div class="reader-scroll"><div class="reader-body"></div></div>';
+    document.body.appendChild(readerEl);
+    var body=readerEl.querySelector('.reader-body');
+    var range=readerEl.querySelector('.reader-size input');
+    function applySize(v){ body.style.setProperty('--rd', v); try{localStorage.setItem('tidd-readsize',v);}catch(e){} }
+    var saved='1.2'; try{ saved=localStorage.getItem('tidd-readsize')||'1.2'; }catch(e){}
+    range.value=saved; applySize(saved);
+    range.addEventListener('input',function(){ applySize(range.value); });
+    readerEl.querySelector('.reader-close').addEventListener('click', closeReader);
+    readerEl.addEventListener('click',function(e){ if(e.target===readerEl) closeReader(); });
+    document.addEventListener('keydown',function(e){ if(e.key==='Escape' && readerEl.classList.contains('open')) closeReader(); });
+    return readerEl;
+  }
+  function openReader(title, html){
+    var r=buildReader();
+    r.querySelector('.reader-title').textContent=title||'Transcript';
+    r.querySelector('.reader-body').innerHTML=html||'';
+    r.querySelector('.reader-scroll').scrollTop=0;
+    r.classList.add('open'); r.setAttribute('aria-hidden','false');
+    document.documentElement.style.overflow='hidden';
+  }
+  function closeReader(){
+    if(!readerEl) return;
+    readerEl.classList.remove('open'); readerEl.setAttribute('aria-hidden','true');
+    document.documentElement.style.overflow='';
+  }
+  window.__openReader = openReader;
+
+  /* ---------- flip-book (books & multi-page letters) ---------- */
+  function initFlipbooks(){
+    document.querySelectorAll('.flipbook').forEach(function(fb){
+      var pages=[].slice.call(fb.querySelectorAll('.fb-page'));
+      if(!pages.length) return;
+      var title=fb.dataset.title||'Document';
+      var data=pages.map(function(p){
+        var img=p.querySelector('img');
+        var t=p.querySelector('.fb-text');
+        return {src:img?img.getAttribute('src'):'', alt:img?img.alt:'',
+                cap:p.dataset.cap||'', text:t?t.textContent:''};
+      });
+      var i=0;
+      var stage=document.createElement('div'); stage.className='fb-stage';
+      var paper=document.createElement('div'); paper.className='fb-paper';
+      var im=document.createElement('img'); paper.appendChild(im); stage.appendChild(paper);
+      var cap=document.createElement('div'); cap.className='fb-cap';
+      var controls=document.createElement('div'); controls.className='fb-controls';
+      controls.innerHTML='<button class="fb-arrow fb-prev" aria-label="Previous page">‹</button>'+
+        '<span class="fb-count"></span>'+
+        '<button class="fb-arrow fb-next" aria-label="Next page">›</button>'+
+        '<button class="fb-read">📖 Read the text</button>';
+      var dots=document.createElement('div'); dots.className='fb-dots';
+      data.forEach(function(_,k){ var b=document.createElement('button'); b.setAttribute('aria-label','Page '+(k+1));
+        b.addEventListener('click',function(){ go(k); }); dots.appendChild(b); });
+      fb.appendChild(stage); fb.appendChild(cap); fb.appendChild(controls); fb.appendChild(dots);
+      var prev=controls.querySelector('.fb-prev'), next=controls.querySelector('.fb-next'),
+          count=controls.querySelector('.fb-count'), read=controls.querySelector('.fb-read');
+      function render(){
+        im.src=data[i].src; im.alt=data[i].alt;
+        cap.textContent=data[i].cap;
+        count.innerHTML='<b>'+(i+1)+'</b> / '+data.length;
+        prev.disabled=i===0; next.disabled=i===data.length-1;
+        [].forEach.call(dots.children,function(b,k){ b.classList.toggle('on',k===i); });
+        read.style.display = data[i].text ? '' : 'none';
+      }
+      function go(n,dir){
+        n=Math.max(0,Math.min(data.length-1,n)); if(n===i && dir===undefined) { render(); return; }
+        if(!reduce && dir){ paper.classList.add(dir>0?'turn-next':'turn-prev');
+          setTimeout(function(){ i=n; render(); paper.classList.remove('turn-next','turn-prev'); },150); }
+        else { i=n; render(); }
+      }
+      prev.addEventListener('click',function(){ go(i-1,-1); });
+      next.addEventListener('click',function(){ go(i+1,1); });
+      read.addEventListener('click',function(){ openReader(title+' · page '+(i+1), data[i].text); });
+      fb.setAttribute('tabindex','0');
+      fb.addEventListener('keydown',function(e){ if(e.key==='ArrowLeft')go(i-1,-1); if(e.key==='ArrowRight')go(i+1,1); });
+      render();
+    });
+  }
+
+  /* ---------- transcript buttons on any image (data-transcript) ---------- */
+  function initTranscriptButtons(){
+    document.querySelectorAll('[data-reader-title]').forEach(function(el){
+      el.addEventListener('click',function(e){
+        e.preventDefault();
+        var html=''; var tpl=el.parentNode.querySelector('.rd-text')||document.getElementById(el.dataset.readerFor||'');
+        if(tpl) html=tpl.innerHTML || tpl.textContent;
+        openReader(el.dataset.readerTitle, html);
+      });
+    });
+  }
+
   function ready(fn){ if(document.readyState!=='loading')fn(); else document.addEventListener('DOMContentLoaded',fn); }
-  ready(function(){ initNav(); initReveal(); initField(); });
+  ready(function(){ initNav(); initReveal(); initField(); initFlipbooks(); initTranscriptButtons(); });
 })();
