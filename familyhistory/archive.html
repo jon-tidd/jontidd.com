@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Archive, Photographs from a Family Pilgrimage</title>
+<meta name="description" content="In 2010 the family drove to Massachusetts and spent days at the New England Historic Genealogical Society and the ancestral Tidd ground, photographing gravestones, the Tidd House, Tidd Avenue, ancestor portraits and centuries of documents. Here is what they brought back.">
+<meta property="og:title" content="The Tidd Archive, a family pilgrimage, in photographs">
+<meta property="og:description" content="Gravestones from 1696, the Tidd House, Tidd Avenue, ancestor portraits, and the original documents behind the whole history.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/archive.html" data-page="archive.html">Archive</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="arc-hero">
+  <img class="arc-hero-img" src="images/archive/old-burying-ground.jpg" alt="An old New England burying ground of slate headstones" fetchpriority="high">
+  <div class="arc-hero-veil"></div>
+  <div class="wrap arc-hero-in">
+    <div class="kicker" data-reveal>The Family Archive · Photographed 2010</div>
+    <h1 class="display" data-reveal>What They Brought<br><span class="grad-text">Home</span></h1>
+    <p class="lead" data-reveal data-delay="1" style="max-width:60ch">
+      In the summer of 2010, two of the family drove north to Massachusetts and spent days in the
+      reading room of the <strong>New England Historic Genealogical Society</strong> and out among the
+      ancestral graves. They photographed everything: 1696 headstones, the Tidd House, a street that
+      still carries the name, and the centuries of paper this whole history rests on.
+    </p>
+  </div>
+</header>
+
+<!-- ══ THE GRAVES ══ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="kicker" data-reveal>I · The Oldest Graves</div>
+    <h2 data-reveal>Where the early Tidds lie.</h2>
+    <p class="lead" data-reveal data-delay="1" style="max-width:60ch;margin:14px 0 34px">In a New England burying ground, the family's slate headstones still stand three centuries on, some carved before the word "American" meant anything. The old spelling wanders between <em>Tidd</em>, <em>Teed</em> and <em>Tydd</em> from one stone to the next.</p>
+    <div class="gal g-3">
+      <figure class="gal-item" data-reveal>
+        <button class="gal-btn" data-cap="“Here lyes ye body of Daniel Teed, aged 28 years, died November 29, 1696.” One of the oldest legible stones, with the family name carved in the older ‘Teed’ spelling.">
+          <img src="images/archive/grave-daniel-teed-1696.jpg" alt="1696 slate headstone of Daniel Teed" loading="lazy">
+        </button>
+        <figcaption><b>Daniel Teed, 1696</b>Dead at 28. The oldest date the family found, carved when the colony was barely two generations old.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="1">
+        <button class="gal-btn" data-cap="“Here lyes the body of Mary Tidd, wife to Joseph Tidd.” A winged-skull ‘death’s head’ stone, the classic early-New-England carving.">
+          <img src="images/archive/grave-mary-tidd.jpg" alt="Early headstone of Mary Tidd, wife of Joseph Tidd" loading="lazy">
+        </button>
+        <figcaption><b>Mary Tidd</b>“Wife to Joseph Tidd.” The winged death’s-head above her name is pure colonial New England.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="2">
+        <button class="gal-btn" data-cap="The worn stone of Hephzibah, a daughter of the Tidd family, the lettering nearly erased by three hundred winters.">
+          <img src="images/archive/grave-hephzibah-tidd.jpg" alt="Weathered headstone of Hephzibah Tidd" loading="lazy">
+        </button>
+        <figcaption><b>Hephzibah Tidd</b>A daughter of the line. Three centuries of weather have almost taken her name back.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TIDD HOUSE & AVENUE ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>II · The Name on the Land</div>
+    <h2 data-reveal>A house and a street<br>that still bear the name.</h2>
+    <div class="gal g-3" style="margin-top:32px">
+      <figure class="gal-item" data-reveal>
+        <button class="gal-btn" data-cap="The Tidd House, an ancestral family home, its name still on the sign out front.">
+          <img src="images/archive/tidd-house.jpg" alt="A historic house with a sign reading Tidd House" loading="lazy">
+        </button>
+        <figcaption><b>The Tidd House</b>Still standing, still named. The family walked its rooms and cellar on the trip.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="1">
+        <button class="gal-btn" data-cap="A green street sign reading TIDD AVE, the surname worn smooth into the map of the town.">
+          <img src="images/archive/tidd-avenue.jpg" alt="A street sign reading Tidd Ave" loading="lazy">
+        </button>
+        <figcaption><b>Tidd Avenue</b>Three and a half centuries in, the name is literally paved into the town.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="2">
+        <button class="gal-btn" data-cap="Two framed 19th-century ancestor portraits hanging inside the Tidd House, a Tidd man and woman, likely great-great-grandparents.">
+          <img src="images/archive/ancestor-portraits.jpg" alt="Two framed 19th-century ancestor portraits on a wall" loading="lazy">
+        </button>
+        <figcaption><b>Faces on the wall</b>Two 19th-century ancestor portraits inside the house, real Tidd faces, generations back.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE RECORD ROOM ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>III · The Record Room</div>
+    <h2 data-reveal>Inside the archive itself.</h2>
+    <p class="lead" data-reveal data-delay="1" style="max-width:62ch;margin:14px 0 34px">Founded in 1845, the <strong>New England Historic Genealogical Society</strong> in Boston is the oldest genealogical society in America. Days there produced most of the hard facts behind this whole site, including a published sketch of the immigrant John Tidd, and a family tree drawn generations deep.</p>
+    <div class="gal g-3">
+      <figure class="gal-item" data-reveal>
+        <button class="gal-btn" data-cap="The reading room of the New England Historic Genealogical Society, Boston, oldest genealogical society in America, founded 1845.">
+          <img src="images/archive/nehgs-reading-room.jpg" alt="Wood-panelled reading room with chandeliers at the NEHGS" loading="lazy">
+        </button>
+        <figcaption><b>The reading room</b>NEHGS, Boston. Where the family history stopped being hearsay and started being sourced.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="1">
+        <button class="gal-btn" data-cap="Title page: Dawes-Gates Ancestral Lines, a memorial volume of the American ancestry of Rufus R. Dawes, compiled by Mary Walton Ferris, privately printed 1943. The Tidds appear among its allied families.">
+          <img src="images/archive/dawes-gates-title.jpg" alt="Title page of Dawes-Gates Ancestral Lines, 1943" loading="lazy">
+        </button>
+        <figcaption><b>Dawes-Gates Ancestral Lines (1943)</b>Mary Walton Ferris’s meticulous volume, the Tidds are one of its documented allied families.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="2">
+        <button class="gal-btn" data-cap="The book’s TIDD sketch (headed ‘Tidd, Tydd, Teed’): John Tidd, ‘a tailor, born by or before 1600,’ of Charlestown, granted a Mystic-side lot in 1638, with Joshua Tidd his presumed brother on the next lot.">
+          <img src="images/archive/tidd-book-entry.jpg" alt="Printed genealogical sketch headed Tidd, Tydd, Teed" loading="lazy">
+        </button>
+        <figcaption><b>“TIDD (Tydd, Teed)”</b>The printed sketch of John Tidd, tailor, and of <em>Joshua</em> Tidd, his presumed brother on the next lot over.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal>
+        <button class="gal-btn" data-cap="A Tidd descendant chart drawn out generation by generation, John Tidd at the top, his children and grandchildren branching below.">
+          <img src="images/archive/family-tree-chart.jpg" alt="A hand-set genealogical chart of Tidd descendants" loading="lazy">
+        </button>
+        <figcaption><b>The descendant chart</b>John Tidd at the crown, the branches spreading down through Daniel, Elizabeth, Joseph and the rest.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="1">
+        <button class="gal-btn" data-cap="A 1795 promissory note, ‘For value received I promise to pay… Forty-Eight Dollars and Seventeen Cents in silver or gold on demand.’ Everyday paper from the family’s New England world.">
+          <img src="images/archive/promissory-note-1795.jpg" alt="A handwritten 1795 promissory note" loading="lazy">
+        </button>
+        <figcaption><b>A 1795 promissory note</b>“Forty-eight dollars and seventeen cents in silver or gold, on demand.” Ordinary life, in ink.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="2">
+        <button class="gal-btn" data-cap="The bookplate of the volume: ‘New-England Historic Genealogical Society, given by Winthrop Reed Kendall, LL.B., Oak Park, Illinois, Dec. 12, 1913.’">
+          <img src="images/archive/nehgs-bookplate.jpg" alt="NEHGS donor bookplate dated 1913" loading="lazy">
+        </button>
+        <figcaption><b>The bookplate</b>Donated to the society in 1913, a reminder that this record has been kept, and added to, for over a century.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHERE IT BEGAN ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>IV · Where It All Began</div>
+    <h2 data-reveal>The same shore, four centuries on.</h2>
+    <p class="lead" data-reveal data-delay="1" style="max-width:62ch;margin:14px 0 34px">The trip traced the family back to its first American ground, Plymouth and the coast of Massachusetts Bay, where English families like the Tidds stepped off wooden ships into a new world in the 1630s.</p>
+    <div class="gal g-3">
+      <figure class="gal-item" data-reveal>
+        <button class="gal-btn" data-cap="Plymouth Rock, carved with 1620, the traditional landing spot of the Mayflower Pilgrims, a generation before the Tidds’ own 1637 crossing.">
+          <img src="images/archive/plymouth-rock.jpg" alt="Plymouth Rock carved with the date 1620" loading="lazy">
+        </button>
+        <figcaption><b>Plymouth Rock</b>1620. The Tidds followed the same sea road just seventeen years later.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="1">
+        <button class="gal-btn" data-cap="Mayflower II, a full-size replica of the 1620 ship, riding at anchor in Plymouth Harbor, the kind of vessel that carried the first English families across.">
+          <img src="images/archive/mayflower-ii.jpg" alt="The Mayflower II replica ship at anchor" loading="lazy">
+        </button>
+        <figcaption><b>Mayflower II</b>A full-size replica of the ship, roughly the size of the vessel John Tidd crossed on in 1637.</figcaption>
+      </figure>
+      <figure class="gal-item" data-reveal data-delay="2">
+        <button class="gal-btn" data-cap="The National Monument to the Forefathers in Plymouth, the largest solid-granite monument in the United States, raised to the Pilgrims and the founding generation.">
+          <img src="images/archive/forefathers-monument.jpg" alt="The National Monument to the Forefathers in Plymouth" loading="lazy">
+        </button>
+        <figcaption><b>Monument to the Forefathers</b>Plymouth’s great granite tribute to the founding generation the Tidds belonged to.</figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card" data-reveal style="text-align:center">
+      <p class="big" style="margin:0 0 8px">This is what a family history costs: a tank of gas and a few careful days.</p>
+      <p class="muted" style="margin:0">Every document here has a home in the <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a> list. Have old photos, letters or a family Bible of your own? They belong in the next edition.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/archive.html">Archive</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Photographs taken by the family at the New England Historic Genealogical Society and ancestral sites, July 2010. Tap or click any image to enlarge.</p>
+</div></footer>
+
+<!-- lightbox -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lb-close" aria-label="Close">✕</button>
+  <img class="lb-img" alt="">
+  <div class="lb-cap"></div>
+</div>
+
+<style>
+.arc-hero{position:relative;min-height:82vh;display:flex;align-items:flex-end;
+  padding:150px 0 60px;overflow:hidden}
+.arc-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 40%;z-index:0;
+  filter:saturate(.85) contrast(1.02)}
+.arc-hero-veil{position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(10,14,23,.7) 0%,rgba(10,14,23,.4) 40%,rgba(10,14,23,.94) 100%)}
+.arc-hero-in{position:relative;z-index:2}
+.arc-hero .lead{color:#e7e1d3;margin-top:20px}
+
+.gal{display:grid;gap:clamp(14px,2vw,22px)}
+.gal.g-3{grid-template-columns:repeat(3,1fr)}
+.gal-item{margin:0;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.01));
+  border:1px solid var(--line);border-radius:16px;overflow:hidden;transition:transform .3s,border-color .3s,box-shadow .3s}
+.gal-item:hover{transform:translateY(-4px);border-color:rgba(212,168,70,.34);box-shadow:0 22px 50px rgba(0,0,0,.5)}
+.gal-btn{display:block;width:100%;padding:0;border:none;cursor:zoom-in;background:#0c1017;position:relative;overflow:hidden}
+.gal-btn img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;transition:transform .5s ease}
+.gal-item:hover .gal-btn img{transform:scale(1.045)}
+.gal-btn::after{content:'⤢';position:absolute;top:10px;right:10px;width:30px;height:30px;border-radius:8px;
+  display:flex;align-items:center;justify-content:center;background:rgba(10,14,23,.7);color:var(--gold-bright);
+  font-size:15px;opacity:0;transition:opacity .25s}
+.gal-item:hover .gal-btn::after{opacity:1}
+.gal-item figcaption{padding:16px 18px;font-size:calc(16px*var(--scale));color:var(--fg-soft);line-height:1.5}
+.gal-item figcaption b{display:block;font-family:var(--serif);font-size:calc(20px*var(--scale));color:var(--gold-bright);margin-bottom:5px}
+
+/* lightbox */
+.lightbox{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;
+  background:rgba(6,8,13,.94);backdrop-filter:blur(6px);padding:clamp(16px,4vw,60px);flex-direction:column;gap:18px}
+.lightbox.open{display:flex}
+.lb-img{max-width:100%;max-height:76vh;border-radius:12px;border:1px solid var(--line);
+  box-shadow:0 30px 80px rgba(0,0,0,.7)}
+.lb-cap{max-width:760px;text-align:center;color:#e7e1d3;font-size:calc(17px*var(--scale));line-height:1.6}
+.lb-close{position:absolute;top:18px;right:22px;width:46px;height:46px;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.08);border:1px solid var(--line);color:#fff;font-size:20px;transition:.2s}
+.lb-close:hover{background:var(--gold);color:#1a1205;border-color:var(--gold)}
+
+@media(max-width:900px){ .gal.g-3{grid-template-columns:repeat(2,1fr)} }
+@media(max-width:600px){ .gal.g-3{grid-template-columns:1fr} .arc-hero{min-height:auto} }
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* simple lightbox */
+(function(){
+  var lb=document.getElementById('lightbox'), img=lb.querySelector('.lb-img'), cap=lb.querySelector('.lb-cap');
+  function open(src,alt,caption){ img.src=src; img.alt=alt||''; cap.textContent=caption||''; lb.classList.add('open'); lb.setAttribute('aria-hidden','false'); }
+  function close(){ lb.classList.remove('open'); lb.setAttribute('aria-hidden','true'); img.src=''; }
+  document.querySelectorAll('.gal-btn').forEach(function(b){
+    b.addEventListener('click',function(){ var im=b.querySelector('img'); open(im.src, im.alt, b.dataset.cap); });
+  });
+  lb.addEventListener('click',function(e){ if(e.target===lb || e.target.classList.contains('lb-close')) close(); });
+  document.addEventListener('keydown',function(e){ if(e.key==='Escape') close(); });
+})();
+</script>
+</body>
+</html>

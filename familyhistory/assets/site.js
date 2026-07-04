@@ -26,7 +26,7 @@
     // "sources.html" or clean "/sources" URLs. The hub (/familyhistory/) = index.
     var p = location.pathname, norm = 'index', m = p.match(/([a-z]+)\.html$/);
     if(m){ norm = m[1]; }
-    else { var m2 = p.match(/\/(migration|famous|maps|genetics|sources)\/?$/); if(m2) norm = m2[1]; }
+    else { var m2 = p.match(/\/(migration|famous|maps|genetics|archive|sources)\/?$/); if(m2) norm = m2[1]; }
     nav.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
       var dp = (a.dataset.page||'').replace(/\.html$/,'') || 'index';
       if(dp===norm) a.classList.add('active');

@@ -204,11 +204,9 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
 
 /* ── responsive ── */
-@media(max-width:900px){
-  .g4{grid-template-columns:repeat(2,1fr)}
-  .g3{grid-template-columns:1fr}
-  /* full nav → hamburger + slide-down panel (triggers early so the desktop
-     bar is never crowded, even at the largest text setting) */
+/* Nav collapses to a hamburger below 1120px so the full 7-item bar is never
+   crowded (kept separate from the content-grid breakpoints below). */
+@media(max-width:1120px){
   .brand small{display:none}            /* compact one-line brand on small screens */
   .nav-links{position:fixed;inset:54px 0 auto 0;flex-direction:column;align-items:stretch;
     background:rgba(10,14,23,.98);backdrop-filter:blur(18px);padding:14px clamp(16px,5vw,40px);
@@ -219,6 +217,10 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
   .textsize{margin:8px 0 0;border-left:none;border-top:1px solid var(--line-soft);
     padding:12px 0 0;justify-content:center}
   .hamb{display:block}
+}
+@media(max-width:900px){
+  .g4{grid-template-columns:repeat(2,1fr)}
+  .g3{grid-template-columns:1fr}
 }
 @media(max-width:720px){
   :root{--fs-base:calc(19px*var(--scale));--fs-lead:calc(21px*var(--scale))}
