@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Living Maps — Where the Tidds Went</title>
+<title>Living Maps, Where the Tidds Went</title>
 <meta name="description" content="Interactive world and U.S. maps of the Tidd family: watch four centuries of migration play out, from England to Woburn in 1637 to today's concentrations across America and the world.">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,10 +47,12 @@
   <div class="wrap">
     <div class="kicker" data-reveal>Chapter III · Living Maps</div>
     <h1 class="display" data-reveal>Watch the Family<br><span class="grad-text">Move</span></h1>
-    <p class="lead" data-reveal data-delay="1" style="max-width:64ch;margin-top:22px">
-      Two maps that don't sit still. Press <strong>play</strong> and four centuries unspool —
-      the family fanning out from one English county to two dozen countries, and one Massachusetts
-      town to every corner of America. Hover anywhere to see who's there.
+    <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin-top:22px">
+      Two maps that don't sit still. Press <strong>play</strong> on the world map and the whole
+      journey unspools, from the first humans leaving Africa to the family's spread across twenty
+      countries today. The U.S. map picks up the story in 1637 and carries it to the present. The
+      glowing lines show <strong>which way people moved</strong>; watch for the popups that mark the
+      big moments along the way.
     </p>
   </div>
 </header>
@@ -61,31 +63,32 @@
     <div class="map-shell" data-reveal>
       <div class="map-head">
         <div>
-          <div class="chip">The World</div>
-          <h2 style="margin-top:12px">Tidds across the globe</h2>
+          <div class="chip">The World · 100,000 years</div>
+          <h2 style="margin-top:12px">The whole migration</h2>
         </div>
         <div class="map-modes" id="worldModes">
           <button class="on" data-mode="today">Today's concentration</button>
-          <button data-mode="play">▶ Play the history</button>
+          <button data-mode="play">▶ Play the journey</button>
         </div>
       </div>
 
       <div class="map-stage">
-        <svg id="worldMap" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map of Tidd surname concentration"></svg>
+        <svg id="worldMap" viewBox="0 0 960 520" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map of the Tidd family's 100,000-year migration"></svg>
         <div class="map-tip" id="worldTip"></div>
         <div class="era-badge" id="worldEra"></div>
+        <div class="moment" id="worldMoment"></div>
         <div class="map-loading" id="worldLoading">Drawing the world…</div>
       </div>
 
       <div class="map-controls" id="worldControls" hidden>
         <button class="play-btn" id="worldPlay">▶</button>
-        <input type="range" id="worldScrub" min="0" max="5" value="0" step="1" aria-label="World timeline">
+        <input type="range" id="worldScrub" min="0" max="8" value="0" step="1" aria-label="World timeline">
         <div class="loop-toggle">
           <button class="on" id="worldLoop" data-loop="1">↻ Loop</button>
           <button id="worldOnce" data-loop="0">→ Once</button>
         </div>
       </div>
-      <div class="map-legend"><span>Fewer Tidds</span><i class="legbar world-leg"></i><span>More Tidds</span>
+      <div class="map-legend"><span class="legcue">↝ flow shows direction of migration</span>
         <span class="leg-note" id="worldEraLabel">Present day</span></div>
     </div>
   </div>
@@ -110,6 +113,7 @@
         <svg id="usMap" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="United States map of Tidd surname concentration"></svg>
         <div class="map-tip" id="usTip"></div>
         <div class="era-badge" id="usEra"></div>
+        <div class="moment" id="usMoment"></div>
         <div class="map-loading" id="usLoading">Drawing the states…</div>
       </div>
 
@@ -134,7 +138,7 @@
     <div class="card stat" data-reveal data-delay="2"><div class="num">1 in 1.6M</div><div class="lbl">of the world's people carry the name</div></div>
   </div>
   <p class="muted" data-reveal style="text-align:center;margin-top:28px;font-size:calc(14px*var(--scale))">
-    Concentrations are drawn from Forebears surname-distribution data (present day) and reconstructed from genealogical and census patterns for earlier eras. Figures are best-estimate and illustrative — the shapes of the migration are real; the exact counts for 1650 or 1850 are informed approximations. See <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a>.
+    The deep-time journey (100,000 BCE to 1273) follows the population-genetics and archaeology shared by everyone of English descent. Present-day counts come from Forebears surname-distribution data; the routes and figures for the eras in between are reconstructed from genealogical and census patterns. The shapes of the migration are real. Exact counts for, say, 1850 are informed approximations. See <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a>.
   </p>
 </div></section>
 
@@ -157,28 +161,52 @@
   border:1px solid var(--line);background:rgba(255,255,255,.03);transition:.2s}
 .map-modes button:hover{color:var(--fg);border-color:var(--gold)}
 .map-modes button.on{color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));border:none}
+/* Stage has an explicit height; the SVG fills it and letterboxes
+   (preserveAspectRatio=meet) so the ENTIRE map is always visible, never cut off. */
 .map-stage{position:relative;border-radius:16px;overflow:hidden;
-  background:radial-gradient(120% 120% at 50% 0%,rgba(20,28,46,.7),rgba(8,11,18,.9));
-  border:1px solid var(--line-soft)}
-.map-stage svg{width:100%;height:auto;display:block}
-.geo{stroke:rgba(10,14,23,.9);stroke-width:.5;transition:fill .5s ease}
+  background:radial-gradient(120% 120% at 50% 0%,rgba(20,28,46,.72),rgba(8,11,18,.94));
+  border:1px solid var(--line-soft);height:clamp(320px,60vh,660px)}
+.map-stage svg{width:100%;height:100%;display:block}
+.geo{stroke:rgba(10,14,23,.85);stroke-width:.4;transition:fill .6s ease}
 .geo.hot{cursor:pointer}
-.geo.hot:hover{stroke:var(--gold-bright);stroke-width:1.4}
-.arc{fill:none;stroke:var(--gold-bright);stroke-width:2.2;opacity:.9;
-  filter:drop-shadow(0 0 5px rgba(240,207,133,.7));stroke-linecap:round}
-.arc.faint{stroke:var(--violet);opacity:.55;stroke-width:1.6}
-.city{fill:var(--gold-bright);filter:drop-shadow(0 0 6px rgba(240,207,133,.9))}
-.city-label{fill:#fff;font-family:var(--mono);font-size:11px;paint-order:stroke;
-  stroke:rgba(0,0,0,.7);stroke-width:3px;pointer-events:none}
+.geo.hot:hover{stroke:var(--gold-bright);stroke-width:1.2}
+
+/* directional migration flows: faint base route + flowing dashes moving
+   toward the destination + an arrowhead + a travelling comet (SMIL) */
+.flow-base{fill:none;stroke:rgba(240,207,133,.30);stroke-width:2;stroke-linecap:round}
+.flow-dash{fill:none;stroke:var(--gold-bright);stroke-width:2.6;stroke-linecap:round;
+  stroke-dasharray:1 13;filter:drop-shadow(0 0 4px rgba(240,207,133,.85));
+  animation:flowdash 1s linear infinite}
+@keyframes flowdash{to{stroke-dashoffset:-14}}
+.flow-comet{fill:#fff;filter:drop-shadow(0 0 7px rgba(240,207,133,1))}
+
+/* presence markers (where the line lived in each era) */
+.mk-halo{fill:rgba(240,207,133,.15);animation:mkpulse 2.6s ease-in-out infinite}
+@keyframes mkpulse{0%,100%{opacity:.32}50%{opacity:.85}}
+.mk-core{fill:var(--gold-bright);filter:drop-shadow(0 0 6px rgba(240,207,133,.95))}
+.mk-label{fill:#fff;font-family:var(--mono);font-size:12.5px;paint-order:stroke;
+  stroke:rgba(0,0,0,.8);stroke-width:3.2px;pointer-events:none;dominant-baseline:middle}
 .map-tip{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-120%);
   background:rgba(10,14,23,.96);border:1px solid var(--gold);border-radius:12px;padding:12px 15px;
   min-width:170px;max-width:250px;transition:opacity .15s;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.6)}
 .map-tip b{color:var(--gold-bright);font-family:var(--serif);font-size:calc(19px*var(--scale));display:block}
 .map-tip .n{font-family:var(--mono);color:var(--fg);font-size:calc(14px*var(--scale));margin:3px 0}
 .map-tip .note{color:var(--fg-soft);font-size:calc(13px*var(--scale));line-height:1.4;margin-top:4px}
-.era-badge{position:absolute;top:14px;left:16px;font-family:var(--serif);font-weight:700;
-  font-size:clamp(30px,5vw,60px);color:rgba(240,207,133,.85);text-shadow:0 2px 20px rgba(0,0,0,.7);
-  pointer-events:none;line-height:1}
+.era-badge{position:absolute;top:14px;left:18px;pointer-events:none;line-height:1;z-index:3}
+.era-badge .eb-date{display:block;font-family:var(--serif);font-weight:700;
+  font-size:clamp(26px,4.4vw,52px);color:rgba(240,207,133,.92);text-shadow:0 2px 22px rgba(0,0,0,.85)}
+.era-badge .eb-name{display:block;margin-top:5px;font-family:var(--mono);
+  font-size:clamp(11px,1.5vw,15px);letter-spacing:.14em;text-transform:uppercase;color:var(--gold);
+  text-shadow:0 1px 12px rgba(0,0,0,.95)}
+/* moment callout popup (anchored near the era's location, clamped in-bounds) */
+.moment{position:absolute;left:50%;top:12px;transform:translateX(-50%);
+  max-width:min(340px,74%);background:rgba(10,14,23,.95);border:1px solid var(--gold);
+  border-radius:14px;padding:14px 17px;z-index:6;opacity:0;pointer-events:none;
+  box-shadow:0 14px 42px rgba(0,0,0,.65);transition:opacity .4s ease}
+.moment.show{opacity:1}
+.moment b{display:block;font-family:var(--serif);font-size:calc(20px*var(--scale));
+  color:var(--gold-bright);margin-bottom:5px;line-height:1.18}
+.moment span{display:block;font-size:calc(14.5px*var(--scale));color:var(--fg-soft);line-height:1.5}
 .map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   font-family:var(--mono);color:var(--gold);letter-spacing:.1em;background:rgba(8,11,18,.6)}
 .map-controls{display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap}
@@ -199,10 +227,14 @@
   font-family:var(--mono);font-size:calc(12px*var(--scale));color:var(--fg-mute)}
 .legbar{width:180px;height:12px;border-radius:6px;display:inline-block}
 .world-leg,.us-leg{background:linear-gradient(90deg,#1b2740,#7a5a1e,#d4a846,#f0cf85)}
+.legcue{color:var(--gold)}
 .leg-note{margin-left:auto;color:var(--gold);font-size:calc(13px*var(--scale))}
 @media(max-width:720px){
-  .era-badge{font-size:26px}
+  .map-stage{height:clamp(300px,54vh,460px)}
+  .era-badge .eb-date{font-size:24px}
+  .mk-label{font-size:15px}
   .map-modes button{font-size:calc(13px*var(--scale));padding:9px 12px}
+  .moment{max-width:86%}
 }
 </style>
 

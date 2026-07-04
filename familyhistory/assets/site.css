@@ -44,6 +44,7 @@ body{
   color:var(--fg);
   background:var(--ink);
   overflow-x:hidden;
+  max-width:100vw;
   letter-spacing:.002em;
 }
 img{display:block;max-width:100%}
@@ -79,15 +80,18 @@ a{color:inherit;text-decoration:none}
   -webkit-backdrop-filter:blur(18px) saturate(1.2);
   border-bottom:1px solid var(--line);
 }
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--serif);
-  font-weight:600;font-size:calc(21px*var(--scale));letter-spacing:.01em;color:var(--fg)}
+/* Nav is fixed-size chrome: the A-/A/A+ control enlarges reading content,
+   not the navigation, so the bar never wraps or overflows when scaled up. */
+.brand{display:flex;align-items:center;gap:12px;flex:none;font-family:var(--serif);
+  font-weight:600;font-size:21px;letter-spacing:.01em;color:var(--fg);white-space:nowrap}
+.brand>span{white-space:nowrap}
 .brand .crest{width:30px;height:30px;flex:none;filter:drop-shadow(0 2px 6px rgba(212,168,70,.4))}
-.brand small{font-family:var(--mono);font-size:calc(10px*var(--scale));color:var(--gold);
+.brand small{font-family:var(--mono);font-size:10px;color:var(--gold);
   letter-spacing:.22em;text-transform:uppercase;display:block;line-height:1;margin-top:2px}
-.nav-links{display:flex;align-items:center;gap:6px}
+.nav-links{display:flex;align-items:center;gap:4px;min-width:0}
 .nav-links a{
-  font-size:calc(15px*var(--scale));font-weight:500;color:var(--fg-soft);
-  padding:9px 14px;border-radius:11px;transition:.18s;white-space:nowrap;
+  font-size:15px;font-weight:500;color:var(--fg-soft);
+  padding:9px 12px;border-radius:11px;transition:.18s;white-space:nowrap;
 }
 .nav-links a:hover{color:var(--fg);background:rgba(255,255,255,.05)}
 .nav-links a.active{color:var(--gold-bright);background:rgba(212,168,70,.1)}
@@ -203,17 +207,21 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
 @media(max-width:900px){
   .g4{grid-template-columns:repeat(2,1fr)}
   .g3{grid-template-columns:1fr}
+  /* full nav → hamburger + slide-down panel (triggers early so the desktop
+     bar is never crowded, even at the largest text setting) */
+  .brand small{display:none}            /* compact one-line brand on small screens */
+  .nav-links{position:fixed;inset:54px 0 auto 0;flex-direction:column;align-items:stretch;
+    background:rgba(10,14,23,.98);backdrop-filter:blur(18px);padding:14px clamp(16px,5vw,40px);
+    border-bottom:1px solid var(--line);gap:4px;transform:translateY(-140%);
+    transition:transform .32s cubic-bezier(.2,.7,.2,1);max-height:calc(100vh - 54px);overflow-y:auto}
+  .nav.open .nav-links{transform:none}
+  .nav-links a{padding:14px 12px;font-size:18px;border-radius:12px}
+  .textsize{margin:8px 0 0;border-left:none;border-top:1px solid var(--line-soft);
+    padding:12px 0 0;justify-content:center}
+  .hamb{display:block}
 }
 @media(max-width:720px){
   :root{--fs-base:calc(19px*var(--scale));--fs-lead:calc(21px*var(--scale))}
-  .nav-links,.textsize{position:fixed;inset:56px 0 auto 0;flex-direction:column;align-items:stretch;
-    background:rgba(10,14,23,.98);backdrop-filter:blur(18px);padding:14px clamp(16px,5vw,40px);
-    border-bottom:1px solid var(--line);gap:4px;transform:translateY(-140%);transition:transform .32s cubic-bezier(.2,.7,.2,1)}
-  .textsize{inset:auto 0 auto 0;top:auto;border-left:none;margin:0;padding-top:0;flex-direction:row;justify-content:center;transform:none;position:static;background:none}
-  .nav.open .nav-links{transform:none}
-  .nav-links a{padding:14px 12px;font-size:calc(18px*var(--scale));border-radius:12px}
-  .nav-links .textsize{margin-top:8px;border-top:1px solid var(--line-soft);padding-top:12px}
-  .hamb{display:block}
   .g2{grid-template-columns:1fr}
   .pad{padding:clamp(44px,10vw,70px) 0}
 }
