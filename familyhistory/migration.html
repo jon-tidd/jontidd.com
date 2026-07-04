@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Migration — 100,000 Years of the Tidd Line</title>
+<meta name="description" content="The Tidd migration story: out of Africa, into Ice-Age Europe, through Bronze-Age Britain and Anglo-Saxon England, across the Atlantic to Woburn in 1637, and westward to Ohio and beyond.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pad" style="padding-top:140px">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Chapter I · Migration</div>
+    <h1 class="display" data-reveal>The Long Walk<br><span class="grad-text">Home</span></h1>
+    <p class="lead" data-reveal data-delay="1" style="max-width:64ch;margin-top:22px">
+      Every family is a relay race run across ice ages and oceans. Here is the Tidd leg of it —
+      one hundred thousand years compressed into a single scroll, from a campfire in Africa
+      to a kitchen table where three children are learning their name.
+    </p>
+    <!-- 100k year clock -->
+    <div class="clock" data-reveal data-delay="2">
+      <div class="clock-track"><div class="clock-fill" id="clockFill"></div>
+        <div class="clock-tick" style="left:0%"><b>100,000<br>years ago</b><span>Out of Africa</span></div>
+        <div class="clock-tick" style="left:55%"><b>45,000</b><span>Into Europe</span></div>
+        <div class="clock-tick" style="left:78%"><b>4,500</b><span>R1b reaches Britain</span></div>
+        <div class="clock-tick" style="left:96%"><b>1637</b><span>Atlantic crossing</span></div>
+        <div class="clock-tick now" style="left:100%"><b>Today</b><span>Alice · Miles · Mason</span></div>
+      </div>
+      <p class="muted" style="margin-top:34px;font-size:calc(14px*var(--scale))">If those 100,000 years were a single day, the family has been in America for the last <strong>five and a half minutes</strong>, and the three youngest Tidds arrived in the final half-second.</p>
+    </div>
+  </div>
+</header>
+
+<!-- ══ TIMELINE ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="timeline">
+      <div class="tl-spine"><div class="tl-spine-fill" id="spineFill"></div></div>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">~100,000 BCE · Africa</div>
+          <h3>The first modern humans</h3>
+          <p>The deepest branch of the family tree has no surname, no country, not even farming. Around 100,000 years ago, anatomically modern humans — the ancestors of <em>everyone</em> alive — were spreading out of East Africa. Every Tidd on Earth descends from a small band that made the crossing out of the continent.</p>
+          <div class="tl-tag">mitochondrial &amp; Y-chromosome roots</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">~45,000 BCE · Ice-Age Europe</div>
+          <h3>Hunters at the edge of the ice</h3>
+          <p>The line reaches Europe during the last Ice Age, sharing the tundra with mammoths and, briefly, with Neanderthals — whose DNA still survives, about 2%, in the modern family genome. These are the people of the painted caves.</p>
+          <div class="tl-tag">Palaeolithic hunter-gatherers</div>
+        </div>
+      </article>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">~6,000 BCE · Neolithic</div>
+          <h3>The first farmers arrive</h3>
+          <p>Farming sweeps out of Anatolia and into Europe. The old hunter-gatherer world is folded into a new agricultural one. The genome the family carries today is a braid of these two peoples — forager and farmer.</p>
+          <div class="tl-tag">Neolithic Anatolian farmers</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">~2,500 BCE · Bronze Age Britain</div>
+          <h3>R1b — the signature of Britain</h3>
+          <p>A third great migration — horse-riding peoples from the steppe north of the Black Sea — sweeps into Britain and largely replaces the population that built Stonehenge. They bring <strong>Y-chromosome haplogroup R1b-P312</strong>, still carried by <strong>over 70% of English men</strong> and the near-certain deep paternal marker of the Tidd line.</p>
+          <div class="tl-tag">Beaker people · R1b-P312 / R-L21</div>
+        </div>
+      </article>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">410 – 700 CE · Anglo-Saxon England</div>
+          <h3>The English are made — and so is the name</h3>
+          <p>As Rome withdraws, Angles, Saxons and Jutes cross the North Sea and settle eastern England, adding a "Germanic" R1b-U106 layer to the gene pool. Out of their language comes the word that becomes the family's name: <em>tid</em> — "time, season" — and <em>tid-man</em>, the trusted head of a <strong>tithing</strong>, a group of ten households bound to answer for one another.</p>
+          <div class="tl-tag">Old English · "tid-man" origin</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">1273 CE · Cambridgeshire</div>
+          <h3>The name enters the written record</h3>
+          <p>The surname is first written down as <strong>"Thomas de Tid"</strong>, recorded in the Hundred Rolls of Cambridgeshire in 1273, during the reign of Edward I. The alternate spelling points to two villages — <strong>Tydd</strong> in Cambridgeshire and Lincolnshire — whose name comes from Old English for a small hill.</p>
+          <div class="tl-tag">Hundred Rolls, 1273 · first record</div>
+        </div>
+      </article>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">c. 1600 CE · Hertfordshire, England</div>
+          <h3>John Tidd, tailor</h3>
+          <p>The direct American line comes into focus with <strong>John Tidd</strong>, born about 1600 in Hertford, Hertfordshire — son of a John Tidd and, by one account, Agnes Dane. A tailor by trade, married to Margaret. In a decade of religious upheaval, the family decides to gamble everything on a colony across the sea.</p>
+          <div class="tl-tag">the immigrant ancestor</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt big" data-reveal>
+        <div class="tl-dot glow"></div>
+        <div class="tl-card featured">
+          <div class="tl-era gold-text">12 May 1637 · The Atlantic</div>
+          <h3>The crossing</h3>
+          <p>John Tidd embarks from <strong>Yarmouth, on the Isle of Wight</strong>, bound for the Massachusetts Bay Colony — a voyage of roughly ten weeks in a wooden ship smaller than a modern tennis court. By that autumn the family is living in <strong>Charlestown</strong>; the next spring they are granted <strong>lot no. 68</strong>.</p>
+          <div class="excerpt">He embarked from Yarmouth, Isle of Wight, for the Massachusetts Bay Colony on May 12, 1637 … living in Charlestown in 1637; on April 23, 1638 the Tidd family was given lot number 68.<cite>Compiled genealogical record</cite></div>
+        </div>
+      </article>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">1640 – 1657 CE · Woburn, Massachusetts</div>
+          <h3>A founder of Woburn</h3>
+          <p>In December 1640, John Tidd is an <strong>original proprietor of Woburn</strong> — one of the men who literally founded the town. By 1643 he is <strong>sergeant of the training band</strong>, the colonial militia. He dies in Woburn in 1657, calling himself in his will a "tailer." The American Tidds now have roots.</p>
+          <div class="tl-tag">town founder · militia sergeant</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">1700s – 1800s · Westward</div>
+          <h3>Over the mountains to Ohio</h3>
+          <p>As the young republic pushes west, branches of the family follow. Records track <strong>William Tidd (1744–1824)</strong> and his son <strong>James Tidd (b. c. 1796)</strong> into the <strong>Niles–Vienna</strong> country of Ohio — part of the great overland migration that carried New England names into the Midwest.</p>
+          <div class="tl-tag">Ohio Tidds · Trumbull County</div>
+        </div>
+      </article>
+
+      <article class="tl-item" data-reveal>
+        <div class="tl-dot"></div>
+        <div class="tl-card">
+          <div class="tl-era">1900s · The modern generations</div>
+          <h3>Into living memory</h3>
+          <p>The line runs on through the American century — into the grandparents whose own DNA now anchors the family's <a href="/familyhistory/genetics.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">genome chapter</a>: <strong>John Tidd</strong> and <strong>Paula Tidd</strong>, and their son <strong>Jon</strong>.</p>
+          <div class="tl-tag">grandparents → parents</div>
+        </div>
+      </article>
+
+      <article class="tl-item alt" data-reveal>
+        <div class="tl-dot now"></div>
+        <div class="tl-card featured now-card">
+          <div class="tl-era gold-text">Today · The living end of the line</div>
+          <h3>Alice, Miles &amp; Mason</h3>
+          <p>One hundred thousand years of walking, farming, sailing and settling arrives — for now — at three children. Everything on this page is their inheritance: the R1b Y-chromosome, the Anglo-Saxon name, the Woburn grit, and a genome you can read for yourself in the next chapters.</p>
+          <a class="btn gold" href="/familyhistory/maps.html">Watch it move on the map →</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card" data-reveal style="text-align:center">
+      <p class="muted" style="margin:0">A note on certainty: the deep-time story (100,000 → 1273) is the shared inheritance of <em>all</em> people of English descent, told from population genetics and archaeology. The named genealogy (1600 → today) comes from specific records that sometimes disagree — every claim is traced, and every conflict flagged, in <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Compiled with care for the Tidd family · <a href="https://jontidd.com">jontidd.com</a>.</p>
+</div></footer>
+
+<style>
+.clock{margin-top:56px}
+.clock-track{position:relative;height:6px;border-radius:6px;background:rgba(255,255,255,.07);margin:70px 0 90px}
+.clock-fill{position:absolute;left:0;top:0;height:100%;width:0;border-radius:6px;
+  background:linear-gradient(90deg,var(--violet),var(--gold));box-shadow:0 0 16px rgba(212,168,70,.5);transition:width .1s linear}
+.clock-tick{position:absolute;top:-8px;transform:translateX(-50%);text-align:center;width:110px}
+.clock-tick::before{content:'';display:block;width:2px;height:22px;background:var(--line);margin:0 auto 10px}
+.clock-tick b{font-family:var(--mono);font-size:calc(13px*var(--scale));color:var(--gold);letter-spacing:.03em;line-height:1.2;display:block}
+.clock-tick span{display:block;font-size:calc(13px*var(--scale));color:var(--fg-soft);margin-top:4px}
+.clock-tick.now b{color:var(--gold-bright)}
+.clock-tick.now::before{background:var(--gold)}
+
+.timeline{position:relative;padding:20px 0}
+.tl-spine{position:absolute;left:26px;top:0;bottom:0;width:3px;background:rgba(255,255,255,.07);border-radius:3px}
+.tl-spine-fill{position:absolute;left:0;top:0;width:100%;height:0;border-radius:3px;
+  background:linear-gradient(180deg,var(--violet),var(--gold));box-shadow:0 0 14px rgba(212,168,70,.5)}
+.tl-item{position:relative;padding:0 0 40px 68px}
+.tl-dot{position:absolute;left:16px;top:6px;width:22px;height:22px;border-radius:50%;
+  background:var(--ink);border:3px solid var(--gold-deep);z-index:2}
+.tl-dot.glow{border-color:var(--gold);box-shadow:0 0 0 6px rgba(212,168,70,.14),0 0 22px rgba(212,168,70,.6)}
+.tl-dot.now{border-color:var(--gold-bright);background:var(--gold);
+  box-shadow:0 0 0 8px rgba(212,168,70,.18),0 0 26px rgba(240,207,133,.7)}
+.tl-era{font-family:var(--mono);font-size:calc(13px*var(--scale));letter-spacing:.08em;
+  text-transform:uppercase;color:var(--gold);margin-bottom:8px}
+.tl-card{background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012));
+  border:1px solid var(--line);border-radius:16px;padding:clamp(20px,3vw,30px)}
+.tl-card h3{margin-bottom:12px}
+.tl-card.featured{border-color:rgba(212,168,70,.4);
+  background:linear-gradient(155deg,rgba(212,168,70,.1),rgba(139,92,246,.06))}
+.tl-tag{display:inline-block;margin-top:16px;font-family:var(--mono);font-size:calc(12px*var(--scale));
+  letter-spacing:.05em;color:var(--fg-mute);border:1px solid var(--line-soft);border-radius:100px;padding:5px 12px}
+.now-card{border-color:var(--gold)}
+@media(min-width:860px){
+  .tl-spine{left:50%;margin-left:-1.5px}
+  .tl-item{width:50%;padding:0 44px 54px 0}
+  .tl-item .tl-dot{left:auto;right:-11px}
+  .tl-item.alt{margin-left:50%;padding:0 0 54px 44px}
+  .tl-item.alt .tl-dot{left:-11px;right:auto}
+  .tl-item.alt .tl-era{}
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* fill the 100k clock + timeline spine as you scroll past them */
+(function(){
+  var clock=document.querySelector('.clock-track'), cf=document.getElementById('clockFill');
+  var tl=document.querySelector('.timeline'), sf=document.getElementById('spineFill');
+  function pct(el){var r=el.getBoundingClientRect();var vh=innerHeight;
+    return Math.max(0,Math.min(1,(vh*0.7 - r.top)/(r.height*0.7+vh*0.2)));}
+  function upd(){
+    if(clock&&cf)cf.style.width=(pct(clock)*100)+'%';
+    if(tl&&sf)sf.style.height=(pct(tl)*100)+'%';
+  }
+  addEventListener('scroll',upd,{passive:true});addEventListener('resize',upd);upd();
+})();
+</script>
+</body>
+</html>

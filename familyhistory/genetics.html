@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Genome — Three Generations of Tidd DNA</title>
+<meta name="description" content="Grandpa John, Grandma Paula and Dad Jon each had their DNA read. Together it reveals a longevity gene that survived every generation, resolves a mystery in Jon's own data, and shows exactly what Alice, Miles & Mason inherit.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pad" style="padding-top:140px">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Chapter IV · The Genome</div>
+    <h1 class="display" data-reveal>The Family,<br><span class="grad-text">Written in Code</span></h1>
+    <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin-top:22px">
+      Three generations — <strong>Grandpa John</strong>, <strong>Grandma Paula</strong>, and
+      <strong>Dad Jon</strong> — each had their DNA read. Lined up together, their results do
+      something no single test can: they show inheritance <em>happening</em>, gene by gene, and let
+      us say exactly what <strong>Alice, Miles &amp; Mason</strong> carry from the Tidd line.
+    </p>
+    <div class="cast" data-reveal data-delay="2">
+      <div class="cast-mem"><span class="av g">♂</span><b>John</b><small>Grandpa</small></div>
+      <div class="cast-plus">＋</div>
+      <div class="cast-mem"><span class="av p">♀</span><b>Paula</b><small>Grandma</small></div>
+      <div class="cast-eq">→</div>
+      <div class="cast-mem"><span class="av j">♂</span><b>Jon</b><small>Dad</small></div>
+      <div class="cast-eq">→</div>
+      <div class="cast-mem now"><span class="av k">✦</span><b>Alice · Miles · Mason</b><small>The kids</small></div>
+    </div>
+  </div>
+</header>
+
+<!-- ══ HEADLINE FINDINGS ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Five things the DNA reveals</div>
+    <div class="grid g2" style="margin-top:30px">
+
+      <div class="card find" data-reveal>
+        <div class="find-ic">🔓</div>
+        <h3>A mystery in Dad's data — solved by his parents</h3>
+        <p>Jon's own test <strong>failed to read his APOE gene</strong> (the big one for heart and brain aging) — it came back as a no-call. But both grandparents read cleanly as <strong>ApoE ε3/ε3</strong>, the neutral, most-common type. Two ε3/ε3 parents can <em>only</em> have an ε3/ε3 child — so Jon's missing result is now <strong>certain: ε3/ε3</strong>. That's the power of testing a family, not a person.</p>
+      </div>
+
+      <div class="card find" data-reveal data-delay="1">
+        <div class="find-ic">🧬</div>
+        <h3>The family signature: everyone carries "TT"</h3>
+        <p>At <strong>TCF7L2</strong> — the single strongest common gene for type-2 diabetes — Grandpa, Grandma <em>and</em> Dad are all <strong>TT</strong> (two copies). Because Dad is TT, <strong>every one of his children inherits at least one T</strong>, guaranteed. It's a true family fingerprint — and a gentle, shared reason to keep an eye on sugar and stay active down the generations.</p>
+      </div>
+
+      <div class="card find" data-reveal>
+        <div class="find-ic">⏳</div>
+        <h3>A longevity gene that survived every generation</h3>
+        <p>At <strong>FOXO3</strong> — one of the only genes reliably linked to reaching 100 — all three carry the favourable <strong>G</strong> "centenarian" variant. It passed from Grandpa and Grandma straight through to Dad, and stands a good chance of reaching the kids too. A small edge, but a real one, running clean through the line.</p>
+      </div>
+
+      <div class="card find" data-reveal data-delay="1">
+        <div class="find-ic">🐟</div>
+        <h3>Why the family runs low on omega-3</h3>
+        <p>At <strong>FADS1</strong>, both grandparents are carriers (one copy each) and Dad inherited <strong>both</strong> — making him a "slow converter" who turns plant omega-3 into the useful kind poorly. It directly explains his low omega-3 blood test. Practical upshot for the whole line: <em>fish or algae oil beats flax</em>.</p>
+      </div>
+
+      <div class="card find wide" data-reveal>
+        <div class="find-ic">🛡️</div>
+        <h3>The autoimmune allele came down the Tidd side</h3>
+        <p>At <strong>PTPN22</strong> — a master switch for autoimmune conditions — Dad carries one risk copy (A). Grandma Paula is GG, so she couldn't have supplied it: the <strong>A traces specifically to Grandpa John's side</strong>. It lines up with Jon's own borderline autoimmune blood markers, and it's exactly the kind of thing a family map makes visible that a solo test never could.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ INHERITANCE TABLE ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>The Inheritance Ledger</div>
+    <h2 data-reveal>Watch the alleles pass down.</h2>
+    <p class="lead" data-reveal data-delay="1" style="max-width:60ch;margin-top:14px">Each person has two copies of every gene — one from each of their own parents. Every letter in Dad's column had to come from Grandpa <em>or</em> Grandma. Here it is, trait by trait.</p>
+
+    <div class="legend-alleles" data-reveal>
+      <span>Allele colours:</span>
+      <i class="al al-A">A</i><i class="al al-C">C</i><i class="al al-G">G</i><i class="al al-T">T</i>
+      <i class="al al-x">–</i><span class="muted">(– = the chip couldn’t read that spot)</span>
+    </div>
+
+    <div class="ledger" id="ledger" data-reveal></div>
+  </div>
+</section>
+
+<!-- ══ WHAT THE KIDS CARRY ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card kids-card" data-reveal>
+      <div class="kicker">Passed to the next generation</div>
+      <h2>What Alice, Miles &amp; Mason<br>are guaranteed to carry from Dad</h2>
+      <p class="lead" style="max-width:64ch;margin:16px 0 26px">Wherever Dad has two identical copies, he can only pass that letter on — so every child receives at least one, no matter what their mother contributes. These four are locked in from the Tidd side:</p>
+      <div class="grid g2">
+        <div class="kbox"><b>TCF7L2 · "T"</b><span>A shared, gentle nudge toward watching blood sugar — met easily with movement and diet.</span></div>
+        <div class="kbox"><b>FADS1 · "T"</b><span>They’ll likely convert plant omega-3 poorly too — a reason to favour fish or algae oil early.</span></div>
+        <div class="kbox"><b>LCT · "G"</b><span>The lactase "off-switch" — some may find dairy sits less easily in adulthood.</span></div>
+        <div class="kbox good"><b>FTO · "T" &amp; ApoE ε3</b><span>Good news: none of the three generations carry the FTO weight-risk allele, and the neutral ApoE ε3 line continues.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ FUN / DEEP ANCESTRY ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="grid g3">
+      <div class="card mini" data-reveal><div class="mini-ic">👁️</div><h3>Light eyes run deep</h3><p>At the main eye-colour gene, Dad and Grandpa both read <strong>GG</strong> — the light-eyed European variant — while Grandma is a brown-eyed carrier.</p></div>
+      <div class="card mini" data-reveal data-delay="1"><div class="mini-ic">☕</div><h3>Fast on caffeine</h3><p>Dad is a <strong>fast caffeine metaboliser</strong> (CYP1A2) — coffee clears quickly. Grandpa carries one "slow" copy.</p></div>
+      <div class="card mini" data-reveal data-delay="2"><div class="mini-ic">💪</div><h3>Built for mixed sport</h3><p>ACTN3 and COL5A1 put Dad in the middle — not a pure sprinter, and a hint of the tendon-injury variant he shares down the line.</p></div>
+      <div class="card mini" data-reveal><div class="mini-ic">🩸</div><h3>Clean on the big risks</h3><p>No hemochromatosis (HFE), no Factor V clotting variant, no alcohol-flush gene, normal statin handling — reassuring across the family.</p></div>
+      <div class="card mini" data-reveal data-delay="1"><div class="mini-ic">🧭</div><h3>The deep paternal line</h3><p>The Tidd Y-chromosome almost certainly belongs to <strong>haplogroup R1b</strong> — the signature of Bronze-Age Britain, unbroken father-to-son for ~4,500 years.</p></div>
+      <div class="card mini" data-reveal data-delay="2"><div class="mini-ic">🦴</div><h3>A little Neanderthal</h3><p>Like most people of European descent, the family genome carries roughly <strong>2% Neanderthal DNA</strong> — a souvenir from Ice-Age Europe.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card" data-reveal style="border-color:rgba(242,109,125,.3)">
+      <h3 style="color:var(--rose)">A careful word</h3>
+      <p style="margin:12px 0 0">These readings come from consumer DNA kits (23andMe), shared with the consent of each family member. They are <strong>informational, not medical advice</strong>, and consumer chips occasionally misread a spot. Nothing here should be used to diagnose or rule out any condition — that's a conversation for a doctor and, where it matters, a genetic counsellor. What this page <em>is</em> good for: wonder, connection, and a few smart, shared habits. Full method and caveats are in <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a>.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Genotypes read from raw 23andMe data for John, Paula &amp; Jon Tidd (2016). Interpretations from published SNP associations; see <a href="/familyhistory/sources.html">Sources</a>.</p>
+</div></footer>
+
+<style>
+.cast{display:flex;flex-wrap:wrap;align-items:center;gap:12px;margin-top:38px}
+.cast-mem{display:flex;flex-direction:column;align-items:center;gap:4px;min-width:96px;
+  background:rgba(255,255,255,.03);border:1px solid var(--line-soft);border-radius:14px;padding:14px 16px}
+.cast-mem .av{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  font-size:22px;color:#fff;margin-bottom:2px}
+.av.g{background:linear-gradient(140deg,#6366f1,#3b3f96)}
+.av.p{background:linear-gradient(140deg,#f26d7d,#a13a44)}
+.av.j{background:linear-gradient(140deg,#8b5cf6,#6d4bb5)}
+.av.k{background:linear-gradient(140deg,#d4a846,#a9812f)}
+.cast-mem b{font-family:var(--serif);font-size:calc(19px*var(--scale))}
+.cast-mem small{color:var(--fg-mute);font-family:var(--mono);font-size:calc(11px*var(--scale));letter-spacing:.08em;text-transform:uppercase}
+.cast-mem.now{border-color:var(--gold);background:linear-gradient(150deg,rgba(212,168,70,.14),rgba(139,92,246,.08))}
+.cast-plus,.cast-eq{font-size:24px;color:var(--fg-mute)}
+
+.find-ic{font-size:32px;margin-bottom:10px}
+.find h3{margin-bottom:10px}
+.find.wide{grid-column:1/-1}
+
+.legend-alleles{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:24px 0;
+  font-family:var(--mono);font-size:calc(13px*var(--scale));color:var(--fg-soft)}
+.al{width:30px;height:30px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;
+  font-weight:600;color:#0a0e17}
+.al-A{background:#34d399}.al-C{background:#818cf8}.al-G{background:#f0cf85}.al-T{background:#c4a2f5}.al-x{background:#4a4a57;color:#ccc}
+
+.ledger{display:flex;flex-direction:column;gap:10px;margin-top:12px}
+.lrow{display:grid;grid-template-columns:1.7fr repeat(3,1fr) 2.4fr;gap:14px;align-items:center;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,.008));
+  border:1px solid var(--line);border-radius:14px;padding:16px 18px;transition:border-color .25s}
+.lrow:hover{border-color:rgba(212,168,70,.3)}
+.lrow.head{background:none;border:none;padding:4px 18px;color:var(--fg-mute);
+  font-family:var(--mono);font-size:calc(12px*var(--scale));letter-spacing:.08em;text-transform:uppercase}
+.ltrait b{font-family:var(--serif);font-size:calc(19px*var(--scale));color:#fff;display:block;line-height:1.2}
+.ltrait span{font-size:calc(14px*var(--scale));color:var(--fg-mute)}
+.geno{display:flex;gap:5px;justify-content:center}
+.geno i{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);font-weight:600;color:#0a0e17;font-size:calc(15px*var(--scale))}
+.a-A{background:#34d399}.a-C{background:#818cf8}.a-G{background:#f0cf85}.a-T{background:#c4a2f5}.a-x{background:#4a4a57;color:#ccc}
+.lread{font-size:calc(15px*var(--scale));color:var(--fg-soft);line-height:1.5}
+.lread em{color:var(--gold-bright);font-style:normal;font-weight:600}
+.col-h{text-align:center}
+
+.kids-card{background:linear-gradient(160deg,rgba(212,168,70,.1),rgba(139,92,246,.06));border-color:rgba(212,168,70,.34)}
+.kbox{background:rgba(0,0,0,.22);border:1px solid var(--line-soft);border-radius:14px;padding:18px 20px}
+.kbox b{font-family:var(--mono);color:var(--gold-bright);font-size:calc(16px*var(--scale));display:block;margin-bottom:6px}
+.kbox span{color:var(--fg-soft);font-size:calc(16px*var(--scale))}
+.kbox.good{border-color:rgba(52,211,153,.4)}
+.kbox.good b{color:var(--emerald)}
+
+.mini-ic{font-size:28px;margin-bottom:8px}
+.mini h3{font-size:calc(21px*var(--scale));margin-bottom:8px}
+.mini p{font-size:calc(16px*var(--scale));color:var(--fg-soft);margin:0}
+
+@media(max-width:820px){
+  .lrow{grid-template-columns:1fr;gap:10px;text-align:left}
+  .lrow.head{display:none}
+  .geno{justify-content:flex-start}
+  .geno::before{content:attr(data-who);font-family:var(--mono);font-size:calc(12px*var(--scale));
+    color:var(--fg-mute);align-self:center;width:66px;text-transform:uppercase}
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* authoritative three-generation panel (raw 23andMe, 2016) */
+var PANEL=[
+ ['FADS1','omega-3 conversion','GT','GT','TT','Dad inherited a reduced-converter <em>T</em> from each parent — favour fish/algae oil.'],
+ ['TCF7L2','type-2 diabetes','TT','TT','TT','The family signature — all three <em>TT</em>. Every child gets at least one T.'],
+ ['FOXO3','longevity','GT','GT','GT','The "centenarian" <em>G</em> allele survived every generation.'],
+ ['PTPN22','autoimmune switch','AG','GG','AG','The risk <em>A</em> could only come from Grandpa — it runs down the Tidd side.'],
+ ['LCT','lactose tolerance','GG','AG','GG','Dad is a lactase non-persister — dairy may sit less easily with age.'],
+ ['APOE','heart &amp; brain aging','–– / TT','CC / TT','CC / ––','Both grandparents ε3/ε3, so Dad’s no-call is <em>resolved to ε3/ε3</em>.'],
+ ['CYP1A2','caffeine','AC','AA','AA','Dad clears caffeine fast; Grandpa carries one slow copy.'],
+ ['HERC2','eye colour','GG','AG','GG','The light-eyed <em>GG</em> — Grandma is a brown-eyed carrier.'],
+ ['ACTN3','muscle type','CC','CT','CT','A balanced power/endurance profile, mixed down from both.'],
+ ['COL5A1','tendon resilience','TT','CT','CT','A hint of the tendon-injury variant, shared father to son.'],
+ ['COMT','stress &amp; focus','AG','GG','AG','One "warrior", one "worrier" copy — the balanced middle.'],
+ ['BDNF','memory','CT','CT','CC','Dad drew the steady <em>Val/Val</em> pair from two carriers.'],
+ ['FTO','appetite / weight','TT','TT','TT','None of the three carry the FTO weight-risk allele — good news.'],
+ ['9p21','heart &amp; aorta','CG','CG','CG','A shared single copy at the top common heart-risk locus.'],
+ ['OXTR','empathy / bonding','GG','GG','GG','The "empathy" <em>GG</em> is fixed across the whole family.'],
+ ['ADH1B','alcohol metabolism','CC','CC','CC','Typical European alcohol-processing across all three.'],
+ ['HFE','iron overload','GG','GG','GG','No hemochromatosis risk anywhere in the line.'],
+ ['MC1R','red-hair variant','CC','CC','CC','No red-hair variant at this spot.'],
+ ['TP53','tumour-suppressor','CG','CC','CG','Dad’s <em>G</em> came from Grandpa — a common, mild modifier.']
+];
+(function(){
+  function chips(g){
+    g=g.replace(/&amp;/g,'&');
+    return g.split('').map(function(ch){
+      if(ch===' '||ch==='/') return '<span style="align-self:center;color:var(--fg-mute);padding:0 2px">'+(ch==='/'?'|':'')+'</span>';
+      var cls = 'ACGT'.indexOf(ch)>=0 ? 'a-'+ch : 'a-x';
+      var lab = (ch==='–'||ch==='-')?'–':ch;
+      return '<i class="'+cls+'">'+lab+'</i>';
+    }).join('');
+  }
+  var host=document.getElementById('ledger');
+  var head='<div class="lrow head"><div>Trait</div><div class="col-h">Grandpa John</div>'+
+           '<div class="col-h">Grandma Paula</div><div class="col-h">Dad Jon</div><div>What it means</div></div>';
+  var rows=PANEL.map(function(r){
+    return '<div class="lrow" data-reveal><div class="ltrait"><b>'+r[0]+'</b><span>'+r[1]+'</span></div>'+
+      '<div class="geno" data-who="John">'+chips(r[2])+'</div>'+
+      '<div class="geno" data-who="Paula">'+chips(r[3])+'</div>'+
+      '<div class="geno" data-who="Jon">'+chips(r[4])+'</div>'+
+      '<div class="lread">'+r[5]+'</div></div>';
+  }).join('');
+  host.innerHTML=head+rows;
+})();
+</script>
+</body>
+</html>

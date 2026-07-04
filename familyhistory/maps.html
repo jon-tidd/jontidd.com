@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Living Maps — Where the Tidds Went</title>
+<meta name="description" content="Interactive world and U.S. maps of the Tidd family: watch four centuries of migration play out, from England to Woburn in 1637 to today's concentrations across America and the world.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pad" style="padding-top:140px;padding-bottom:20px">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Chapter III · Living Maps</div>
+    <h1 class="display" data-reveal>Watch the Family<br><span class="grad-text">Move</span></h1>
+    <p class="lead" data-reveal data-delay="1" style="max-width:64ch;margin-top:22px">
+      Two maps that don't sit still. Press <strong>play</strong> and four centuries unspool —
+      the family fanning out from one English county to two dozen countries, and one Massachusetts
+      town to every corner of America. Hover anywhere to see who's there.
+    </p>
+  </div>
+</header>
+
+<!-- ══ WORLD MAP ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="map-shell" data-reveal>
+      <div class="map-head">
+        <div>
+          <div class="chip">The World</div>
+          <h2 style="margin-top:12px">Tidds across the globe</h2>
+        </div>
+        <div class="map-modes" id="worldModes">
+          <button class="on" data-mode="today">Today's concentration</button>
+          <button data-mode="play">▶ Play the history</button>
+        </div>
+      </div>
+
+      <div class="map-stage">
+        <svg id="worldMap" viewBox="0 0 960 500" preserveAspectRatio="xMidYMid meet" role="img" aria-label="World map of Tidd surname concentration"></svg>
+        <div class="map-tip" id="worldTip"></div>
+        <div class="era-badge" id="worldEra"></div>
+        <div class="map-loading" id="worldLoading">Drawing the world…</div>
+      </div>
+
+      <div class="map-controls" id="worldControls" hidden>
+        <button class="play-btn" id="worldPlay">▶</button>
+        <input type="range" id="worldScrub" min="0" max="5" value="0" step="1" aria-label="World timeline">
+        <div class="loop-toggle">
+          <button class="on" id="worldLoop" data-loop="1">↻ Loop</button>
+          <button id="worldOnce" data-loop="0">→ Once</button>
+        </div>
+      </div>
+      <div class="map-legend"><span>Fewer Tidds</span><i class="legbar world-leg"></i><span>More Tidds</span>
+        <span class="leg-note" id="worldEraLabel">Present day</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ US MAP ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="map-shell" data-reveal>
+      <div class="map-head">
+        <div>
+          <div class="chip">The United States</div>
+          <h2 style="margin-top:12px">From Woburn to everywhere</h2>
+        </div>
+        <div class="map-modes" id="usModes">
+          <button class="on" data-mode="today">Today's concentration</button>
+          <button data-mode="play">▶ Play the history</button>
+        </div>
+      </div>
+
+      <div class="map-stage">
+        <svg id="usMap" viewBox="0 0 960 560" preserveAspectRatio="xMidYMid meet" role="img" aria-label="United States map of Tidd surname concentration"></svg>
+        <div class="map-tip" id="usTip"></div>
+        <div class="era-badge" id="usEra"></div>
+        <div class="map-loading" id="usLoading">Drawing the states…</div>
+      </div>
+
+      <div class="map-controls" id="usControls" hidden>
+        <button class="play-btn" id="usPlay">▶</button>
+        <input type="range" id="usScrub" min="0" max="4" value="0" step="1" aria-label="US timeline">
+        <div class="loop-toggle">
+          <button class="on" id="usLoop" data-loop="1">↻ Loop</button>
+          <button id="usOnce" data-loop="0">→ Once</button>
+        </div>
+      </div>
+      <div class="map-legend"><span>Fewer Tidds</span><i class="legbar us-leg"></i><span>More Tidds</span>
+        <span class="leg-note" id="usEraLabel">Present day</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm"><div class="wrap">
+  <div class="grid g3">
+    <div class="card stat" data-reveal><div class="num">20</div><div class="lbl">countries with at least one Tidd today</div></div>
+    <div class="card stat" data-reveal data-delay="1"><div class="num">77<span style="font-size:.5em">%</span></div><div class="lbl">of all Tidds now live in the Americas</div></div>
+    <div class="card stat" data-reveal data-delay="2"><div class="num">1 in 1.6M</div><div class="lbl">of the world's people carry the name</div></div>
+  </div>
+  <p class="muted" data-reveal style="text-align:center;margin-top:28px;font-size:calc(14px*var(--scale))">
+    Concentrations are drawn from Forebears surname-distribution data (present day) and reconstructed from genealogical and census patterns for earlier eras. Figures are best-estimate and illustrative — the shapes of the migration are real; the exact counts for 1650 or 1850 are informed approximations. See <a href="/familyhistory/sources.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Sources</a>.
+  </p>
+</div></section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Maps built with D3 &amp; Natural Earth / US Census TopoJSON. <a href="https://jontidd.com">jontidd.com</a></p>
+</div></footer>
+
+<style>
+.map-shell{background:linear-gradient(180deg,rgba(255,255,255,.03),rgba(255,255,255,.008));
+  border:1px solid var(--line);border-radius:22px;padding:clamp(18px,2.6vw,30px)}
+.map-head{display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between;margin-bottom:20px}
+.map-modes{display:flex;gap:8px;flex-wrap:wrap}
+.map-modes button{font-family:var(--sans);font-size:calc(15px*var(--scale));font-weight:600;
+  padding:11px 18px;border-radius:12px;cursor:pointer;color:var(--fg-soft);
+  border:1px solid var(--line);background:rgba(255,255,255,.03);transition:.2s}
+.map-modes button:hover{color:var(--fg);border-color:var(--gold)}
+.map-modes button.on{color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));border:none}
+.map-stage{position:relative;border-radius:16px;overflow:hidden;
+  background:radial-gradient(120% 120% at 50% 0%,rgba(20,28,46,.7),rgba(8,11,18,.9));
+  border:1px solid var(--line-soft)}
+.map-stage svg{width:100%;height:auto;display:block}
+.geo{stroke:rgba(10,14,23,.9);stroke-width:.5;transition:fill .5s ease}
+.geo.hot{cursor:pointer}
+.geo.hot:hover{stroke:var(--gold-bright);stroke-width:1.4}
+.arc{fill:none;stroke:var(--gold-bright);stroke-width:2.2;opacity:.9;
+  filter:drop-shadow(0 0 5px rgba(240,207,133,.7));stroke-linecap:round}
+.arc.faint{stroke:var(--violet);opacity:.55;stroke-width:1.6}
+.city{fill:var(--gold-bright);filter:drop-shadow(0 0 6px rgba(240,207,133,.9))}
+.city-label{fill:#fff;font-family:var(--mono);font-size:11px;paint-order:stroke;
+  stroke:rgba(0,0,0,.7);stroke-width:3px;pointer-events:none}
+.map-tip{position:absolute;pointer-events:none;opacity:0;transform:translate(-50%,-120%);
+  background:rgba(10,14,23,.96);border:1px solid var(--gold);border-radius:12px;padding:12px 15px;
+  min-width:170px;max-width:250px;transition:opacity .15s;z-index:5;box-shadow:0 10px 30px rgba(0,0,0,.6)}
+.map-tip b{color:var(--gold-bright);font-family:var(--serif);font-size:calc(19px*var(--scale));display:block}
+.map-tip .n{font-family:var(--mono);color:var(--fg);font-size:calc(14px*var(--scale));margin:3px 0}
+.map-tip .note{color:var(--fg-soft);font-size:calc(13px*var(--scale));line-height:1.4;margin-top:4px}
+.era-badge{position:absolute;top:14px;left:16px;font-family:var(--serif);font-weight:700;
+  font-size:clamp(30px,5vw,60px);color:rgba(240,207,133,.85);text-shadow:0 2px 20px rgba(0,0,0,.7);
+  pointer-events:none;line-height:1}
+.map-loading{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  font-family:var(--mono);color:var(--gold);letter-spacing:.1em;background:rgba(8,11,18,.6)}
+.map-controls{display:flex;align-items:center;gap:16px;margin-top:18px;flex-wrap:wrap}
+.play-btn{width:52px;height:52px;flex:none;border-radius:50%;cursor:pointer;font-size:20px;
+  color:#1a1205;background:linear-gradient(120deg,var(--gold),var(--gold-deep));border:none;
+  box-shadow:0 6px 18px rgba(212,168,70,.4)}
+.map-controls input[type=range]{flex:1;min-width:180px;height:6px;-webkit-appearance:none;appearance:none;
+  background:linear-gradient(90deg,var(--gold) 0%,rgba(255,255,255,.1) 0%);border-radius:6px;outline:none}
+.map-controls input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;
+  border-radius:50%;background:var(--gold-bright);cursor:pointer;box-shadow:0 0 0 4px rgba(212,168,70,.25)}
+.map-controls input[type=range]::-moz-range-thumb{width:22px;height:22px;border:none;border-radius:50%;
+  background:var(--gold-bright);cursor:pointer}
+.loop-toggle{display:flex;gap:4px;border:1px solid var(--line);border-radius:11px;padding:3px}
+.loop-toggle button{font-size:calc(13px*var(--scale));font-weight:600;padding:8px 13px;border-radius:8px;
+  cursor:pointer;color:var(--fg-soft);background:transparent;border:none;transition:.2s}
+.loop-toggle button.on{color:#1a1205;background:var(--gold)}
+.map-legend{display:flex;align-items:center;gap:12px;margin-top:18px;flex-wrap:wrap;
+  font-family:var(--mono);font-size:calc(12px*var(--scale));color:var(--fg-mute)}
+.legbar{width:180px;height:12px;border-radius:6px;display:inline-block}
+.world-leg,.us-leg{background:linear-gradient(90deg,#1b2740,#7a5a1e,#d4a846,#f0cf85)}
+.leg-note{margin-left:auto;color:var(--gold);font-size:calc(13px*var(--scale))}
+@media(max-width:720px){
+  .era-badge{font-size:26px}
+  .map-modes button{font-size:calc(13px*var(--scale));padding:9px 12px}
+}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/d3@7/dist/d3.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/topojson-client@3/dist/topojson-client.min.js"></script>
+<script src="assets/site.js"></script>
+<script src="assets/maps.js"></script>
+</body>
+</html>
