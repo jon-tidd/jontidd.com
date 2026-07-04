@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sources — The Record Behind the Tidd History</title>
+<meta name="description" content="Every book, archive and record behind this Tidd family history — with links, descriptions of what each contains, a summary of where the sources conflict, and the strongest reads starred for anyone who wants to go deeper.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<header class="pad" style="padding-top:140px">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Chapter V · Sources</div>
+    <h1 class="display" data-reveal>Where This<br><span class="grad-text">Comes From</span></h1>
+    <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin-top:22px">
+      A family history is only as good as its receipts. Everything on this site traces back to
+      the records below — books, archives, DNA files and genealogical databases. Each one is
+      described, linked where possible, and honestly rated. Where sources disagree, we say so.
+    </p>
+  </div>
+</header>
+
+<!-- ══ SUGGESTED READING ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>★ Start Here — The Strongest Reads</div>
+    <div class="grid g3" style="margin-top:26px">
+      <a class="card star" href="https://books.google.com/books/about/The_Story_of_the_Tidd_Family_of_Woburn_M.html?id=PoMMugEACAAJ" target="_blank" rel="noopener" data-reveal>
+        <div class="star-badge">★</div>
+        <h3>The Story of the Tidd Family of Woburn</h3>
+        <p>Edward Francis Johnson (1934). The single most detailed narrative of the founding American line — 96 pages, straight from the town where it began.</p>
+        <span class="card-link">Google Books →</span>
+      </a>
+      <a class="card star" href="https://www.catostreetconspiracy.org.uk/the-conspirators/richard-tidd" target="_blank" rel="noopener" data-reveal data-delay="1">
+        <div class="star-badge">★</div>
+        <h3>The Cato Street Conspiracy Archive</h3>
+        <p>A meticulous, well-sourced site devoted to the 1820 plot — with Richard Tidd's biography, portrait and trial record. Vivid and rigorous.</p>
+        <span class="card-link">catostreetconspiracy.org.uk →</span>
+      </a>
+      <a class="card star" href="https://www.nature.com/articles/s41586-022-05247-2" target="_blank" rel="noopener" data-reveal data-delay="2">
+        <div class="star-badge">★</div>
+        <h3>The Anglo-Saxon Migration (Nature, 2022)</h3>
+        <p>The landmark genetics paper behind the deep-ancestry chapter — how the English gene pool, and names like Tidd, actually formed.</p>
+        <span class="card-link">Nature →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══ SOURCE GROUPS ══ -->
+<section class="pad-sm"><div class="wrap" id="srcGroups"></div></section>
+
+<!-- ══ CONFLICTS ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Where the Sources Disagree</div>
+    <h2 data-reveal>Honest open questions.</h2>
+    <p class="lead" data-reveal data-delay="1" style="max-width:62ch;margin:14px 0 30px">Genealogy is detective work, and the trail is centuries cold. These are the places where good sources point in different directions — recorded here so future family historians know exactly what still needs nailing down.</p>
+    <div class="conflicts">
+      <div class="conf" data-reveal><b>Was John Tidd born in Hertford — and did he die in 1656 or 1657?</b><p>Most compiled trees place the immigrant's birth in Hertford, Hertfordshire (c. 1600) and give his mother as Agnes/Anna Dane, but these upstream English details are less firmly documented than his American life. His death is recorded as both 1656 and 1657 across sources; his Woburn will settles it near April 1657.</p></div>
+      <div class="conf" data-reveal><b>The Ohio Tidd book's "memory" section.</b><p>The genealogy documenting William Tidd (1744–1824) and James Tidd of the Niles–Vienna area is invaluable, but its compilers openly note that its later section was assembled from family members' recollections — "a possibility of errors and omissions that must be verified." Treat those links as leads, not gospel.</p></div>
+      <div class="conf" data-reveal><b>Two theories for the name itself.</b><p>SurnameDB gives two origins for "Tidd": an occupational one (a <em>tid-man</em>, head of a tithing) and a locational one (from the villages of Tydd). Both are pre-8th-century and plausible; the record doesn't decisively favour either.</p></div>
+      <div class="conf" data-reveal><b>Paul Roscher's service record — still open.</b><p>Paul Roscher is remembered in the family as a WWII B-17 pilot. We have not yet located a public unit roster or service file confirming the details, so the verbatim excerpt in Chapter II is drawn from a <em>different</em> 91st Bomb Group airman's published account, used to illustrate the world he flew in — not as his own words. His record is a priority for the next edition; the <a href="https://www.mightyeighth.org/veteran-database/" target="_blank" rel="noopener">Mighty Eighth veterans database</a> is the place to confirm it.</p></div>
+      <div class="conf" data-reveal><b>A genome that argued with itself — and got resolved.</b><p>Two neighbouring markers in the 9p21 heart region read inconsistently in Jon's raw data (a known "strand" quirk of consumer chips), and his APOE gene didn't read at all. The family trio fixed the APOE gap — both parents being ε3/ε3 makes Jon ε3/ε3 with certainty. It's a small case study in why testing relatives beats testing an individual.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card" data-reveal style="text-align:center">
+      <p class="big" style="margin:0 0 8px">Have a record we're missing?</p>
+      <p class="muted" style="margin:0">Family bibles, photographs, service files, a great-aunt's letters — every scrap makes the next edition truer. This page is built to grow.</p>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Assembled July 2026 for the Tidd family · <a href="https://jontidd.com">jontidd.com</a>. Deep-time ancestry reflects the shared inheritance of people of English descent; named genealogy reflects the specific records above.</p>
+</div></footer>
+
+<style>
+.star{position:relative;display:block;border-color:rgba(212,168,70,.34);
+  background:linear-gradient(160deg,rgba(212,168,70,.1),rgba(139,92,246,.05))}
+.star-badge{position:absolute;top:16px;right:18px;font-size:24px;color:var(--gold-bright)}
+.star h3{margin:6px 0 10px;padding-right:30px}
+.card-link{display:inline-block;margin-top:14px;font-family:var(--mono);font-size:calc(13px*var(--scale));
+  letter-spacing:.05em;color:var(--gold);text-transform:uppercase}
+.star:hover .card-link{color:var(--gold-bright)}
+
+.src-group{margin-bottom:44px}
+.src-group h2{font-size:clamp(24px,3.4vw,36px);margin-bottom:6px}
+.src-group .gdesc{color:var(--fg-mute);margin-bottom:20px;font-size:calc(16px*var(--scale))}
+.src{display:grid;grid-template-columns:1fr auto;gap:14px 20px;align-items:start;
+  background:linear-gradient(180deg,rgba(255,255,255,.026),rgba(255,255,255,.006));
+  border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-bottom:12px;transition:border-color .25s}
+.src:hover{border-color:rgba(212,168,70,.3)}
+.src-main b{font-family:var(--serif);font-size:calc(21px*var(--scale));color:#fff;display:block;line-height:1.25}
+.src-main .meta{font-family:var(--mono);font-size:calc(12px*var(--scale));color:var(--gold);
+  letter-spacing:.04em;margin:4px 0 8px}
+.src-main p{margin:0;color:var(--fg-soft);font-size:calc(16px*var(--scale))}
+.src-go{white-space:nowrap;align-self:center;font-family:var(--mono);font-size:calc(13px*var(--scale));
+  color:var(--gold);border:1px solid var(--line);border-radius:100px;padding:8px 15px;transition:.2s}
+.src-go:hover{color:var(--gold-bright);border-color:var(--gold)}
+.src-rate{display:inline-block;margin-left:8px;font-size:calc(12px*var(--scale))}
+
+.conflicts{display:flex;flex-direction:column;gap:12px}
+.conf{background:linear-gradient(180deg,rgba(242,109,125,.05),rgba(255,255,255,.006));
+  border:1px solid rgba(242,109,125,.2);border-left:3px solid var(--rose);border-radius:0 14px 14px 0;padding:18px 22px}
+.conf b{font-family:var(--serif);font-size:calc(20px*var(--scale));color:#fff;display:block;margin-bottom:8px}
+.conf p{margin:0;color:var(--fg-soft);font-size:calc(16px*var(--scale))}
+@media(max-width:640px){.src{grid-template-columns:1fr}.src-go{justify-self:start}}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+var GROUPS=[
+ {title:'Founding American Line & Genealogy',desc:'The records that trace the immigrant John Tidd and his descendants.',
+  items:[
+   ['The Story of the Tidd Family of Woburn, Massachusetts','Edward Francis Johnson, 1934 · 96 pp · ★★★','The definitive narrative of the founding line, reproduced by Arthur W. Tidd in 1934. Held at the Library of Congress, the DAR Library, and the FamilySearch (Salt Lake) library.','https://books.google.com/books/about/The_Story_of_the_Tidd_Family_of_Woburn_M.html?id=PoMMugEACAAJ'],
+   ['WikiTree — John Tidd (abt. 1600–1656)','Collaborative genealogy · ★★','Profile of the immigrant ancestor with sourcing, family links, and the Yarmouth 1637 embarkation and Charlestown lot no. 68.','https://www.wikitree.com/wiki/Tidd-6'],
+   ['Geni — Sgt. John Tidd of Woburn','Collaborative genealogy · ★★','Confirms his role as original proprietor of Woburn and sergeant of the training band, 1643.','https://www.geni.com/people/Sgt-John-Tidd-of-Woburn/6000000009897602401'],
+   ['Genealogy.com — TIDD forums','Community research threads · ★','Decades of amateur and professional discussion on the immigrant John Tidd and the Ohio branches — leads and cautions in equal measure.','https://www.genealogy.com/forum/surnames/topics/tidd/24/'],
+   ['Gopher Genealogy — Amos Tidd Family, Rev. War','ICAPGen research, 2010 · ★','A professionally researched line documenting a Tidd family through the Revolutionary War era.','http://gophergenealogy.blogspot.com/p/amos-tidd-family-revolutionary-war.html']
+  ]},
+ {title:'The Name & Its Distribution',desc:'Etymology, first records, and where the surname lives today.',
+  items:[
+   ['SurnameDB — Tidd','Surname etymology · ★★','Traces the name to pre-8th-century Old English, the "tid-man" and Tydd-village theories, and the first record: Thomas de Tid, 1273.','https://surnamedb.com/Surname/Tidd'],
+   ['Forebears — Tidd','Surname distribution data · ★★','The source for the maps: ~2,897 bearers in the U.S., presence in ~20 countries, world rank 104,673rd, 77% in the Americas.','https://forebears.io/surnames/tidd'],
+   ['Geneanet & FamilySearch — Tidd','Record aggregators · ★','Millions of indexed births, marriages and census entries for cross-checking specific individuals.','https://en.geneanet.org/surnames/TIDD']
+  ]},
+ {title:'Notable People of the Bloodlines',desc:'Archives and records for the figures in Chapter II.',
+  items:[
+   ['The Cato Street Conspiracy Archive — Richard Tidd','Dedicated history site · ★★★','Full biography, portrait and trial account of the 1820 conspirator hanged for high treason.','https://www.catostreetconspiracy.org.uk/the-conspirators/richard-tidd'],
+   ['Kansas Historical Society — Charles Plummer Tidd','State archive · ★★','Documents the John Brown raider who escaped Harpers Ferry and re-enlisted under an alias; holds an 1859 photograph.','https://www.kshs.org/archives/208817'],
+   ['Wikipedia — Vice Adm. Emmett Hulcy Tidd','Encyclopedia · ★★','Career of the three-star admiral (1923–2018) and his two flag-officer sons, with his official Navy portrait.','https://en.wikipedia.org/wiki/Emmett_Hulcy_Tidd'],
+   ['Find a Grave — Marshall Tidd (1820–1904)','Memorial record · ★','The self-taught gunsmith and machinist; related to M. M. Tidd, Boston lithographer.','https://www.findagrave.com/memorial/112220873/marshall-tidd'],
+   ['Warfare History Network — A B-17 Pilot’s Story','First-hand WWII account · ★★','A 91st Bomb Group pilot’s Feb. 1944 mission — used as backdrop for Paul Roscher’s world (see Conflicts for the important caveat).','https://warfarehistorynetwork.com/article/the-boeing-b-17-flying-fortress-stories-from-a-wwii-pilot/'],
+   ['National Museum of the Mighty Eighth — Veterans Database','Searchable service records · ★','Where Paul Roscher’s Eighth Air Force record should be confirmable for the next edition.','https://www.mightyeighth.org/veteran-database/']
+  ]},
+ {title:'Deep Ancestry & the Genome',desc:'The science behind Chapters I and IV.',
+  items:[
+   ['"The Anglo-Saxon migration and the formation of the early English gene pool" — Nature (2022)','Peer-reviewed genetics · ★★★','The definitive modern study of how the English population, and its surnames, were formed.','https://www.nature.com/articles/s41586-022-05247-2'],
+   ['Wikipedia — Genetic history of the British Isles','Encyclopedia synthesis · ★★','Accessible overview of R1b, the Beaker migration, and Anglo-Saxon ancestry underpinning the deep paternal line.','https://en.wikipedia.org/wiki/Genetic_history_of_the_British_Isles'],
+   ['Earlham Institute — Anglo-Saxon ancestry begins in East Anglia','Research summary · ★','Plain-language explainer of the 2022 findings on early English ancestry.','https://www.earlham.ac.uk/articles/anglo-saxon-british-human-ancestry-starts-east-anglia'],
+   ['23andMe raw genotype files — John, Paula & Jon Tidd (2016)','Primary genomic data · ★★★','The family’s own DNA (build 37), read directly for the three-generation ledger. Private; shared by family consent.',''],
+   ['Curated genomic extract & Promethease reports','Personal annotation · ★★','130 clinically-relevant SNPs annotated against family health history, plus Promethease literature reports for all three.','']
+  ]}
+];
+(function(){
+  function stars(meta){return meta;}
+  var host=document.getElementById('srcGroups');
+  host.innerHTML=GROUPS.map(function(g){
+    var items=g.items.map(function(it){
+      var go = it[3] ? '<a class="src-go" href="'+it[3]+'" target="_blank" rel="noopener">Open ↗</a>'
+                     : '<span class="src-go" style="color:var(--fg-mute)">Private</span>';
+      return '<div class="src" data-reveal><div class="src-main"><b>'+it[0]+'</b>'+
+        '<div class="meta">'+it[1]+'</div><p>'+it[2]+'</p></div>'+go+'</div>';
+    }).join('');
+    return '<div class="src-group"><div class="kicker" data-reveal>'+g.title+'</div>'+
+      '<p class="gdesc" data-reveal>'+g.desc+'</p>'+items+'</div>';
+  }).join('');
+})();
+</script>
+</body>
+</html>

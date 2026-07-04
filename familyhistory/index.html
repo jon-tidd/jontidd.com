@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Tidd Line — 100,000 Years of Family History</title>
+<meta name="description" content="One hundred thousand years of the Tidd family — from the first modern humans out of Africa, to Anglo-Saxon England, to Woburn 1637, to Alice, Miles & Mason today. A family history built for gathering around.">
+<meta property="og:title" content="The Tidd Line — 100,000 Years of Family History">
+<meta property="og:description" content="Deep ancestry, migration, famous Tidds, living maps, and the family's own genome — one story, six chapters.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jontidd.com/familyhistory/">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/site.css">
+</head>
+<body>
+<div class="progress"></div>
+<canvas id="bg-canvas"></canvas>
+<div class="bg-wash"></div><div class="bg-grid"></div><div class="bg-vignette"></div>
+
+<!-- ══ NAV (shared markup across all 6 pages) ══ -->
+<nav class="nav">
+  <a class="brand" href="/familyhistory/">
+    <svg class="crest" viewBox="0 0 48 56" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <path d="M24 2 46 9v20c0 14-11 22-22 25C13 51 2 43 2 29V9L24 2Z" fill="url(#cg)" stroke="#f0cf85" stroke-width="1.4"/>
+      <path d="M24 12v30M14 20h20M16 30h16" stroke="#1a1205" stroke-width="2.4" stroke-linecap="round"/>
+      <circle cx="24" cy="9.5" r="1.7" fill="#1a1205"/>
+      <defs><linearGradient id="cg" x1="2" y1="2" x2="46" y2="54" gradientUnits="userSpaceOnUse">
+        <stop stop-color="#f0cf85"/><stop offset="1" stop-color="#a9812f"/></linearGradient></defs>
+    </svg>
+    <span>The Tidd Line<small>Familia · Historia · Genoma</small></span>
+  </a>
+  <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
+  <div class="nav-links">
+    <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
+    <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
+    <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html" data-page="genetics.html">The Genome</a>
+    <a href="/familyhistory/sources.html" data-page="sources.html">Sources</a>
+    <div class="textsize" role="group" aria-label="Text size">
+      <button class="ts-sm" data-size="sm" aria-label="Smaller text">A</button>
+      <button class="ts-md" data-size="md" aria-label="Default text">A</button>
+      <button class="ts-lg" data-size="lg" aria-label="Larger text">A</button>
+    </div>
+  </div>
+</nav>
+
+<!-- ══ HERO ══ -->
+<header class="hero-fh">
+  <div class="wrap hero-inner">
+    <div class="kicker" data-reveal>A Family History · Six Chapters</div>
+    <h1 class="display hero-title">
+      One Hundred Thousand<br>Years of the <span class="grad-text">Tidd Line</span>
+    </h1>
+    <p class="lead hero-lead" data-reveal data-delay="1">
+      From the first modern humans walking out of Africa, through the forests of
+      Anglo-Saxon England, across the Atlantic to <strong>Woburn, Massachusetts in 1637</strong> —
+      and down, unbroken, to three children named <em>Alice, Miles &amp; Mason</em>.
+      This is the whole arc, made to be read aloud at the table.
+    </p>
+    <div class="hero-cta" data-reveal data-delay="2">
+      <a class="btn gold" href="/familyhistory/migration.html">Begin the journey →</a>
+      <a class="btn" href="/familyhistory/genetics.html">See the family genome</a>
+    </div>
+    <div class="scroll-cue" aria-hidden="true"><span></span>Scroll</div>
+  </div>
+  <div class="hero-years" aria-hidden="true">100,000 <span>BCE — 2026 CE</span></div>
+</header>
+
+<!-- ══ HEADLINE STAT BAND ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="grid g4">
+      <div class="card stat" data-reveal><div class="num" data-count="100000" data-suffix="">0</div><div class="lbl">years of traceable human lineage</div></div>
+      <div class="card stat" data-reveal data-delay="1"><div class="num" data-count="1637">0</div><div class="lbl">Sgt. John Tidd lands in the New World</div></div>
+      <div class="card stat" data-reveal data-delay="2"><div class="num" data-count="14">0</div><div class="lbl">generations from the immigrant to Mason</div></div>
+      <div class="card stat" data-reveal data-delay="3"><div class="num" data-count="2897">0</div><div class="lbl">people named Tidd in the U.S. today</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ WHAT MAKES THIS FAMILY ══ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="kicker" data-reveal>The Wow Reel</div>
+    <h2 data-reveal>Five things worth knowing<br>before the next reunion.</h2>
+    <div class="grid g2" style="margin-top:44px">
+      <div class="card hl" data-reveal>
+        <div class="hl-ic">🧬</div>
+        <h3>Anglo-Saxon to the bone</h3>
+        <p>The name <strong>Tidd</strong> is pre-8th-century Old English — a <em>tid-man</em>, keeper of a tithing of ten households. The deep paternal line runs through <strong>haplogroup R1b</strong>, the signature of Bronze-Age Britain, carried by more than 70% of English men today.</p>
+      </div>
+      <div class="card hl" data-reveal data-delay="1">
+        <div class="hl-ic">⚓</div>
+        <h3>Among the first Americans</h3>
+        <p>In <strong>1637</strong>, John Tidd — a tailor from Hertfordshire — sailed from the Isle of Wight and helped found <strong>Woburn, Massachusetts</strong>. He was a sergeant of the town's training band before there was a United States to defend.</p>
+      </div>
+      <div class="card hl" data-reveal>
+        <div class="hl-ic">✶</div>
+        <h3>Rebels, raiders &amp; admirals</h3>
+        <p>The bloodlines include a man <strong>hanged for plotting to overthrow the British Cabinet</strong> (1820), one of <strong>John Brown's Harpers Ferry raiders</strong>, a <strong>three-star Navy admiral</strong> who fathered two more flag officers — and <strong>Paul Roscher</strong>, who flew a B-17 over Germany.</p>
+      </div>
+      <div class="card hl" data-reveal data-delay="1">
+        <div class="hl-ic">🌍</div>
+        <h3>A rare name, everywhere</h3>
+        <p>Only about <strong>1 in 1.6 million</strong> people on Earth carry the surname — yet you'll find Tidds in <strong>20 countries</strong>. Three-quarters live in the Americas, the rest cluster in England, Canada and Australia. Watch the map breathe over four centuries.</p>
+      </div>
+      <div class="card hl wide" data-reveal>
+        <div class="hl-ic">👑</div>
+        <h3>The family's own genome, read three generations deep</h3>
+        <p>Grandpa John, Grandma Paula and Dad Jon each had their DNA sequenced. Together their results <em>resolve a mystery in Jon's own data</em>, reveal a longevity gene that survived every generation, and mark one variant that <strong>all three carry — and every one of the kids is guaranteed to inherit.</strong></p>
+        <a class="card-link" href="/familyhistory/genetics.html">Open the family genome →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ THE LIVING LINE ══ -->
+<section class="pad-sm">
+  <div class="wrap">
+    <div class="card line-card" data-reveal>
+      <div class="kicker">The Unbroken Thread</div>
+      <div class="line-flow">
+        <div class="node"><b>c. 1600</b><span>John Tidd<br>Hertfordshire → Woburn</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>1700s</b><span>Westward<br>to Ohio</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>1900s</b><span>The modern<br>generations</span></div>
+        <div class="arrow">→</div>
+        <div class="node"><b>Today</b><span>John &amp; Paula<br>→ Jon</span></div>
+        <div class="arrow gold-arrow">→</div>
+        <div class="node now"><b>Now</b><span>Alice · Miles · Mason</span></div>
+      </div>
+      <p class="muted" style="margin:22px 0 0;text-align:center">Fourteen generations, one continuous line of inheritance — genetic and otherwise.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ CHAPTER NAV ══ -->
+<section class="pad">
+  <div class="wrap">
+    <div class="kicker" data-reveal>Explore the Six Chapters</div>
+    <div class="grid g3" style="margin-top:34px">
+      <a class="card chap" href="/familyhistory/migration.html" data-reveal>
+        <span class="chap-n">I</span><h3>Migration</h3>
+        <p>Out of Africa, into England, across the ocean, over the Alleghenies — 100,000 years mapped as one journey.</p><span class="card-link">Follow the path →</span>
+      </a>
+      <a class="card chap" href="/familyhistory/famous.html" data-reveal data-delay="1">
+        <span class="chap-n">II</span><h3>Famous Tidds</h3>
+        <p>Founders, conspirators, abolitionist raiders, admirals and airmen — with their own words, verbatim.</p><span class="card-link">Meet them →</span>
+      </a>
+      <a class="card chap" href="/familyhistory/maps.html" data-reveal data-delay="2">
+        <span class="chap-n">III</span><h3>Living Maps</h3>
+        <p>A world map and a U.S. map that <em>play</em> — watch the family spread and concentrate from the 1600s to now.</p><span class="card-link">Press play →</span>
+      </a>
+      <a class="card chap" href="/familyhistory/genetics.html" data-reveal>
+        <span class="chap-n">IV</span><h3>The Genome</h3>
+        <p>Three generations of real DNA — longevity genes, the traits the kids will carry, and one resolved mystery.</p><span class="card-link">Read the code →</span>
+      </a>
+      <a class="card chap" href="/familyhistory/sources.html" data-reveal data-delay="1">
+        <span class="chap-n">V</span><h3>Sources</h3>
+        <p>Every book, record and archive — with links, descriptions, conflicts flagged, and the best reads starred.</p><span class="card-link">Check the record →</span>
+      </a>
+      <a class="card chap glow" href="/familyhistory/migration.html" data-reveal data-delay="2">
+        <span class="chap-n">✦</span><h3>Start at the beginning</h3>
+        <p>Best read top to bottom, like a story. Begin 100,000 years ago and end at the dinner table.</p><span class="card-link">Begin →</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer class="foot"><div class="wrap">
+  <div class="foot-nav">
+    <a href="/familyhistory/">Highlights</a><a href="/familyhistory/migration.html">Migration</a>
+    <a href="/familyhistory/famous.html">Famous Tidds</a><a href="/familyhistory/maps.html">Living Maps</a>
+    <a href="/familyhistory/genetics.html">The Genome</a><a href="/familyhistory/sources.html">Sources</a>
+  </div>
+  <p>Compiled with care for the Tidd family · <a href="https://jontidd.com">jontidd.com</a>.
+  History drawn from public genealogical records and family accounts; see <a href="/familyhistory/sources.html">Sources</a> for provenance and open questions. Genetic data is consumer-grade and shared by family consent — informational, not medical advice.</p>
+</div></footer>
+
+<!-- page-specific styles -->
+<style>
+.hero-fh{position:relative;min-height:100vh;display:flex;align-items:center;
+  padding:120px 0 80px;overflow:hidden}
+.hero-inner{position:relative;z-index:2}
+.hero-title{margin:6px 0 26px;text-shadow:0 2px 40px rgba(0,0,0,.5)}
+.hero-lead{max-width:60ch}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:36px}
+.hero-years{position:absolute;right:clamp(16px,5vw,60px);bottom:40px;z-index:1;
+  font-family:var(--serif);font-size:clamp(28px,7vw,86px);color:rgba(212,168,70,.12);
+  line-height:.8;text-align:right;pointer-events:none;font-weight:700}
+.hero-years span{display:block;font-family:var(--mono);font-size:clamp(10px,1.4vw,15px);
+  letter-spacing:.3em;color:rgba(212,168,70,.28)}
+.scroll-cue{margin-top:54px;font-family:var(--mono);font-size:calc(12px*var(--scale));
+  letter-spacing:.24em;text-transform:uppercase;color:var(--fg-mute);display:flex;align-items:center;gap:14px}
+.scroll-cue span{width:24px;height:38px;border:2px solid var(--line);border-radius:14px;position:relative}
+.scroll-cue span::after{content:'';position:absolute;left:50%;top:8px;width:4px;height:8px;
+  border-radius:2px;background:var(--gold);transform:translateX(-50%);animation:scrolldot 1.8s infinite}
+@keyframes scrolldot{0%{opacity:0;transform:translate(-50%,0)}40%{opacity:1}80%{opacity:0;transform:translate(-50%,12px)}}
+
+.hl-ic{font-size:34px;margin-bottom:12px}
+.hl h3{margin-bottom:10px}
+.hl.wide{grid-column:1/-1}
+.card-link{display:inline-block;margin-top:16px;font-family:var(--mono);
+  font-size:calc(13px*var(--scale));letter-spacing:.06em;color:var(--gold);text-transform:uppercase}
+.card:hover .card-link{color:var(--gold-bright)}
+
+.line-card{text-align:center}
+.line-flow{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 6px;margin-top:22px}
+.line-flow .node{background:rgba(255,255,255,.03);border:1px solid var(--line-soft);border-radius:14px;
+  padding:14px 16px;min-width:130px}
+.line-flow .node b{display:block;font-family:var(--mono);font-size:calc(13px*var(--scale));color:var(--gold);letter-spacing:.05em}
+.line-flow .node span{display:block;margin-top:6px;font-size:calc(15px*var(--scale));color:var(--fg-soft);line-height:1.4}
+.line-flow .node.now{background:linear-gradient(150deg,rgba(212,168,70,.16),rgba(139,92,246,.12));
+  border-color:var(--gold)}
+.line-flow .node.now span{color:#fff}
+.line-flow .arrow{color:var(--fg-mute);font-size:24px}
+.line-flow .gold-arrow{color:var(--gold)}
+
+.chap{display:block}
+.chap-n{font-family:var(--serif);font-size:44px;color:var(--gold-deep);line-height:1;display:block;margin-bottom:6px}
+.chap h3{margin-bottom:10px}
+.chap.glow{background:linear-gradient(160deg,rgba(212,168,70,.12),rgba(139,92,246,.08))}
+@media(max-width:720px){.line-flow .arrow{transform:rotate(90deg)}}
+</style>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/site.js"></script>
+<script>
+/* count-up for the stat band */
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function fmt(n){return n.toLocaleString('en-US');}
+  function run(el){
+    var end=+el.dataset.count, suf=el.dataset.suffix||'', t0=null, dur=1500;
+    if(reduce){el.textContent=fmt(end)+suf;return;}
+    function step(ts){if(!t0)t0=ts;var p=Math.min((ts-t0)/dur,1);
+      var e=1-Math.pow(1-p,3);el.textContent=fmt(Math.round(end*e))+suf;
+      if(p<1)requestAnimationFrame(step);}
+    requestAnimationFrame(step);
+  }
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){
+    if(e.isIntersecting){run(e.target);io.unobserve(e.target);}});},{threshold:.4});
+  document.querySelectorAll('[data-count]').forEach(function(el){io.observe(el);});
+})();
+</script>
+</body>
+</html>
