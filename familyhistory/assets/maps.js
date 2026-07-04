@@ -209,28 +209,23 @@
       moment.style.left=left+'px'; moment.style.top=top+'px'; moment.style.transform='none';
     }
 
-    function setEra(i){ state.era=Math.max(0,Math.min(eras.length-1,i)); render(); }
-    function play(){ state.playing=true; playBtn.textContent='❚❚';
-      if(state.era>=eras.length-1) state.era=0; step(); }
-    function step(){ render(); clearTimeout(state.timer);
-      state.timer=setTimeout(function(){
-        if(state.era>=eras.length-1){ if(state.loop){state.era=0;step();} else pause(); return; }
-        state.era++; step();
-      }, reduce?700:3200);
+    function setEra(i){ state.era=Math.max(0,Math.min(eras.length-1,i)); render(); updateStepUI(); }
+    // step through the story with arrows — no autoplay, no loop, no video
+    var prevBtn=document.getElementById(cfg.prev), nextBtn=document.getElementById(cfg.next),
+        stepLbl=document.getElementById(cfg.step);
+    function updateStepUI(){
+      if(prevBtn) prevBtn.disabled=state.era===0;
+      if(nextBtn) nextBtn.disabled=state.era===eras.length-1;
+      if(stepLbl) stepLbl.innerHTML='step <b>'+(state.era+1)+'</b> / '+eras.length;
     }
-    function pause(){ state.playing=false; playBtn.textContent='▶'; clearTimeout(state.timer); }
-
-    if(playBtn) playBtn.onclick=function(){ state.playing?pause():play(); };
-    if(scrub) scrub.oninput=function(){ pause(); setEra(+scrub.value); };
+    if(prevBtn) prevBtn.onclick=function(){ setEra(state.era-1); };
+    if(nextBtn) nextBtn.onclick=function(){ setEra(state.era+1); };
     d3.selectAll('#'+cfg.modes+' button').on('click',function(){
       var mode=this.dataset.mode;
       d3.selectAll('#'+cfg.modes+' button').classed('on',false); d3.select(this).classed('on',true);
-      if(mode==='today'){ pause(); controls.hidden=true; setEra(eras.length-1); }
-      else { controls.hidden=false; setEra(0); play(); }
+      if(mode==='today'){ controls.hidden=true; setEra(eras.length-1); }
+      else { controls.hidden=false; setEra(0); }
     });
-    var loopBtn=document.getElementById(cfg.loopBtn), onceBtn=document.getElementById(cfg.onceBtn);
-    if(loopBtn) loopBtn.onclick=function(){state.loop=true;loopBtn.classList.add('on');onceBtn.classList.remove('on');};
-    if(onceBtn) onceBtn.onclick=function(){state.loop=false;onceBtn.classList.add('on');loopBtn.classList.remove('on');};
     addEventListener('resize',function(){ positionMoment(eras[state.era]); },{passive:true});
 
     cfg.load(function(err,topo){
@@ -245,8 +240,8 @@
   /* WORLD */
   makeMap({
     svg:'worldMap',tip:'worldTip',era:'worldEra',moment:'worldMoment',loading:'worldLoading',
-    controls:'worldControls',scrub:'worldScrub',play:'worldPlay',modes:'worldModes',
-    loopBtn:'worldLoop',onceBtn:'worldOnce',eraLabel:'worldEraLabel',
+    controls:'worldControls',prev:'worldPrev',next:'worldNext',step:'worldStep',modes:'worldModes',
+    eraLabel:'worldEraLabel',
     eras:WORLD,note:COUNTRY_NOTE,w:960,h:520,
     load:function(cb){ d3.json('https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json').then(function(t){cb(null,t);}).catch(cb); },
     extract:function(t){ return topojson.feature(t,t.objects.countries).features.filter(function(f){return f.properties.name!=='Antarctica';}); },
@@ -255,8 +250,8 @@
   /* US */
   makeMap({
     svg:'usMap',tip:'usTip',era:'usEra',moment:'usMoment',loading:'usLoading',
-    controls:'usControls',scrub:'usScrub',play:'usPlay',modes:'usModes',
-    loopBtn:'usLoop',onceBtn:'usOnce',eraLabel:'usEraLabel',
+    controls:'usControls',prev:'usPrev',next:'usNext',step:'usStep',modes:'usModes',
+    eraLabel:'usEraLabel',
     eras:US,note:STATE_NOTE,w:960,h:560,
     load:function(cb){ d3.json('https://cdn.jsdelivr.net/npm/us-atlas@3/states-10m.json').then(function(t){cb(null,t);}).catch(cb); },
     extract:function(t){ return topojson.feature(t,t.objects.states).features; },

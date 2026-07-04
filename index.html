@@ -417,6 +417,14 @@ section{position:relative;z-index:1;padding:120px 24px}
 .card-ss h3{color:#ccfbf1}
 .card-ss .card-status{color:#2dd4bf}
 .card-ss .card-meta{color:#2dd4bf}
+.card-family .proj-label{color:#e0b64a;background:rgba(212,168,70,.08);border-color:rgba(212,168,70,.25)}
+.card-family h3{color:#f6e9c9}
+.card-family .card-status{color:#d4a846}
+.card-family .card-header{background:linear-gradient(180deg,rgba(212,168,70,.06) 0%,rgba(212,168,70,.02) 70%,transparent 100%)}
+.fh-cta{display:inline-flex;align-items:center;gap:8px;margin-top:4px;font-size:14px;font-weight:700;
+  color:#1a1205;background:linear-gradient(120deg,#e0b64a,#a9812f);padding:11px 20px;border-radius:11px;
+  transition:transform .2s,box-shadow .2s}
+.fh-cta:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(212,168,70,.34)}
 .ss-demo{height:100%;display:flex;flex-direction:column;font-family:'JetBrains Mono',monospace;background:linear-gradient(180deg,#07110f,#060a0c);position:relative;overflow:hidden}
 .ss-top{display:flex;align-items:center;gap:9px;padding:11px 16px;border-bottom:1px solid rgba(255,255,255,.05);font-size:10px;letter-spacing:.14em;color:#5eead4;font-weight:600}
 .ss-dot{width:7px;height:7px;border-radius:50%;background:#2dd4bf;box-shadow:0 0 8px #2dd4bf}
@@ -874,6 +882,41 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
         <span class="card-meta">Built for the 2026 season · invite only</span>
         <p class="card-disclaimer">An independent hobby project. Not affiliated with Tyler Place Family Resort.</p>
+      </div>
+    </article>
+
+    <!-- ═══ The Tidd Family History ═══ -->
+    <article class="project-card card-family no-link" data-reveal data-delay="1" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #7</span>
+        <div class="card-question">"What if a family's whole history — one hundred thousand years of it, could live on one beautiful, readable website?"</div>
+        <div class="card-title-row">
+          <h3>The Tidd Family History</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Live</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <div class="cc" data-carousel>
+          <div class="cc-slides">
+            <img class="cc-slide is-active" src="images/cards/fh-1-grave.jpg" alt="A 1696 Tidd headstone in the Lexington burying ground" loading="lazy">
+            <img class="cc-slide" src="images/cards/fh-2-church.jpg" alt="First Parish in Lexington, found from a grandfather's polaroid" loading="lazy">
+            <img class="cc-slide" src="images/cards/fh-3-portraits.jpg" alt="Nineteenth-century Tidd ancestor portraits" loading="lazy">
+          </div>
+          <div class="cc-dots">
+            <button type="button" class="cc-dot is-active" aria-label="1696 headstone"></button>
+            <button type="button" class="cc-dot" aria-label="First Parish, Lexington"></button>
+            <button type="button" class="cc-dot" aria-label="Ancestor portraits"></button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="desc">A <strong>seven-chapter family history site</strong> tracing the Tidd line from the first humans out of Africa to my three kids. <strong>Deep-ancestry migration maps</strong> you step through, <strong>famous Tidds</strong> in their own words, <strong>three generations of real DNA</strong>, and a photo archive of a 2010 pilgrimage — 1696 gravestones, the Tidd House, and flip-through genealogy books, every source traced.</p>
+        <div class="card-tech">
+          <strong>three.js</strong> ancestral starfield · <strong>D3</strong> living world &amp; U.S. maps · flip-book documents with typed <strong>transcriptions &amp; a text-size slider</strong> for every age · a three-generation genome ledger · built to be read aloud at a reunion. A fast, <strong>no-build static site</strong>.
+        </div>
+        <a class="fh-cta" href="/familyhistory/">Explore the family history →</a>
       </div>
     </article>
 
