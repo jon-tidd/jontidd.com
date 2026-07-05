@@ -292,8 +292,8 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
 @media(max-width:560px){ .reader-title{order:0;flex-basis:100%} }
 
 /* ── responsive ── */
-/* Nav collapses to a hamburger below 1120px so the full 7-item bar is never
-   crowded (kept separate from the content-grid breakpoints below). */
+/* No hamburger: below 1420px the links become a second row, a thin
+   horizontally-scrollable bar that is always visible under the brand. */
 /* squeeze tier: full 8-link bar, compacted, on mid-size desktops */
 @media(min-width:1421px) and (max-width:1640px){
   .nav-links a{font-size:13px;padding:8px 8px}
@@ -303,15 +303,17 @@ html.reveal-on [data-reveal].in{opacity:1;transform:none}
 }
 @media(max-width:1420px){
   .brand small{display:none}            /* compact one-line brand on small screens */
-  .nav-links{position:fixed;inset:54px 0 auto 0;flex-direction:column;align-items:stretch;
-    background:rgba(10,14,23,.98);backdrop-filter:blur(18px);padding:14px clamp(16px,5vw,40px);
-    border-bottom:1px solid var(--line);gap:4px;transform:translateY(-140%);
-    transition:transform .32s cubic-bezier(.2,.7,.2,1);max-height:calc(100vh - 54px);overflow-y:auto}
-  .nav.open .nav-links{transform:none}
-  .nav-links a{padding:14px 12px;font-size:18px;border-radius:12px}
-  .textsize{margin:8px 0 0;border-left:none;border-top:1px solid var(--line-soft);
-    padding:12px 0 0;justify-content:center}
-  .hamb{display:block}
+  .hamb{display:none}
+  .nav{flex-wrap:wrap;padding-top:10px;padding-bottom:0;row-gap:0}
+  .nav-links{order:20;flex-basis:100%;min-width:100%;display:flex;flex-direction:row;
+    align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none;
+    -webkit-overflow-scrolling:touch;
+    margin:4px calc(-1*clamp(16px,4vw,40px)) 0;
+    padding:2px clamp(16px,4vw,40px) 10px}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{flex:none;font-size:14.5px;padding:8px 11px}
+  .textsize{flex:none;margin-left:6px;padding-left:10px;border-left:1px solid var(--line-soft)}
+  .line-toggle{margin-left:auto;font-size:12px;padding:7px 11px}
 }
 @media(max-width:900px){
   .g4{grid-template-columns:repeat(2,1fr)}

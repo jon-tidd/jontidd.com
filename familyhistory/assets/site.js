@@ -292,15 +292,18 @@
     btn.type='button';
     btn.className='line-toggle'+(on?' on':'');
     btn.setAttribute('aria-pressed', on?'true':'false');
-    btn.title='Show only your direct bloodline (hide collateral relatives)';
-    btn.innerHTML='<span class="lt-dot"></span><span class="lt-label">Direct line</span>';
+    btn.title='Toggle between the direct bloodline only and the whole family, indirect lines included';
+    btn.innerHTML='<span class="lt-dot"></span><span class="lt-label"></span>';
+    var lbl=btn.querySelector('.lt-label');
     function apply(v){
       on=v;
       document.documentElement.classList.toggle('line-only', on);
       btn.classList.toggle('on', on);
       btn.setAttribute('aria-pressed', on?'true':'false');
+      lbl.textContent = on ? 'Direct line only' : 'Direct + Indirect';
       try{ localStorage.setItem('tidd-line-only', on?'1':'0'); }catch(e){}
     }
+    apply(on);
     btn.addEventListener('click', function(){ apply(!on); });
     nav.appendChild(btn);
   }
