@@ -71,9 +71,9 @@
      popup:{c:[-71.1,42.4],title:'Ground zero: Woburn', body:'Sgt. John Tidd helps found Woburn in 1640. For a century the family barely leaves Massachusetts.'}},
     {t:'c. 1750', name:'New England', data:{'Massachusetts':60,'New Hampshire':15,'Connecticut':12,'Maine':10}, choro:true,
      markers:[{c:[-71.1,42.4]}], flows:[], popup:null},
-    {t:'c. 1850', name:'West to Ohio', data:{'Massachusetts':120,'Ohio':90,'New York':70,'Pennsylvania':40,'New Hampshire':25,'Maine':20,'Connecticut':18,'Illinois':15}, choro:true,
-     markers:[{c:[-82.9,40.4],r:2.2,label:'Ohio'}], flows:[{from:[-71.1,42.4],to:[-82.9,40.4]}],
-     popup:{c:[-82.9,40.4],title:'The Ohio branch', body:'William & James Tidd settle the Niles–Vienna country as New England names pour into the Midwest.'}},
+    {t:'c. 1850', name:'Westward', data:{'Massachusetts':120,'Ohio':90,'New York':70,'Pennsylvania':40,'New Hampshire':25,'Maine':20,'Connecticut':18,'Illinois':15}, choro:true,
+     markers:[{c:[-82.9,40.4],r:2.2,label:'Ohio'},{c:[-98.2,41.2],r:2.2,label:'Palmer, Neb.'}], flows:[{from:[-71.1,42.4],to:[-82.9,40.4]},{from:[-71.1,42.4],to:[-98.2,41.2]}],
+     popup:{c:[-98.2,41.2],title:'The line leaps to Nebraska', body:'Cousin branches settle Ohio and New York, while the direct line jumps from Lexington to Palmer, Nebraska: Charles Lowell Tidd, Civil War veteran, opens one of the town\u2019s first stores.'}},
     {t:'c. 1950', name:'Coast to coast', data:{'Ohio':260,'Massachusetts':220,'California':180,'New York':150,'Illinois':70,'Michigan':90,'Texas':80,'Florida':60,'Pennsylvania':60,'Indiana':50}, choro:true,
      markers:[{c:[-119,37],label:'California'}], flows:[{from:[-71.1,42.4],to:[-119,37]},{from:[-71.1,42.4],to:[-99,31.5]},{from:[-71.1,42.4],to:[-81.7,28]}],
      popup:null},
@@ -83,7 +83,7 @@
   ];
 
   var COUNTRY_NOTE={'United States of America':'Largest Tidd population on Earth.','United Kingdom':'The homeland where the name was born.','Canada':'~10% of the world’s Tidds.','Australia':'Carried south in the 1800s.'};
-  var STATE_NOTE={'Massachusetts':'Woburn, founded 1640 by Sgt. John Tidd.','Ohio':'The westward branch — the Niles–Vienna Tidds.','California':'Today the top Tidd state.'};
+  var STATE_NOTE={'Massachusetts':'Woburn, founded 1640 by Sgt. John Tidd.','Ohio':'A cousin branch, the Niles–Vienna Tidds.','Nebraska':'Palmer: the direct line\u2019s prairie home from the 1880s.','California':'Today the top Tidd state, and Ceres, where Grandpa Joy was born.'};
 
   var uid=0;
   function makeMap(cfg){

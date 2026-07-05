@@ -12,6 +12,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/familyhistory/assets/site.css">
+<script>try{if(localStorage.getItem('tidd-line-only')==='1')document.documentElement.classList.add('line-only')}catch(e){}</script>
 </head>
 <body>
 <div class="progress"></div>
@@ -32,6 +33,7 @@
   <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/line.html" data-page="line.html">The Line</a>
     <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
     <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
     <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
@@ -64,7 +66,7 @@
 </header>
 
 <!-- ══ HOW THEY FOUND IT ══ -->
-<section class="pad-sm">
+<section class="pad-sm" id="origin">
   <div class="wrap">
     <div class="kicker" data-reveal>How they found it</div>
     <h2 data-reveal>A polaroid, a grandfather,<br>and Google Street View.</h2>
@@ -86,7 +88,7 @@
 </section>
 
 <!-- ══ THE GRAVES ══ -->
-<section class="pad">
+<section class="pad" id="graves">
   <div class="wrap">
     <div class="kicker" data-reveal>I · The Oldest Graves · Lexington, Massachusetts</div>
     <h2 data-reveal>Where the early Tidds lie.</h2>
@@ -128,7 +130,7 @@
         <div class="tree-node">
           <button class="gal-btn tn-img" data-cap="“Here lyes ye body of John Tidd, aged 78 years, died April 1703.” John, son of the immigrant, removed to Lexington; his stone stands in the Old Burying Ground.">
             <img src="images/archive/grave-john-tidd-sr.jpg" alt="Headstone of John Tidd Sr., d. 1703 aged 78" loading="lazy"></button>
-          <div class="tn-body"><b>John Tidd, Sen<sup>r</sup></b><span>d. 1703, aged 78 · removed to Lexington</span></div>
+          <div class="tn-body"><b>John Tidd, Sen<sup>r</sup></b><span>d. 1703, aged 78 · removed to Lexington · 2nd generation of the direct line</span></div>
         </div>
         <div class="tree-marry" aria-hidden="true">⚭</div>
         <div class="tree-node">
@@ -142,7 +144,7 @@
         <div class="tree-node">
           <button class="gal-btn tn-img" data-cap="A double headstone: “Here lyes the body of Mr Joseph Tidd, who died Dec. 26, 1730, in ye 70th year,” beside his wife Mary.">
             <img src="images/archive/grave-joseph-mary-tidd.jpg" alt="Double headstone of Joseph and Mary Tidd, both 1730" loading="lazy"></button>
-          <div class="tn-body"><b>Joseph Tidd</b><span>d. 26 Dec 1730, aged 70</span></div>
+          <div class="tn-body"><b>Joseph Tidd</b><span>d. 26 Dec 1730, aged 70 · constable 1699, selectman 1714 · 3rd generation of the direct line</span></div>
         </div>
         <div class="tree-marry" aria-hidden="true">⚭</div>
         <div class="tree-node">
@@ -157,12 +159,12 @@
         </div>
       </div>
     </div>
-    <p class="muted" data-reveal style="text-align:center;font-size:calc(13px*var(--scale));margin-top:20px">Links follow the stones themselves and the Dawes-Gates genealogy; the exact tie of each 1730-era stone to the generation above is the family historian’s next puzzle.</p>
+    <p class="muted" data-reveal style="text-align:center;font-size:calc(13px*var(--scale));margin-top:20px">Solved in 2026: Hudson’s town genealogy ties the stones together. Joseph (d. 1730) is the son of John Tidd Senʳ and the direct third generation of the line; Daniel was his younger brother. The whole chain is walked out on <a href="/familyhistory/line.html" style="color:var(--gold)">The Line</a>.</p>
   </div>
 </section>
 
 <!-- ══ TIDD HOUSE & AVENUE ══ -->
-<section class="pad-sm">
+<section class="pad-sm" id="house">
   <div class="wrap">
     <div class="kicker" data-reveal>II · The Name on the Land · Woburn, Massachusetts</div>
     <h2 data-reveal>A house and a street<br>that still bear the name.</h2>
@@ -191,13 +193,13 @@
 </section>
 
 <!-- ══ THE RECORD ROOM ══ -->
-<section class="pad-sm">
+<section class="pad-sm" id="record">
   <div class="wrap">
     <div class="kicker" data-reveal>III · The Record Room</div>
     <h2 data-reveal>Inside the archive itself.</h2>
     <p class="lead" data-reveal data-delay="1" style="max-width:62ch;margin:14px 0 34px">Founded in 1845, the <strong>New England Historic Genealogical Society</strong> in Boston is the oldest genealogical society in America. Days there produced most of the hard facts behind this whole site, including a published sketch of the immigrant John Tidd, and a family tree drawn generations deep.</p>
     <!-- Featured flip-book: the Dawes-Gates account of John Tidd -->
-    <div class="card" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
+    <div class="card" id="dawes" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
       <div class="kicker" style="margin-bottom:8px">The Book of Record · flip through it</div>
       <h3 style="margin-bottom:8px">The Dawes-Gates account of John Tidd</h3>
       <p class="muted" style="max-width:64ch;margin:0 0 14px">The four pages that anchor this whole family history: the title page of <em>Dawes-Gates Ancestral Lines</em> (Mary Walton Ferris, 1943) and its full "TIDD" chapter. Cleaned and flattened from the originals. Turn the pages, or tap <strong>Read the text</strong> for a large-print transcription.</p>
@@ -222,7 +224,7 @@
     </div>
 
     <!-- Featured flip-book: the TIDD LINE typescript genealogy -->
-    <div class="card" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
+    <div class="card" id="tiddline" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
       <div class="kicker" style="margin-bottom:8px">The Line, generation by generation</div>
       <h3 style="margin-bottom:8px">“A Tidd Line”, the typescript genealogy</h3>
       <p class="muted" style="max-width:64ch;margin:0 0 14px">A second book from the reading room: a typed genealogy that walks the family down six generations, from Charlestown in 1637 to a Revolutionary War soldier. Turn the pages, or tap <strong>Read the text</strong> for the full large-print transcription of each page.</p>
@@ -251,10 +253,10 @@
     </div>
 
     <!-- Featured flip-book: the 1882 resolutions on the death of Charles Tidd -->
-    <div class="card" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
+    <div class="card" id="resolutions" data-reveal style="margin-bottom:30px;border-color:rgba(212,168,70,.3)">
       <div class="kicker" style="margin-bottom:8px">A town’s tribute · flip through it</div>
       <h3 style="margin-bottom:8px">Resolutions on the death of a Lexington schoolmaster, 1882</h3>
-      <p class="muted" style="max-width:64ch;margin:0 0 14px">When <strong>Charles Tidd</strong> died, the Town of Lexington asked its School Committee to set down, in the town record, what he had meant to the place. He had taught its public schools for a quarter of a century, and served as School Committee man, assessor and town clerk. Turn the two pages, or tap <strong>Read the text</strong>.</p>
+      <p class="muted" style="max-width:64ch;margin:0 0 14px">When <strong>Charles Tidd</strong> (1807–1880), a direct ancestor of this family, died, the Town of Lexington asked its School Committee to set down, in the town record, what he had meant to the place. He had taught its public schools for a quarter of a century, and served as School Committee man, assessor and town clerk. Turn the two pages, or tap <strong>Read the text</strong>.</p>
       <div class="flipbook" data-title="Resolutions on the death of Charles Tidd (1882)">
         <div class="fb-page" data-cap="Page 1 · ‘a teacher of public schools in this his native town’">
           <img src="images/archive/resolutions/charles-tidd-1.jpg" alt="First page of the 1882 Lexington resolutions on the death of Charles Tidd">
@@ -308,13 +310,13 @@
         <button class="gal-btn" data-cap="An 1881 letter from Lexington transmitting the resolutions the town passed, in town meeting, on the death of Charles L. Tidd’s father.">
           <img src="images/archive/ephemera/lexington-1881-letter.jpg" alt="An 1881 letter from the Town of Lexington on the death of a Tidd" loading="lazy">
         </button>
-        <figcaption><b>A town’s tribute, 1881</b>Lexington, in town meeting, resolved to honor a Tidd on his death.<button class="doc-read" data-reader-title="Lexington’s 1881 letter">📖 Read the text</button><div class="rd-text"><h4>A letter from Lexington</h4><div class="rd-src">Lexington, Massachusetts · 9 March 1881</div><p>“Lexington, March 9, 1881. Mr Charles L. Tidd and others.</p><p>It becomes my duty to transmit to you the enclosed Resolutions passed by the Town of Lexington, in town meeting assembled, on the death of your honored father.</p><p>Permit me also to add my individual testimony as to his worth as a man, a citizen and a friend. I remain very respectfully, <strong>Leonard A. Saville.</strong>”</p></div></figcaption>
+        <figcaption><b>The town clerk’s letter</b>Leonard A. Saville transmits the Resolutions to the schoolmaster’s children, among them Charles L. Tidd, the next rung of the line.<button class="doc-read" data-reader-title="Lexington’s 1881 letter">📖 Read the text</button><div class="rd-text"><h4>A letter from Lexington</h4><div class="rd-src">Lexington, Massachusetts · 9 March 1881</div><p>“Lexington, March 9, 1881. Mr Charles L. Tidd and others.</p><p>It becomes my duty to transmit to you the enclosed Resolutions passed by the Town of Lexington, in town meeting assembled, on the death of your honored father.</p><p>Permit me also to add my individual testimony as to his worth as a man, a citizen and a friend. I remain very respectfully, <strong>Leonard A. Saville.</strong>”</p></div></figcaption>
       </figure>
       <figure class="gal-item" data-reveal>
         <button class="gal-btn" data-cap="A 1782 deed on a printed ‘Know all Men by these Presents’ form: John Tidd of Lexington, yeoman, sells an eleven-and-a-half-acre Woburn wood lot to David Blanchard for one hundred and ten pounds.">
           <img src="images/archive/ephemera/deed-1782-john-tidd.jpg" alt="A 1782 deed signed by John Tidd of Lexington" loading="lazy">
         </button>
-        <figcaption><b>A deed, 1782</b>John Tidd sells a Woburn wood lot, his wife Elizabeth giving up her right of dower.<button class="doc-read" data-reader-title="John Tidd’s deed, 1782">📖 Read the text</button><div class="rd-text"><h4>A deed of land</h4><div class="rd-src">Lexington &amp; Woburn, Massachusetts · 29 March 1782</div><p>“Know all Men by these Presents, that I <strong>John Tidd of Lexington</strong>, in the County of Middlesex and Commonwealth of Massachusetts, Yeoman, in consideration of <strong>one hundred and ten pounds</strong> lawful money paid me by <strong>David Blanchard of Woburn</strong>… do give, grant, sell and convey unto the said David Blanchard and to his heirs and assigns for ever <strong>one certain wood lot lying in Woburn</strong>, formerly owned by Joseph Kendall, near Deacon Samuel Reed, containing <strong>eleven acres and an half</strong> by measure…”</p><p>“In witness whereof I the said John Tidd, with <strong>Elizabeth my now married wife</strong> consenting hereto and giving up her right of dower and power of thirds in the same, have hereunto set our hands and seal this twenty-ninth day of March, one thousand seven hundred and eighty-two.”</p><p>“Signed, sealed and delivered in presence of us: <strong>William Tidd, Joseph Simonds.</strong>” Acknowledged before Samuel Thompson, Justice of the Peace.</p></div></figcaption>
+        <figcaption><b>A deed, 1782</b>Signed by John Tidd (1749–1812), the direct ancestor who stood on Lexington Green on April 19, 1775; Elizabeth is his wife Elizabeth Reed.<button class="doc-read" data-reader-title="John Tidd’s deed, 1782">📖 Read the text</button><div class="rd-text"><h4>A deed of land</h4><div class="rd-src">Lexington &amp; Woburn, Massachusetts · 29 March 1782</div><p>“Know all Men by these Presents, that I <strong>John Tidd of Lexington</strong>, in the County of Middlesex and Commonwealth of Massachusetts, Yeoman, in consideration of <strong>one hundred and ten pounds</strong> lawful money paid me by <strong>David Blanchard of Woburn</strong>… do give, grant, sell and convey unto the said David Blanchard and to his heirs and assigns for ever <strong>one certain wood lot lying in Woburn</strong>, formerly owned by Joseph Kendall, near Deacon Samuel Reed, containing <strong>eleven acres and an half</strong> by measure…”</p><p>“In witness whereof I the said John Tidd, with <strong>Elizabeth my now married wife</strong> consenting hereto and giving up her right of dower and power of thirds in the same, have hereunto set our hands and seal this twenty-ninth day of March, one thousand seven hundred and eighty-two.”</p><p>“Signed, sealed and delivered in presence of us: <strong>William Tidd, Joseph Simonds.</strong>” Acknowledged before Samuel Thompson, Justice of the Peace.</p></div></figcaption>
       </figure>
       <figure class="gal-item" data-reveal data-delay="1">
         <button class="gal-btn" data-cap="A copy of a 1729 Cambridge town record laying out a way, ‘the way leading from Concord to Woburn,’ described tree by tree, in the part of Cambridge that is now Lexington.">
@@ -326,7 +328,7 @@
         <button class="gal-btn" data-cap="A 1798 Lexington receipt: Polly Farrar acknowledges eleven dollars and fifty cents from John Tidd, in full of all demands, signing with her mark.">
           <img src="images/archive/ephemera/receipt-farrar-1798.jpg" alt="A 1798 receipt signed with a mark by Polly Farrar" loading="lazy">
         </button>
-        <figcaption><b>A receipt, signed with a mark, 1798</b>Paid in full, and signed with an X by a woman who could not write her name.<button class="doc-read" data-reader-title="Polly Farrar’s receipt, 1798">📖 Read the text</button><div class="rd-text"><h4>A receipt in full</h4><div class="rd-src">Lexington, Massachusetts · 28 August 1798</div><p>“Lexington, August 28th, 1798. Received of <strong>John Tidd eleven dollars and fifty cents</strong>, in full of all demands or accounts between him and me to the present time.”</p><p>“Received by me, her <strong>× mark</strong>, <strong>Polly Farrar.</strong> Attest: John Tidd, Junr.”</p><p class="rd-note">Polly Farrar signs with an X between her names, the mark of someone who never learned to write, in the same decades the family’s children were being taught in Lexington’s schools.</p></div></figcaption>
+        <figcaption><b>A receipt, signed with a mark, 1798</b>Paid in full, and signed with an X by a woman who could not write her name.<button class="doc-read" data-reader-title="Polly Farrar’s receipt, 1798">📖 Read the text</button><div class="rd-text"><h4>A receipt in full</h4><div class="rd-src">Lexington, Massachusetts · 28 August 1798</div><p>“Lexington, August 28th, 1798. Received of <strong>John Tidd eleven dollars and fifty cents</strong>, in full of all demands or accounts between him and me to the present time.”</p><p>“Received by me, her <strong>× mark</strong>, <strong>Polly Farrar.</strong> Attest: John Tidd, Junr.”</p><p class="rd-note">Polly Farrar signs with an X between her names, the mark of someone who never learned to write. The “John Tidd, Junr” who attests is the son, John Tidd (1779–1842), the next rung of the direct line.</p></div></figcaption>
       </figure>
       <figure class="gal-item" data-reveal>
         <button class="gal-btn" data-cap="A small mourning card: ‘Joseph Tidd died September 1815, in the 66th year of his age,’ with a memorial couplet, ‘From Death’s arrests no age is free, my friends prepare to follow me.’">
@@ -340,7 +342,7 @@
         </button>
         <figcaption><b>A tradesman’s bill, 1806</b>“One chaise boot, nine pounds.” A carriage part, bought and receipted.<button class="doc-read" data-reader-title="A chaise-boot bill, 1806">📖 Read the text</button><div class="rd-text"><h4>A tradesman’s bill</h4><div class="rd-src">Charlestown, Massachusetts · 11 October 1806</div><p>“Charlestown, Oct. 11, 1806. <strong>Mr. John Tidd, bought of Joseph Reed:</strong> one <strong>chaise boot</strong> … £9-0-0; to sundries … £0-2-0; total … £9-2-0.”</p><p>“By sundries… received payment, <strong>Joseph Reed.</strong>”</p><p class="rd-note">A “chaise boot” was the leather apron and cover of a light two-wheeled carriage, a small window onto how the family got about.</p></div></figcaption>
       </figure>
-      <figure class="gal-item" data-reveal data-delay="2">
+      <figure class="gal-item" data-reveal data-delay="2" data-collateral>
         <button class="gal-btn" data-cap="The will of Samuel Tidd of Woburn, yeoman, printed in ‘The Story of the Tidd Family of Woburn’ (Edward F. Johnson, 1890); in it Samuel Tidd is called a cooper, the old family trade.">
           <img src="images/archive/samuel-tidd-will.jpg" alt="A printed page of Samuel Tidd's will from the 1890 Tidd family history" loading="lazy">
         </button>
@@ -351,17 +353,17 @@
 </section>
 
 <!-- ══ THE ANTI-SLAVERY CAUSE ══ -->
-<section class="pad-sm">
+<section class="pad-sm" id="abolition">
   <div class="wrap">
     <div class="kicker" data-reveal>IV · In the Thick of It</div>
     <h2 data-reveal>The family and the<br>anti-slavery cause.</h2>
-    <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin:14px 0 30px">Among the papers is one that stops you cold. A family letter from <strong>Lexington, December 1840</strong>, written on stationery printed with the era’s great anti-slavery emblem: a chained, kneeling figure and the words <strong>“Am I Not a Man and a Brother?”</strong> The news inside is ordinary, a wedding, a schoolteacher’s term, a new baby. The paper it is written on is not.</p>
+    <p class="lead" data-reveal data-delay="1" style="max-width:66ch;margin:14px 0 30px">Among the papers is one that stops you cold. A family letter from <strong>Lexington, December 1840</strong>, written on stationery printed with the era’s great anti-slavery emblem: a chained, kneeling figure and the words <strong>“Am I Not a Man and a Brother?”</strong> The writer is <strong>Rebecca M. (Nourse) Tidd</strong>, wife of the Lexington schoolmaster Charles Tidd, and a <strong>direct ancestor of this family</strong>: the kids’ own five-times-great-grandmother. The news inside is ordinary, a wedding, a schoolteacher’s term, a new baby. The paper it is written on is not.</p>
 
     <!-- Featured flip-book: the 1840 abolitionist-letterhead letter -->
     <div class="card" data-reveal style="margin-bottom:34px;border-color:rgba(212,168,70,.35)">
       <div class="kicker" style="margin-bottom:8px">The letter under the broken chain</div>
       <h3 style="margin-bottom:8px">“Am I Not a Man and a Brother?” · Lexington, 1840</h3>
-      <p class="muted" style="max-width:66ch;margin:0 0 14px">Written by <strong>R. M. Tidd</strong> to her uncle, on printed abolitionist letterhead. The emblem at the top, the kneeling enslaved man in chains, was the seal of the movement to end slavery, first cut for Josiah Wedgwood in 1787 and reproduced on paper, ribbons and tokens for half a century. To choose it for ordinary family letters was to nail your colours to the mast. Turn the pages, or tap <strong>Read the text</strong> for a large-print transcription.</p>
+      <p class="muted" style="max-width:66ch;margin:0 0 14px">Written by <strong>R. M. Tidd</strong>, Rebecca M. (Nourse) Tidd of Waterford, Maine, to her uncle back home, on printed abolitionist letterhead. Hudson’s town genealogy confirms every name in it: her husband Charles taught the Centre District school, and “sister Mary” married David T. Watson of Franklin, N.H., on 19 November 1840, seventeen days before this letter. The emblem at the top, the kneeling enslaved man in chains, was the seal of the movement to end slavery, first cut for Josiah Wedgwood in 1787 and reproduced on paper, ribbons and tokens for half a century. To choose it for ordinary family letters was to nail your colours to the mast. Turn the pages, or tap <strong>Read the text</strong> for a large-print transcription.</p>
       <div class="flipbook" data-title="R. M. Tidd’s 1840 letter">
         <div class="fb-page" data-cap="Page 1 · under the printed emblem, ‘Dear Uncle’">
           <img src="images/archive/abolition/abolition-1.jpg" alt="First page of the 1840 Tidd letter, printed with the Am I Not a Man and a Brother anti-slavery emblem">
@@ -378,11 +380,11 @@
       </div>
       <div class="excerpt" style="margin-top:18px">“They have a very excellent man for their minister, and withal a good Abolitionist… Only four felt it their duty to carry Freedom’s ticket at the Presidential Election.”<cite>R. M. Tidd → her uncle · Lexington · 6 December 1840</cite></div>
       <p style="max-width:68ch">The everyday news carries the movement inside it. A Lexington family in 1840 counting the four neighbours who dared vote the abolitionist <strong>Liberty ticket</strong>, turning out to hear <strong>Samuel J. May</strong> lecture against slavery, noting which relations are “beginning to feel considerable interest in Abolition,” and packing <strong>“an Antislavery Library”</strong> to carry west. And all of it set down on paper that announces the household’s convictions before a single word is read.</p>
-      <p class="muted" style="margin:0;max-width:68ch">This is the letter the family long remembered. Nearly eighty years later, <strong>Aunt Esther</strong> would write to the same branch that an 1840 letter “seemed to me very full of magic power.”</p>
+      <p class="muted" style="margin:0;max-width:68ch">This is the letter the family long remembered. Nearly eighty years later the baby it anticipated, <strong>Aunt Esther</strong>, sent it west to her brother’s family with the words: “you see how the letter in 1840 seemed to me very full of magic power.” It has descended the direct line ever since.</p>
     </div>
 
-    <h3 data-reveal style="margin:38px 0 6px">A generation on, the same conviction.</h3>
-    <p class="muted" data-reveal data-delay="1" style="max-width:64ch;margin:0 0 22px">Writing in 1918 to her nephew in California, the family’s <strong>Aunt Esther</strong> (Esther M. Barrell) looks back on the years before the Civil War and puts the Tidds squarely inside the fight against slavery.</p>
+    <h3 id="esther" data-reveal style="margin:38px 0 6px">A generation on, the same conviction.</h3>
+    <p class="muted" data-reveal data-delay="1" style="max-width:64ch;margin:0 0 22px">Writing in 1918 to her nephew in California, the family’s <strong>Aunt Esther</strong>, Esther Mary Tidd, born five months after the 1840 letter above, its writer’s own daughter, looks back on the years before the Civil War and puts the Tidds squarely inside the fight against slavery. She married Hayward Barrett, great-grandson of Col. James Barrett of Concord, who commanded at the Old North Bridge.</p>
     <div class="abol">
       <div class="abol-fig" data-reveal>
         <div class="flipbook" data-title="Aunt Esther’s letter, 1918">
@@ -403,10 +405,10 @@
             <script type="text/plain" class="fb-text"><h4>On sending the medal</h4><div class="rd-src">Aunt Esther’s 1918 letter</div><p>“I send you the medal because you carry the name; and of course you see I am in a very different relation to them from what you are… when I send them to you there goes from me all care for them.”</p><p>“In view of the great subjects now agitating the whole of Europe, these things of which this letter speaks seem trivial; yet from another point of view they have power to make us tingle with their intensity of value. Now, in closing… How thankful we are for Peace!”</p></script>
           </div>
         </div>
-        <p class="fb-cap" style="margin-top:14px">Aunt Esther (Esther M. Barrell) to her nephew C. W. Tidd · Lincoln, Mass. · 26 Nov 1918</p>
+        <p class="fb-cap" style="margin-top:14px">Aunt Esther (Esther Mary Tidd, m. Barrett) to C. W. Tidd · Lincoln, Mass. · 26 Nov 1918</p>
       </div>
       <div class="abol-text" data-reveal data-delay="1">
-        <div class="excerpt">“…well do I remember ‘Squatter Sovereignty,’ and all the Kansas trouble; and was a worker in the ‘Emigrant Aid’ Society, as well as in ‘Soldiers’ Aid Society’ through the Civil War.”<cite>Esther M. Barrell → her nephew C. W. Tidd · Lincoln, Mass. · 26 Nov 1918</cite></div>
+        <div class="excerpt">“…well do I remember ‘Squatter Sovereignty,’ and all the Kansas trouble; and was a worker in the ‘Emigrant Aid’ Society, as well as in ‘Soldiers’ Aid Society’ through the Civil War.”<cite>Esther Mary (Tidd) Barrett → C. W. Tidd · Lincoln, Mass. · 26 Nov 1918</cite></div>
         <p>The <strong>New England Emigrant Aid Company</strong> was no quiet charity. Backed by the era’s most famous abolitionists (<strong>Henry Ward Beecher</strong> and <strong>Wendell Phillips</strong> are both named elsewhere in these same letters), it armed and funded free-state settlers to pour into Kansas and keep it out of slavery. It was the movement that lit “Bleeding Kansas,” and the same current that carried John Brown’s men, among them the family’s own <a href="/familyhistory/famous.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">Charles Plummer Tidd</a>.</p>
         <p class="muted" style="margin:0">To have a Tidd relative write, in her own hand, that she worked in the Emigrant Aid and Soldiers’ Aid societies is about as direct a line to the anti-slavery cause as a family can hope to hold.</p>
       </div>
