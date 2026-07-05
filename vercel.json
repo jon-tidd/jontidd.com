@@ -1,4 +1,7 @@
 {
+  "redirects": [
+    { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/battleplan", "destination": "https://nova-plan-omega.vercel.app/" },
     { "source": "/battleplan/api/:path*", "destination": "https://nova-plan-omega.vercel.app/api/:path*" },
