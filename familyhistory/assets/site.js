@@ -26,7 +26,7 @@
     // "sources.html" or clean "/sources" URLs. The hub (/familyhistory/) = index.
     var p = location.pathname, norm = 'index', m = p.match(/([a-z]+)\.html$/);
     if(m){ norm = m[1]; }
-    else { var m2 = p.match(/\/(migration|famous|maps|genetics|archive|sources)\/?$/); if(m2) norm = m2[1]; }
+    else { var m2 = p.match(/\/(line|migration|famous|maps|genetics|archive|sources)\/?$/); if(m2) norm = m2[1]; }
     nav.querySelectorAll('.nav-links a[data-page]').forEach(function(a){
       var dp = (a.dataset.page||'').replace(/\.html$/,'') || 'index';
       if(dp===norm) a.classList.add('active');
@@ -283,6 +283,28 @@
     });
   }
 
+  /* ---------- direct-line filter (show only the lineal bloodline) ---------- */
+  function initLineFilter(){
+    var nav=document.querySelector('.nav'); if(!nav) return;
+    var on=false; try{ on = localStorage.getItem('tidd-line-only')==='1'; }catch(e){}
+    document.documentElement.classList.toggle('line-only', on);
+    var btn=document.createElement('button');
+    btn.type='button';
+    btn.className='line-toggle'+(on?' on':'');
+    btn.setAttribute('aria-pressed', on?'true':'false');
+    btn.title='Show only your direct bloodline (hide collateral relatives)';
+    btn.innerHTML='<span class="lt-dot"></span><span class="lt-label">Direct line</span>';
+    function apply(v){
+      on=v;
+      document.documentElement.classList.toggle('line-only', on);
+      btn.classList.toggle('on', on);
+      btn.setAttribute('aria-pressed', on?'true':'false');
+      try{ localStorage.setItem('tidd-line-only', on?'1':'0'); }catch(e){}
+    }
+    btn.addEventListener('click', function(){ apply(!on); });
+    nav.appendChild(btn);
+  }
+
   function ready(fn){ if(document.readyState!=='loading')fn(); else document.addEventListener('DOMContentLoaded',fn); }
-  ready(function(){ initNav(); initReveal(); initField(); initFlipbooks(); initTranscriptButtons(); });
+  ready(function(){ initNav(); initLineFilter(); initReveal(); initField(); initFlipbooks(); initTranscriptButtons(); });
 })();

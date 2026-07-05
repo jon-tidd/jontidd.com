@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/familyhistory/assets/site.css">
+<script>try{if(localStorage.getItem('tidd-line-only')==='1')document.documentElement.classList.add('line-only')}catch(e){}</script>
 </head>
 <body>
 <div class="progress"></div>
@@ -30,6 +31,7 @@
   <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/line.html" data-page="line.html">The Line</a>
     <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
     <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
     <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
@@ -67,7 +69,7 @@
         <p>Edward Francis Johnson (1934). The single most detailed narrative of the founding American line, 96 pages, straight from the town where it began.</p>
         <span class="card-link">Google Books →</span>
       </a>
-      <a class="card star" href="https://www.catostreetconspiracy.org.uk/the-conspirators/richard-tidd" target="_blank" rel="noopener" data-reveal data-delay="1">
+      <a class="card star" href="https://www.catostreetconspiracy.org.uk/the-conspirators/richard-tidd" target="_blank" rel="noopener" data-reveal data-delay="1" data-collateral>
         <div class="star-badge">★</div>
         <h3>The Cato Street Conspiracy Archive</h3>
         <p>A meticulous, well-sourced site devoted to the 1820 plot, with Richard Tidd's biography, portrait and trial record. Vivid and rigorous.</p>
@@ -94,9 +96,9 @@
     <p class="lead" data-reveal data-delay="1" style="max-width:62ch;margin:14px 0 30px">Genealogy is detective work, and the trail is centuries cold. These are the places where good sources point in different directions, recorded here so future family historians know exactly what still needs nailing down.</p>
     <div class="conflicts">
       <div class="conf" data-reveal><b>Was John Tidd born in Hertford, and did he die in 1656 or 1657?</b><p>Most compiled trees place the immigrant's birth in Hertford, Hertfordshire (c. 1600) and give his mother as Agnes/Anna Dane, but these upstream English details are less firmly documented than his American life. His death is recorded as both 1656 and 1657 across sources; his Woburn will settles it near April 1657.</p></div>
-      <div class="conf" data-reveal><b>The Ohio Tidd book's "memory" section.</b><p>The genealogy documenting William Tidd (1744–1824) and James Tidd of the Niles–Vienna area is invaluable, but its compilers openly note that its later section was assembled from family members' recollections, "a possibility of errors and omissions that must be verified." Treat those links as leads, not gospel.</p></div>
+      <div class="conf" data-reveal><b>Ohio or Nebraska? Resolved: Nebraska.</b><p>Earlier drafts of this history assumed the direct line went west over the mountains to Ohio. Hudson's Lexington genealogy and the family's own memoir now show the real route: the line stayed in Lexington for two centuries, then jumped straight to <strong>Palmer, Nebraska</strong> (Charles Lowell Tidd, d. 1899), then Ceres, California. The Niles–Vienna Ohio Tidds documented by the Ohio book, whose compilers themselves warn of "errors and omissions that must be verified," are a separate cousin branch, as is the Eaton, N.Y. line traced in the "A Tidd Line" typescript.</p></div>
       <div class="conf" data-reveal><b>Two theories for the name itself.</b><p>SurnameDB gives two origins for "Tidd": an occupational one (a <em>tid-man</em>, head of a tithing) and a locational one (from the villages of Tydd). Both are pre-8th-century and plausible; the record doesn't decisively favour either.</p></div>
-      <div class="conf" data-reveal><b>Paul Roscher's service record, still open.</b><p>Paul Roscher is remembered in the family as a WWII B-17 pilot. We have not yet located a public unit roster or service file confirming the details, so the verbatim excerpt in Chapter II is drawn from a <em>different</em> 91st Bomb Group airman's published account, used to illustrate the world he flew in, not as his own words. His record is a priority for the next edition; the <a href="https://www.mightyeighth.org/veteran-database/" target="_blank" rel="noopener">Mighty Eighth veterans database</a> is the place to confirm it.</p></div>
+      <div class="conf" data-reveal data-collateral><b>Paul Roscher's service record, still open.</b><p>Paul Roscher is remembered in the family as a WWII B-17 pilot. We have not yet located a public unit roster or service file confirming the details, so the verbatim excerpt in Chapter II is drawn from a <em>different</em> 91st Bomb Group airman's published account, used to illustrate the world he flew in, not as his own words. His record is a priority for the next edition; the <a href="https://www.mightyeighth.org/veteran-database/" target="_blank" rel="noopener">Mighty Eighth veterans database</a> is the place to confirm it.</p></div>
       <div class="conf" data-reveal><b>A genome that argued with itself, and got resolved.</b><p>Two neighbouring markers in the 9p21 heart region read inconsistently in Jon's raw data (a known "strand" quirk of consumer chips), and his APOE gene didn't read at all. The family trio fixed the APOE gap, both parents being ε3/ε3 makes Jon ε3/ε3 with certainty. It's a small case study in why testing relatives beats testing an individual.</p></div>
     </div>
   </div>
@@ -167,6 +169,7 @@ var GROUPS=[
    ['Genealogy.com, TIDD forums','Community research threads · ★','Decades of amateur and professional discussion on the immigrant John Tidd and the Ohio branches, leads and cautions in equal measure.','https://www.genealogy.com/forum/surnames/topics/tidd/24/'],
    ['Gopher Genealogy, Amos Tidd Family, Rev. War','ICAPGen research, 2010 · ★','A professionally researched line documenting a Tidd family through the Revolutionary War era.','http://gophergenealogy.blogspot.com/p/amos-tidd-family-revolutionary-war.html'],
    ['Dawes-Gates Ancestral Lines','Mary Walton Ferris, 1943 · ★★★','A privately printed memorial volume whose allied families include the Tidds. Its sketch “TIDD (Tydd, Teed)” describes John Tidd, a tailor, of Charlestown, his 1638 Mystic-side lot, and Joshua Tidd, his presumed brother. Photographed at the NEHGS; see the <a href="/familyhistory/archive.html" style="color:var(--gold)">Archive</a>.',''],
+   ['History of the Town of Lexington, Vol. II (Genealogies)','Charles Hudson, revised ed. 1913 · ★★★','The genealogical register of Lexington families, and the key that unlocked the direct line in 2026. Its TIDD section (pp. 696–700) documents generation by generation: John² who moved to Cambridge Farms in 1686, Joseph³ the selectman, John⁵ of Parker’s company struck down on the Green on April 19, 1775, Charles⁷ the schoolmaster and town clerk, and Charles Lowell⁸ of the 48th Massachusetts who died at Palmer, Nebraska, in 1899. The whole chain is drawn out on <a href="/familyhistory/line.html" style="color:var(--gold)">The Line</a>.','https://archive.org/details/historyoftownofl02hudsiala'],
    ['New England Historic Genealogical Society','Boston, founded 1845 · ★★★','The oldest genealogical society in America and the source of most primary documents behind this site: the Tidd sketches, descendant charts, account books and letters photographed in 2010.','https://www.americanancestors.org/'],
    ['The Tidd family papers (NEHGS)','Primary manuscripts, photographed 2010 · ★★★','The family’s own documents: an 1840 Lexington letter on printed anti-slavery stationery (“Am I Not a Man and a Brother?”, naming Rev. S. J. May and the Liberty ticket), the Town of Lexington’s 1882 resolutions on the death of schoolmaster Charles Tidd, a 1782 deed of John Tidd, and receipts and notes from 1729 onward. Flattened and transcribed in the <a href="/familyhistory/archive.html" style="color:var(--gold)">Archive</a>.','']
   ]},
@@ -176,7 +179,7 @@ var GROUPS=[
    ['Forebears, Tidd','Surname distribution data · ★★','The source for the maps: ~2,897 bearers in the U.S., presence in ~20 countries, world rank 104,673rd, 77% in the Americas.','https://forebears.io/surnames/tidd'],
    ['Geneanet & FamilySearch, Tidd','Record aggregators · ★','Millions of indexed births, marriages and census entries for cross-checking specific individuals.','https://en.geneanet.org/surnames/TIDD']
   ]},
- {title:'Notable People of the Bloodlines',desc:'Archives and records for the figures in Chapter II.',
+ {title:'Notable People of the Bloodlines',desc:'Archives and records for the figures in Chapter II.',coll:1,
   items:[
    ['The Cato Street Conspiracy Archive, Richard Tidd','Dedicated history site · ★★★','Full biography, portrait and trial account of the 1820 conspirator hanged for high treason.','https://www.catostreetconspiracy.org.uk/the-conspirators/richard-tidd'],
    ['Kansas Historical Society, Charles Plummer Tidd','State archive · ★★','Documents the John Brown raider who escaped Harpers Ferry and re-enlisted under an alias; holds an 1859 photograph.','https://www.kshs.org/archives/208817'],
@@ -201,10 +204,10 @@ var GROUPS=[
     var items=g.items.map(function(it){
       var go = it[3] ? '<a class="src-go" href="'+it[3]+'" target="_blank" rel="noopener">Open ↗</a>'
                      : '<span class="src-go" style="color:var(--fg-mute)">Private</span>';
-      return '<div class="src" data-reveal><div class="src-main"><b>'+it[0]+'</b>'+
+      return '<div class="src" data-reveal'+(it[4]?' data-collateral':'')+'><div class="src-main"><b>'+it[0]+'</b>'+
         '<div class="meta">'+it[1]+'</div><p>'+it[2]+'</p></div>'+go+'</div>';
     }).join('');
-    return '<div class="src-group"><div class="kicker" data-reveal>'+g.title+'</div>'+
+    return '<div class="src-group"'+(g.coll?' data-collateral':'')+'><div class="kicker" data-reveal>'+g.title+'</div>'+
       '<p class="gdesc" data-reveal>'+g.desc+'</p>'+items+'</div>';
   }).join('');
 })();

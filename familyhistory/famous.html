@@ -10,6 +10,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Lora:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/familyhistory/assets/site.css">
+<script>try{if(localStorage.getItem('tidd-line-only')==='1')document.documentElement.classList.add('line-only')}catch(e){}</script>
 </head>
 <body>
 <div class="progress"></div>
@@ -30,6 +31,7 @@
   <button class="hamb" aria-label="Menu"><span></span><span></span><span></span></button>
   <div class="nav-links">
     <a href="/familyhistory/" data-page="index">Highlights</a>
+    <a href="/familyhistory/line.html" data-page="line.html">The Line</a>
     <a href="/familyhistory/migration.html" data-page="migration.html">Migration</a>
     <a href="/familyhistory/famous.html" data-page="famous.html">Famous Tidds</a>
     <a href="/familyhistory/maps.html" data-page="maps.html">Living Maps</a>
@@ -48,10 +50,16 @@
   <div class="wrap">
     <div class="kicker" data-reveal>Chapter II · Famous Tidds</div>
     <h1 class="display" data-reveal>The Ones History<br><span class="grad-text">Remembers</span></h1>
-    <p class="lead" data-reveal data-delay="1" style="max-width:64ch;margin-top:22px">
+    <p class="lead" data-reveal data-delay="1" data-collateral style="max-width:64ch;margin-top:22px">
       The bloodlines, Tidd and the families married into them, run through people who founded towns,
       plotted revolutions, raided arsenals, commanded fleets, and flew into flak over Germany.
       Here they are in their own century's words, with what made each of them extraordinary.
+    </p>
+    <p class="lead" data-lineal style="max-width:64ch;margin-top:22px">
+      Filtered to the direct line. Two figures remain: the immigrant founder the whole story
+      descends from, and his great-great-grandson who bled on Lexington Green the morning the
+      Revolution began. Turn the Direct line toggle off to meet the wider family's rebels,
+      raiders, admirals and airmen.
     </p>
   </div>
 </header>
@@ -59,7 +67,7 @@
 <section class="pad-sm"><div class="wrap figures">
 
   <!-- 1. John Tidd -->
-  <article class="fig" data-reveal>
+  <article class="fig" id="founder" data-reveal>
     <div class="fig-portrait" data-era="c.1600–1657" data-role="⚓">
       <span class="monogram">JT</span>
     </div>
@@ -73,8 +81,23 @@
     </div>
   </article>
 
+  <!-- 1b. John Tidd, minuteman of Lexington Green (direct line) -->
+  <article class="fig" id="minuteman" data-reveal>
+    <div class="fig-portrait" data-era="1749–1812" data-role="✪">
+      <span class="monogram">JT</span>
+    </div>
+    <div class="fig-body">
+      <div class="chip">Minuteman · Lexington Green · direct line</div>
+      <h2>John Tidd of Parker's Company</h2>
+      <p class="fig-sub">Farmer of Lexington · minuteman · struck down at the first fight of the Revolution</p>
+      <p>Great-great-grandson of the founder, and a <strong>direct ancestor of this family</strong>. At dawn on <strong>April 19, 1775</strong>, John Tidd stood on Lexington Common in Captain John Parker's company as the British column arrived. He was among the last to leave the Green. A mounted British officer rode him down and struck him with a sword; while he lay senseless the regulars robbed him and left him for dead. He recovered, married Elizabeth Reed, farmed his Lexington land for another thirty-seven years, and his 1782 deed survives in the family papers.</p>
+      <div class="excerpt">He was a member of Captain Parker's company. Among the last to leave the Common he was pursued by a British officer on horseback and struck down by a sword; while senseless the British robbed him and left him for dead.<cite>Hudson · History of the Town of Lexington · Genealogies, p. 698</cite></div>
+      <p class="fig-why"><b>Most impressive:</b> of all the family's soldiers, he is the one who stood at the exact spot where the United States began, took a sword blow for it, and lived to sign the quiet paperwork of an ordinary life. His deed and his place in the chain are on <a href="/familyhistory/line.html" style="color:var(--gold);border-bottom:1px solid var(--gold)">The Line</a>.</p>
+    </div>
+  </article>
+
   <!-- 2. Richard Tidd -->
-  <article class="fig" data-reveal>
+  <article class="fig" data-reveal data-collateral>
     <div class="fig-portrait rebel" data-era="1775–1820" data-role="⚔">
       <span class="monogram">RT</span>
       <div class="fig-photos" data-carousel>
@@ -98,7 +121,7 @@
   </article>
 
   <!-- 3. Charles Plummer Tidd -->
-  <article class="fig" data-reveal>
+  <article class="fig" data-reveal data-collateral>
     <div class="fig-portrait" data-era="1834–1862" data-role="✶">
       <span class="monogram">CT</span>
       <div class="fig-photos">
@@ -120,7 +143,7 @@
   </article>
 
   <!-- 4. Emmett Hulcy Tidd -->
-  <article class="fig" data-reveal>
+  <article class="fig" data-reveal data-collateral>
     <div class="fig-portrait navy" data-era="1923–2018" data-role="★★★">
       <span class="monogram">ET</span>
       <div class="fig-photos">
@@ -141,7 +164,7 @@
   </article>
 
   <!-- 5. Marshall / M. M. Tidd -->
-  <article class="fig" data-reveal>
+  <article class="fig" data-reveal data-collateral>
     <div class="fig-portrait maker" data-era="1820–1904" data-role="⚙">
       <span class="monogram">MT</span>
     </div>
@@ -156,7 +179,7 @@
   </article>
 
   <!-- 6. Paul Roscher -->
-  <article class="fig" data-reveal>
+  <article class="fig" data-reveal data-collateral>
     <div class="fig-portrait airman" data-era="WWII" data-role="✈">
       <span class="monogram">PR</span>
       <div class="fig-photos">
