@@ -7,6 +7,30 @@
   'use strict';
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* ---------- overlay history: browser Back closes the open overlay ---------- */
+  /* Any overlay (reader, image lightbox) calls tiddPushOverlay(closeFn) when it
+     opens and tiddPopOverlay() when the user closes it. Pressing the browser
+     Back button then dismisses the overlay instead of leaving the page. */
+  (function(){
+    var closers = [];      // stack of close callbacks, one per open overlay
+    var selfBack = false;  // true while we trigger our own history.back()
+    window.tiddPushOverlay = function(closeFn){
+      closers.push(closeFn);
+      try{ history.pushState({tiddOverlay:true}, ''); }catch(e){}
+    };
+    window.tiddPopOverlay = function(){   // overlay closed by button / Escape / backdrop
+      if(!closers.length) return;
+      closers.pop();
+      selfBack = true;
+      try{ history.back(); }catch(e){ selfBack = false; }
+    };
+    window.addEventListener('popstate', function(){
+      if(selfBack){ selfBack = false; return; }  // our own history.back(), overlay already closed
+      var fn = closers.pop();
+      if(fn) fn();                                // Back pressed: close the top overlay
+    });
+  })();
+
   /* ---------- text-size control (grandparent friendly) ---------- */
   var SCALES = {sm:0.9, md:1, lg:1.18};
   function applyScale(k){
@@ -205,11 +229,14 @@
     r.querySelector('.reader-scroll').scrollTop=0;
     r.classList.add('open'); r.setAttribute('aria-hidden','false');
     document.documentElement.style.overflow='hidden';
+    window.tiddPushOverlay(function(){ closeReader(true); });
   }
-  function closeReader(){
+  function closeReader(fromPop){
     if(!readerEl) return;
+    if(!readerEl.classList.contains('open')) return;
     readerEl.classList.remove('open'); readerEl.setAttribute('aria-hidden','true');
     document.documentElement.style.overflow='';
+    if(!fromPop) window.tiddPopOverlay();
   }
   window.__openReader = openReader;
 
