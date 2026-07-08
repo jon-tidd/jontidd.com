@@ -113,6 +113,9 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 .mapbtn.on{color:#0b5e6a;font-weight:800}
 .iw textarea.iwnote{width:100%;min-height:44px;font:inherit;font-size:12px;padding:6px;border:1px solid var(--line);border-radius:6px;resize:vertical;color:var(--ink)}
 .iw textarea.iwnote:focus{outline:2px solid var(--teal);border-color:var(--teal)}
+.iw textarea.iwnote:disabled{background:#f4f6f7;color:var(--muted)}
+.iw .iwme{display:flex;align-items:center;gap:6px;margin:6px 0 3px;font-size:12px;color:var(--navy);font-weight:600}
+.iw .iwme select{font:inherit;font-size:12px;padding:2px 6px;border:1px solid var(--line);border-radius:6px;background:#fff;color:var(--ink)}
 .iw .share{display:flex;gap:8px;margin-top:8px}
 .iw .share a,.iw .share button{flex:1;text-align:center;border:1px solid var(--teal);background:#fff;color:var(--teal-d);border-radius:6px;padding:6px 0;font-size:12px;font-weight:700;text-decoration:none;cursor:pointer}
 /* gate */
@@ -367,7 +370,7 @@ function myNoteKey(p){return NOTEME?p+NSEP+NOTEME:null;}
 function myNote(p){const k=myNoteKey(p);return k?(STATE.notes[k]||""):"";}
 function othersNotesHtml(p){return notesOf(p).filter(n=>n.person!==NOTEME).map(n=>`<div class="nrow"><b>${n.person}:</b> ${escHtml(n.text)}</div>`).join("");}
 function loadNoteMe(){try{const m=localStorage.getItem("igce_me2");if(PEOPLE.includes(m))NOTEME=m;}catch(e){}}
-function setNoteMe(n){NOTEME=PEOPLE.includes(n)?n:null;try{NOTEME?localStorage.setItem("igce_me2",NOTEME):localStorage.removeItem("igce_me2");}catch(e){}const s=document.getElementById("mepick2");if(s)s.value=NOTEME||"";refreshCells();refreshCard();}
+function setNoteMe(n){NOTEME=PEOPLE.includes(n)?n:null;try{NOTEME?localStorage.setItem("igce_me2",NOTEME):localStorage.removeItem("igce_me2");}catch(e){}const s=document.getElementById("mepick2");if(s)s.value=NOTEME||"";const s2=document.getElementById("iw-mepick");if(s2)s2.value=NOTEME||"";const ta=document.getElementById("iw-note");if(ta){ta.disabled=!NOTEME;ta.placeholder=NOTEME?("Your note as "+NOTEME+"…"):"Choose your name above to start a note";}refreshCells();refreshCard();}
 function needIdentity(){const s=document.getElementById("mepick2");if(s){s.focus();s.style.outline="2px solid var(--teal)";setTimeout(()=>{s.style.outline="";},1500);}alert("Pick your name (top of the table) so your note is saved under it.");}
 function iFavBy(p,person){return !!(STATE.favs[p]&&STATE.favs[p][person]);}
 function favPeopleOf(p){const o=STATE.favs[p];return o?PEOPLE.filter(n=>o[n]):[];}
@@ -452,8 +455,10 @@ function voteChips(pin){return PEOPLE.map(p=>'<span class="vchip '+(iFavBy(pin,p
 function wireCard(d){
  const box=document.getElementById("iw-votes");
  if(box)box.querySelectorAll('[data-cv-person]').forEach(ch=>ch.onclick=()=>toggleVote(d.pin,ch.dataset.cvPerson));
+ const mp=document.getElementById("iw-mepick");
+ if(mp)mp.onchange=()=>{setNoteMe(mp.value);const t=document.getElementById("iw-note");if(t&&NOTEME)t.focus();};
  const ta=document.getElementById("iw-note");
- if(ta){ta.addEventListener("focus",()=>{if(!NOTEME){needIdentity();ta.blur();return;}editingNoteKey=myNoteKey(d.pin);});
+ if(ta){ta.addEventListener("focus",()=>{editingNoteKey=myNoteKey(d.pin);});
   ta.addEventListener("input",()=>{pendingNoteVal=ta.value;setNote(d.pin,ta.value);});
   ta.addEventListener("blur",()=>{editingNoteKey=null;pendingNoteVal=null;});}
  const a=document.getElementById("iw-sms");if(a)a.onclick=()=>shareSms(d);
@@ -531,7 +536,8 @@ function openInfo(d,m){
  </table>
  <div class="cardvotes" id="iw-votes" data-pin="${escAttr(d.pin)}"><span class="vlabel">Votes</span>${voteChips(d.pin)}<b id="iw-vcount">${favCount(d.pin)}</b><span class="vof">/4</span></div>
  <div class="nlist" id="iw-notes-others" data-pin="${escAttr(d.pin)}">${othersNotesHtml(d.pin)}</div>
- <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" placeholder="${NOTEME?escAttr("Your note ("+NOTEME+")…"):"Pick your name above the table, then add your note…"}">${escHtml(myNote(d.pin))}</textarea>
+ <div class="iwme">Note as <select id="iw-mepick" title="Save your note under this name">${NOTEME?"":'<option value="" selected>— pick your name —</option>'}${["Ira","Kathleen","Jim","Jon"].map(p=>`<option${p===NOTEME?" selected":""}>${p}</option>`).join("")}</select></div>
+ <textarea id="iw-note" class="iwnote" data-pin="${escAttr(d.pin)}" ${NOTEME?"":"disabled"} placeholder="${NOTEME?escAttr("Your note as "+NOTEME+"…"):"Choose your name above to start a note"}">${escHtml(myNote(d.pin))}</textarea>
  <div class="share"><a id="iw-sms">Text</a><a id="iw-email">Email</a><button id="iw-copy">Copy</button></div>
  <div class="links">
  <a href="https://www.google.com/maps/search/?api=1&query=${d.lat},${d.lon}" target="_blank">Map / who's here</a>
