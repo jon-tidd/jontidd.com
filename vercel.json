@@ -1,6 +1,7 @@
 {
   "redirects": [
-    { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true }
+    { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true },
+    { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true }
   ],
   "rewrites": [
     { "source": "/battleplan", "destination": "https://nova-plan-omega.vercel.app/" },
