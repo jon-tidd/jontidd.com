@@ -82,6 +82,10 @@ td.score,th[data-k="score"]{text-align:center}
 .iw .flag-pass{background:#e4f5ea;color:#1d7a3a;border-color:#bfe6cd}
 .iw .flag-conditional{background:#fdf3e0;color:#9a6b00;border-color:#f0dcae}
 .iw .flag-fail{background:#fbe9e7;color:#b23b2f;border-color:#f2c7c0}
+.iw a.listbtn{display:block;margin:6px 0 4px;padding:7px 10px;background:#0b5e6a;color:#fff;border-radius:7px;font-size:12.5px;font-weight:700;text-decoration:none;line-height:1.35}
+.iw a.listbtn:hover{background:#0a4f59}
+.iw a.listbtn .lp{font-weight:600;opacity:.95}
+.iw a.listbtn .lb{font-weight:500;opacity:.8;font-size:11.5px}
 .iw .breakdown{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:11.5px;color:var(--muted);margin:2px 0 4px}
 .iw .breakdown b{color:var(--navy)}
 .iw .cardtools{display:flex;align-items:center;gap:8px;margin:9px 0 5px}
@@ -335,7 +339,8 @@ function sc_era(d){
  }
  return 3;
 }
-function sc_area(d){if(enrichOf(d).env)return 3;const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let s=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))s++;return Math.min(8,s);}
+function surrOf(d){return (typeof SURR!=="undefined"&&SURR[d.pin])||null;}
+function sc_area(d){const s=surrOf(d);if(s&&typeof s.s==="number")return s.s;if(enrichOf(d).env)return 3;const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let sc=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))sc++;return Math.min(8,sc);}
 // Availability: reward what we can actually act on. For sale = full marks,
 // off-market = nothing. (The old logic prized off-market; founders flipped it.)
 function sc_avail(d){const a=availOf(d);return a==="sale"?10:a==="listed"?8:a==="unk"?3:0;}
@@ -353,6 +358,8 @@ function fitScore(d){if(igceDisq(d))return 0;let t=0;for(const f of IGCE_F)t+=f[
 function vaultFlag(d){const v=sc_vault(d);return v>=8?"Pass":v>=4?"Conditional":"Fail";}
 function parkFlag(d){const p=parkOf(d);return p>=100?"Target":p>=80?"Marginal":"Fail";}
 function availFlag(d){const a=availOf(d);return {sale:"For sale",listed:"Listed (lease)",off:"Off-market",unk:"Status unknown",gone:"Gone"}[a]||"—";}
+function listOf(d){return (typeof LIST!=="undefined"&&LIST[d.pin])||null;}
+function listingBanner(d){const l=listOf(d);if(!l||!l.url)return "";const price=l.px?`<span class="lp">${escHtml(l.px)}</span>`:"";const br=l.br?`<span class="lb">via ${escHtml(l.br)}</span>`:"";return `<a class="listbtn" href="${escAttr(l.url)}" target="_blank" rel="noopener">📄 View listing ↗ ${price} ${br}</a>`;}
 function recAction(d){if(igceDisq(d))return "Skip — disqualified";const s=fitScore(d);return s>=80?"Cold-call priority":s>=65?"Site visit":s>=50?"Watch":"Skip";}
 function scoreClass(s){return s>=80?"sc-top":s>=65?"sc-hi":s>=50?"sc-mid":"sc-lo";}
 function scoreWhy(d){const dq=igceDisq(d);if(dq)return "Disqualified: "+dq;const b=fitBreakdown(d).slice().sort((a,c)=>(c.pts/c.max)-(a.pts/a.max));return "↑ "+b.slice(0,2).map(x=>x.name).join(", ")+"   ↓ "+b.slice(-2).map(x=>x.name).join(", ");}
@@ -508,6 +515,7 @@ function openInfo(d,m){
  const st=d.stories?`${d.stories}-story`:(effStories(d)>1?`~${effStories(d)} floors (est.)`:"1-story (est.)");
  const c=`<div class="iw"><h3>${escHtml(d.addr)}</h3><div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>${bizCard(d)}
  <div class="scoreline"><span class="scorebadge ${scoreClass(fitScore(d))}">Fit ${fitScore(d)}/100</span><span class="rec">${escHtml(recAction(d))}</span></div>
+ ${listingBanner(d)}
  <div class="flags"><span class="flag flag-${vaultFlag(d).toLowerCase()}">Vault ${vaultFlag(d)}</span><span class="flag">Parking ${parkFlag(d)}</span><span class="flag ${(availOf(d)==='sale'||availOf(d)==='listed')?'flag-pass':''}">${availFlag(d)}</span></div>
  <div class="breakdown">${fitBreakdown(d).map(x=>`<span><b>${x.pts}</b>/${x.max} ${x.name}</span>`).join("")}</div>
  <div class="gallery" id="iw-gallery" data-pin="${escAttr(d.pin)}">${buildGimgs(d)}</div>
@@ -525,6 +533,7 @@ function openInfo(d,m){
  ${enrichOf(d).cl?`<tr><td>Clear height</td><td>~${enrichOf(d).cl}′</td></tr>`:""}
  ${enrichOf(d).ow?`<tr><td>Owner of record</td><td>${escHtml(enrichOf(d).ow)}${enrichOf(d).ot?` <span style="color:var(--muted)">(${enrichOf(d).ot})</span>`:""}</td></tr>`:""}
  ${enrichOf(d).nt?`<tr><td>Notes (research)</td><td>${escHtml(enrichOf(d).nt)}</td></tr>`:""}
+ ${surrOf(d)&&surrOf(d).n?`<tr><td>Surroundings (studied)</td><td>${escHtml(surrOf(d).n)}</td></tr>`:""}
  <tr><td>Interstate access</td><td>${hwyMiles(d).toFixed(1)} mi${nearestIc(d)?` · ${escHtml(nearestIc(d).name)} (${nearestIc(d).route})`:""}</td></tr>
  </table>
  <div class="cardvotes" id="iw-votes" data-pin="${escAttr(d.pin)}"><span class="vlabel">Votes</span>${voteChips(d.pin)}<b id="iw-vcount">${favCount(d.pin)}</b><span class="vof">/4</span></div>
