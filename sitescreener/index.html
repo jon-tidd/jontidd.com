@@ -211,7 +211,7 @@ td.votes{text-align:center;font-weight:700;color:var(--navy)}
 <th>Notes</th>
 </tr></thead><tbody id="tbody"></tbody></table>
 </div></div>
-<div class="note"><b>IGCE Fit score (0–100):</b> weighted match to the property-scanner brief — radiation-vault structural suitability (20), building size 15–30k SF ideal (15), lot/parking (15), highway access to I-95/395/495 (15), zoning (10), construction era (10), surroundings (8), off-market signal (7). Hard disqualifiers force 0 (usable &lt;10k, vault-fail with no lot for an addition, lot &lt;1ac &amp; parking &lt;60, &gt;3mi from an interchange & &gt;5mi from centroid, residential zoning). Bands: 80+ cold-call priority · 65–79 site visit · 50–64 watch · &lt;50 skip. <b>Proxy caveats:</b> vault, construction era, and off-market are inferred from use-category/zone/stories/sale-date (no year-built, ceiling-height, floor-loading, or listing feeds in this dataset), and highway distance is straight-line to approximate interstate routes — treat as a triage rank, then verify. Where research found real facts (year built, stories, clear height, owner, surface-space counts, active listings, environmental red flags), they override the proxies — cards show them as '(researched)'/⚠ rows. Ranks 1–36 were adversarially validated against listings and property records, and 331 of 521 records carry researched facts (current as of July 2026 — listing status decays in weeks; verify before outreach). The Avail. column shows the deal path: For sale / Listed / Off-market. Hover any score for its top +/− factors.
+<div class="note"><b>IGCE Fit score (0–100):</b> weighted match to the property-scanner brief — radiation-vault structural suitability (20), building size 15–30k SF ideal (15), lot/parking (15), highway access to I-95/395/495 (15), zoning (10), construction era (10), surroundings (8), availability (7). Hard disqualifiers force 0 (usable &lt;10k, vault-fail with no lot for an addition, lot &lt;1ac &amp; parking &lt;60, &gt;3mi from an interchange & &gt;5mi from centroid, residential zoning). Bands: 80+ cold-call priority · 65–79 site visit · 50–64 watch · &lt;50 skip. <b>Availability</b> rewards what you can act on now: For sale scores full, Listed high, unknown low, and confirmed off-market zero — so the score favours reachable deals rather than penalising them. <b>Proxy caveats:</b> vault and construction era are inferred from use-category/zone/stories/sale-date (no ceiling-height or floor-loading feeds in this dataset), and highway distance is straight-line to approximate interstate routes — treat as a triage rank, then verify. Where research found real facts (year built, stories, clear height, owner, surface-space counts, active listings, environmental red flags), they override the proxies — cards show them as '(researched)'/⚠ rows. Ranks 1–36 were adversarially validated against listings and property records, and 331 of 521 records carry researched facts (current as of July 2026 — listing status decays in weeks; verify before outreach). The Avail. column shows the deal path: For sale / Listed / Off-market. Hover any score for its top +/− factors.
 <b>Scope:</b> Fairfax County + City of Alexandria. Arlington's in-boundary sliver and the Prince William (Woodbridge) tail are excluded (low yield for freestanding flex, thinner open data).
 <b>Business / owner:</b> populated for Alexandria from the city assessor's property name; Fairfax withholds owner names in open GIS, so those show a "Who's here?" lookup link (enable Places API on the key and these can auto-fill).
 <b>Data:</b> Fairfax County GIS &amp; City of Alexandria GIS — parcels, assessed values, zoning, footprints; Fairfax adds sales history, Alexandria adds stories. Building SF is footprint area. Parking est = (lot − footprint) ÷ 325 sf/space; verify by aerial. Footprint layers refresh on multi-year cycles. Not a substitute for survey, title, or zoning confirmation. The password gate here is a light client-side lock; a server-side lock is set at the host.</div>
@@ -336,17 +336,10 @@ function sc_era(d){
  return 3;
 }
 function sc_area(d){if(enrichOf(d).env)return 3;const nm=((d.owner||GUESS[d.pin]||"")+" "+d.addr).toLowerCase();if(/salvage|recycl|waste|junk|wreck|landfill|scrap/.test(nm))return 3;let s=isInd(d)?7:6;if(/business (park|center)|industrial park|corporate (center|park)|95 business/.test(nm))s++;return Math.min(8,s);}
-function sc_offmkt(d){
- const e=enrichOf(d);
- if(e.ls===true)return 1; // actively listed — the opposite of off-market
- const yr=d.saled?+String(d.saled).slice(0,4):null,hold=yr?2026-yr:null;
- let s=hold==null?6:(hold>15?10:hold>=10?8:6);
- const o=((e.ow||d.owner||"")+"").toUpperCase();
- if(e.ot==="institutional"||/REIT|FUND|\bLP\b|TRUST COMPANY/.test(o))s=Math.min(s,4);
- if(e.ot==="private")s=Math.min(10,s+1);
- return s;
-}
-const IGCE_F=[["Size","size",sc_size,15],["Vault","vault",sc_vault,20],["Parking/Lot","parking",sc_parklot,15],["Access","access",sc_access,15],["Zoning","zoning",sc_zone,10],["Construction","era",sc_era,10],["Surroundings","area",sc_area,8],["Off-market","offmkt",sc_offmkt,7]];
+// Availability: reward what we can actually act on. For sale = full marks,
+// off-market = nothing. (The old logic prized off-market; founders flipped it.)
+function sc_avail(d){const a=availOf(d);return a==="sale"?10:a==="listed"?8:a==="unk"?3:0;}
+const IGCE_F=[["Size","size",sc_size,15],["Vault","vault",sc_vault,20],["Parking/Lot","parking",sc_parklot,15],["Access","access",sc_access,15],["Zoning","zoning",sc_zone,10],["Construction","era",sc_era,10],["Surroundings","area",sc_area,8],["Availability","avail",sc_avail,7]];
 function igceDisq(d){const u=usableOf(d),ac=(d.lot||0)/43560,mi=hwyMiles(d),cen=haversineMi([d.lat,d.lon],IGCE_CENTROID),z=(d.zone||"").toUpperCase();
  if(enrichOf(d).dq)return enrichOf(d).dq;
  if(u<10000)return "too small (<10k SF)";
@@ -359,7 +352,7 @@ function fitBreakdown(d){return IGCE_F.map(f=>({name:f[0],pts:Math.round(f[2](d)
 function fitScore(d){if(igceDisq(d))return 0;let t=0;for(const f of IGCE_F)t+=f[2](d)*f[3]/10;return Math.round(t);}
 function vaultFlag(d){const v=sc_vault(d);return v>=8?"Pass":v>=4?"Conditional":"Fail";}
 function parkFlag(d){const p=parkOf(d);return p>=100?"Target":p>=80?"Marginal":"Fail";}
-function offFlag(d){const s=sc_offmkt(d);return s>=8?"High":s>=6?"Medium":"Low";}
+function availFlag(d){const a=availOf(d);return {sale:"For sale",listed:"Listed (lease)",off:"Off-market",unk:"Status unknown",gone:"Gone"}[a]||"—";}
 function recAction(d){if(igceDisq(d))return "Skip — disqualified";const s=fitScore(d);return s>=80?"Cold-call priority":s>=65?"Site visit":s>=50?"Watch":"Skip";}
 function scoreClass(s){return s>=80?"sc-top":s>=65?"sc-hi":s>=50?"sc-mid":"sc-lo";}
 function scoreWhy(d){const dq=igceDisq(d);if(dq)return "Disqualified: "+dq;const b=fitBreakdown(d).slice().sort((a,c)=>(c.pts/c.max)-(a.pts/a.max));return "↑ "+b.slice(0,2).map(x=>x.name).join(", ")+"   ↓ "+b.slice(-2).map(x=>x.name).join(", ");}
@@ -515,7 +508,7 @@ function openInfo(d,m){
  const st=d.stories?`${d.stories}-story`:(effStories(d)>1?`~${effStories(d)} floors (est.)`:"1-story (est.)");
  const c=`<div class="iw"><h3>${escHtml(d.addr)}</h3><div class="meta">${d.city} ${d.zip} · ${d.juris} · PIN ${d.pin}</div>${bizCard(d)}
  <div class="scoreline"><span class="scorebadge ${scoreClass(fitScore(d))}">Fit ${fitScore(d)}/100</span><span class="rec">${escHtml(recAction(d))}</span></div>
- <div class="flags"><span class="flag flag-${vaultFlag(d).toLowerCase()}">Vault ${vaultFlag(d)}</span><span class="flag">Parking ${parkFlag(d)}</span><span class="flag">Off-mkt ${offFlag(d)}</span></div>
+ <div class="flags"><span class="flag flag-${vaultFlag(d).toLowerCase()}">Vault ${vaultFlag(d)}</span><span class="flag">Parking ${parkFlag(d)}</span><span class="flag ${(availOf(d)==='sale'||availOf(d)==='listed')?'flag-pass':''}">${availFlag(d)}</span></div>
  <div class="breakdown">${fitBreakdown(d).map(x=>`<span><b>${x.pts}</b>/${x.max} ${x.name}</span>`).join("")}</div>
  <div class="gallery" id="iw-gallery" data-pin="${escAttr(d.pin)}">${buildGimgs(d)}</div>
  <table>
@@ -608,7 +601,7 @@ function downloadCsv(){
   if(k==="recommended")return recAction(d);
   if(k==="vault_flag")return vaultFlag(d);
   if(k==="parking_flag")return parkFlag(d);
-  if(k==="off_market")return offFlag(d);
+  if(k==="off_market")return availFlag(d);
   if(k==="availability")return AVAILL[availOf(d)];
   if(k==="hwy_miles")return hwyMiles(d).toFixed(2);
   if(k==="nearest_exit"){const ic=nearestIc(d);return ic?ic.name+" ("+ic.route+")":"";}
