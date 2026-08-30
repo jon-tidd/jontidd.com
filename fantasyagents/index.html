@@ -22,6 +22,13 @@ body{background:var(--ink);color:var(--text);
 .vignette{position:fixed;inset:0;z-index:1;pointer-events:none;
   background:radial-gradient(120% 100% at 50% 0%,transparent 55%,rgba(0,0,0,.55) 100%)}
 .wrap{position:relative;z-index:2;max-width:1140px;margin:0 auto;padding:30px 22px 84px}
+
+/* hero banner (the poster) */
+.herobanner{position:relative;border-radius:18px;overflow:hidden;margin-bottom:28px;
+  border:1px solid var(--glass-line);box-shadow:0 34px 90px -44px rgba(231,178,60,.5),0 1px 0 rgba(255,255,255,.05) inset}
+.herobanner img{display:block;width:100%;height:auto}
+.herobanner::after{content:'';position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(180deg,transparent 62%,rgba(6,7,12,.9) 100%)}
 .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;font-variant-numeric:tabular-nums}
 h1,h2,.disp{font-family:'Archivo',system-ui,sans-serif;letter-spacing:-.02em;text-wrap:balance;margin:0}
 .eyebrow{font:600 11px/1 'IBM Plex Mono',monospace;letter-spacing:.18em;text-transform:uppercase;color:var(--gold)}
@@ -150,6 +157,7 @@ td{padding:9px 0;border-top:1px solid var(--hair)}
 </style></head><body>
 <canvas id="bc-bg"></canvas><div class="vignette"></div>
 <div class="wrap">
+  <div class="herobanner"><img src="hero.jpg" alt="Ballers Coach — every data source, every study, 10,000 simulations, one text" loading="eager" decoding="async"></div>
   <div class="top reveal">
     <div class="brand"><span class="logo">B</span>
       <span class="mark">Ballers<b>Coach</b></span>
