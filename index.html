@@ -461,6 +461,27 @@ section{position:relative;z-index:1;padding:120px 24px}
 .tp-line{font-family:'JetBrains Mono',monospace;font-size:11px;color:#f3dca6;letter-spacing:.02em}
 .tp-badge{position:absolute;top:14px;left:16px;font-family:'JetBrains Mono',monospace;font-size:9.5px;letter-spacing:.13em;text-transform:uppercase;color:#e8c877;background:rgba(8,12,22,.6);border:1px solid rgba(232,200,119,.3);padding:4px 9px;border-radius:5px;-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px)}
 
+/* ── Fantasy Engine (gold / black · autonomous GM) ── */
+.card-fe .proj-label{color:#e7b23c;background:rgba(231,178,60,.08);border-color:rgba(231,178,60,.24)}
+.card-fe h3{color:#fbe6bd}
+.card-fe .card-status{color:#e7b23c}
+.card-fe .card-link{color:#e7b23c}
+.card-fe .card-header{background:linear-gradient(180deg,rgba(231,178,60,.06) 0%,rgba(231,178,60,.02) 70%,transparent 100%)}
+.card-fe .card-media{border-top:none}
+.fe-demo{height:100%;display:flex;flex-direction:column;justify-content:center;gap:15px;padding:26px 30px;
+  background:radial-gradient(ellipse at 74% 6%,rgba(231,178,60,.17),transparent 60%),linear-gradient(180deg,#0b0c12,#08090f)}
+.fe-odds{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(42px,7vw,60px);line-height:.86;letter-spacing:-.035em;
+  background:linear-gradient(180deg,#fbe3a0,#e7b23c 58%,#b98a1e);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 5px 26px rgba(231,178,60,.32))}
+.fe-odds small{display:block;font-family:'JetBrains Mono',monospace;font-size:10.5px;font-weight:600;letter-spacing:.16em;
+  text-transform:uppercase;color:#9a8f6a;-webkit-text-fill-color:#9a8f6a;margin-bottom:9px}
+.fe-bubble{align-self:flex-start;background:rgba(231,178,60,.1);border:1px solid rgba(231,178,60,.26);
+  border-radius:13px 13px 13px 3px;padding:10px 14px;font-size:12.5px;color:#f3dfad;max-width:88%;line-height:1.5}
+.fe-bubble b{color:#fff8ec}
+.fe-tag{align-self:flex-start;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;color:#e7b23c;
+  background:rgba(231,178,60,.08);border:1px solid rgba(231,178,60,.2);padding:4px 9px;border-radius:5px;display:inline-flex;align-items:center;gap:7px}
+.fe-tag::before{content:'';width:6px;height:6px;border-radius:50%;background:#e7b23c;box-shadow:0 0 8px #e7b23c;animation:pulse 2.4s ease-in-out infinite}
+
 /* ── Screenshot carousel (real captures) ── */
 .cc{position:absolute;inset:0;overflow:hidden;background:#0a0b10}
 .cc-slides{position:absolute;inset:0}
@@ -754,12 +775,43 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       </div>
     </a>
 
-    <!-- ═══ The Tidd Family History ═══ -->
-    <article class="project-card card-family no-link" data-reveal data-delay="1" data-tilt>
+    <!-- ═══ Fantasy Engine ═══ -->
+    <a href="/fantasyengine" target="_blank" class="project-card card-fe" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
         <span class="proj-label">Project #3</span>
+        <div class="card-question">"Can a fantasy football novice automate his way to championship glory?"</div>
+        <div class="card-title-row">
+          <h3>Fantasy Engine</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Live · In Season</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <div class="fe-demo">
+          <div class="fe-odds"><small>Championship odds</small>8.3%</div>
+          <div class="fe-bubble">🏈 Start <b>Ferguson</b> at TE. Add <b>Juwan Johnson</b>, drop Evans. Reply <b>YES</b> and I'll set your lineup.</div>
+          <span class="fe-tag">ranked by ΔP(championship)</span>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="desc">An <strong>autonomous GM</strong> that manages a full fantasy football team and texts its owner the one move to make. Built for a total novice: the software is the expert, you just tap <strong>YES</strong>.</p>
+        <div class="card-tech">
+          <strong>8+ live data feeds</strong> fused weekly (Yahoo, nflverse, Vegas lines, Sleeper, ESPN, xFP). A <strong>10,000-season Monte-Carlo</strong> simulation ranks every move by <strong>ΔP(championship)</strong>, not points, modeling injuries, correlation &amp; your league's exact scoring. It <strong>texts the single move</strong> and sets your Yahoo lineup on a reply, then runs itself 24/7 on a Mac mini for under $3 a month.
+        </div>
+        <span class="card-link">
+          Open the live dashboard
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- ═══ The Tidd Family History ═══ -->
+    <article class="project-card card-family no-link" data-reveal data-delay="2" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #4</span>
         <div class="card-question">"What if a family's whole history — one hundred thousand years of it, could live on one beautiful, readable website?"</div>
         <div class="card-title-row">
           <h3>The Tidd Family History</h3>
@@ -794,7 +846,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #4</span>
+        <span class="proj-label">Project #5</span>
         <div class="card-question">"What does it actually take to shave 14 strokes off your game in a single summer?"</div>
         <div class="card-title-row">
           <h3>The Tiger Method</h3>
@@ -829,7 +881,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #5</span>
+        <span class="proj-label">Project #6</span>
         <div class="card-question">"What if a startup's whole operating plan ran itself — notes, owners and follow-ups updating live after every call?"</div>
         <div class="card-title-row">
           <h3>Startup Battleplan</h3>
@@ -853,7 +905,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #6</span>
+        <span class="proj-label">Project #7</span>
         <div class="card-question">"What if you could screen thousands of real-world sites — and have an engine tell you exactly which ones to pursue first?"</div>
         <div class="card-title-row">
           <h3>Site Screener</h3>
@@ -889,7 +941,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #7</span>
+        <span class="proj-label">Project #8</span>
         <div class="card-question">"At a 600-person family camp, how do you find the handful of families you'll genuinely click with?"</div>
         <div class="card-title-row">
           <h3>Tyler Place Connections</h3>
