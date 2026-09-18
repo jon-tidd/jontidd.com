@@ -1,0 +1,7 @@
+{
+  "gate": "none",
+  "luckMiss": 0.3,
+  "wrongPenalty": 0.5,
+  "firstTurn": "left",
+  "sides": { "left": "mason", "right": "miles" }
+}

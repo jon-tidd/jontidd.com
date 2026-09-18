@@ -1,0 +1,14 @@
+[
+  {
+    "id": "mason", "name": "Mason", "color": "#3B82F6",
+    "mathLevel": 1, "answerMode": "choice", "timerSeconds": null,
+    "mercy": true, "wrongPenalty": null, "damageScale": 1.2,
+    "thematic": false, "readAloud": true
+  },
+  {
+    "id": "miles", "name": "Miles", "color": "#EF4444",
+    "mathLevel": 6, "answerMode": "open", "timerSeconds": 20,
+    "mercy": false, "wrongPenalty": null, "damageScale": 1.0,
+    "thematic": true, "readAloud": false
+  }
+]

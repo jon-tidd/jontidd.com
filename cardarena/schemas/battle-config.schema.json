@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jontidd.com/cardarena/schemas/battle-config.schema.json",
+  "title": "CardArena battle configuration",
+  "type": "object",
+  "required": ["gate", "luckMiss", "wrongPenalty", "firstTurn", "sides"],
+  "properties": {
+    "gate": { "enum": ["none", "math"] },
+    "luckMiss": { "type": "number", "minimum": 0, "maximum": 0.5, "description": "P(miss) when gate is none. Pure mode = 0." },
+    "wrongPenalty": { "type": "number", "minimum": 0, "maximum": 1, "description": "P(miss) after a wrong answer when gate is math." },
+    "firstTurn": { "enum": ["coin", "left", "right"] },
+    "seed": { "type": "integer", "description": "Optional fixed RNG seed for replay/tests." },
+    "sides": {
+      "type": "object",
+      "required": ["left", "right"],
+      "properties": {
+        "left": { "type": "string", "description": "profile id" },
+        "right": { "type": "string", "description": "profile id" }
+      },
+      "additionalProperties": false
+    },
+    "slowMoBeforeImpactMs": { "type": "integer", "minimum": 0, "maximum": 800, "default": 300 },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "master": { "type": "number", "minimum": 0, "maximum": 1 },
+        "music": { "type": "number", "minimum": 0, "maximum": 1 },
+        "cries": { "type": "boolean" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

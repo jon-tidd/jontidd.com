@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jontidd.com/cardarena/schemas/content-pack.schema.json",
+  "title": "CardArena content pack descriptor (pack.manifest)",
+  "description": "Describes a device-local pack. The engine reads this; it never ships the pack itself.",
+  "type": "object",
+  "required": ["packId", "version", "engineMin", "files", "cardDb", "manifest", "effectIr"],
+  "properties": {
+    "packId": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+    "version": { "type": "string" },
+    "engineMin": { "type": "string", "description": "Minimum engine version." },
+    "displayName": { "type": "string" },
+    "cardDb": { "type": "string", "description": "Relative path to the SQLite card database." },
+    "manifest": { "type": "string", "description": "Relative path to manifest.json." },
+    "effectIr": { "type": "string", "description": "Relative path to effect-ir.json." },
+    "capsuleOverride": { "type": ["string", "null"], "description": "Optional addressable key for a custom summon object." },
+    "cries": { "type": "boolean", "default": false },
+    "files": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256", "bytes"],
+        "properties": {
+          "path": { "type": "string" },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "bytes": { "type": "integer", "minimum": 0 }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

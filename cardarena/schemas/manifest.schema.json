@@ -1,0 +1,37 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jontidd.com/cardarena/schemas/manifest.schema.json",
+  "title": "CardArena species placement manifest",
+  "description": "Per-species placement numbers produced by the forge. Contains no creative assets; safe to publish.",
+  "type": "object",
+  "required": ["version", "generatedAt", "species"],
+  "properties": {
+    "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "generatedAt": { "type": "string", "format": "date-time" },
+    "species": {
+      "type": "object",
+      "description": "Keyed by species id (dex number) or form key such as '6-mega-x'.",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["scale", "pivot", "yaw", "yawSource", "heightM", "fallback"],
+        "properties": {
+          "scale": { "type": "number", "exclusiveMinimum": 0, "description": "Multiply raw mesh units by this to get metres." },
+          "pivot": {
+            "type": "array", "items": { "type": "number" }, "minItems": 3, "maxItems": 3,
+            "description": "Translation (raw units) that places the bbox floor-centre at the origin."
+          },
+          "yaw": { "type": "number", "minimum": 0, "exclusiveMaximum": 360, "description": "Degrees about +Y so the face points +Z." },
+          "yawSource": { "enum": ["cluster", "clip", "vlm", "manual"] },
+          "yawMargin": { "type": "number", "description": "CLIP cosine margin over the runner-up view." },
+          "heightM": { "type": "number", "exclusiveMinimum": 0 },
+          "tris": { "type": "integer", "minimum": 0 },
+          "hasIdleClip": { "type": "boolean" },
+          "fallback": { "enum": ["none", "billboard"] },
+          "notes": { "type": "string" }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,19 @@
+[
+  {
+    "hash": "3c1e0d9a2b7f4e5c8a1d6f0b9e2c4a7d5f8b1c3e",
+    "cardIds": ["base1-1"],
+    "element": "Psychic", "archetype": "beam", "intensity": 0.3,
+    "damage": { "kind": "fixed", "value": 30 },
+    "coinFlips": { "count": 1, "onHeads": { "status": "Confused" } },
+    "status": null, "needsReferee": false, "confidence": 0.98
+  },
+  {
+    "hash": "9a7b5c3d1e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b",
+    "cardIds": ["base1-2"],
+    "element": "Water", "archetype": "beam", "intensity": 0.5,
+    "damage": { "kind": "plus", "base": 40, "perUnit": 10, "cap": 20,
+                "units": { "source": "energyCount", "promptLabel": "Extra Water Energy" } },
+    "coinFlips": { "count": 0 },
+    "status": null, "needsReferee": true, "confidence": 0.93
+  }
+]

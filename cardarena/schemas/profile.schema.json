@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://jontidd.com/cardarena/schemas/profile.schema.json",
+  "title": "CardArena player profile",
+  "type": "object",
+  "required": ["id", "name", "mathLevel", "answerMode"],
+  "properties": {
+    "id": { "type": "string" },
+    "name": { "type": "string", "maxLength": 20 },
+    "color": { "type": "string", "pattern": "^#[0-9a-fA-F]{6}$" },
+    "mathLevel": { "type": "integer", "minimum": 1, "maximum": 10 },
+    "answerMode": { "enum": ["choice", "open"] },
+    "timerSeconds": { "type": ["integer", "null"], "minimum": 5, "maximum": 120, "description": "null = no timer; omitted = level default." },
+    "mercy": { "type": "boolean", "default": false, "description": "Failed roll becomes GLANCE instead of MISS." },
+    "wrongPenalty": { "type": ["number", "null"], "minimum": 0, "maximum": 1, "description": "Overrides battle-config wrongPenalty when set." },
+    "damageScale": { "type": "number", "minimum": 0.5, "maximum": 2, "default": 1 },
+    "thematic": { "type": "boolean", "default": false },
+    "readAloud": { "type": "boolean", "default": false },
+    "stats": {
+      "type": "object",
+      "properties": {
+        "wins": { "type": "integer", "minimum": 0 },
+        "battles": { "type": "integer", "minimum": 0 },
+        "byLevel": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "properties": {
+              "asked": { "type": "integer", "minimum": 0 },
+              "correct": { "type": "integer", "minimum": 0 },
+              "streak": { "type": "integer", "minimum": 0 },
+              "bestStreak": { "type": "integer", "minimum": 0 },
+              "medianAnswerMs": { "type": "integer", "minimum": 0 }
+            },
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false
+}

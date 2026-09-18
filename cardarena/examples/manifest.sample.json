@@ -1,0 +1,9 @@
+{
+  "version": "0.1.0",
+  "generatedAt": "2026-09-18T00:00:00Z",
+  "species": {
+    "25":  { "scale": 0.0041, "pivot": [0, -12.2, 0], "yaw": 180, "yawSource": "clip", "yawMargin": 0.11, "heightM": 0.4, "tris": 9800, "hasIdleClip": false, "fallback": "none" },
+    "6":   { "scale": 0.0170, "pivot": [0, -0.9, 0],  "yaw": 0,   "yawSource": "cluster", "heightM": 1.7, "tris": 21400, "hasIdleClip": true, "fallback": "none" },
+    "143": { "scale": 1.0,    "pivot": [0, 0, 0],     "yaw": 0,   "yawSource": "manual", "heightM": 2.1, "fallback": "billboard", "notes": "0-byte source file" }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "gate": "math",
+  "luckMiss": 0,
+  "wrongPenalty": 0.5,
+  "firstTurn": "coin",
+  "sides": { "left": "mason", "right": "miles" },
+  "slowMoBeforeImpactMs": 300,
+  "audio": { "master": 0.9, "music": 0.4, "cries": true }
+}
