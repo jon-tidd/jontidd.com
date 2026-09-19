@@ -21,6 +21,8 @@ This folder is the spec. It is written to be built from directly.
 | [SPEC-native.md](SPEC-native.md) | Swift ⇄ Unity plugin contract: C ABI, configs, event catalog, threading, Editor mock, runtime reference images |
 | [SPEC-audio.md](SPEC-audio.md) | Sound event catalog, sourcing, mixer buses, ducking, variation |
 | [BUILD-PLAN.md](BUILD-PLAN.md) | Milestones in build order, each with acceptance criteria |
+| [HANDOFF.md](HANDOFF.md) | Running this build in another tool: setup, kickoff prompt, always-loaded rules, per-milestone prompts, the two risk spikes |
+| [COST-CALIBRATION.md](COST-CALIBRATION.md) | Measuring real agent spend: protocol, milestone weight table, extrapolation, `cost-log.csv` |
 | [schemas/](schemas/) | JSON Schemas for `manifest`, `effect-ir`, `profile`, `battle-config`, `content-pack` |
 | [forge/golden-attacks.json](forge/golden-attacks.json) | 38 hand-labelled attacks the IR batch must reproduce (card ids + expected IR; no card text) |
 
