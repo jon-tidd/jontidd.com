@@ -46,17 +46,16 @@ Front-emission point for VFX is derived at runtime from the bbox, not stored.
 
 ## 4. Effect IR (`ir`) — one LLM batch, cached forever
 
-For every **unique** `(attack.name, attack.text, attack.damage)` triple in the card DB
-(≈ 15 k), one structured-output call producing the object in `schemas/effect-ir.schema.json`.
-Classification is by the attack's `cost` element (deterministic), and the model supplies
-`archetype`, `damage` structure (`fixed | plus | times | none` with `units.source`),
-`coinFlips`, `status`, `needsReferee`, and `intensity` (0–1 from damage relative to era).
+Fully specified in **[SPEC-ir.md](SPEC-ir.md)**: the field-ownership split (the forge
+computes `element`, `intensity`, `needsReferee`, `hash`, `cardIds`; the model decides the
+rest), the exact rubric prompt, the derived structured-output schema, batch mechanics on
+`claude-opus-5` (adaptive thinking on by default, no `temperature` — determinism comes from
+the rubric, structured outputs, validation, and the cache), the per-item failure path, cost
+by model, and the 38-case golden acceptance test in `forge/golden-attacks.json`.
 
-Rules: temperature 0; retry on schema failure; sample 200 for human review; **the IR stores no
-card text** — it is keyed by attack hash and card id, so it is shippable in the public repo.
-
-Weakness/resistance strings (`"×2"`, `"+20"`, `"-30"`) are normalized deterministically
-(no LLM) into `{op, value}` in the card SQLite.
+The IR stores no card text — it is keyed by attack hash and card id — so it ships in the
+public repo. Weakness/resistance strings (`"×2"`, `"+20"`, `"-30"`) are normalized
+deterministically (no LLM) into `{op, value}` in the card SQLite.
 
 ## 5. Build (`build`) *(Unity batch mode)*
 Import GLB → apply manifest transform to a prefab root → generate LOD1 (mesh simplifier,

@@ -126,6 +126,24 @@ runs only if the attack **connected** (no flipping for a miss). Each flip is a 1
 animation with sound; results feed `units.source = coinHeads` and any `onHeads` damage
 adders. Status effects in `onHeads/onTails` are surfaced as popups only in v1.
 
+### 3.3 Side effects, status, preconditions (v1 handling)
+
+The IR lists effects the full game would apply. v1 enforces the ones it can model and
+surfaces the rest as popups so nobody is surprised.
+
+| IR field / value | v1 behaviour |
+|---|---|
+| `sideEffects: cantAttackNextTurn` | **Enforced** — that side's next turn is skipped with a "Recharging…" banner. |
+| `sideEffects: cantUseThisAttackNextTurn` | **Enforced** — that attack chip is greyed for one turn. |
+| `sideEffects: preventDamageNextTurn` (incl. under `onHeads`) | **Enforced** — a shield marker; the next incoming attack resolves to 0 damage (effects still animate). |
+| `selfDamage`, `onTails.selfDamage` | **Enforced** — applied after the defender's damage, own popup. |
+| `heal`, `healAll` | **Enforced** — capped at max HP. |
+| `status`, `selfStatus`, `onHeads.status` | **Popup only** ("Confused!") — no persistent conditions in v1. |
+| `precondition` | **Ignored** in v1, shown as a small note on the attack chip. |
+| `discard*Energy`, `benchEffect`, `switchDefender`, `searchOrDraw`, `recoverConditions`, `other` | **Popup only** as flavour. |
+| `copyAttack` | **Referee** — a picker listing the defender's attacks; the chosen attack resolves as if the attacker used it. |
+| `attackFails` (coin) | **Enforced** — outcome becomes `MISS` after the flip; the whiff animation plays. |
+
 ## 4. Sides & profiles
 
 - SETUP binds `left` and `right` to profiles (persisted; defaults to the last binding).

@@ -1,19 +1,104 @@
 [
-  {
-    "hash": "3c1e0d9a2b7f4e5c8a1d6f0b9e2c4a7d5f8b1c3e",
-    "cardIds": ["base1-1"],
-    "element": "Psychic", "archetype": "beam", "intensity": 0.3,
-    "damage": { "kind": "fixed", "value": 30 },
-    "coinFlips": { "count": 1, "onHeads": { "status": "Confused" } },
-    "status": null, "needsReferee": false, "confidence": 0.98
+ {
+  "hash": "dce2078e2606201b465a57b3f01a47ba4c847515",
+  "cardIds": [
+   "base1-1"
+  ],
+  "element": "Psychic",
+  "intensity": 0.3,
+  "archetype": "beam",
+  "elementHint": "None",
+  "damage": {
+   "kind": "fixed",
+   "value": 30,
+   "base": 0,
+   "perUnit": 0,
+   "cap": null,
+   "units": {
+    "source": "none",
+    "of": "self",
+    "constant": 0,
+    "promptType": "none",
+    "promptLabel": ""
+   }
   },
-  {
-    "hash": "9a7b5c3d1e2f4a6b8c0d2e4f6a8b0c2d4e6f8a0b",
-    "cardIds": ["base1-2"],
-    "element": "Water", "archetype": "beam", "intensity": 0.5,
-    "damage": { "kind": "plus", "base": 40, "perUnit": 10, "cap": 20,
-                "units": { "source": "energyCount", "promptLabel": "Extra Water Energy" } },
-    "coinFlips": { "count": 0 },
-    "status": null, "needsReferee": true, "confidence": 0.93
-  }
+  "coinFlips": {
+   "count": 1,
+   "untilTails": false,
+   "onHeads": {
+    "extraDamage": 0,
+    "status": "Confused",
+    "selfDamage": 0,
+    "attackFails": false,
+    "sideEffects": []
+   },
+   "onTails": {
+    "extraDamage": 0,
+    "status": "None",
+    "selfDamage": 0,
+    "attackFails": false,
+    "sideEffects": []
+   }
+  },
+  "status": "None",
+  "selfStatus": "None",
+  "selfDamage": 0,
+  "heal": 0,
+  "healAll": false,
+  "sideEffects": [],
+  "precondition": "none",
+  "needsReferee": false,
+  "confidence": 0.98
+ },
+ {
+  "hash": "2d941ff180f722498a6fd6af43c2465ebfca3b0a",
+  "cardIds": [
+   "base1-2"
+  ],
+  "element": "Water",
+  "intensity": 0.4,
+  "archetype": "beam",
+  "elementHint": "None",
+  "damage": {
+   "kind": "plus",
+   "value": 0,
+   "base": 40,
+   "perUnit": 10,
+   "cap": 20,
+   "units": {
+    "source": "energyCount",
+    "of": "self",
+    "constant": 0,
+    "promptType": "count",
+    "promptLabel": "Extra Water Energy on attacker?"
+   }
+  },
+  "coinFlips": {
+   "count": 0,
+   "untilTails": false,
+   "onHeads": {
+    "extraDamage": 0,
+    "status": "None",
+    "selfDamage": 0,
+    "attackFails": false,
+    "sideEffects": []
+   },
+   "onTails": {
+    "extraDamage": 0,
+    "status": "None",
+    "selfDamage": 0,
+    "attackFails": false,
+    "sideEffects": []
+   }
+  },
+  "status": "None",
+  "selfStatus": "None",
+  "selfDamage": 0,
+  "heal": 0,
+  "healAll": false,
+  "sideEffects": [],
+  "precondition": "none",
+  "needsReferee": true,
+  "confidence": 0.98
+ }
 ]

@@ -17,9 +17,12 @@ This folder is the spec. It is written to be built from directly.
 | [SPEC-math.md](SPEC-math.md) | The 10-level math ladder, question generators, answer input (voice / choice / numpad), parsing, timers, mercy, thematic questions |
 | [SPEC-app.md](SPEC-app.md) | Runtime: card detection + OCR + tracking, asset loading, summon sequence, animation & VFX, damage-stage shader, voice, audio, HUD, storage, TV out |
 | [SPEC-forge.md](SPEC-forge.md) | Offline content pipeline: fetch, integrity, scale/pivot/yaw auto-detection, effect-IR generation, texture/LOD build, outputs |
+| [SPEC-ir.md](SPEC-ir.md) | The effect-IR batch: field ownership, the exact rubric prompt, structured-output schema derivation, batch mechanics, cost, golden acceptance test |
+| [SPEC-native.md](SPEC-native.md) | Swift ⇄ Unity plugin contract: C ABI, configs, event catalog, threading, Editor mock, runtime reference images |
 | [SPEC-audio.md](SPEC-audio.md) | Sound event catalog, sourcing, mixer buses, ducking, variation |
 | [BUILD-PLAN.md](BUILD-PLAN.md) | Milestones in build order, each with acceptance criteria |
 | [schemas/](schemas/) | JSON Schemas for `manifest`, `effect-ir`, `profile`, `battle-config`, `content-pack` |
+| [forge/golden-attacks.json](forge/golden-attacks.json) | 38 hand-labelled attacks the IR batch must reproduce (card ids + expected IR; no card text) |
 
 ---
 

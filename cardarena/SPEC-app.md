@@ -26,8 +26,10 @@ only *after* identification, with a reference image built at runtime.
 4. Match: name fuzzy-matched (≤ 2 edits) against the card DB, then disambiguated by
    `number/setTotal` if read; else pick the most common printing. Require 3 consistent
    reads over ~0.5 s before locking.
-5. On lock: fetch the card's own art from the pack (`cards/{id}.jpg`), create an
-   `ARReferenceImage` (physical width 63 mm) at runtime, add to the session's tracked set.
+5. On lock: capture the rectified camera crop (`ca_vision_capture_rect`) and use it as the
+   runtime `ARReferenceImage` (physical width 63 mm) — it matches lighting, sleeve, and print
+   exactly. If the crop is blurry or fails AR Foundation's feature validation, fall back to
+   the card's own art from the pack (`cards/{id}.jpg`). See SPEC-native §6.
 6. The tracked image anchor is the creature's root transform. Two tracked images max.
 
 ### 2.3 Card DB
@@ -38,6 +40,27 @@ hp, types, weaknesses, resistances, attack ids) ≈ 50 MB with images. FTS on na
 On anchor loss: hold the last pose 3 s (creature keeps idling), then fade to 40 % and show a
 "lost card" glyph on that side's HUD. Re-acquisition is silent. State never changes on loss.
 A *different* card locked on that side triggers the swap rule (SPEC-battle §1).
+
+### 2.5 Unknown or ambiguous cards
+
+A bad read must never stall a battle.
+
+- **Ambiguous printing** (name matched, number unread, several printings): pick, in order,
+  a printing in `known-cards.json`, else the most recent set. Show a small set badge on that
+  side's HUD; long-press it to change printing. Only HP differs materially.
+- **Not a Pokémon card** (Trainer / Energy detected by name band): show a "not a creature"
+  glyph; no unknown flow.
+- **Unknown** — a rectangle is stable in a zone for > 2.5 s but OCR yields nothing usable or
+  no name within 2 edits: a "?" chip appears on that side. Tapping it opens **Pick a card**:
+  1. *Recent* — the last 12 cards seen on this device (big rows: art, name, HP, type glyph).
+  2. *Search* — type-ahead over names (FTS, from 3 characters), same rows.
+  3. *Manual* — referee enters HP (default 100) and up to two attacks as name + damage.
+     The creature is the billboard fallback using the camera crop as art.
+- **Learning the binder.** Whatever is chosen, store `pHash(crop) → cardId` in
+  `known-cards.json`. On later placements a pHash match (Hamming ≤ 10 on a 64-bit hash)
+  locks the card *before* OCR — so foreign, damaged, and oddly-lit cards get faster over time.
+- Voice while a side is unknown/manual: the grammar for that side is `attack one` /
+  `attack two` plus number words.
 
 ## 3. Asset loading
 
@@ -110,6 +133,7 @@ Billboard fallback receives the same material.
   names (+ "go", "cancel"); `QUESTION` → the choices, or number/fraction words.
 - Matching: normalize → Levenshtein + Double Metaphone against the current grammar; accept
   if best score ≥ 0.75 and margin over second ≥ 0.15; else show the top 2 as tap chips.
+- For a side in the unknown/manual state the grammar is `attack one` / `attack two` (§2.5).
 - Attack phrase forms accepted: "<name> <attack>", "<attack>", "use <attack>", "<name>, use <attack>".
 - Confirmation chip shows the parsed attack for 1.5 s; "go"/tap confirms, "no"/tap cancels.
 

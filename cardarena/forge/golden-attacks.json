@@ -1,0 +1,1971 @@
+{
+ "_readme": "Golden set for the effect-IR batch. Inputs are card ids + attack index; the test loads the attack text from the local card DB at test time so this fixture reproduces no card text. Deterministic fields (element, intensity) are expected too and must match the forge's rules. eraMax by set: base1=100, swsh1=250, sv1=300.",
+ "cases": [
+  {
+   "cardId": "base1-7",
+   "attackIndex": 0,
+   "attackName": "Jab",
+   "expected": {
+    "element": "Fighting",
+    "intensity": 0.2,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 20,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-35",
+   "attackIndex": 0,
+   "attackName": "Tackle",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.1,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 10,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-58",
+   "attackIndex": 1,
+   "attackName": "Thunder Jolt",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 0.3,
+    "archetype": "projectile",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 30,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 10,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-4",
+   "attackIndex": 0,
+   "attackName": "Fire Spin",
+   "expected": {
+    "element": "Fire",
+    "intensity": 1.0,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 100,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "discardSelfEnergy"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-2",
+   "attackIndex": 0,
+   "attackName": "Hydro Pump",
+   "expected": {
+    "element": "Water",
+    "intensity": 0.4,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 40,
+     "perUnit": 10,
+     "cap": 20,
+     "units": {
+      "source": "energyCount",
+      "of": "self",
+      "constant": 0,
+      "promptType": "count",
+      "promptLabel": "Extra Water Energy on attacker?"
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  },
+  {
+   "cardId": "base1-10",
+   "attackIndex": 0,
+   "attackName": "Psychic",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.1,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 10,
+     "perUnit": 10,
+     "cap": null,
+     "units": {
+      "source": "energyCount",
+      "of": "defender",
+      "constant": 0,
+      "promptType": "count",
+      "promptLabel": "Energy on defender?"
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  },
+  {
+   "cardId": "base1-17",
+   "attackIndex": 0,
+   "attackName": "Twineedle",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.6,
+    "archetype": "projectile",
+    "elementHint": "None",
+    "damage": {
+     "kind": "times",
+     "value": 0,
+     "base": 0,
+     "perUnit": 30,
+     "cap": null,
+     "units": {
+      "source": "coinHeads",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 2,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-35",
+   "attackIndex": 1,
+   "attackName": "Flail",
+   "expected": {
+    "element": "Water",
+    "intensity": 0.2,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "times",
+     "value": 0,
+     "base": 0,
+     "perUnit": 10,
+     "cap": null,
+     "units": {
+      "source": "damageCounters",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-11",
+   "attackIndex": 0,
+   "attackName": "Thrash",
+   "expected": {
+    "element": "Grass",
+    "intensity": 0.3,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 30,
+     "perUnit": 10,
+     "cap": 10,
+     "units": {
+      "source": "coinHeads",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 10,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-11",
+   "attackIndex": 1,
+   "attackName": "Toxic",
+   "expected": {
+    "element": "Grass",
+    "intensity": 0.2,
+    "archetype": "projectile",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 20,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "Poisoned",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-29",
+   "attackIndex": 0,
+   "attackName": "Hypnosis",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.15,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "Asleep",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-29",
+   "attackIndex": 1,
+   "attackName": "Dream Eater",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.5,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 50,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "defenderAsleep",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-3",
+   "attackIndex": 0,
+   "attackName": "Scrunch",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": [
+       "preventDamageNextTurn"
+      ]
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-3",
+   "attackIndex": 1,
+   "attackName": "Double-edge",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.8,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 80,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 80,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-32",
+   "attackIndex": 0,
+   "attackName": "Recover",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": true,
+    "sideEffects": [
+     "discardSelfEnergy"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-5",
+   "attackIndex": 1,
+   "attackName": "Metronome",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "copyAttack"
+    ],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  },
+  {
+   "cardId": "base1-14",
+   "attackIndex": 0,
+   "attackName": "Agility",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 0.2,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 20,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": [
+       "preventDamageNextTurn"
+      ]
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-16",
+   "attackIndex": 0,
+   "attackName": "Thunder",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 0.6,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 60,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 30,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-16",
+   "attackIndex": 1,
+   "attackName": "Thunderbolt",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 1.0,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 100,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "discardSelfEnergy"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-13",
+   "attackIndex": 1,
+   "attackName": "Whirlpool",
+   "expected": {
+    "element": "Water",
+    "intensity": 0.4,
+    "archetype": "aoe",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 40,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "discardDefenderEnergy"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-12",
+   "attackIndex": 0,
+   "attackName": "Lure",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "benchEffect"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-1",
+   "attackIndex": 0,
+   "attackName": "Confuse Ray",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.3,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 30,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "Confused",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-6",
+   "attackIndex": 0,
+   "attackName": "Dragon Rage",
+   "expected": {
+    "element": "Water",
+    "intensity": 0.5,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 50,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-15",
+   "attackIndex": 0,
+   "attackName": "Solarbeam",
+   "expected": {
+    "element": "Grass",
+    "intensity": 0.6,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 60,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "base1-8",
+   "attackIndex": 0,
+   "attackName": "Seismic Toss",
+   "expected": {
+    "element": "Fighting",
+    "intensity": 0.6,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 60,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-32",
+   "attackIndex": 0,
+   "attackName": "Raging Claws",
+   "expected": {
+    "element": "Fire",
+    "intensity": 0.1,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 30,
+     "perUnit": 10,
+     "cap": null,
+     "units": {
+      "source": "damageCounters",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-32",
+   "attackIndex": 1,
+   "attackName": "Bright Flame",
+   "expected": {
+    "element": "Fire",
+    "intensity": 0.83,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 250,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "discardSelfEnergy"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-81",
+   "attackIndex": 0,
+   "attackName": "Photon Blaster",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 0.73,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 220,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "cantAttackNextTurn"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-114",
+   "attackIndex": 0,
+   "attackName": "Avenging Knuckle",
+   "expected": {
+    "element": "Fighting",
+    "intensity": 0.1,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 30,
+     "perUnit": 120,
+     "cap": 120,
+     "units": {
+      "source": "prompt",
+      "of": "self",
+      "constant": 0,
+      "promptType": "yesNo",
+      "promptLabel": "Fighting ally knocked out last turn?"
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  },
+  {
+   "cardId": "sv1-114",
+   "attackIndex": 1,
+   "attackName": "Accelerating Stab",
+   "expected": {
+    "element": "Fighting",
+    "intensity": 0.4,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 120,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "cantUseThisAttackNextTurn"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-122",
+   "attackIndex": 1,
+   "attackName": "Adrenaline Hammer",
+   "expected": {
+    "element": "Fighting",
+    "intensity": 0.43,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 130,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "Confused",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-163",
+   "attackIndex": 0,
+   "attackName": "Reckless Charge",
+   "expected": {
+    "element": "Colorless",
+    "intensity": 0.23,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 70,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 10,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "swsh1-78",
+   "attackIndex": 0,
+   "attackName": "Attack the Wound",
+   "expected": {
+    "element": "Lightning",
+    "intensity": 0.1,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 10,
+     "perUnit": 50,
+     "cap": 50,
+     "units": {
+      "source": "defenderDamaged",
+      "of": "defender",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "swsh1-120",
+   "attackIndex": 1,
+   "attackName": "Crazy Claws",
+   "expected": {
+    "element": "Darkness",
+    "intensity": 0.1,
+    "archetype": "melee",
+    "elementHint": "None",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 10,
+     "perUnit": 60,
+     "cap": null,
+     "units": {
+      "source": "damageCounters",
+      "of": "defender",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "swsh1-120",
+   "attackIndex": 0,
+   "attackName": "Lode Search",
+   "expected": {
+    "element": "Darkness",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "searchOrDraw"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "sv1-86",
+   "attackIndex": 0,
+   "attackName": "Miracle Force",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.63,
+    "archetype": "beam",
+    "elementHint": "None",
+    "damage": {
+     "kind": "fixed",
+     "value": 190,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [
+     "recoverConditions"
+    ],
+    "precondition": "none",
+    "needsReferee": false
+   }
+  },
+  {
+   "cardId": "swsh1-50",
+   "attackIndex": 0,
+   "attackName": "G-Max Pump",
+   "expected": {
+    "element": "Water",
+    "intensity": 0.36,
+    "archetype": "aoe",
+    "elementHint": "Water",
+    "damage": {
+     "kind": "plus",
+     "value": 0,
+     "base": 90,
+     "perUnit": 30,
+     "cap": null,
+     "units": {
+      "source": "energyCount",
+      "of": "self",
+      "constant": 0,
+      "promptType": "count",
+      "promptLabel": "Water Energy on attacker?"
+     }
+    },
+    "coinFlips": {
+     "count": 0,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  },
+  {
+   "cardId": "sv1-83",
+   "attackIndex": 0,
+   "attackName": "Pendulum Influence",
+   "expected": {
+    "element": "Psychic",
+    "intensity": 0.15,
+    "archetype": "self",
+    "elementHint": "None",
+    "damage": {
+     "kind": "none",
+     "value": 0,
+     "base": 0,
+     "perUnit": 0,
+     "cap": null,
+     "units": {
+      "source": "none",
+      "of": "self",
+      "constant": 0,
+      "promptType": "none",
+      "promptLabel": ""
+     }
+    },
+    "coinFlips": {
+     "count": 1,
+     "untilTails": false,
+     "onHeads": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": [
+       "copyAttack"
+      ]
+     },
+     "onTails": {
+      "extraDamage": 0,
+      "status": "None",
+      "selfDamage": 0,
+      "attackFails": false,
+      "sideEffects": []
+     }
+    },
+    "status": "None",
+    "selfStatus": "None",
+    "selfDamage": 0,
+    "heal": 0,
+    "healAll": false,
+    "sideEffects": [],
+    "precondition": "none",
+    "needsReferee": true
+   }
+  }
+ ]
+}

@@ -15,8 +15,9 @@ Estimates assume evenings/weekends with an AI pair; "AC" = acceptance criteria.
 - Unity batch step: prefabs with baked transform → Addressables (ASTC, 2 LODs).
 
 **AC:** `forge verify` passes; manifest covers every fetched species; a random 30-species
-sample renders front-facing at consistent real-world scale; IR validates against schema
-and covers 100 % of attacks with `needsReferee=false` for ≥ 95 %.
+sample renders front-facing at consistent real-world scale; `forge ir --golden` passes per
+SPEC-ir §6 (38/38 on semantics, ≤ 2 archetype disagreements); the full IR validates against
+schema and covers 100 % of attacks with `needsReferee=false` for ≥ 95 %.
 
 ## M1 · Table demo (≈ 3 days)
 - Two hard-coded cards as reference images; models anchored above them; Y-constrained
@@ -28,8 +29,11 @@ and covers 100 % of attacks with `needsReferee=false` for ≥ 95 %.
 - Vision rectangles → rectify → OCR name + collector number → local DB → runtime
   `ARReferenceImage` from the card's own art → tracked anchor.
 - Tracking-loss grace: hold last pose 3 s, then fade; re-acquire silently.
+- Unknown-card flow (Recent / Search / Manual) and `known-cards.json` pHash learning.
 
-**AC:** 20 random cards from the kids' binders identified ≥ 90 % within 2 s under living-room light.
+**AC:** 20 random cards from the kids' binders identified ≥ 90 % within 2 s under living-room
+light; a deliberately obscured card reaches a playable state via Pick-a-card in ≤ 15 s; a
+card picked manually once locks by pHash the next time without OCR.
 
 ## M3 · Summon (≈ 3 days)
 - Capsule arc-in → spin → open → white-hot dissolve-in of the species mesh → material lerp.
@@ -64,8 +68,8 @@ and covers 100 % of attacks with `needsReferee=false` for ≥ 95 %.
 fractions); a 4-year-old profile completes a battle by tap on L1 with no adult input.
 
 ## M8 · Voice (≈ 1 week)
-- Native plugin; push-to-talk; state-scoped contextual strings; attack-phrase and
-  number/fraction parsers; confirmation chip.
+- Native plugin per SPEC-native (Editor mock first, device second); push-to-talk;
+  state-scoped contextual strings; attack-phrase and number/fraction parsers; confirmation chip.
 
 **AC:** ≥ 90 % correct attack recognition for an adult at 2 m; ≥ 70 % for the 7-year-old;
 number answers ≥ 90 % for both.

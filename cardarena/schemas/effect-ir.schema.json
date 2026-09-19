@@ -2,31 +2,34 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://jontidd.com/cardarena/schemas/effect-ir.schema.json",
   "title": "CardArena attack effect IR",
-  "description": "Structured semantics for one attack. Keyed by attack hash; stores no card text.",
+  "description": "Structured semantics for one attack. Keyed by attack hash; stores no card text. Written flat (no oneOf/$ref, no null-in-enum) so the LLM-facing subset can be used directly as a structured-output schema. Fields marked DETERMINISTIC are computed by the forge, not the model.",
   "type": "object",
-  "required": ["hash", "element", "archetype", "damage", "coinFlips", "intensity", "needsReferee"],
+  "required": ["hash", "cardIds", "element", "archetype", "intensity", "damage", "coinFlips", "status", "selfStatus", "selfDamage", "heal", "healAll", "sideEffects", "precondition", "elementHint", "needsReferee", "confidence"],
   "properties": {
-    "hash": { "type": "string", "description": "sha1 of (name|text|damage) — the cache key." },
-    "cardIds": { "type": "array", "items": { "type": "string" }, "description": "Cards that carry this exact attack." },
-    "element": { "enum": ["Fire", "Water", "Lightning", "Psychic", "Fighting", "Grass", "Darkness", "Metal", "Fairy", "Dragon", "Colorless"] },
+    "hash": { "type": "string", "description": "DETERMINISTIC. sha1 of name|text|damage — the cache key." },
+    "cardIds": { "type": "array", "items": { "type": "string" }, "description": "DETERMINISTIC. Cards that carry this exact attack." },
+    "element": { "enum": ["Fire", "Water", "Lightning", "Psychic", "Fighting", "Grass", "Darkness", "Metal", "Fairy", "Dragon", "Colorless"], "description": "DETERMINISTIC. firstNonColorless(cost) ?? elementHint ?? Colorless." },
+    "intensity": { "type": "number", "minimum": 0, "maximum": 1, "description": "DETERMINISTIC. clamp(referenceDamage / eraMax, 0.1, 1); text-only attacks 0.15." },
     "archetype": { "enum": ["melee", "projectile", "beam", "aoe", "self"] },
-    "intensity": { "type": "number", "minimum": 0, "maximum": 1 },
+    "elementHint": { "enum": ["None", "Fire", "Water", "Lightning", "Psychic", "Fighting", "Grass", "Darkness", "Metal", "Fairy", "Dragon"], "description": "Model-supplied. Only when the attack NAME unambiguously names an element; used solely when cost is all-Colorless." },
     "damage": {
       "type": "object",
-      "required": ["kind"],
+      "required": ["kind", "value", "base", "perUnit", "cap", "units"],
       "properties": {
         "kind": { "enum": ["fixed", "plus", "times", "none"] },
-        "value": { "type": "integer", "minimum": 0 },
-        "base": { "type": "integer", "minimum": 0 },
-        "perUnit": { "type": "integer", "minimum": 0 },
-        "cap": { "type": ["integer", "null"], "minimum": 0 },
+        "value": { "type": "integer", "minimum": 0, "description": "fixed only; else 0." },
+        "base": { "type": "integer", "minimum": 0, "description": "plus only; else 0." },
+        "perUnit": { "type": "integer", "minimum": 0, "description": "plus/times; else 0." },
+        "cap": { "type": ["integer", "null"], "minimum": 0, "description": "plus only: maximum ADDED damage, null = uncapped." },
         "units": {
           "type": "object",
-          "required": ["source"],
+          "required": ["source", "of", "constant", "promptType", "promptLabel"],
           "properties": {
-            "source": { "enum": ["coinHeads", "energyCount", "damageCounters", "prompt", "constant"] },
+            "source": { "enum": ["none", "coinHeads", "energyCount", "damageCounters", "defenderDamaged", "prompt", "constant"] },
+            "of": { "enum": ["self", "defender"] },
             "constant": { "type": "integer", "minimum": 0 },
-            "promptLabel": { "type": "string", "maxLength": 40 }
+            "promptType": { "enum": ["none", "count", "yesNo"] },
+            "promptLabel": { "type": "string", "maxLength": 40, "description": "Original paraphrase for the referee; never quotes card text. Empty unless source is prompt." }
           },
           "additionalProperties": false
         }
@@ -35,31 +38,46 @@
     },
     "coinFlips": {
       "type": "object",
-      "required": ["count"],
+      "required": ["count", "untilTails", "onHeads", "onTails"],
       "properties": {
-        "count": { "oneOf": [ { "type": "integer", "minimum": 0 }, { "const": "untilTails" } ] },
-        "onHeads": { "$ref": "#/$defs/conditional" },
-        "onTails": { "$ref": "#/$defs/conditional" }
+        "count": { "type": "integer", "minimum": 0 },
+        "untilTails": { "type": "boolean" },
+        "onHeads": {
+          "type": "object",
+          "required": ["extraDamage", "status", "selfDamage", "attackFails", "sideEffects"],
+          "properties": {
+            "extraDamage": { "type": "integer", "minimum": 0 },
+            "status": { "enum": ["None", "Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"] },
+            "selfDamage": { "type": "integer", "minimum": 0 },
+            "attackFails": { "type": "boolean" },
+            "sideEffects": { "type": "array", "items": { "enum": ["preventDamageNextTurn", "copyAttack", "discardSelfEnergy", "discardDefenderEnergy", "switchDefender", "benchEffect", "other"] } }
+          },
+          "additionalProperties": false
+        },
+        "onTails": {
+          "type": "object",
+          "required": ["extraDamage", "status", "selfDamage", "attackFails", "sideEffects"],
+          "properties": {
+            "extraDamage": { "type": "integer", "minimum": 0 },
+            "status": { "enum": ["None", "Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"] },
+            "selfDamage": { "type": "integer", "minimum": 0 },
+            "attackFails": { "type": "boolean" },
+            "sideEffects": { "type": "array", "items": { "enum": ["preventDamageNextTurn", "copyAttack", "discardSelfEnergy", "discardDefenderEnergy", "switchDefender", "benchEffect", "other"] } }
+          },
+          "additionalProperties": false
+        }
       },
       "additionalProperties": false
     },
-    "status": { "type": ["string", "null"], "enum": ["Asleep", "Burned", "Confused", "Paralyzed", "Poisoned", null] },
-    "selfDamage": { "type": "integer", "minimum": 0 },
+    "status": { "enum": ["None", "Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"], "description": "Unconditional status on the defender." },
+    "selfStatus": { "enum": ["None", "Asleep", "Burned", "Confused", "Paralyzed", "Poisoned"], "description": "Unconditional status on the attacker." },
+    "selfDamage": { "type": "integer", "minimum": 0, "description": "Unconditional damage to the attacker." },
     "heal": { "type": "integer", "minimum": 0 },
-    "needsReferee": { "type": "boolean", "description": "True when v1 cannot evaluate without a human-entered number." },
+    "healAll": { "type": "boolean" },
+    "sideEffects": { "type": "array", "items": { "enum": ["discardSelfEnergy", "discardDefenderEnergy", "cantAttackNextTurn", "cantUseThisAttackNextTurn", "preventDamageNextTurn", "switchDefender", "benchEffect", "copyAttack", "recoverConditions", "searchOrDraw", "other"] } },
+    "precondition": { "enum": ["none", "defenderAsleep", "defenderDamaged", "other"] },
+    "needsReferee": { "type": "boolean", "description": "DERIVED by the forge: units.source in {prompt, energyCount} or copyAttack present or damage string unparseable." },
     "confidence": { "type": "number", "minimum": 0, "maximum": 1 }
   },
-  "additionalProperties": false,
-  "$defs": {
-    "conditional": {
-      "type": "object",
-      "properties": {
-        "extraDamage": { "type": "integer", "minimum": 0 },
-        "status": { "type": ["string", "null"] },
-        "attackFails": { "type": "boolean" },
-        "selfDamage": { "type": "integer", "minimum": 0 }
-      },
-      "additionalProperties": false
-    }
-  }
+  "additionalProperties": false
 }
