@@ -77,6 +77,12 @@ privacy (camera + mic never leave the device), and — decisively — **legal**:
 that serves the models is *you distributing copyrighted assets*. Device-local assets the
 user fetched from a third party is a different posture entirely.
 
+**One consequence worth stating: a battle costs $0.** No per-turn inference, no card-
+recognition API, no cloud database, no backend, no per-player bandwidth. Vision OCR and
+Speech both run on-device; combat, math, RNG, assets and the card database are all local.
+Every dollar in this project is spent during the build; the finished thing has no marginal
+cost per play and cannot acquire one unless someone deliberately adds a service.
+
 ## Legal posture (drives the design)
 
 | Ships in the public repo | Lives only in the content pack (user-fetched) |

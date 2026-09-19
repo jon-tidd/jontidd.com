@@ -61,6 +61,8 @@ one mid-battle failure and they stop believing in it, which is how projects like
 actually die; (3) it all fits: ~250 MB of models, ~50 MB of card JSON, so a server has
 nothing to do; (4) legal, per D4; (5) privacy: camera and mic never leave the device;
 (6) no ops — a server is a thing that breaks at 7pm on a Saturday.
+It also means the finished app has **no marginal cost per battle** — a property that is
+easy to lose by accident later and impossible to recover without reopening D4 and D5.
 **Changes my mind:** multi-device play across households. Nothing short of that.
 
 ### D6 · Identify cards by OCR, track them by runtime image target
@@ -238,6 +240,18 @@ next two before anyone notices — and a runaway loop has no spend ceiling. The 
 constant supervision, it's ~4 concentrated evenings at the right moments (`HANDOFF.md` §2b).
 **Changes my mind:** a way to give an agent eyes on the physical table and a real opinion
 about whether a four-year-old is having fun. Not close yet.
+
+### D26 · Oracles are authored by the strongest model, separately from the implementation
+**Rejected:** one model writes a generator and its constraint checker in the same session.
+**Why:** the entire cost strategy rests on cheap output being *verified* rather than
+trusted, and that only holds where the verifier is independent of what it verifies. The
+schemas and the 38-case golden set are hand-authored and safe. M7's 10,000-case constraint
+checkers are not — they are written as part of the milestone. One model authoring both can
+converge on a self-consistent wrong answer, pass all 10,000 cases, and report success;
+nothing downstream catches it. Aider's architect/editor split (`--editor-model`) is a ready
+mechanism for this: strong model designs and writes the checks, cheap model implements
+against them.
+**Changes my mind:** nothing. This is what makes every other cost decision safe.
 
 ### D24 · Never learn the size of an API bill by receiving it
 **Rejected:** run `forge ir` and see what it costs.

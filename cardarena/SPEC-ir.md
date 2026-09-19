@@ -191,19 +191,35 @@ pack, then fall back to single items for a pack that fails twice.
 **Use `strict: true` on the tool schema** so arguments are guaranteed schema-valid and the
 JSON Schema gate never sees malformed output.
 
-### 5.2 Run the golden set on a cheap model on day one
+### 5.2 Day one: run a model tournament on the golden set
 
-Before any M0 coding, run `forge ir --golden` on **Claude Haiku 4.5**. It is a ~30-minute,
-roughly $1 experiment that decides a $50 question and validates the whole
-verify-don't-trust premise before an evening is committed.
+Do not pick a model and hope. Before any M0 coding, run the **exact production prompt and
+schema** against all 38 goldens on several candidates at once. It costs a few dollars, takes
+under an hour, and decides a $70 question with your own data instead of a leaderboard.
 
-- **Clears 38/38** → run the bulk on Haiku 4.5 Batch, escalate the ~15 % low-confidence
-  tail to Opus 5 Batch. **≈ $22 all in.**
-- **Fails** → use packed Opus 5 Batch at **≈ $34** and stop optimizing. The spread between
-  options is a rounding error against your time.
+Candidates, cheapest first: an ultra-cheap structured-output model (e.g. a GPT-5.6-mini
+class or `claude-haiku-4-5`), a cheap open-weights model, `claude-sonnet-5`, and
+`claude-opus-5` as the quality ceiling for reference.
 
-Escalate an item on: a `confidence` below 0.7, any enum value outside the expected
-distribution, disagreement with the deterministic `damage.kind`, or a random 3 % audit.
+Score each on: `schema_valid`, exact semantic match, `damage.kind` agreement with the
+deterministic derivation, `needsReferee` agreement, `archetype` agreement, retry count, and
+mean output tokens.
+
+**Decision rule: the cheapest candidate that clears 38/38 with no schema failures wins.**
+When one misses by a little, step *one rung* up the ladder — never jump from "missed two"
+to Opus. Sonnet 5 Batch is ~$28 and Opus is ~$34 packed; the whole spread is a rounding
+error against one evening of your time, so stop optimizing once something passes.
+
+Production run: bulk on the winner, then escalate only suspicious rows to one tier up.
+Escalate on a `confidence` below 0.7, any enum outside the expected distribution,
+disagreement with the deterministic `damage.kind`, a schema failure that survives one
+retry, or a random 3 % audit. At a 5–15 % escalation rate this adds a couple of dollars.
+
+**Token-mix caveat for `--dry-run`:** output per item swings roughly 250 → 700 tokens
+depending on whether the model reasons before emitting. A cheap model in pure
+structured-output mode sits near the bottom of that range; an Anthropic model with adaptive
+thinking sits near the top. Measure it from a 100-item sample rather than assuming — that
+one variable moves the projection by ~2×.
 
 **`forge ir --dry-run` is mandatory before any paid run.** It must print the exact unique
 count after dedup, the token estimate from a 100-item sample, and the projected cost per

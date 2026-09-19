@@ -75,19 +75,51 @@ project_base   = M0_cost × 7.65
 project_likely = M0_cost × 10        # 7.65 × 1.3 contingency for rework and debugging
 ```
 
-Worked example — if M0 lands at $150:
+Worked example — if M0 lands at $150 of *metered* spend:
 
 | | |
 |---|---|
-| Base | $1,150 |
-| With contingency | **$1,500** |
-| Cursor Ultra equivalent ($200/mo → $400 credits) | ~4 months ≈ **$800 cash** |
-| Plus the IR batch (direct Anthropic API, not credits) | **+$125** |
+| Base (7.65×) | $1,150 |
+| With contingency (10×) | **$1,500** of model usage |
+
+That is usage, not cash. Cash depends on how you buy it:
+
+| Funding path | ~3.5 months | Note |
+|---|---|---|
+| **BYOK metered + routing** | **$150–250** | Cheapest if the routing holds. No floor, no ceiling — set a spend alert. |
+| Claude Code Max 5× + a cheap second terminal | $350–420 | Predictable; only wins if you'd otherwise burn >$100/mo of frontier |
+| Cursor Ultra | ~$700 | Auto stopped being a bargain in Aug 2026 |
+| + IR batch (direct API, never credits) | +$5–34 | See `SPEC-ir.md` §5 |
+
+**Check before committing to a subscription:** a $100/month plan only pays for itself if
+metered usage would exceed $100/month. With 45 % of the work routed to cheap tiers, it
+often won't. Start metered, measure M0, and buy the subscription only once the meter says
+you're past it.
 
 **Add the contingency.** The 7.65 figure covers building each milestone once. It does not
 cover discovering in M2 that your OCR hit rate is 70 %, or that the CLIP yaw spike missed
 and you need the VLM path. Those are the two named risks in `HANDOFF.md` §5 and they are
 exactly what contingency is for.
+
+## 3b. Optimize effective cost, not model cost
+
+The number that matters is not the API bill:
+
+```
+effective_cost = api_cost + (your_rework_minutes × what_your_time_is_worth)
+```
+
+Worked, at $100/hour: a cheap model saves **$8** on a task but costs **30 extra minutes**
+of rework. That is $8 − $50 = **−$42**. The cheap model was economically worse, and the
+API bill said the opposite.
+
+**Decision rule: the moment extra rework caused by a cheap tier costs more than the
+inference it saved, escalate that task class permanently.** Not the individual task — the
+class. One bad evening on native plugin code means native plugin code moves to frontier for
+the rest of the project.
+
+This is why `cost-log.csv` records minutes alongside dollars. A log without minutes cannot
+answer the only question that matters.
 
 ## 4. What moves this number most
 
@@ -104,6 +136,24 @@ Roughly in order of leverage:
    level. Writing those first is cheaper than debugging a wrong generator through the UI.
 5. **Doing the two spikes early.** Finding out in week 8 that yaw detection doesn't work is
    the expensive version of that discovery.
+
+## 3c. The first-10-tasks experiment (do this inside M0)
+
+A measured M0 total tells you what the project costs. It does not tell you *which tier to
+route to*. Get both from the same milestone by deliberately mixing the first ~10 meaningful
+coding tasks:
+
+| Tasks | Tier |
+|---|---|
+| 3 | cheapest bounded model |
+| 3 | cheap agentic model |
+| 3 | frontier |
+| 1 | you, by hand — the baseline |
+
+Same acceptance process for all ten. Then compare `api_cost + rework_minutes × rate` per
+accepted task. That produces **your** model frontier on **your** codebase, which beats every
+routing table in this repo and every one you'll get from asking a model — including the
+ones that produced this file.
 
 ## 4b. This estimate assumes you are supervising
 
@@ -125,6 +175,19 @@ date,milestone,session,tool,model_or_mode,minutes,credits_or_cost,outcome,notes
 `outcome` ∈ `done` · `partial` · `rework` · `abandoned`. Track `rework` honestly — the
 ratio of rework to done is the real quality signal, and it is the thing a vendor's
 satisfaction benchmark cannot tell you about your own project.
+
+**Escalate immediately on any of these** — they all mean the cheap tier has stopped being
+cheap:
+
+- Two or more failed test-fix cycles on ordinary work.
+- The same file edited 3+ times without the test going green.
+- The model edits the *test* to make it pass.
+- A bug reintroduced after being fixed.
+- The model touches files unrelated to the task.
+- Defensive null checks appear instead of a root cause.
+- "This should work now", twice.
+- Works in the editor or simulator, behaves intermittently on device.
+- The acceptance test passes only after substantial hand-editing by you.
 
 ## 6. A fair comparison, if that's the goal
 

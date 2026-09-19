@@ -121,6 +121,31 @@ production.
 If one model must do both, author the oracle in a separate session that has not seen the
 implementation, and review it yourself before the implementation is written.
 
+Aider has this built in: `--editor-model` splits architect from editor, so a strong model
+designs and writes the checks while a cheap one implements against them. If your harness
+offers that split, use it here.
+
+## Harness notes
+
+The harness is free; the model is the cost. Both of the obvious open options are $0 and
+BYOK, so the economics live entirely in which model you point them at:
+
+- **Cline** (VS Code) — autonomous agent, strong at multi-file, multi-language, tool-using
+  work. Better fit for M1, M2, M3, M8, M9, M10 where Unity, the editor and the device are
+  all in play.
+- **Aider** (terminal) — tight implement → test → fix → commit loops, excellent Git
+  awareness, and the architect/editor split above. Better fit for M0, M4, M5, M6, M7 —
+  bounded, code-heavy, test-verified work.
+
+Configure named model profiles once (bounded-cheap / cheap-agent / frontier / escalation)
+and switch deliberately by task class rather than letting a router spend for you. **Do not
+use Roo Code** — archived read-only since 2026-05-15, unmaintained, and it will drift as
+provider APIs change.
+
+One caveat on the cheapest tier: very small coding models are fine for *bounded* edits with
+a test oracle, and unreliable as long-horizon autonomous agents. Use them as a cheap pair,
+not as "go build M2 while I eat dinner".
+
 ## Definition of done for a milestone
 Every acceptance criterion in `spec/BUILD-PLAN.md` for that milestone, demonstrated with
 real command output or a screenshot. Not "implemented" — demonstrated.
