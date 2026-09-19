@@ -33,7 +33,33 @@ cardarena-engine/
 
 ---
 
-## 1. Kickoff prompt (paste as the very first message)
+## 1. Kickoff prompt — Night 1 (paste as the very first message)
+
+**Start here unless you have a reason not to.** `BUILD-PLAN.md` Part 1 is four evenings
+and produces a playable thing on your table. Part 2 is optional expansion.
+
+> You are implementing **CardArena**, an iPad AR trading-card battler. A complete
+> specification exists in `spec/`. It is the contract — you implement it, you do not
+> redesign it.
+>
+> **Read first, in full:** `spec/README.md`, `spec/DECISIONS.md` (why the spec is the way
+> it is — read this before concluding any part of it is wrong), and `spec/BUILD-PLAN.md`.
+>
+> **Your task: Night 1 (N1 · Forge-lite) only.** Part 1 of the build plan, nothing else.
+>
+> This is deliberately the *small* version. Twenty species, hand-checked, no automated yaw
+> detection, no effect-IR batch, no asset bundles. Do not build the M0 pipeline — it exists
+> for 1,300 species and we have 20.
+>
+> Write a short Python script that, given a list of ~20 species ids, downloads those GLBs
+> and extracts HP, types, weaknesses and up to two attacks per card from `pokemon-tcg-data`
+> into one JSON. Then give me a checklist for hand-noting each model's facing direction, and
+> a `manifest.json` skeleton matching `spec/schemas/manifest.schema.json` for me to fill in.
+>
+> Constraints: never modify `spec/`; never commit a model, texture, card image or card text;
+> everything you emit validates against `spec/schemas/`; run what you write and show output.
+
+## 1b. Kickoff prompt — the full pipeline (only if you need all 1,300 species)
 
 > You are implementing **CardArena**, an iPad AR trading-card battler. A complete
 > specification already exists in `spec/`. It is the contract — you implement it, you do
@@ -49,8 +75,8 @@ cardarena-engine/
 >
 > Then read the remaining `spec/SPEC-*.md` files as each milestone needs them.
 >
-> **Your task right now: milestone M0 only** (`spec/BUILD-PLAN.md` → "M0 · Forge").
-> Do not start M1. Do not scaffold Unity.
+> **Your task right now: M0 only** (`spec/BUILD-PLAN.md` Part 2 → "M0 · The real forge").
+> Do not start any other milestone. Do not scaffold Unity.
 >
 > Build the Python side first, as a CLI named `forge` with subcommands in this order:
 > `fetch`, `check`, `place`, `sheet`, `ir`, `verify`. Implement and verify each subcommand
@@ -206,10 +232,20 @@ Supervision column: **auto** = long leash, check the gate in the morning · **ch
 run unattended, then judge the result with your own eyes before building on it ·
 **watch** = stay in the loop, failures are silent or only show on device.
 
+**Part 1 (the four nights)** — N1 is §1 above. N2–N4:
+
 | # | Sup. | Prompt |
 |---|---|---|
-| **M0** | auto | See §1 above. |
-| **M1** | check | `Implement M1 (Table demo) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §§4–5 first. Unity 6 LTS + AR Foundation. Two hard-coded reference images; creature prefabs anchored above each; Y-axis-constrained lookAt between them; screen-space HP bars. Use the manifest from M0 for scale/pivot/yaw. Acceptance: 30 fps for 5 minutes on device, models keep facing each other as cards move.` |
+| **N2** | check | `Implement N2 (Table demo) from spec/BUILD-PLAN.md Part 1. Read spec/SPEC-app.md §§4-5 first. Unity 6 + AR Foundation. Two photographed cards as hardcoded ARReferenceImage targets — no OCR, no recognition. Creature above each, hover bob, Y-constrained lookAt so they face each other, screen-space HP bars. Use the hand-written manifest from N1.` |
+| **N3** | auto | `Implement N3 (Combat) from spec/BUILD-PLAN.md Part 1. Read spec/SPEC-battle.md §§1-3 in full. Build the FSM and damage pipeline properly — Part 2 builds on this. Pure mode only, no gates. Three generic VFX (melee lunge, projectile, beam), not the full element matrix. Tap to attack. Unit-test the damage pipeline before wiring visuals.` |
+| **N4** | check | `Implement N4 (The capsule) from spec/BUILD-PLAN.md Part 1. Read spec/SPEC-app.md §4. Capsule arcs in, spins, opens, white-hot dissolve-in of the mesh, material lerp. Faint is the same timeline reversed. The mesh materializes using its own geometry with a swapped unlit emissive material, so it works on any model.` |
+
+**Part 2 (expansion)** — any order, none required:
+
+| # | Sup. | Prompt |
+|---|---|---|
+| **M0** | auto | See §1b above. |
+| **M1** | check | *(superseded by N2)* `Implement M1 (Table demo) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §§4–5 first. Unity 6 LTS + AR Foundation. Two hard-coded reference images; creature prefabs anchored above each; Y-axis-constrained lookAt between them; screen-space HP bars. Use the manifest from M0 for scale/pivot/yaw. Acceptance: 30 fps for 5 minutes on device, models keep facing each other as cards move.` |
 | **M2** | watch | `Implement M2 (Card identification) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §2 (all of it, including §2.5 unknown-card flow) and spec/SPEC-native.md in full. Build the native plugin against the C ABI in SPEC-native §2 exactly — signatures and event JSON must match. Implement EditorMockBackend first so this is testable without a device, then IosBackend. Include the pHash known-cards learning in §2.5.` |
 | **M3** | check | `Implement M3 (Summon) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §4. The capsule sequence must hide asset loading — the load starts at t=0 and the mesh materializes at t=1.25s. Faint is the same timeline reversed. Acceptance: cold-load of an unseen species shows no visible hitch.` |
 | **M4** | auto | `Implement M4 (Combat core, Pure mode) from spec/BUILD-PLAN.md. Read spec/SPEC-battle.md in full and spec/SPEC-app.md §6. The battle engine is PURE LOGIC: no rendering or I/O dependencies, consumes config + cards + IR + seeded RNG, emits the event log in SPEC-battle §6. Presentation replays the log. Write unit tests for the damage pipeline against 20 sampled attacks before wiring any visuals.` |

@@ -31,19 +31,20 @@ only asking about execution cost.
 
 | # | Milestone | Nature of the work | Relative size |
 |---|---|---|---|
-| M0 | Content pipeline ("forge") | Python CLI: fetch ~1,300 GLB models + a card database, validate, normalize scale/pivot, auto-detect each model's facing direction via CLIP/VLM, run a classification batch, build asset bundles | 1.00 |
-| M1 | AR table demo | Unity 6 + AR Foundation; anchor models to tracked cards | 0.35 |
-| M2 | Card identification | iOS Vision rectangle detection + OCR, native Swift plugin, C# integration | 0.90 |
-| M3 | Summon sequence | Unity animation timeline + shader dissolve | 0.45 |
-| M4 | Combat core | Pure-logic C# state machine, damage pipeline, unit tests, VFX wiring | 1.10 |
-| M5 | Audio | Unity AudioMixer wiring, ~30 sound events | 0.35 |
+| N1–N4 | Four-night starter | Hand-picked 20 species, hardcoded AR targets, tap combat, summon animation | 0.50 |
+| M0 | Content pipeline ("forge") | Python CLI: fetch ~1,300 GLB models + card DB, validate, normalize scale/pivot, auto-detect model facing via CLIP/VLM, run a classification batch, build asset bundles | 1.00 |
+| M2 | Card identification | iOS Vision rectangles + OCR, native Swift plugin, C# integration | 0.90 |
+| M4+ | Full element VFX | 11 elements × 5 archetypes, coin-flip UI, procedural motion | 0.45 |
 | M6 | Probability mode | Small: config + a statistical test | 0.20 |
-| M7 | Math Mode | 10 question generators + 10,000-case tests each, UI, profiles | 1.40 |
-| M8 | Voice | iOS Speech via native plugin, fuzzy phrase matching | 0.80 |
+| M7 | Math generators | 10 question generators (~350 lines) + 10,000-case constraint test each + choice UI | 0.45 |
+| M8 | Voice | iOS Speech via native plugin, attack-phrase *and* spoken-number parsers | 0.95 |
+| M5 | Audio | Unity AudioMixer wiring, ~30 sound events | 0.35 |
 | M9 | Damage shader | One Shader Graph material, triplanar projection | 0.40 |
-| M10 | Polish | Download flow, stats, integration debugging | 0.70 |
+| M3+ | Summon polish | Move asset streaming inside the animation timeline | 0.20 |
+| M10 | Profiles, settings, first-run | Per-kid profiles, parent settings screen, stats, download flow, integration debugging | 1.05 |
 
-Total ≈ 7.65 × M0. Estimated 7–8 weeks of evening work for one developer with AI
+Total ≈ 6.45 × M0 if I build everything; the four-night starter alone is 0.50. Roughly 4
+evenings for a playable version, ~33 evenings for the full thing, one developer with AI
 assistance. Languages: Python, C#, Swift, HLSL/Shader Graph.
 
 ## Why aggressive cost optimization is unusually safe here

@@ -55,32 +55,35 @@ weights — some milestones are long in wall-clock but light in agent work becau
 iteration is visual and human-driven (audio taste, shader look), while others are pure
 code generation and testing.
 
-| Milestone | Weight | Why |
+| Item | Weight | Why |
 |---|---:|---|
-| M0 · Forge | **1.00** | baseline — scripting, tests, iteration |
-| M1 · Table demo | 0.35 | small; much of it is Unity GUI work, not agent work |
-| M2 · Card identification | 0.90 | native plugin + C# + heavy iteration |
-| M3 · Summon | 0.45 | timeline and animation, visually iterated |
-| M4 · Combat core | 1.10 | largest pure-logic chunk: FSM, damage pipeline, VFX wiring |
-| M5 · Audio | 0.35 | wiring plus human asset sourcing |
-| M6 · Luck mode | 0.20 | small, mostly config and a probability test |
-| M7 · Math Mode | 1.40 | most code in the project: 10 generators, 10k-case tests, UI, profiles |
-| M8 · Voice | 0.80 | native plugin plus parsers |
-| M9 · Damage stages | 0.40 | one shader, visually iterated |
-| M10 · Polish | 0.70 | download flow, stats, integration debugging |
-| **Total** | **7.65** | |
+| **N1–N4 · the four nights** | **0.50** | Part 1 in total. Hand-picked species, hardcoded targets, three VFX. |
+| M0 · the real forge | **1.00** | baseline — scripting, tests, iteration |
+| M2 · card identification | 0.90 | native plugin + C# + heavy iteration |
+| M4+ · full element VFX | 0.45 | 55 combinations on top of N3's three |
+| M6 · luck & mercy | 0.20 | config plus a probability test |
+| M7 · math core | 0.45 | ~350 lines of generators + their checkers; smaller than it looks |
+| M8 · voice | 0.95 | native plugin plus *both* parsers (attacks and numbers) |
+| M5 · audio | 0.35 | wiring plus human asset sourcing |
+| M9 · damage stages | 0.40 | one shader, visually iterated |
+| M3+ · summon polish | 0.20 | moving the load inside the timeline |
+| M10 · profiles, settings, first-run | 1.05 | absorbs the config layer misfiled under M7 |
+| **Everything** | **6.45** | |
+
+Part 1 alone is **0.50** — if N1 measures $X, the four nights cost about 4×(X/1.0)… in
+practice, a rounding error. The extrapolation below applies only if you go on to Part 2.
 
 ```
-project_base   = M0_cost × 7.65
-project_likely = M0_cost × 10        # 7.65 × 1.3 contingency for rework and debugging
+project_base   = M0_cost × 6.45
+project_likely = M0_cost × 10        # 6.45 × 1.3 contingency for rework and debugging
 ```
 
 Worked example — if M0 lands at $150 of *metered* spend:
 
 | | |
 |---|---|
-| Base (7.65×) | $1,150 |
-| With contingency (10×) | **$1,500** of model usage |
+| Base (6.45×) | $968 |
+| With contingency (8.4×) | **$1,260** of model usage |
 
 That is usage, not cash. Cash depends on how you buy it:
 
@@ -96,7 +99,7 @@ metered usage would exceed $100/month. With 45 % of the work routed to cheap tie
 often won't. Start metered, measure M0, and buy the subscription only once the meter says
 you're past it.
 
-**Add the contingency.** The 7.65 figure covers building each milestone once. It does not
+**Add the contingency.** The 6.45 figure covers building each milestone once. It does not
 cover discovering in M2 that your OCR hit rate is 70 %, or that the CLIP yaw spike missed
 and you need the VLM path. Those are the two named risks in `HANDOFF.md` §5 and they are
 exactly what contingency is for.
