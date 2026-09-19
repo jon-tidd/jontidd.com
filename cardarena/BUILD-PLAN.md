@@ -13,7 +13,9 @@ Estimates assume evenings/weekends with an AI pair; "AC" = acceptance criteria.
 - Contact-sheet QA renderer (100 fronts per page) + `forge fix <id> --yaw N` for outliers.
 - Effect-IR batch generation for every unique attack text; schema-validated; cached.
   `--dry-run` (exact count + projected cost, no API calls) and `--golden` must both exist
-  and be used before any paid run.
+  and be used before any paid run. Pack 10–20 attacks per request and run `--golden` on a
+  cheap model on day one (SPEC-ir §§5.1–5.2) — it is a ~$1 experiment that decides the
+  model choice for the whole batch.
 - Unity batch step: prefabs with baked transform → Addressables (ASTC, 2 LODs).
 
 **AC:** `forge verify` passes; manifest covers every fetched species; a random 30-species
@@ -63,6 +65,9 @@ card picked manually once locks by pHash the next time without OCR.
 **AC:** 100 simulated attacks at each slider stop hit within ±5 % of the target rate.
 
 ## M7 · Math Mode (≈ 1.5 weeks)
+- **Constraint checkers first, authored separately from the generators** (see HANDOFF.md
+  "Oracle authorship") — a model that writes both can agree with itself across all 10,000
+  cases and be wrong. Use the strongest model available for the checkers.
 - Ladder L1–L10 generators + unit tests; choice and open answer modes; numpad; timer;
   mercy; profiles & sides; parent settings screen; referee strip.
 

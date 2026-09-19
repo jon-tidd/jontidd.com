@@ -161,15 +161,49 @@ Measured from the real card data rather than estimated:
 Per item: ~50 fresh input tokens, the ~1,800-token cached rubric, ~700 output tokens
 including thinking. At Batch API pricing (50 % off):
 
-| Model | Full run |
+| Option | Full run |
 |---|---|
-| `claude-opus-5` | **$70 – $102** |
-| `claude-sonnet-5` | $28 – $41 |
-| `claude-haiku-4-5` | $14 – $21 |
+| `claude-opus-5`, one item per request | $69 – $102 |
+| `claude-opus-5`, **packed 20/request** | **~$34** |
+| `claude-sonnet-5`, packed | ~$28 |
+| `claude-haiku-4-5`, packed | ~$14 |
+| **Two-tier: Haiku 4.5 bulk + Opus 5 on the ~15 % tail** | **~$22** |
+
+Non-Anthropic bulk passes (Gemini Flash-Lite, GPT-5.6-luna, DeepSeek off-peak, GLM-Flash)
+land in the $3–8 range but add a second SDK and retry path. The two-tier Anthropic route
+keeps one code path for a few dollars more — worth it unless you are already fluent in the
+alternative.
 
 Opus 5 is the default. If you run a cheaper model, re-run every item with
 `confidence < 0.7` plus any golden-set failure on Opus 5 and merge — that costs a few
 dollars and recovers most of the quality gap.
+
+### 5.1 Two free levers, applied before choosing a model
+
+**Pack 10–20 attacks per request.** The ~1,800-token rubric dominates input when each
+request carries one item. Packing amortizes it across the batch: input per item drops from
+~1,850 tokens to ~140, roughly halving the total bill with no quality trade and no reliance
+on caching. Prompt caching inside a 24-hour batch window is unreliable (short TTL), so
+packing is the deterministic version of the same saving. One malformed response costs 20
+items instead of 1 — the schema-validate-and-retry loop already handles that; retry the
+pack, then fall back to single items for a pack that fails twice.
+
+**Use `strict: true` on the tool schema** so arguments are guaranteed schema-valid and the
+JSON Schema gate never sees malformed output.
+
+### 5.2 Run the golden set on a cheap model on day one
+
+Before any M0 coding, run `forge ir --golden` on **Claude Haiku 4.5**. It is a ~30-minute,
+roughly $1 experiment that decides a $50 question and validates the whole
+verify-don't-trust premise before an evening is committed.
+
+- **Clears 38/38** → run the bulk on Haiku 4.5 Batch, escalate the ~15 % low-confidence
+  tail to Opus 5 Batch. **≈ $22 all in.**
+- **Fails** → use packed Opus 5 Batch at **≈ $34** and stop optimizing. The spread between
+  options is a rounding error against your time.
+
+Escalate an item on: a `confidence` below 0.7, any enum value outside the expected
+distribution, disagreement with the deterministic `damage.kind`, or a random 3 % audit.
 
 **`forge ir --dry-run` is mandatory before any paid run.** It must print the exact unique
 count after dedup, the token estimate from a 100-item sample, and the projected cost per
