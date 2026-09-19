@@ -22,6 +22,7 @@ This folder is the spec. It is written to be built from directly.
 | [SPEC-audio.md](SPEC-audio.md) | Sound event catalog, sourcing, mixer buses, ducking, variation |
 | [BUILD-PLAN.md](BUILD-PLAN.md) | **Part 1: four evenings to a playable thing.** Part 2: optional expansion, any order, with acceptance criteria |
 | [DECISIONS.md](DECISIONS.md) | Why the spec is the way it is: 24 decisions, each with the alternative rejected, the reasoning, and what would change my mind |
+| [RESEARCH-PROMPT-start.md](RESEARCH-PROMPT-start.md) | **Paste-ready prompt to get building this week**: honest Cursor verdict, tool comparison decided not surveyed, one-evening setup checklist, and a refinement pass on the four nights |
 | [RESEARCH-PROMPT-cost.md](RESEARCH-PROMPT-cost.md) | A paste-ready prompt for other models: research the current landscape and return a model-routing plan for building this at lowest cost |
 | [HANDOFF.md](HANDOFF.md) | Running this build in another tool: setup, kickoff prompt, always-loaded rules, per-milestone prompts, the two risk spikes |
 | [COST-CALIBRATION.md](COST-CALIBRATION.md) | Measuring real agent spend: protocol, milestone weight table, extrapolation, `cost-log.csv` |

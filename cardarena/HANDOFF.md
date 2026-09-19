@@ -151,6 +151,18 @@ Aider has this built in: `--editor-model` splits architect from editor, so a str
 designs and writes the checks while a cheap one implements against them. If your harness
 offers that split, use it here.
 
+## A note on prices in this repo
+
+Five model reviews of this plan produced **conflicting current prices** for the same models
+and disagreed on whether a given router tier is available to individuals. The landscape moves
+faster than any document in here can track.
+
+So: **no price in this repo is authoritative.** Every cost figure is an order-of-magnitude
+sanity check, and every decision that depends on one is expressed as a *method* instead —
+the golden-set tournament (`SPEC-ir.md` §5.2), `--dry-run` before any paid run (D24), and
+measure-then-extrapolate (`COST-CALIBRATION.md`). Check live pricing at the moment you
+spend, and trust your own measurement over any table, including these.
+
 ## Harness notes
 
 The harness is free; the model is the cost. Both of the obvious open options are $0 and

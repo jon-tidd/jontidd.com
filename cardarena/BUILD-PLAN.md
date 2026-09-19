@@ -42,7 +42,10 @@ you may never want some of them.
 - Read `spec/SPEC-battle.md` §§1–3 — implement the FSM and damage pipeline properly even
   here, because Part 2 builds on it. Skip §2's gates: Pure mode only.
 
-**AC:** a full battle playable by tap with correct math on 10 sampled attacks.
+**AC:** a full battle playable by tap with correct math on **40 attacks chosen for edge
+combinations**, not 40 random ones — coin-flip × weakness, resistance on a `plus` attack,
+`times` damage with zero heads, self-damage that KOs the attacker, a glance against
+resistance. A cheap model passes 15/20 random attacks and fails exactly these.
 
 ## N4 · The capsule (1 evening)
 - Summon: capsule arcs in → spins → opens → white-hot dissolve-in of the mesh → material
@@ -91,7 +94,7 @@ manually once locks by pHash next time without OCR.
 - Element × archetype VFX (11 elements × 5 archetypes) replacing N3's three.
 - Coin-flip UI driven by the effect IR; procedural lunge/recoil/hit-stop per archetype.
 
-**AC:** correct math on 20 sampled attacks; each element visibly distinct.
+**AC:** correct math on the 40 edge-combination attacks from N3; each element visibly distinct.
 
 ## M6 · Luck & mercy (≈ 1 evening) — *unlocks: suspense*
 - Luck slider; outcome decided at RESOLVING, revealed at impact; dodge/whiff/glance.
@@ -133,7 +136,10 @@ answers ≥ 90 % for both. Tap fallback always available.
 - One shader driven by `damage01`: triplanar grime, desaturation, red rim at heavy;
   posture + smoke by band.
 
-**AC:** three visibly distinct bands on 10 random species with no per-species tuning.
+**AC:** three visibly distinct bands on 10 random species with **zero per-species tuning**.
+Watch for the specific cheat: triplanar looks right on one mesh and stretches on another, and
+the tempting fix is a per-species scale override. If the manifest grows shader fields, the
+projection is wrong — fix the projection.
 
 ## M3+ · Summon polish (≈ 1 evening)
 - Asset load moved *inside* the capsule timeline so it hides Addressables streaming.

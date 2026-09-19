@@ -158,25 +158,24 @@ Measured from the real card data rather than estimated:
 - **Attack text averages 59 characters (~15 tokens)** — input per item is tiny; output and
   thinking dominate the bill.
 
-Per item: ~50 fresh input tokens, the ~1,800-token cached rubric, ~700 output tokens
-including thinking. At Batch API pricing (50 % off):
+Per item, packed 20 to a request: **~140 input tokens** (the ~1,800-token rubric amortised
+across the pack, plus ~50 for the attack itself) and **~300 output tokens** (the IR object;
+measure it, it is the variable that moves the bill). At 10,000 items that is ~1.4M input and
+~3M output. Batch API pricing (50 % off):
 
 | Option | Full run |
 |---|---|
-| `claude-opus-5`, one item per request | $69 – $102 |
-| `claude-opus-5`, **packed 20/request** | **~$34** |
-| `claude-sonnet-5`, packed | ~$28 |
-| `claude-haiku-4-5`, packed | ~$14 |
-| **Two-tier: Haiku 4.5 bulk + Opus 5 on the ~15 % tail** | **~$22** |
+| Cheapest structured-output tier (GPT-5-nano class, Gemini Flash-Lite) | **~$2** |
+| `claude-haiku-4-5` batch | ~$8 |
+| `claude-sonnet-5` batch | ~$16 |
+| `claude-opus-5` batch | ~$41 |
+| **Two-tier: cheapest bulk + Sonnet 5 on a ~10 % tail** | **~$4** |
+| **Two-tier, Anthropic only: Haiku bulk + Opus 5 on a ~10 % tail** | **~$12** |
 
-Non-Anthropic bulk passes (Gemini Flash-Lite, GPT-5.6-luna, DeepSeek off-peak, GLM-Flash)
-land in the $3–8 range but add a second SDK and retry path. The two-tier Anthropic route
-keeps one code path for a few dollars more — worth it unless you are already fluent in the
-alternative.
-
-Opus 5 is the default. If you run a cheaper model, re-run every item with
-`confidence < 0.7` plus any golden-set failure on Opus 5 and merge — that costs a few
-dollars and recovers most of the quality gap.
+**This is not a cost decision.** The entire spread is under $40 — less than one evening of
+your time. Pick on *quality* via the tournament below and take whichever passes; only run
+`--dry-run` to confirm the count and the output-token figure, because that last one moves
+the projection by ~2× and is the only number here worth measuring.
 
 ### 5.1 Two free levers, applied before choosing a model
 
