@@ -67,8 +67,11 @@ I am most likely to use Cursor. Tell me straight whether that's right, covering:
 - What it costs me in 2026 given that its Auto mode stopped being flat-rate in August 2026.
   Which plan tier, and what actually consumes credits during agent work.
 - Where its model routing helps and where it silently spends money.
-- Whether its lack of BYOK on standard tiers matters, given that open-weights models are now
-  an order of magnitude cheaper per token than frontier ones.
+- How to actually run it BYOK against OpenRouter: what that covers (Agent, Composer, Chat,
+  Inline Edit) versus what stays on Cursor's own models (Tab, Apply), which plan tier it
+  needs, and the correct base URL. Then tell me whether that setup — subscription for Tab
+  and indexing, wholesale tokens for agent work — is better or worse than a fully-open
+  harness, and why.
 
 ### 2. Cursor versus the alternatives, decided not surveyed
 

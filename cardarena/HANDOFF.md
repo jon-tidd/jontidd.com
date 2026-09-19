@@ -165,8 +165,29 @@ spend, and trust your own measurement over any table, including these.
 
 ## Harness notes
 
-The harness is free; the model is the cost. Both of the obvious open options are $0 and
-BYOK, so the economics live entirely in which model you point them at:
+**BYOK** — "bring your own key" — means the tool sends requests using *your* provider API
+key and bills *you* at wholesale token rates, instead of consuming the tool's own credits.
+The harness becomes a steering wheel; you choose the engine.
+
+**Cursor supports BYOK**, and this is the setup worth knowing:
+
+- Works with your key: **Chat, Composer, Agent Mode, and Inline Edit** — i.e. all the
+  expensive agentic work.
+- Always stays on Cursor's own models: **Tab completion and Apply.** You want this — Tab is
+  what Cursor is best at, it's fast, and it's covered by the subscription.
+- Providers: OpenAI, Anthropic, Gemini, Azure, Bedrock, and any **OpenAI-compatible host** —
+  which is how OpenRouter gets you 200+ models including open weights.
+- Requires a **paid plan** ($20 Pro minimum) for BYOK with a custom base URL in Agent.
+- **OpenRouter gotcha:** the base URL must be `https://openrouter.ai/api/v1/cursor`. Plain
+  `/api/v1` breaks tool calls.
+- Don't use Auto while on BYOK — Auto and Cursor's own Composer models bill to Cursor, not
+  to your key, which defeats the point.
+
+So **Cursor Pro + OpenRouter BYOK** gets you Tab completion and repo indexing on the
+subscription, and agent tokens at wholesale on whatever model you pick. That is a strong
+default and removes the main structural argument for leaving Cursor.
+
+The fully-open alternatives are $0 for the tool and BYOK by default:
 
 - **Cline** (VS Code) — autonomous agent, strong at multi-file, multi-language, tool-using
   work. Better fit for M1, M2, M3, M8, M9, M10 where Unity, the editor and the device are
