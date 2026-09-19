@@ -12,6 +12,8 @@ Estimates assume evenings/weekends with an AI pair; "AC" = acceptance criteria.
 - Yaw auto-detection: convention clustering → 16-view render vs. official-art CLIP match → VLM tie-break.
 - Contact-sheet QA renderer (100 fronts per page) + `forge fix <id> --yaw N` for outliers.
 - Effect-IR batch generation for every unique attack text; schema-validated; cached.
+  `--dry-run` (exact count + projected cost, no API calls) and `--golden` must both exist
+  and be used before any paid run.
 - Unity batch step: prefabs with baked transform → Addressables (ASTC, 2 LODs).
 
 **AC:** `forge verify` passes; manifest covers every fetched species; a random 30-species

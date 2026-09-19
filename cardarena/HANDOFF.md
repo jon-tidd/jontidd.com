@@ -125,11 +125,13 @@ small, which is the single biggest lever on cost.
 
 ## 4. Two things that are not agent work
 
-- **The IR batch** (`forge ir`, inside M0) makes ~15,000 Anthropic API calls. That is a
-  **direct API bill of roughly $125 on `claude-opus-5` via the Batch API**, separate from
-  any IDE subscription or credits. Run `forge ir --golden` (38 cases, costs cents) and get
-  it passing before you spend the full run. Details and cheaper model options in
-  `spec/SPEC-ir.md` §5.
+- **The IR batch** (`forge ir`, inside M0) classifies every unique attack in the card
+  database — measured at **~7,500–11,000 items** after dedup. That is a **direct Anthropic
+  API bill of $70–$102 on `claude-opus-5`** via the Batch API ($28–41 on Sonnet 5, $14–21
+  on Haiku 4.5), separate from any IDE subscription or credits. Always run
+  `forge ir --dry-run` first — it prints the exact count and projected cost without calling
+  the API — then `forge ir --golden` (38 cases, cents) to gate correctness. Full derivation
+  in `spec/SPEC-ir.md` §5.
 - **The content pack** must be fetched by you on your own machine from third-party
   sources. Never host it, never commit it. See `spec/README.md` "Legal posture".
 

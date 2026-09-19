@@ -145,18 +145,36 @@ interpret. Below 0.7 the attack is routed to human review.
   only re-runs items whose rule outcome could change (or everything, if in doubt — it's cheap
   relative to the argument).
 
-## 5. Cost (order of magnitude; measure on the golden set first)
+## 5. Cost (measured inputs, not guessed)
 
-~15 000 unique attacks, ~120 input tokens each plus the ~1 800-token cached rubric, ~600
-output tokens including thinking. Batch pricing:
+Measured from the real card data rather than estimated:
 
-| Model | Approx. full run | Notes |
-|---|---|---|
-| `claude-opus-5` | ~$125 | the default; output/thinking tokens dominate |
-| `claude-sonnet-5` | ~$50 | user's call; run `confidence < 0.7` + golden failures again on Opus 5 |
-| `claude-haiku-4-5` | ~$25 | user's call; same re-run rule |
+- **176 English sets, 20,530 cards**; Pokemon cards (the only ones with attacks) are ~62 %
+  of that, so **~12,700 cards**.
+- **1.32 attacks per card** (measured across an 8-set sample spanning ex1 → sv1).
+- **Deduplication**: unique-attack ratio falls steadily as the corpus grows — 0.96 at one
+  set, 0.77 at eight, still declining. Across 176 sets expect **0.45–0.65**.
+- **~7,500–11,000 unique attacks** to classify.
+- **Attack text averages 59 characters (~15 tokens)** — input per item is tiny; output and
+  thinking dominate the bill.
 
-The golden set alone costs cents and is the first thing to run after any rubric change.
+Per item: ~50 fresh input tokens, the ~1,800-token cached rubric, ~700 output tokens
+including thinking. At Batch API pricing (50 % off):
+
+| Model | Full run |
+|---|---|
+| `claude-opus-5` | **$70 – $102** |
+| `claude-sonnet-5` | $28 – $41 |
+| `claude-haiku-4-5` | $14 – $21 |
+
+Opus 5 is the default. If you run a cheaper model, re-run every item with
+`confidence < 0.7` plus any golden-set failure on Opus 5 and merge — that costs a few
+dollars and recovers most of the quality gap.
+
+**`forge ir --dry-run` is mandatory before any paid run.** It must print the exact unique
+count after dedup, the token estimate from a 100-item sample, and the projected cost per
+model, then exit without calling the API. No one should ever discover the size of this
+bill by receiving it. `forge ir --golden` (38 cases) costs cents and gates correctness.
 
 ## 6. Acceptance (`forge ir --golden`)
 
