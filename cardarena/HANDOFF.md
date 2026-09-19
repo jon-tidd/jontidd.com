@@ -41,9 +41,11 @@ cardarena-engine/
 >
 > **Read these in order before writing any code, in full, not skimmed:**
 > 1. `spec/README.md` — goals, three-layer architecture, legal posture, stack
-> 2. `spec/BUILD-PLAN.md` — milestones M0–M10 with acceptance criteria
-> 3. `spec/SPEC-forge.md` and `spec/SPEC-ir.md` — the offline content pipeline
-> 4. `spec/schemas/*.json` — every artifact you produce must validate against these
+> 2. `spec/DECISIONS.md` — why the spec is the way it is, and what was rejected. Read this
+>    before you conclude any part of the spec is wrong.
+> 3. `spec/BUILD-PLAN.md` — milestones M0–M10 with acceptance criteria
+> 4. `spec/SPEC-forge.md` and `spec/SPEC-ir.md` — the offline content pipeline
+> 5. `spec/schemas/*.json` — every artifact you produce must validate against these
 >
 > Then read the remaining `spec/SPEC-*.md` files as each milestone needs them.
 >
@@ -91,6 +93,8 @@ Save as `AGENTS.md` and `.cursorrules` at the repo root:
 
 ## Always
 - Read the relevant `spec/SPEC-*.md` section before implementing a feature.
+- Before deciding any spec choice is wrong, check `spec/DECISIONS.md` — the alternative you
+  are about to propose was probably considered and rejected for a stated reason.
 - Validate every produced artifact against its schema, in code, as a test.
 - Run what you write and paste real output. Never report success you haven't observed.
 - Keep the engine franchise-neutral: no franchise names in code, identifiers, UI
