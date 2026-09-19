@@ -126,25 +126,74 @@ Every acceptance criterion in `spec/BUILD-PLAN.md` for that milestone, demonstra
 real command output or a screenshot. Not "implemented" — demonstrated.
 ```
 
+## 2b. What you cannot delegate
+
+Roughly **45 % of this project by weight (M0, M4, M6, M7) can run nearly unattended**,
+because each has an oracle that does not need you: `forge verify` exits 0 or it doesn't,
+the 38-case golden set passes or it doesn't, the battle engine's tests are deterministic,
+the generators face 10,000 constraint checks. Give those long leashes and read the gates in
+the morning. That was the point of building machine-checkable acceptance everywhere (D23).
+
+The rest needs a person, and not because agents are weak — because the work is physical:
+
+1. **The table.** The app watches real cards under your actual living-room light through a
+   camera on a stand. M1, M3 and M9's criteria are literally *does it look right* — a
+   creature floating too high, facing backwards, an HP bar unreadable from the couch, the
+   iPad throttling after 20 minutes. There is no oracle but your eyes.
+2. **Your kids' actual cards.** The OCR spike is not "does OCR work", it's "does it read a
+   sleeved, bent, thumbprinted card at 8pm under a warm bulb". That needs those cards.
+3. **Deployment.** Sideloading needs your Apple ID, your Mac, your cable, your iPad.
+4. **The real success criterion.** Is L1 right for a four-year-old? Is mercy patronising to
+   the older one? Does the capsule opening feel *magical*? That is the entire point of the
+   project and no test has an opinion about whether your kids light up.
+5. **The legal call.** Fetching the content pack is your decision about your own risk (D4).
+   Not something an agent should do in your name.
+
+### Unattended is plausibly *more* expensive, not less
+
+Every routing decision here assumes a human notices "tests green, behaviour still wrong"
+and escalates. Remove that and three things break at once: an agent builds M1 that passes
+its checks and renders wrong, then builds M3 on it, then M4 on that — the error surfaces
+three milestones later and unwinding it costs more than the routing saved; the escalation
+rate and churn metrics in `COST-CALIBRATION.md` §4 have nothing measuring them; and a
+runaway loop has no ceiling. Budget supervision as cost control, not as overhead.
+
+### Batch your involvement — the edges, not the middle
+
+| When | What | Time |
+|---|---|---|
+| Week 1 | Both spikes: CLIP yaw hit rate, OCR on the binders (§5) | one evening |
+| After M0 | Read the contact sheets, spot the ~40 bad-facing outliers | 5 minutes |
+| After M1–M3 | One session with the iPad on the stand, judging all three together | one evening |
+| After M9 | Look at the damage shader on 10 species | 20 minutes |
+| M10 | Play a full battle with your boys | the good part |
+
+That is about **four evenings of genuinely irreplaceable presence across three months.**
+Everything between them can run while you sleep.
+
 ## 3. Per-milestone prompts
 
 Each assumes the kickoff prompt ran earlier in the same session, or that `AGENTS.md` is
 auto-loaded in a fresh one. Start a **fresh session per milestone** — it keeps context
 small, which is the single biggest lever on cost.
 
-| # | Prompt |
-|---|---|
-| **M0** | See §1 above. |
-| **M1** | `Implement M1 (Table demo) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §§4–5 first. Unity 6 LTS + AR Foundation. Two hard-coded reference images; creature prefabs anchored above each; Y-axis-constrained lookAt between them; screen-space HP bars. Use the manifest from M0 for scale/pivot/yaw. Acceptance: 30 fps for 5 minutes on device, models keep facing each other as cards move.` |
-| **M2** | `Implement M2 (Card identification) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §2 (all of it, including §2.5 unknown-card flow) and spec/SPEC-native.md in full. Build the native plugin against the C ABI in SPEC-native §2 exactly — signatures and event JSON must match. Implement EditorMockBackend first so this is testable without a device, then IosBackend. Include the pHash known-cards learning in §2.5.` |
-| **M3** | `Implement M3 (Summon) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §4. The capsule sequence must hide asset loading — the load starts at t=0 and the mesh materializes at t=1.25s. Faint is the same timeline reversed. Acceptance: cold-load of an unseen species shows no visible hitch.` |
-| **M4** | `Implement M4 (Combat core, Pure mode) from spec/BUILD-PLAN.md. Read spec/SPEC-battle.md in full and spec/SPEC-app.md §6. The battle engine is PURE LOGIC: no rendering or I/O dependencies, consumes config + cards + IR + seeded RNG, emits the event log in SPEC-battle §6. Presentation replays the log. Write unit tests for the damage pipeline against 20 sampled attacks before wiring any visuals.` |
-| **M5** | `Implement M5 (Audio) from spec/BUILD-PLAN.md. Read spec/SPEC-audio.md. Wire every event in the §3 catalog, the mixer buses and the Listening snapshot ducking, and the variation rules. Engine SFX must be CC0 — log every source in audio/SOURCES.md.` |
-| **M6** | `Implement M6 (Luck mode) from spec/BUILD-PLAN.md. Read spec/SPEC-battle.md §2. Outcome is decided at RESOLVING and revealed at impact — wind-up and launch are identical for every outcome. Acceptance: 100 simulated attacks at each slider stop hit within ±5% of target rate.` |
-| **M7** | `Implement M7 (Math Mode) from spec/BUILD-PLAN.md. Read spec/SPEC-math.md in full. Generators for all 10 levels with the stated constraints, plus the 10,000-question test per level from §7 — write the tests first. Then choice/open answer input, numpad, timer, mercy, profiles, parent settings, referee strip. Use spec/examples/profiles.json as the fixture.` |
-| **M8** | `Implement M8 (Voice) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §8 and spec/SPEC-native.md §§3–4. Push-to-talk only, no wake word. State-scoped contextual strings. Matching is Levenshtein + Double Metaphone with the stated thresholds. Tap fallback must always remain available.` |
-| **M9** | `Implement M9 (Damage stages) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §7. ONE Shader Graph material driven by a damage01 float, using triplanar projection so it needs no per-species UV knowledge. Acceptance: three visibly distinct bands on 10 random species with zero per-species tuning.` |
-| **M10** | `Implement M10 (Polish and first-run) from spec/BUILD-PLAN.md. Pack download + hash verification + isExcludedFromBackup, stats screen, HDMI-out test, parent-gated settings. Acceptance: crash-free 30-minute session on device.` |
+Supervision column: **auto** = long leash, check the gate in the morning · **check** =
+run unattended, then judge the result with your own eyes before building on it ·
+**watch** = stay in the loop, failures are silent or only show on device.
+
+| # | Sup. | Prompt |
+|---|---|---|
+| **M0** | auto | See §1 above. |
+| **M1** | check | `Implement M1 (Table demo) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §§4–5 first. Unity 6 LTS + AR Foundation. Two hard-coded reference images; creature prefabs anchored above each; Y-axis-constrained lookAt between them; screen-space HP bars. Use the manifest from M0 for scale/pivot/yaw. Acceptance: 30 fps for 5 minutes on device, models keep facing each other as cards move.` |
+| **M2** | watch | `Implement M2 (Card identification) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §2 (all of it, including §2.5 unknown-card flow) and spec/SPEC-native.md in full. Build the native plugin against the C ABI in SPEC-native §2 exactly — signatures and event JSON must match. Implement EditorMockBackend first so this is testable without a device, then IosBackend. Include the pHash known-cards learning in §2.5.` |
+| **M3** | check | `Implement M3 (Summon) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §4. The capsule sequence must hide asset loading — the load starts at t=0 and the mesh materializes at t=1.25s. Faint is the same timeline reversed. Acceptance: cold-load of an unseen species shows no visible hitch.` |
+| **M4** | auto | `Implement M4 (Combat core, Pure mode) from spec/BUILD-PLAN.md. Read spec/SPEC-battle.md in full and spec/SPEC-app.md §6. The battle engine is PURE LOGIC: no rendering or I/O dependencies, consumes config + cards + IR + seeded RNG, emits the event log in SPEC-battle §6. Presentation replays the log. Write unit tests for the damage pipeline against 20 sampled attacks before wiring any visuals.` |
+| **M5** | auto | `Implement M5 (Audio) from spec/BUILD-PLAN.md. Read spec/SPEC-audio.md. Wire every event in the §3 catalog, the mixer buses and the Listening snapshot ducking, and the variation rules. Engine SFX must be CC0 — log every source in audio/SOURCES.md.` |
+| **M6** | auto | `Implement M6 (Luck mode) from spec/BUILD-PLAN.md. Read spec/SPEC-battle.md §2. Outcome is decided at RESOLVING and revealed at impact — wind-up and launch are identical for every outcome. Acceptance: 100 simulated attacks at each slider stop hit within ±5% of target rate.` |
+| **M7** | auto | `Implement M7 (Math Mode) from spec/BUILD-PLAN.md. Read spec/SPEC-math.md in full. Generators for all 10 levels with the stated constraints, plus the 10,000-question test per level from §7 — write the tests first. Then choice/open answer input, numpad, timer, mercy, profiles, parent settings, referee strip. Use spec/examples/profiles.json as the fixture.` |
+| **M8** | watch | `Implement M8 (Voice) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §8 and spec/SPEC-native.md §§3–4. Push-to-talk only, no wake word. State-scoped contextual strings. Matching is Levenshtein + Double Metaphone with the stated thresholds. Tap fallback must always remain available.` |
+| **M9** | check | `Implement M9 (Damage stages) from spec/BUILD-PLAN.md. Read spec/SPEC-app.md §7. ONE Shader Graph material driven by a damage01 float, using triplanar projection so it needs no per-species UV knowledge. Acceptance: three visibly distinct bands on 10 random species with zero per-species tuning.` |
+| **M10** | watch | `Implement M10 (Polish and first-run) from spec/BUILD-PLAN.md. Pack download + hash verification + isExcludedFromBackup, stats screen, HDMI-out test, parent-gated settings. Acceptance: crash-free 30-minute session on device.` |
 
 ## 4. Two things that are not agent work
 

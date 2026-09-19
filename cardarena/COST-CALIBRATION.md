@@ -105,6 +105,14 @@ Roughly in order of leverage:
 5. **Doing the two spikes early.** Finding out in week 8 that yaw detection doesn't work is
    the expensive version of that discovery.
 
+## 4b. This estimate assumes you are supervising
+
+Every figure here assumes a human catching drift within a session or two. Fully unattended
+runs break the model: escalation rate and churn ratio have nothing measuring them, a
+runaway loop has no spend ceiling, and an error that passes its gates compounds across
+milestones before anyone sees it. See `HANDOFF.md` §2b for which milestones are safe to
+leave alone and which are not. Supervision is a cost control, not an overhead.
+
 ## 5. `cost-log.csv`
 
 ```csv

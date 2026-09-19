@@ -227,6 +227,18 @@ to a cheaper model — the gates catch drift that a human reviewer would miss, a
 model nor a vendor benchmark can grade itself generously.
 **Changes my mind:** nothing. This is the spec's main defence.
 
+### D25 · Batch human involvement at the edges; never remove it
+**Rejected:** hand the whole build to an autonomous agent swarm and collect the result.
+**Why:** about 45 % of the work (M0, M4, M6, M7) has a real oracle and can run unattended —
+that's what the machine-checkable gates bought. The rest is physical: a creature floating at
+the wrong height, OCR on a bent card under a warm bulb, signing to a device, and whether the
+kids actually light up. None of that has a test. Worse, unattended runs remove the escalation
+signal the whole routing plan depends on, so a wrong-but-passing milestone compounds into the
+next two before anyone notices — and a runaway loop has no spend ceiling. The answer isn't
+constant supervision, it's ~4 concentrated evenings at the right moments (`HANDOFF.md` §2b).
+**Changes my mind:** a way to give an agent eyes on the physical table and a real opinion
+about whether a four-year-old is having fun. Not close yet.
+
 ### D24 · Never learn the size of an API bill by receiving it
 **Rejected:** run `forge ir` and see what it costs.
 **Why:** `forge ir --dry-run` prints the exact post-dedup count and projected cost per
