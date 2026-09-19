@@ -38,7 +38,10 @@ learning before you're 8 weeks in.
    pinned model. The number is meaningless without them.
 
 Where to read spend:
-- **Cursor** — Dashboard → Usage, per-model breakdown, filterable by date. Both pools
+- **Cursor with BYOK (the assumed setup)** — read **OpenRouter → Activity**, filtered by
+  date. Cursor's own dashboard will only show Tab and Apply, which is a useful cross-check:
+  if agent tokens appear there, your BYOK override isn't working.
+- **Cursor without BYOK** — Dashboard → Usage, per-model breakdown. Both pools
   ("Cursor Models" and "Other Models") count; add them.
 - **Claude Code** — `/cost` in-session; subscription plans show usage against limits rather
   than dollars, so log sessions and % of limit instead.
@@ -89,10 +92,18 @@ That is usage, not cash. Cash depends on how you buy it:
 
 | Funding path | ~3.5 months | Note |
 |---|---|---|
-| **BYOK metered + routing** | **$150–250** | Cheapest if the routing holds. No floor, no ceiling — set a spend alert. |
+| **Cursor Pro $20 + OpenRouter BYOK** | **$220–320** | The recommended setup. $70 subscription (Tab + indexing) plus $150–250 of wholesale agent tokens. No ceiling — set a spend alert. |
+| Fully-open harness (Cline/Aider) + BYOK | $150–250 | Slightly cheaper, no Tab completion, more config time |
 | Claude Code Max 5× + a cheap second terminal | $350–420 | Predictable; only wins if you'd otherwise burn >$100/mo of frontier |
-| Cursor Ultra | ~$700 | Auto stopped being a bargain in Aug 2026 |
-| + IR batch (direct API, never credits) | +$5–34 | See `SPEC-ir.md` §5 |
+| Cursor Ultra, no BYOK | ~$700 | Auto stopped being a bargain in Aug 2026; no reason to pick this once BYOK is configured |
+| + IR batch (direct API, never credits) | +$2–12 | See `SPEC-ir.md` §5 |
+
+**Part 1 (the four nights) is ~$20 of Cursor Pro and a few dollars of tokens.** The table
+above only applies if you go on to Part 2.
+
+**Measuring a BYOK setup:** read spend in **OpenRouter's** activity log, not Cursor's
+dashboard — under BYOK, Cursor's usage page shows only Tab and Apply. If agent work is
+appearing in Cursor's numbers, your base URL override isn't taking effect.
 
 **Check before committing to a subscription:** a $100/month plan only pays for itself if
 metered usage would exceed $100/month. With 45 % of the work routed to cheap tiers, it

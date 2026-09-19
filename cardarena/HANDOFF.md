@@ -20,6 +20,44 @@ milestone into a real project estimate.
 4. Put `spec/RULES.md` (§2 below) at the repo root as `AGENTS.md` **and** `.cursorrules`
    (or `CLAUDE.md` — whatever your tool auto-loads). Both names, same content: tools differ.
 
+### Assumed setup: Cursor Pro + OpenRouter BYOK
+
+These instructions assume **Cursor Pro ($20/mo) with BYOK pointed at OpenRouter**. It is the
+best-fit default for this project: Tab completion and repo indexing stay on the subscription
+(Tab is what Cursor does best and you'll lean on it constantly in Unity C#), while every
+agent token bills to OpenRouter at wholesale on whatever model you pick.
+
+One-time config, ~10 minutes:
+
+1. Cursor Pro. The paid tier is required for BYOK with a custom base URL in Agent.
+2. OpenRouter account, load credit, create a key.
+3. Cursor → Settings → Models → **OpenAI** provider → enable "Use own API key".
+4. Paste the OpenRouter key. Set **Override Base URL** to
+   `https://openrouter.ai/api/v1/cursor` — the trailing `/cursor` is required; plain
+   `/api/v1` breaks tool calls.
+5. Add the model ids you want to the custom model list.
+6. Set a spend alert in OpenRouter. BYOK has no ceiling; a runaway agent session has no cap.
+7. **Turn Auto off.** Auto and Cursor's own Composer models bill to Cursor, not your key,
+   which defeats the setup.
+
+Verify before starting: open Agent mode, ask it to read a file, confirm the request shows up
+in your OpenRouter activity log. If it doesn't, you're still spending Cursor credits.
+
+### Which model for which milestone
+
+Map the supervision column in §3 straight onto model tier — the supervision level *is* the
+risk level:
+
+| Supervision | Model tier | Why |
+|---|---|---|
+| **auto** | cheapest capable open-weights (Qwen/DeepSeek/GLM class, ~$0.07–0.30/M) | A gate catches every failure. `forge verify`, the golden set, and the 10k-case tests are the oracle, not the model. |
+| **check** | mid-tier | *You* are the oracle here, so iteration speed matters more than model quality. Don't overpay for work you're going to eyeball anyway. |
+| **watch** | frontier (Sonnet/Opus class) | Failures are silent or device-only. This is where rework costs an evening and the model cost is noise. |
+
+Switching tier is a dropdown. Change it deliberately per task class rather than letting a
+router decide — and log which one you used (`cost-log.csv`), or you can't tell later whether
+the cheap tier was actually cheap.
+
 ```
 cardarena-engine/
 ├── AGENTS.md          # = spec/RULES.md, auto-loaded context
@@ -241,6 +279,39 @@ its checks and renders wrong, then builds M3 on it, then M4 on that — the erro
 three milestones later and unwinding it costs more than the routing saved; the escalation
 rate and churn metrics in `COST-CALIBRATION.md` §4 have nothing measuring them; and a
 runaway loop has no ceiling. Budget supervision as cost control, not as overhead.
+
+### Where an autonomous agent platform does and doesn't fit
+
+Platforms like **Grok Bot** (xAI, launched Aug 2026) give each agent its own cloud computer,
+sign in with your credentials, run 24/7 with your laptop closed, and escalate only for
+decisions. That shape maps onto this project unusually cleanly — but only onto half of it.
+
+**Genuinely good fit — the `auto` milestones:**
+- **M0 forge.** A headless Python CLI with `forge verify` as an oracle. Fetching 1,300
+  models, the integrity pass, normalization, and iterating until verify exits 0 is exactly
+  overnight work that needs no human.
+- **The IR batch.** Long-running, retry-heavy, zero judgment once the golden set passes.
+- **M7 generators, M4 combat core, M6.** Pure logic with tests as the oracle.
+- **Contact-sheet rendering.** Have the QA sheets waiting for you in the morning.
+
+**Structurally cannot help, regardless of model quality:**
+- **Anything in Unity** (N2–N4, M1, M3, M5, M9). The Editor is a GUI app on your Mac, and
+  the iteration is visual — is the creature the right height, is the shader stretching.
+- **Anything on-device.** Sideloading needs your Mac, your cable, your iPad, your Apple ID.
+  A cloud VM cannot plug into your iPad.
+- **The table.** Unchanged from above.
+
+**Two credential cautions.** Don't hand an autonomous agent your Apple Developer credentials
+or anything that can publish. And the content-pack fetch (D4) is a decision about your own
+legal risk — don't delegate it to an agent acting under your identity.
+
+Note that this fit map is identical to the `auto` / `check` / `watch` column in §3. That is
+not a coincidence: the milestones safe to hand to an autonomous platform are exactly the ones
+with a machine-checkable oracle.
+
+Separately: **Grok models are just a routing choice.** Point Cursor's BYOK at Grok 4.x via
+OpenRouter and you are "building in Grok" with no commitment. Put it in the golden-set
+tournament (`SPEC-ir.md` §5.2) and let 38 hand-labelled cases decide rather than a benchmark.
 
 ### Batch your involvement — the edges, not the middle
 

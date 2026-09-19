@@ -61,7 +61,9 @@ both can converge on a self-consistent wrong answer and pass every test.
 
 ### 1. An honest Cursor verdict
 
-I am most likely to use Cursor. Tell me straight whether that's right, covering:
+**My assumed setup is Cursor Pro ($20/mo) with BYOK pointed at OpenRouter** — Tab
+completion and repo indexing on the subscription, agent tokens at wholesale on whatever
+model I select. Tell me straight whether that's right, covering:
 - What Cursor is genuinely best at for THIS project specifically — a mixed Unity C# +
   Python + Swift repo, evenings and weekends, one developer.
 - What it costs me in 2026 given that its Auto mode stopped being flat-rate in August 2026.
@@ -100,7 +102,17 @@ Read the four nights above and tell me:
 - Whether the four-night scope is realistic at ~3 hours per night, and if not, what to cut.
 - The single most likely reason this stalls before night 4, and how to de-risk it now.
 
-### 5. Ground rules
+### 5. Autonomous agent platforms
+
+Agent platforms with their own cloud computers (e.g. Grok Bot, launched Aug 2026) can run
+unattended for hours and escalate only for decisions. Tell me honestly which parts of this
+project they fit and which they structurally cannot, given that: the Unity Editor is a GUI
+app on my Mac, the iterative work in Unity is visual judgement, sideloading needs my
+physical iPad and Apple ID, and roughly half the acceptance criteria are things only my eyes
+can check. Where they DO fit, is the ~$20/mo worth it for a project of this size, or is a
+long-leash agent inside my IDE enough?
+
+### 6. Ground rules
 
 - Search for current pricing and say the date of your sources. Prices in my spec are
   explicitly not authoritative — several model reviews of this plan returned conflicting
