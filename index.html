@@ -4,19 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jon Tidd — AI developer building tools for human flourishing</title>
-<meta name="description" content="I build AI tools to help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
+<meta name="description" content="I build AI tools to ignite curiosity and help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://jontidd.com/">
 <meta property="og:title" content="Jon Tidd — I build tools for human flourishing">
-<meta property="og:description" content="I build AI tools to help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
+<meta property="og:description" content="I build AI tools to ignite curiosity and help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
 <meta property="og:image" content="https://jontidd.com/images/og.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Jon Tidd — I build tools for human flourishing">
-<meta name="twitter:description" content="I build AI tools to help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
+<meta name="twitter:description" content="I build AI tools to ignite curiosity and help people learn and live well. Exploring the intersection of technology, classical wisdom, and raising good humans.">
 <meta name="twitter:image" content="https://jontidd.com/images/og.jpg">
 
 <!-- Favicon -->
@@ -468,6 +468,12 @@ section{position:relative;z-index:1;padding:120px 24px}
 .card-fe .card-link{color:#e7b23c}
 .card-fe .card-header{background:linear-gradient(180deg,rgba(231,178,60,.06) 0%,rgba(231,178,60,.02) 70%,transparent 100%)}
 .card-fe .card-media{border-top:none}
+.card-mars .proj-label{color:#e07a55;background:rgba(224,122,85,.08);border-color:rgba(224,122,85,.24)}
+.card-mars h3{color:#f7d3c3}
+.card-mars .card-status{color:#e07a55}
+.card-mars .card-link{color:#e07a55}
+.card-mars .card-header{background:linear-gradient(180deg,rgba(224,122,85,.06) 0%,rgba(224,122,85,.02) 70%,transparent 100%)}
+.card-mars .card-media{border-top:none}
 .fe-demo{height:100%;display:flex;flex-direction:column;justify-content:center;gap:15px;padding:26px 30px;
   background:radial-gradient(ellipse at 74% 6%,rgba(231,178,60,.17),transparent 60%),linear-gradient(180deg,#0b0c12,#08090f)}
 .fe-odds{font-family:'Inter',sans-serif;font-weight:900;font-size:clamp(42px,7vw,60px);line-height:.86;letter-spacing:-.035em;
@@ -693,7 +699,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   </div>
   <div class="hero-tag">Hi, I'm Jon</div>
   <h1>I build tools<br>for <span class="accent">human<br>flourishing</span></h1>
-  <p class="hero-lead">I build <span class="hl">AI tools</span> to help people <span class="hl">learn</span> and <span class="hl">live well</span>. I'm hooked on exploring the intersection of <span class="hl-accent">technology, classical wisdom, and raising good humans</span>.</p>
+  <p class="hero-lead">I build <span class="hl">AI tools</span> to <span class="hl">ignite curiosity</span> and help people <span class="hl">learn</span> and <span class="hl">live well</span>. I'm hooked on exploring the intersection of <span class="hl-accent">technology, classical wisdom, and raising good humans</span>.</p>
   <p class="hero-aside">
     <span class="aside-label">Off the clock</span>
     <span class="aside-text">camping with the kiddos<span class="dot">·</span>synthwave &amp; tundra rock&nbsp;concerts<span class="dot">·</span>a&nbsp;growing wall full of 90&rsquo;s sci-fi animation cels</span>
@@ -775,12 +781,50 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       </div>
     </a>
 
-    <!-- ═══ Fantasy Engine ═══ -->
-    <a href="/fantasyengine" target="_blank" class="project-card card-fe" data-reveal data-delay="1" data-tilt>
+    <!-- ═══ Mars ═══ -->
+    <a href="/mars" target="_blank" class="project-card card-mars" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
         <span class="proj-label">Project #3</span>
+        <div class="card-question">"Can I train a model to find an ancient civilization on Mars?"</div>
+        <div class="card-title-row">
+          <h3>Mars Search</h3>
+          <span class="card-status"><span class="card-status-dot"></span>0.16% of Mars swept</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <div class="cc" data-carousel>
+          <div class="cc-slides">
+            <img class="cc-slide is-active" src="/mars/figures/candidate_3013N_2387E.jpg" alt="Context and close-up of an elongated, round-ended rim on an old crater floor at 30.13°N 23.87°E" loading="lazy">
+            <img class="cc-slide" src="/mars/figures/labels_example.jpg" alt="Candidate tiles scored by hand: four marked interesting, four marked natural" loading="lazy">
+            <img class="cc-slide" style="object-position:center 70%" src="/mars/figures/example_target.jpg" alt="The reference example: a flat-topped block with edges meeting at sharp angles" loading="lazy">
+          </div>
+          <div class="cc-dots">
+            <button type="button" class="cc-dot is-active" aria-label="The candidate I keep coming back to"></button>
+            <button type="button" class="cc-dot" aria-label="Hand-scored candidates"></button>
+            <button type="button" class="cc-dot" aria-label="The reference shape"></button>
+          </div>
+        </div>
+      </div>
+      <div class="card-body">
+        <p class="desc">A computer-vision scanner that sweeps <strong>NASA orbital imagery</strong> for geometry that wind, water and impacts struggle to explain, then hands a short list to a human (and my kids) to judge. The odds are very low. They aren't zero, so I'm checking.</p>
+        <div class="card-tech">
+          <strong>235,065 km²</strong> of Terra Sabaea swept at 6 m/pixel in <strong>2.6 hours</strong> on a laptop: <strong>192,299 cells</strong> scored for right angles, corners and parallel walls. Validated by planting <strong>weathered walls, grids and pyramids</strong> into real imagery and measuring where they rank. Streams HiRISE and CTX imagery on demand and stores measurements, not photos.
+        </div>
+        <span class="card-link">
+          Read the write-up
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- ═══ Fantasy Engine ═══ -->
+    <a href="/fantasyengine" target="_blank" class="project-card card-fe" data-reveal data-delay="2" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #4</span>
         <div class="card-question">"Can a fantasy football novice automate his way to championship glory?"</div>
         <div class="card-title-row">
           <h3>Fantasy Engine</h3>
@@ -807,11 +851,11 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ The Tidd Family History ═══ -->
-    <article class="project-card card-family no-link" data-reveal data-delay="2" data-tilt>
+    <article class="project-card card-family no-link" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #4</span>
+        <span class="proj-label">Project #5</span>
         <div class="card-question">"What if a family's whole history, one hundred thousand years of it, could live on one beautiful, readable website?"</div>
         <div class="card-title-row">
           <h3>The Tidd Family History</h3>
@@ -846,7 +890,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #5</span>
+        <span class="proj-label">Project #6</span>
         <div class="card-question">"What does it actually take to shave 14 strokes off your game in a single summer?"</div>
         <div class="card-title-row">
           <h3>The Tiger Method</h3>
@@ -881,7 +925,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #6</span>
+        <span class="proj-label">Project #7</span>
         <div class="card-question">"What if a startup's whole operating plan ran itself, notes, owners and follow-ups updating live after every call?"</div>
         <div class="card-title-row">
           <h3>Startup Battleplan</h3>
@@ -905,7 +949,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #7</span>
+        <span class="proj-label">Project #8</span>
         <div class="card-question">"What if you could screen thousands of real-world sites and have an engine tell you exactly which ones to pursue first?"</div>
         <div class="card-title-row">
           <h3>Site Screener</h3>
@@ -941,7 +985,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
-        <span class="proj-label">Project #8</span>
+        <span class="proj-label">Project #9</span>
         <div class="card-question">"At a 600-person family camp, how do you find the handful of families you'll genuinely click with?"</div>
         <div class="card-title-row">
           <h3>Tyler Place Connections</h3>
