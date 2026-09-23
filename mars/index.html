@@ -1,6 +1,16 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head><body style="margin:0">
-<title>Looking for Straight Lines on Mars</title>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Looking for Straight Lines on Mars — Jon Tidd</title>
+<meta name="description" content="Can I train a model to locate evidence of an ancient civilization on Mars? A weekend-scale search of NASA imagery, and an honest account of what the detector can and can't see.">
+<meta property="og:title" content="Looking for Straight Lines on Mars">
+<meta property="og:description" content="Can I train a model to locate evidence of an ancient civilization on Mars?">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jontidd.com/mars/">
+<meta property="og:image" content="https://jontidd.com/mars/figures/example_target.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
   :root {
@@ -57,7 +67,7 @@
   .col { max-width: 660px; margin-inline: auto; }
   .col > * + * { margin-top: 1.15em; }
 
-  header.post { padding-block: 64px 40px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  header.post { padding-block: 40px 40px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
   .eyebrow {
     font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
     text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
@@ -135,9 +145,15 @@
   .chart .sw.s2 { background: var(--series-2); }
   .chart path:hover { opacity: .8; }
   .credits { font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--ink-soft); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; color: var(--ink-soft); text-decoration: none; display: inline-block; padding-top: 24px; }
+  .home:hover { color: var(--accent); }
+  body { margin: 0; }
 </style>
+</head>
+<body>
 
 <div class="wrap">
+  <div class="col"><a class="home" href="/">&larr; jontidd.com</a></div>
   <header class="post">
     <div class="col">
       <p class="eyebrow">Side project</p>
@@ -168,9 +184,7 @@
     <p>There's a second reason, and it isn't a small one. I wanted to know what these AI tools can actually do now — not in a demo, on a real problem with real data and no tidy answer at the end. The interesting measurement turned out to be speed. From "I wonder if you could do this" to a working scanner streaming NASA imagery, running validation experiments and handing me a scored shortlist took about two days. Not two days of my full attention, either. That number would have been months not long ago, and I don't think most people have updated for it yet.</p>
 
     <p>And a third reason, which is really the first. I want my kids in on this. Not watching me work — actually doing the part that matters, which is looking at pictures of another planet and deciding which ones look strange. The machine hands back a hundred candidates and a human has to judge them. That's a job a curious eight-year-old can do, and it comes with the best lesson science has to offer: form an opinion, then let the evidence tell you you were wrong.</p>
-  </div>
 
-  <div class="col">
     <h2>How it works, briefly</h2>
 
     <p>Nothing is stored in bulk. The HiRISE images live on USGS servers in Amazon's cloud, and the global CTX mosaic is served as map tiles; the scanner pulls only the pixels it needs for the patch it's currently measuring, at only the zoom level it needs. My laptop stores measurements, not photographs.</p>
@@ -264,17 +278,15 @@
 
     <h3>The full breakdown, by shape, size and wear</h3>
 
-    <p>The chart above rolls everything up into three wear buckets. Here's every combination separately — four shapes, four sizes, three wear levels, each shown as its percentile rank against every other scanned cell (100 = came out on top):</p>
+    <p>The chart above rolls everything up into three wear buckets. Here's every combination separately — each shape at each size and level of wear, shown as its percentile rank against every scanned cell (100 = ranked first):</p>
   </div>
 
   <figure class="wide">
     <img src="figures/percentile_breakdown.jpg" alt="Dot plot of percentile rank for every combination of shape, size and wear level tested">
-    <figcaption>Percentile rank of each planted, weathered shape among all scanned cells in its pool, broken out by shape type, footprint size and wear level. The black tick marks the median of three trials per cell; the three dots are the individual trials (orange, red and dark-red shading indicates trial number, not a data value). Large, crisp shapes cluster near the top-1% line; small and heavily worn ones scatter down toward chance.</figcaption>
+    <figcaption>Percentile rank of each planted, weathered shape among all scanned cells, by shape, footprint size and wear. Each dot is one trial, shaded by wear (darkest = light wear, lightest = heavy); the black tick is their average. Dashed line: the top 1%.</figcaption>
   </figure>
 
   <div class="col">
-    <p>The pattern holds up close: size dominates. Almost everything at 1,800 m clears the top-1% line regardless of wear; almost everything at 200 m struggles to, even lightly worn. Wear matters at the margins, but footprint size is doing most of the work here — which is exactly what you'd expect from a detector that's fundamentally counting pixels of straight edge.</p>
-
     <h2>Then I pointed it at 235,000 km² and looked at what came back</h2>
 
     <div class="stats">
