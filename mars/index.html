@@ -1,0 +1,372 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Looking for Straight Lines on Mars — Jon Tidd</title>
+<meta name="description" content="Can I train a model to locate evidence of an ancient civilization on Mars? A weekend-scale search of NASA imagery, and an honest account of what the detector can and can't see.">
+<meta property="og:title" content="Looking for Straight Lines on Mars">
+<meta property="og:description" content="Can I train a model to locate evidence of an ancient civilization on Mars?">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jontidd.com/mars/">
+<meta property="og:image" content="https://jontidd.com/mars/figures/example_target.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+  :root {
+    --paper: #fcfbf9;
+    --ink: #16181c;
+    --ink-soft: #4c535e;
+    --rule: #dcd8d1;
+    --panel: #f4f2ee;
+    --accent: #9c3a2c;
+    --good: #2f6f52;
+    --series-1: #2a78d6;
+    --series-2: #eb6834;
+    --serif: "Newsreader", Georgia, "Times New Roman", serif;
+    --mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #121316;
+      --ink: #eceae6;
+      --ink-soft: #a3a8b0;
+      --rule: #2e3137;
+      --panel: #1a1c20;
+      --accent: #e0745f;
+      --good: #6bbf95;
+      --series-1: #3987e5;
+      --series-2: #d95926;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #121316;
+    --ink: #eceae6;
+    --ink-soft: #a3a8b0;
+    --rule: #2e3137;
+    --panel: #1a1c20;
+    --accent: #e0745f;
+    --good: #6bbf95;
+    --series-1: #3987e5;
+    --series-2: #d95926;
+    color-scheme: dark;
+  }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-size: 19px;
+    line-height: 1.62;
+    padding-block: 0 96px;
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .wrap { max-width: 1040px; margin: 0 auto; }
+  .col { max-width: 660px; margin-inline: auto; }
+  .col > * + * { margin-top: 1.15em; }
+
+  header.post { padding-block: 40px 40px; border-bottom: 1px solid var(--rule); margin-bottom: 40px; }
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .14em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 18px;
+  }
+  h1 {
+    font-size: clamp(34px, 6vw, 54px); line-height: 1.08; font-weight: 600;
+    letter-spacing: -.015em; margin: 0; text-wrap: balance;
+  }
+  .dek { font-size: 21px; color: var(--ink-soft); margin-top: 20px; text-wrap: pretty; }
+  .byline { font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); margin-top: 26px; }
+
+  h2 {
+    font-size: 27px; font-weight: 600; letter-spacing: -.01em; line-height: 1.2;
+    margin-top: 2.4em; text-wrap: balance;
+  }
+  h3 { font-size: 20px; font-weight: 600; margin-top: 2em; }
+  p { margin: 0; }
+  a { color: var(--accent); text-underline-offset: 3px; }
+  strong { font-weight: 600; }
+
+  figure { margin: 40px 0; }
+  figure img { display: block; width: 100%; height: auto; border: 1px solid var(--rule); }
+  figcaption {
+    font-family: var(--mono); font-size: 12.5px; line-height: 1.55;
+    color: var(--ink-soft); margin-top: 10px; max-width: 660px;
+  }
+  figure.wide { margin-inline: auto; }
+
+  .stats {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px; background: var(--rule); border: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+  .stat { background: var(--paper); padding: 16px 18px; }
+  .stat b {
+    display: block; font-family: var(--mono); font-size: 25px; font-weight: 500;
+    letter-spacing: -.02em; font-variant-numeric: tabular-nums;
+  }
+  .stat span { font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-soft); }
+
+  .tablewrap { overflow-x: auto; margin: 30px 0; }
+  table { border-collapse: collapse; width: 100%; font-family: var(--mono); font-size: 14px; }
+  th, td { text-align: left; padding: 9px 14px 9px 0; border-bottom: 1px solid var(--rule); vertical-align: top; }
+  th { font-weight: 500; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-soft); }
+  td.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  blockquote {
+    margin: 32px 0; padding: 18px 22px; background: var(--panel);
+    border-left: 2px solid var(--accent); font-size: 18px;
+  }
+  .note {
+    font-family: var(--mono); font-size: 13.5px; line-height: 1.6;
+    background: var(--panel); padding: 18px 20px; margin: 32px 0;
+  }
+  ul, ol { margin: 0; padding-left: 1.25em; }
+  li + li { margin-top: .5em; }
+  code { font-family: var(--mono); font-size: .86em; background: var(--panel); padding: 1px 5px; }
+  hr { border: 0; border-top: 1px solid var(--rule); margin: 56px 0; }
+  .sig { font-family: var(--mono); font-size: 13px; color: var(--ink-soft); }
+
+  .chart .legend { display: flex; flex-wrap: wrap; gap: 8px 20px; font-family: var(--mono); font-size: 12.5px; color: var(--ink-soft); margin-bottom: 10px; max-width: 660px; }
+  .chart .legend span { display: inline-flex; align-items: center; gap: 8px; }
+  .chart .sw { width: 12px; height: 12px; border-radius: 2px; display: inline-block; }
+  .chart .panels { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 16px 28px; }
+  .chart svg { width: 100%; height: auto; display: block; overflow: visible; }
+  .chart .ct { font-family: var(--mono); font-size: 12.5px; font-weight: 500; fill: var(--ink); }
+  .chart .tick, .chart .val, .chart .chl { font-family: var(--mono); font-size: 11px; fill: var(--ink-soft); }
+  .chart .val { fill: var(--ink); }
+  .chart .grid { stroke: var(--rule); stroke-width: 1; }
+  .chart .axis { stroke: var(--ink-soft); stroke-width: 1; }
+  .chart .chance { stroke: var(--ink-soft); stroke-width: 1.5; stroke-dasharray: 4 4; }
+  .chart .s1 { fill: var(--series-1); }
+  .chart .s2 { fill: var(--series-2); }
+  .chart .sw.s1 { background: var(--series-1); }
+  .chart .sw.s2 { background: var(--series-2); }
+  .chart path:hover { opacity: .8; }
+  .credits { font-family: var(--mono); font-size: 12px; line-height: 1.6; color: var(--ink-soft); }
+  .home { font-family: var(--mono); font-size: 12.5px; letter-spacing: .04em; color: var(--ink-soft); text-decoration: none; display: inline-block; padding-top: 24px; }
+  .home:hover { color: var(--accent); }
+  body { margin: 0; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="col"><a class="home" href="/">&larr; jontidd.com</a></div>
+  <header class="post">
+    <div class="col">
+      <p class="eyebrow">Side project</p>
+      <h1>Looking for Straight Lines on Mars</h1>
+      <p class="dek">Can I train a model to locate evidence of an ancient civilization on Mars?</p>
+      <p class="byline">Jon Tidd · September 2026</p>
+    </div>
+  </header>
+
+  <figure class="wide">
+    <img src="figures/example_target.jpg" alt="Mars Orbiter Camera image of a flat-topped block with sharply angled edges">
+    <figcaption>The reference example: a flat-topped block with edges meeting at sharp angles, from Mars Orbiter Camera image E10-00462. This is the shape I handed the system and said: find me things like this. Image: NASA/JPL/Malin Space Science Systems.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>That's the shape that started this — photographed by Mars Global Surveyor. There's very probably a boring explanation. But it's exactly the kind of thing I wanted a machine to notice on its own.</p>
+
+    <h2>Why I'm doing this</h2>
+
+    <p>I've always liked the detective side of archaeology — the digging, the arguing over what a shape in the ground means, the possibility that someone was here before and left something behind. On Earth that requires permits and a shovel. Mars is the odd case where the digging has already been done: we have photographed essentially the entire planet, the images are free to anyone, and almost nobody has looked at most of them.</p>
+
+    <p>Here's my position. I think the probability of finding evidence of an ancient civilization on Mars is extremely low. I also think it isn't zero. When checking costs a few weekends and some cloud credits, "extremely low but not zero" is reason enough to go and look.</p>
+
+    <blockquote>Nearly all of Mars is photographed at about 6 metres per pixel, and a few percent of it at 25 to 50 centimetres. Can computer vision sweep that library, flag the places whose geometry is hard to explain by wind, water or impacts, and hand back a short list worth a scientist's afternoon?</blockquote>
+
+    <p>That's a search problem, not a belief. A search either finds something or lowers the odds for the ground it covered, and both are worth having. Right now nobody can tell you either way, which is the part I find hard to leave alone.</p>
+
+    <p>There's a second reason, and it isn't a small one. I wanted to know what these AI tools can actually do now — not in a demo, on a real problem with real data and no tidy answer at the end. The interesting measurement turned out to be speed. From "I wonder if you could do this" to a working scanner streaming NASA imagery, running validation experiments and handing me a scored shortlist took about two days. Not two days of my full attention, either. That number would have been months not long ago, and I don't think most people have updated for it yet.</p>
+
+    <p>And a third reason, which is really the first. I want my kids in on this. Not watching me work — actually doing the part that matters, which is looking at pictures of another planet and deciding which ones look strange. The machine hands back a hundred candidates and a human has to judge them. That's a job a curious eight-year-old can do, and it comes with the best lesson science has to offer: form an opinion, then let the evidence tell you you were wrong.</p>
+
+    <h2>How it works, briefly</h2>
+
+    <p>Nothing is stored in bulk. The HiRISE images live on USGS servers in Amazon's cloud, and the global CTX mosaic is served as map tiles; the scanner pulls only the pixels it needs for the patch it's currently measuring, at only the zoom level it needs. My laptop stores measurements, not photographs.</p>
+
+    <p>Mars gets cut into fixed cells — about 1.2 kilometres across for the wide sweep on the 6-metre mosaic, about 300 metres for close-up work on HiRISE. Every cell that gets scanned is logged, so the system can always tell me how much of the planet has been looked at and with which camera. If I close the lid, it picks up where it stopped.</p>
+
+    <p>For each cell it asks a handful of statistical questions. Do the edges here fall into two families about 90° apart, rather than one? Do long straight edges actually meet at corners? Are there parallel walls? And a question that subtracts rather than adds: is this just a dune field, where everything runs one way, which is organised but thoroughly ordinary?</p>
+
+    <p>Then, for the short list only, it spends real effort: it pulls the 3D terrain model if one exists, and it pulls other photographs of the same ground taken years apart with the sun in a different place. A shape that evaporates under different lighting was never a shape.</p>
+
+    <h2>Three illusions it had to learn to ignore</h2>
+
+    <p>The first version of this was useless, and it was useless in an instructive way. Each of its top "discoveries" turned out to be an artifact of how the pictures are made.</p>
+
+    <p><strong>The camera's own stripes.</strong> HiRISE images carry faint streaks running along the spacecraft's flight path. They're long, perfectly straight, and they cross the natural rock layering at almost exactly 90°. To a right-angle detector, that's a jackpot. My first two candidates were both this.</p>
+  </div>
+
+  <figure class="wide">
+    <img src="figures/destripe.jpg" alt="Raw HiRISE image, the same image after removing detector streaks, and the streak pattern that was removed">
+    <figcaption>Left: raw HiRISE. Middle: the same ground after the correction. Right: the difference between the two, which is the streak pattern itself — slightly tilted because it follows the spacecraft's track, not the map grid. The fix rotates each image into that flight frame and subtracts a long running median along it. Image: NASA/JPL/University of Arizona.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p><strong>The sun.</strong> When the sun is low, a slope facing it is bright and a slope facing away is dark, while anything running along the sun's direction barely registers. So every image arrives with a built-in preferred direction, and a naive detector reads that as alignment across the entire picture. The scanner now measures each cell against the direction pattern of the terrain around it, so it only scores when it disagrees with its neighbourhood.</p>
+
+    <p><strong>The seams.</strong> The global mosaic is stitched from about 110,000 separate photographs, and where they don't quite meet there's a wedge of near-black filler with a dead straight edge. Beautifully artificial. Entirely a filing artifact.</p>
+  </div>
+
+  <figure style="max-width:480px;margin-inline:auto">
+    <img src="figures/seam.jpg" alt="A black wedge of missing data in the Mars mosaic with perfectly straight edges">
+    <figcaption>A mosaic seam: missing data, filled black, with edges straighter than anything geology makes. It ranked first in an early run. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h2>Proving it works, when there's nothing to test against</h2>
+
+    <p>Here's the awkward part of this whole enterprise. There is no confirmed artificial structure on Mars, so there's nothing to check the detector against. You can't measure a hit rate with zero known hits.</p>
+
+    <p>The way out is to plant things. I take real Mars imagery, paste a known structure into a copy in memory, and measure how highly it ranks against the ordinary cells around it. Walled rectangles, L-shaped corners, grids of foundations, pyramids.</p>
+
+    <p>Except that fresh, crisp shapes are a cheat. Anything actually out there has had a very long time to fall apart. So every planted shape gets weathered first: edges bend and wander, corners go off square by up to 12°, whole wall sections are missing, faces slump, one side gets half-buried in drift, and the entire thing is rounded off.</p>
+  </div>
+
+  <figure class="wide">
+    <img src="figures/weathering.jpg" alt="Grid of planted test shapes at four levels of weathering">
+    <figcaption>Planted test shapes at four levels of wear. Columns: walled rectangle, L-shaped corner, foundation grid, pyramid. The background is deliberately hard: a crater wall streaked top to bottom, the kind of ground that fools the detector on its own. Look at the L in the top row — only one of its two arms is visible, because the other runs along the sun's direction and throws no shadow. That's physics, and no amount of clever code gets it back. Background: HiRISE ESP_092658_1325, NASA/JPL/University of Arizona.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>A planted shape covers several cells, so it gets credit for the best of them. Scored the same way — best cell out of a 3×3 patch — a random location with nothing planted still lands in the top 1% about 7% of the time. That, not 1%, is the bar to beat.</p>
+
+    <p>The first round of tests planted 75 shapes into 25 random HiRISE images and ranked each one against the roughly 1,300 ordinary cells of those images:</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Wear level</th><th>Reached top 1%</th><th>Reached top 5%</th><th>Ranked #1</th></tr></thead>
+        <tbody>
+          <tr><td>Light</td><td class="num">8 of 25</td><td class="num">10 of 25</td><td class="num">3 of 25</td></tr>
+          <tr><td>Moderate</td><td class="num">6 of 25</td><td class="num">11 of 25</td><td class="num">3 of 25</td></tr>
+          <tr><td>Heavy</td><td class="num">4 of 25</td><td class="num">11 of 25</td><td class="num">1 of 25</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>Against a 7% chance rate, light and moderate wear are clearly better than luck. Heavy wear, at 4 of 25, isn't — you'd see a result that good by chance about one time in eleven. For ruins that are badly worn down, this detector does no better than luck yet, and I'd rather say so than round it up.</p>
+
+    <p>Walls and grid layouts do well. Lone corners and pyramids do badly. The pyramid failure is worth stating plainly, because a pyramid is easy for a person to see from above — two faces lit, two in shadow. It just doesn't look like what the detector measures: four diagonal ridges meeting at a point, not walls meeting at corners. Only 1 of 18 planted pyramids made the top 1% from imagery alone.</p>
+
+    <p>So I ran the same experiment in three dimensions, planting pyramids into real elevation models and ranking them against 2,572 patches of natural terrain — hills, mesas, crater rims, ridges. There, <strong>27 of 36 weathered pyramids landed in the top 1%</strong>, against a 3.3% chance baseline.</p>
+
+    <p>Which gives a clean division of labour: flat imagery finds walls and layouts, elevation data finds pyramids, and anything badly degraded needs both plus a second photograph taken under a different sun.</p>
+
+    <h3>The test that matches what I actually reviewed</h3>
+
+    <p>That first round has two gaps, and a careful reader will spot both. It used HiRISE images, but the regional sweep below ran on the 6-metre CTX mosaic. And "top 1%" of a whole region is thousands of cells; I only ever looked at the top 100. So I reran it on the real thing: 25 random blocks of the 6-metre CTX mosaic from Terra Sabaea itself, re-measured with today's code — about 2,400 ordinary cells — and 72 weathered shapes (walls, corners, grids and pyramids at 450, 900 and 1,800 metres) planted and ranked exactly the same way.</p>
+
+    <figure class="wide chart" id="planted-chart">
+  <div class="legend"><span><i class="sw s2"></i>HiRISE test (1–6 m pixels, 75 shapes)</span><span><i class="sw s1"></i>CTX test (6 m mosaic, the camera the sweep used, 72 shapes)</span></div>
+  <div class="panels">
+    <svg viewBox="0 0 300 242" role="img" aria-label="Reached the top 1%"><text x="0" y="16" class="ct">Reached the top 1%</text><text x="0" y="31" class="chl">- - - chance: about 7%</text><line x1="34" x2="292" y1="208.0" y2="208.0" class="grid"/><text x="28" y="212.0" class="tick" text-anchor="end">0%</text><line x1="34" x2="292" y1="169.0" y2="169.0" class="grid"/><text x="28" y="173.0" class="tick" text-anchor="end">10%</text><line x1="34" x2="292" y1="130.0" y2="130.0" class="grid"/><text x="28" y="134.0" class="tick" text-anchor="end">20%</text><line x1="34" x2="292" y1="91.0" y2="91.0" class="grid"/><text x="28" y="95.0" class="tick" text-anchor="end">30%</text><line x1="34" x2="292" y1="52.0" y2="52.0" class="grid"/><text x="28" y="56.0" class="tick" text-anchor="end">40%</text><path d="M53.5,208.0 V87.2 Q53.5,83.2 57.5,83.2 H71.5 Q75.5,83.2 75.5,87.2 V208.0 Z" class="s2"><title>HiRISE test, light wear: 8 of 25</title></path><text x="64.5" y="78.2" class="val" text-anchor="middle">8/25</text><path d="M78.5,208.0 V163.2 Q78.5,159.2 82.5,159.2 H96.5 Q100.5,159.2 100.5,163.2 V208.0 Z" class="s1"><title>CTX test, light wear: 3 of 24</title></path><text x="89.5" y="154.2" class="val" text-anchor="middle">3/24</text><text x="77.0" y="226.0" class="tick" text-anchor="middle">light</text><path d="M139.5,208.0 V118.4 Q139.5,114.4 143.5,114.4 H157.5 Q161.5,114.4 161.5,118.4 V208.0 Z" class="s2"><title>HiRISE test, moderate wear: 6 of 25</title></path><text x="150.5" y="109.4" class="val" text-anchor="middle">6/25</text><path d="M164.5,208.0 V130.8 Q164.5,126.8 168.5,126.8 H182.5 Q186.5,126.8 186.5,130.8 V208.0 Z" class="s1"><title>CTX test, moderate wear: 5 of 24</title></path><text x="175.5" y="121.8" class="val" text-anchor="middle">5/24</text><text x="163.0" y="226.0" class="tick" text-anchor="middle">moderate</text><path d="M225.5,208.0 V149.6 Q225.5,145.6 229.5,145.6 H243.5 Q247.5,145.6 247.5,149.6 V208.0 Z" class="s2"><title>HiRISE test, heavy wear: 4 of 25</title></path><text x="236.5" y="140.6" class="val" text-anchor="middle">4/25</text><path d="M250.5,208.0 V163.2 Q250.5,159.2 254.5,159.2 H268.5 Q272.5,159.2 272.5,163.2 V208.0 Z" class="s1"><title>CTX test, heavy wear: 3 of 24</title></path><text x="261.5" y="154.2" class="val" text-anchor="middle">3/24</text><text x="249.0" y="226.0" class="tick" text-anchor="middle">heavy</text><line x1="34" x2="292" y1="181.9" y2="181.9" class="chance"/><line x1="34" x2="292" y1="208.0" y2="208.0" class="axis"/></svg>
+    <svg viewBox="0 0 300 242" role="img" aria-label="Ranked #1 in its pool"><text x="0" y="16" class="ct">Ranked #1 in its pool</text><text x="0" y="31" class="chl">- - - chance: under 1%</text><line x1="34" x2="292" y1="208.0" y2="208.0" class="grid"/><text x="28" y="212.0" class="tick" text-anchor="end">0%</text><line x1="34" x2="292" y1="169.0" y2="169.0" class="grid"/><text x="28" y="173.0" class="tick" text-anchor="end">10%</text><line x1="34" x2="292" y1="130.0" y2="130.0" class="grid"/><text x="28" y="134.0" class="tick" text-anchor="end">20%</text><line x1="34" x2="292" y1="91.0" y2="91.0" class="grid"/><text x="28" y="95.0" class="tick" text-anchor="end">30%</text><line x1="34" x2="292" y1="52.0" y2="52.0" class="grid"/><text x="28" y="56.0" class="tick" text-anchor="end">40%</text><path d="M53.5,208.0 V165.2 Q53.5,161.2 57.5,161.2 H71.5 Q75.5,161.2 75.5,165.2 V208.0 Z" class="s2"><title>HiRISE test, light wear: 3 of 25</title></path><text x="64.5" y="156.2" class="val" text-anchor="middle">3/25</text><text x="89.5" y="203.0" class="val" text-anchor="middle">0/24</text><text x="77.0" y="226.0" class="tick" text-anchor="middle">light</text><path d="M139.5,208.0 V165.2 Q139.5,161.2 143.5,161.2 H157.5 Q161.5,161.2 161.5,165.2 V208.0 Z" class="s2"><title>HiRISE test, moderate wear: 3 of 25</title></path><text x="150.5" y="156.2" class="val" text-anchor="middle">3/25</text><text x="175.5" y="203.0" class="val" text-anchor="middle">0/24</text><text x="163.0" y="226.0" class="tick" text-anchor="middle">moderate</text><path d="M225.5,208.0 V196.4 Q225.5,192.4 229.5,192.4 H243.5 Q247.5,192.4 247.5,196.4 V208.0 Z" class="s2"><title>HiRISE test, heavy wear: 1 of 25</title></path><text x="236.5" y="187.4" class="val" text-anchor="middle">1/25</text><text x="261.5" y="203.0" class="val" text-anchor="middle">0/24</text><text x="249.0" y="226.0" class="tick" text-anchor="middle">heavy</text><line x1="34" x2="292" y1="206.5" y2="206.5" class="chance"/><line x1="34" x2="292" y1="208.0" y2="208.0" class="axis"/></svg>
+  </div>
+  <figcaption>Share of planted, weathered shapes that reached each level, by wear. Dashed line: how often a random spot with nothing planted gets there by the same best-of-3×3 rule. Pools: about 2,400 ordinary cells for CTX, 1,300 for HiRISE. Ranked #1 is the closest match to the depth I actually reviewed (the top 100 of about 192,000 cells, or top 0.05%).</figcaption>
+</figure>
+
+    <p>The answer is sobering. On the mosaic, 11 of 72 planted shapes reached the top 1% — 15% against a 7% chance rate, so the detector is picking something up, but not much. <strong>None of the 72 ranked first in its pool</strong>, and first out of 2,400 is the level that matches the list I actually reviewed (the top 100 of 192,000). Put plainly: if a weathered ruin with low walls sat in Terra Sabaea, the odds it made my top 100 were poor.</p>
+
+    <p>It isn't a broken test. As a control I planted fresh, six-metre-tall walls and grids into the same images, and 8 of 12 ranked first. The difference is height and wear. The walls I planted as "realistic" stand 1.5 to 5 metres, which at 6 metres per pixel is a pixel or two of shadow, and weathering blurs even that. So the 6-metre sweep is a coarse net: it catches big, tall, crisp things. Anything low or worn needs HiRISE, where the same detector does noticeably better.</p>
+
+    <p>As a sanity check I also ran two features people already argue about. The Cydonia "Face" came out 3rd of 529 cells in the test pool. The mound on Syrtis Major that HiRISE itself catalogues as "pyramidal" came 14th. Neither is evidence of anything — both have ordinary geological explanations — but a detector that shrugged at them would be suspect. It also tells me something less flattering: the Face is a mesa, so the detector likes mesas, and I then pointed it at a region full of them. That's a bias I have to watch.</p>
+
+    <h3>The full breakdown, by shape, size and wear</h3>
+
+    <p>The chart above rolls everything up into three wear buckets. Here's every combination separately — each shape at each size and level of wear, shown as its percentile rank against every scanned cell (100 = ranked first):</p>
+  </div>
+
+  <figure class="wide">
+    <img src="figures/percentile_breakdown.jpg" alt="Dot plot of percentile rank for every combination of shape, size and wear level tested">
+    <figcaption>Percentile rank of each planted, weathered shape among all scanned cells, by shape, footprint size and wear. Each dot is one trial, shaded by wear (darkest = light wear, lightest = heavy); the black tick is their average. Dashed line: the top 1%.</figcaption>
+  </figure>
+
+  <div class="col">
+    <h2>Then I pointed it at 235,000 km² and looked at what came back</h2>
+
+    <div class="stats">
+      <div class="stat"><b>235,065</b><span>km² swept</span></div>
+      <div class="stat"><b>0.16%</b><span>of Mars, so far</span></div>
+      <div class="stat"><b>192,299</b><span>cells measured</span></div>
+      <div class="stat"><b>2.6 h</b><span>of laptop scanning</span></div>
+    </div>
+
+    <p>That's a region of Terra Sabaea, chosen because it's full of flat-topped mesas like the one that started this. (A smaller patch around Cydonia, about 17,600 km², was scanned separately for the sanity check above.) The system produced its top 100 and built them into a single page I could scroll through and score: interesting, maybe, or natural.</p>
+
+    <p>I scored all 100. Four interesting, eight maybe, eighty-eight natural.</p>
+  </div>
+
+  <figure class="wide">
+    <img src="figures/labels_example.jpg" alt="Eight Mars image tiles with scale bars, four marked interesting and four marked natural">
+    <figcaption>My actual scoring; each tile is about 3.6 km across, north up. Top row, the four I flagged as interesting: faint straight lineations crossing a textured plain; a patch of the maze-like texture geologists call brain terrain, which is almost certainly ice-related and natural; an elongated, round-ended rim on an old crater floor (below); and faint parallel grooves. Bottom row: four of the eighty-eight I rejected — two crater walls, a scarp, and a fresh impact crater. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>Eighty-eight rejections sounds like failure. It isn't, quite. Look at that bottom row and you'll see the pattern immediately: they're craters. And craters are a hard case, not a bug.</p>
+
+    <p>Dark streaks run straight down the inside of a crater wall — mostly slope streaks, small dust avalanches, with the odd gully. The rim and the rock layers run across them. Those two things meet at real right angles. A crater is not fooling my detector with a fake pattern — it is producing an authentic right-angle pattern with a completely ordinary cause.</p>
+
+    <p>I tried three different ways to reject craters automatically: voting for curvature in the edges, fitting circles to them, and testing whether the pattern radiates from a point rather than sitting on a grid. All three failed. None could separate a crater from a planted structure without also throwing away real ones. I've left that failure in the write-up rather than quietly deleting it, because it changed the design.</p>
+
+    <p>If a rule can't do it, the scoring has to learn it from a human. That's what my 88 rejections are for. The system now models what I reject and pushes anything similar down the list. Four "interesting" is far too few to learn what I'm looking <em>for</em> — but eighty-eight rejections is plenty to learn what bores me.</p>
+
+    <p>That has its own risk: a model trained on what bores me in one region could quietly bury something real that happens to sit on a crater wall. So every round, I also hand-check a random sample of what it pushed down.</p>
+
+    <p>The rest of the tuning so far has been less glamorous. Tiny scraps of rough texture, eight pixels long, were being counted as walls, so the minimum wall length now scales with pixel size: 150 metres on the 6-metre mosaic, 50 metres on HiRISE.</p>
+
+    <h3>The one I keep coming back to</h3>
+  </div>
+
+  <figure class="wide">
+    <img src="figures/candidate_3013N_2387E.jpg" alt="Context and close-up views of an elongated round-ended rim at 30.13 degrees north, 23.87 degrees east">
+    <figcaption>30.13°N 23.87°E, north up. Left: 9 km of context — the feature sits on the floor of an old, degraded crater. Right: a close-up of the orange box. The straight band crossing the upper right of the context view is a seam between mosaic tiles, not terrain. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
+  </figure>
+
+  <div class="col">
+    <p>It's an elongated rim with a rounded end, about a kilometre long, sitting on the floor of an old crater. There are several ordinary ways to make something like this — an inverted channel, the edge of a debris lobe, a ridge along a buried fracture. What there isn't, yet, is a second look. No HiRISE image covers it, there's no terrain model, and no other photograph under a different sun. At 6 metres per pixel, that's as far as the evidence goes.</p>
+
+    <p>That's fixable: HiRISE takes public suggestions for where to point next through its HiWish programme, and this is going in as a request.</p>
+
+    <h2>Where it stands</h2>
+
+    <p>0.16% of Mars swept at 6 metres per pixel. One region. A hundred candidates scored by hand.</p>
+
+    <p>The close-up pass has finished too: all 136 HiRISE images covering the same region, at 1 metre per pixel — six times finer, which matters because the detector ignores any straight edge shorter than 150 metres on the 6-metre mosaic, and the small stuff is what I'm most curious about. That produced 115,417 cells of about 300 metres. I've scored its top 100 as well: six interesting, thirteen maybe, eighty-one natural.</p>
+
+    <p>Nothing found so far makes me reach for the phone. The most interesting thing to come out of it is a sharpened sense of how much geology looks designed when you sample enough of it. Which is its own kind of answer, and a good thing to be able to show the kids before we start scoring images together.</p>
+
+    <h2>What's next, and what it would cost</h2>
+
+    <p>Three things need doing before scaling up. Shadow measurement, so a wall can be distinguished from a dark stripe painted on the ground by its shadow length — which is the only practical way to get height for small features, since elevation models are too coarse. More scored candidates from me, so the learned side has something to work with. And a second region with different geology, so it isn't just learning one district's craters.</p>
+
+    <p>Then it's a question of raw compute. Here's the arithmetic, from measured scanning speeds (about 1,000–1,500 km² per minute per worker on the mosaic):</p>
+
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Sweep the whole planet at 6 m/px</th><th class="num">Time</th><th class="num">Cost</th></tr></thead>
+        <tbody>
+          <tr><td>My Mac Mini, four workers, running flat out</td><td class="num">~3–4 weeks</td><td class="num">electricity</td></tr>
+          <tr><td>One 32-core cloud machine</td><td class="num">~4 days</td><td class="num">~$30–60</td></tr>
+          <tr><td>Four of them in parallel</td><td class="num">~1 day</td><td class="num">~$30–60</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p>The cost barely moves when you add machines, because you're buying core-hours either way. A day versus a month for the same money is not a difficult decision. Two things the table leaves out. The mosaic is currently read from a free public tile service, and a whole-planet sweep would pull several terabytes from it — not a fair use of a free service — so that run has to go against my own copy of the mosaic, which Caltech distributes freely. And the high-resolution pass over the full HiRISE archive, about 200,000 observations with a lot of overlap, is a much bigger job: roughly a month on one cloud machine for $200–400, or the better part of half a year on the Mac Mini.</p>
+
+    <p>What's holding me back from spending it isn't the money. It's that a faster scanner at today's precision just generates a longer list of craters. Speed multiplies whatever the detector is worth, so the detector has to be worth something first — and on the 6-metre mosaic, the test above says it isn't yet.</p>
+
+    <hr>
+
+    <p class="sig">The code, the validation experiments and the raw numbers are all sitting in a folder on my desk. If you work on planetary imaging and want to tell me what I've got wrong, I'd like to hear it.</p>
+
+    <p class="credits">Image credits: HiRISE — NASA/JPL/University of Arizona. CTX and MOC — NASA/JPL/Malin Space Science Systems. Global CTX mosaic — Caltech Murray Lab (Dickson et al.). Elevation models — USGS Astrogeology.</p>
+  </div>
+</div>
+
+</body></html>
