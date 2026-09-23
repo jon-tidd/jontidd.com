@@ -85,12 +85,6 @@
     color: var(--ink-soft); margin-top: 10px; max-width: 660px;
   }
   figure.wide { margin-inline: auto; }
-  .pending {
-    display: flex; align-items: center; justify-content: center;
-    min-height: 160px; border: 1px dashed var(--rule); background: var(--panel);
-    font-family: var(--mono); font-size: 13px; color: var(--ink-soft);
-    letter-spacing: .04em; text-align: center; padding: 20px;
-  }
 
   .stats {
     display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
@@ -205,8 +199,8 @@
     <p><strong>The seams.</strong> The global mosaic is stitched from about 110,000 separate photographs, and where they don't quite meet there's a wedge of near-black filler with a dead straight edge. Beautifully artificial. Entirely a filing artifact.</p>
   </div>
 
-  <figure class="wide">
-    <div class="pending">figure pending — mosaic seam example<br>(figures/seam.jpg)</div>
+  <figure style="max-width:480px;margin-inline:auto">
+    <img src="figures/seam.jpg" alt="A black wedge of missing data in the Mars mosaic with perfectly straight edges">
     <figcaption>A mosaic seam: missing data, filled black, with edges straighter than anything geology makes. It ranked first in an early run. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
   </figure>
 
@@ -296,7 +290,7 @@
   </div>
 
   <figure class="wide">
-    <div class="pending">figure pending — scored example tiles, interesting vs. natural<br>(figures/labels_example.jpg)</div>
+    <img src="figures/labels_example.jpg" alt="Eight Mars image tiles with scale bars, four marked interesting and four marked natural">
     <figcaption>My actual scoring; each tile is about 3.6 km across, north up. Top row, the four I flagged as interesting: faint straight lineations crossing a textured plain; a patch of the maze-like texture geologists call brain terrain, which is almost certainly ice-related and natural; an elongated, round-ended rim on an old crater floor (below); and faint parallel grooves. Bottom row: four of the eighty-eight I rejected — two crater walls, a scarp, and a fresh impact crater. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
   </figure>
 
@@ -317,7 +311,7 @@
   </div>
 
   <figure class="wide">
-    <div class="pending">figure pending — candidate at 30.13°N 23.87°E<br>(figures/candidate_3013N_2387E.jpg)</div>
+    <img src="figures/candidate_3013N_2387E.jpg" alt="Context and close-up views of an elongated round-ended rim at 30.13 degrees north, 23.87 degrees east">
     <figcaption>30.13°N 23.87°E, north up. Left: 9 km of context — the feature sits on the floor of an old, degraded crater. Right: a close-up of the orange box. The straight band crossing the upper right of the context view is a seam between mosaic tiles, not terrain. CTX mosaic: NASA/JPL/MSSS, Caltech Murray Lab.</figcaption>
   </figure>
 
