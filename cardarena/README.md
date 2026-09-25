@@ -24,6 +24,8 @@ This folder is the spec. It is written to be built from directly.
 | [DECISIONS.md](DECISIONS.md) | Why the spec is the way it is: 24 decisions, each with the alternative rejected, the reasoning, and what would change my mind |
 | [RESEARCH-PROMPT-start.md](RESEARCH-PROMPT-start.md) | **Paste-ready prompt to get building this week**: honest Cursor verdict, tool comparison decided not surveyed, one-evening setup checklist, and a refinement pass on the four nights |
 | [RESEARCH-PROMPT-cost.md](RESEARCH-PROMPT-cost.md) | A paste-ready prompt for other models: research the current landscape and return a model-routing plan for building this at lowest cost |
+| [CLOUD-KICKOFF.md](CLOUD-KICKOFF.md) | **Away from the Mac?** Hand Night 1 to a Cursor cloud agent from your phone: 5 steps and one paste-ready prompt. Says plainly what the cloud can and cannot build |
+| [RULES.md](RULES.md) | The always-loaded agent rules — copy verbatim to `AGENTS.md` and `.cursorrules` at the engine repo root |
 | [SETUP.md](SETUP.md) | **Start here.** First-time setup, step by step: Unity/Xcode downloads, Cursor install and Pro+ redemption, repo creation, model choice, OpenRouter (later), and the Unity/iPad prerequisites that stall night 2 |
 | [HANDOFF.md](HANDOFF.md) | Running this build in another tool: setup, kickoff prompt, always-loaded rules, per-milestone prompts, the two risk spikes |
 | [COST-CALIBRATION.md](COST-CALIBRATION.md) | Measuring real agent spend: protocol, milestone weight table, extrapolation, `cost-log.csv` |

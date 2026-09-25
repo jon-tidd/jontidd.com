@@ -137,6 +137,8 @@ and produces a playable thing on your table. Part 2 is optional expansion.
 
 Save as `AGENTS.md` and `.cursorrules` at the repo root:
 
+The canonical copy lives in **[RULES.md](RULES.md)** — copy that file verbatim.
+
 ```markdown
 # CardArena — agent rules
 
