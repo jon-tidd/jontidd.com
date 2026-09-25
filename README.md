@@ -1,36 +1,27 @@
 # jontidd.com
 
-Personal portfolio for [Jon Tidd](https://jontidd.com) — AI developer building tools at the intersection of technology, classical wisdom, and human flourishing.
+Personal site for [Jon Tidd](https://jontidd.com) — AI developer building tools at the intersection of technology, classical wisdom, and human flourishing. Pure HTML/CSS/JS, no build step. Hosted on Vercel (project `jontidd-homepage`); every push to `main` deploys.
 
-**Live at [jontidd.com](https://jontidd.com)**
+## Project index
 
-## About
+Two kinds of things live at jontidd.com: **pages** that are folders in this repo, and **apps** that have their own repo and Vercel project and are proxied in through rewrites in `vercel.json`.
 
-A single-page dark-themed portfolio featuring:
+| Path | What | Where the code lives | Deploys as |
+|---|---|---|---|
+| `/` | Portfolio homepage | this repo, `index.html` | jontidd-homepage |
+| `/mars` | Mars Hunt write-up ("Looking for Straight Lines on Mars") | this repo, `mars/` — the scanner itself is [`jon-tidd/mars-hunt`](https://github.com/jon-tidd/mars-hunt) | jontidd-homepage |
+| `/fantasyengine`, `/fantasyagents` | Fantasy Engine dashboard + agents page (published by the engine) | this repo, `fantasyengine/`, `fantasyagents/` — engine code in [`jon-tidd/fantasy-engine`](https://github.com/jon-tidd/fantasy-engine) | jontidd-homepage |
+| `/floorplan/` | IGCE Plan Studio (password) | [`jon-tidd/igce`](https://github.com/jon-tidd/igce) | `igce` → rewrite |
+| `/sitescreener/` | IGCE Site Screener (password) | [`jon-tidd/igce`](https://github.com/jon-tidd/igce) | `igce` → rewrite |
+| `/battleplan`, `/projectplan` | Nova Plan | [`jon-tidd/nova-plan`](https://github.com/jon-tidd/nova-plan) | `nova-plan` → rewrite |
+| `/tiger/`, `/tylerplace/`, `/writing/`, `/familyhistory/`, `/MRIReport/` | Static pages | this repo | jontidd-homepage |
 
-- Animated star field with mouse parallax
-- 3D perspective tilt on project cards with cursor-following metallic sheen
-- Live typing demo recreating the Bedtime Virtues AI Story Forge
-- Embedded video demo of the Rudyard Library's RoboRudyard AI
-- Collapsible contact form via FormSubmit.co
-- Scroll-reveal animations via IntersectionObserver
-- Fully responsive across mobile, tablet, and desktop
+Rule of thumb: a static page you alone edit is a folder here. Anything with an API, secrets, a database, or other people editing it gets its own repo and Vercel project and a rewrite here.
 
-## Tech
-
-Pure HTML, CSS, and JavaScript — no build step, no dependencies, no framework.
-
-Hosted on GitHub Pages with custom domain via Namecheap DNS.
-
-## Projects Featured
-
-- **[Bedtime Virtues](https://virtueforge.vercel.app)** — AI-generated bedtime stories rooted in Aristotle's cardinal virtues
-- **[The Rudyard Library](https://rudyard.vercel.app)** — An explorable 3D atlas of a creator's intellectual universe
-
-## Run Locally
+## Run locally
 
 ```bash
 npx serve -l 3456 .
 ```
 
-Open [http://localhost:3456](http://localhost:3456).
+Rewrites to other projects only work on Vercel (`npx vercel dev` honors them).

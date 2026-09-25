@@ -1,49 +1,19 @@
 {
   "redirects": [
-    {
-      "source": "/familyhistory",
-      "destination": "/familyhistory/",
-      "permanent": true
-    },
-    {
-      "source": "/sitescreener",
-      "destination": "/sitescreener/",
-      "permanent": true
-    },
-    {
-      "source": "/floorplan",
-      "destination": "/floorplan/",
-      "permanent": true
-    }
+    { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true },
+    { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true },
+    { "source": "/floorplan", "destination": "/floorplan/", "permanent": true }
   ],
   "rewrites": [
-    {
-      "source": "/floorplan/api/:path*",
-      "destination": "/api/floorplan/:path*"
-    },
-    {
-      "source": "/battleplan",
-      "destination": "https://nova-plan-omega.vercel.app/"
-    },
-    {
-      "source": "/battleplan/api/:path*",
-      "destination": "https://nova-plan-omega.vercel.app/api/:path*"
-    },
-    {
-      "source": "/battleplan/:path*",
-      "destination": "https://nova-plan-omega.vercel.app/:path*"
-    },
-    {
-      "source": "/projectplan",
-      "destination": "https://nova-plan-omega.vercel.app/projectplan"
-    },
-    {
-      "source": "/projectplan/api/:path*",
-      "destination": "https://nova-plan-omega.vercel.app/api/:path*"
-    },
-    {
-      "source": "/projectplan/:path*",
-      "destination": "https://nova-plan-omega.vercel.app/projectplan/:path*"
-    }
+    { "source": "/floorplan/", "destination": "https://igce.vercel.app/floorplan/" },
+    { "source": "/floorplan/:path*", "destination": "https://igce.vercel.app/floorplan/:path*" },
+    { "source": "/sitescreener/", "destination": "https://igce.vercel.app/sitescreener/" },
+    { "source": "/sitescreener/:path*", "destination": "https://igce.vercel.app/sitescreener/:path*" },
+    { "source": "/battleplan", "destination": "https://nova-plan-omega.vercel.app/" },
+    { "source": "/battleplan/api/:path*", "destination": "https://nova-plan-omega.vercel.app/api/:path*" },
+    { "source": "/battleplan/:path*", "destination": "https://nova-plan-omega.vercel.app/:path*" },
+    { "source": "/projectplan", "destination": "https://nova-plan-omega.vercel.app/projectplan" },
+    { "source": "/projectplan/api/:path*", "destination": "https://nova-plan-omega.vercel.app/api/:path*" },
+    { "source": "/projectplan/:path*", "destination": "https://nova-plan-omega.vercel.app/projectplan/:path*" }
   ]
 }
