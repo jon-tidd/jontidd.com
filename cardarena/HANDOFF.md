@@ -191,6 +191,11 @@ Aider has this built in: `--editor-model` splits architect from editor, so a str
 designs and writes the checks while a cheap one implements against them. If your harness
 offers that split, use it here.
 
+## Definition of done for a milestone
+Every acceptance criterion in `spec/BUILD-PLAN.md` for that milestone, demonstrated with
+real command output or a screenshot. Not "implemented" — demonstrated.
+```
+
 ## A note on prices in this repo
 
 Five model reviews of this plan produced **conflicting current prices** for the same models
@@ -245,10 +250,6 @@ One caveat on the cheapest tier: very small coding models are fine for *bounded*
 a test oracle, and unreliable as long-horizon autonomous agents. Use them as a cheap pair,
 not as "go build M2 while I eat dinner".
 
-## Definition of done for a milestone
-Every acceptance criterion in `spec/BUILD-PLAN.md` for that milestone, demonstrated with
-real command output or a screenshot. Not "implemented" — demonstrated.
-```
 
 ## 2b. What you cannot delegate
 

@@ -49,60 +49,6 @@ Aider has this built in: `--editor-model` splits architect from editor, so a str
 designs and writes the checks while a cheap one implements against them. If your harness
 offers that split, use it here.
 
-## A note on prices in this repo
-
-Five model reviews of this plan produced **conflicting current prices** for the same models
-and disagreed on whether a given router tier is available to individuals. The landscape moves
-faster than any document in here can track.
-
-So: **no price in this repo is authoritative.** Every cost figure is an order-of-magnitude
-sanity check, and every decision that depends on one is expressed as a *method* instead —
-the golden-set tournament (`SPEC-ir.md` §5.2), `--dry-run` before any paid run (D24), and
-measure-then-extrapolate (`COST-CALIBRATION.md`). Check live pricing at the moment you
-spend, and trust your own measurement over any table, including these.
-
-## Harness notes
-
-**BYOK** — "bring your own key" — means the tool sends requests using *your* provider API
-key and bills *you* at wholesale token rates, instead of consuming the tool's own credits.
-The harness becomes a steering wheel; you choose the engine.
-
-**Cursor supports BYOK**, and this is the setup worth knowing:
-
-- Works with your key: **Chat, Composer, Agent Mode, and Inline Edit** — i.e. all the
-  expensive agentic work.
-- Always stays on Cursor's own models: **Tab completion and Apply.** You want this — Tab is
-  what Cursor is best at, it's fast, and it's covered by the subscription.
-- Providers: OpenAI, Anthropic, Gemini, Azure, Bedrock, and any **OpenAI-compatible host** —
-  which is how OpenRouter gets you 200+ models including open weights.
-- Requires a **paid plan** ($20 Pro minimum) for BYOK with a custom base URL in Agent.
-- **OpenRouter gotcha:** the base URL must be `https://openrouter.ai/api/v1/cursor`. Plain
-  `/api/v1` breaks tool calls.
-- Don't use Auto while on BYOK — Auto and Cursor's own Composer models bill to Cursor, not
-  to your key, which defeats the point.
-
-So **Cursor Pro + OpenRouter BYOK** gets you Tab completion and repo indexing on the
-subscription, and agent tokens at wholesale on whatever model you pick. That is a strong
-default and removes the main structural argument for leaving Cursor.
-
-The fully-open alternatives are $0 for the tool and BYOK by default:
-
-- **Cline** (VS Code) — autonomous agent, strong at multi-file, multi-language, tool-using
-  work. Better fit for M1, M2, M3, M8, M9, M10 where Unity, the editor and the device are
-  all in play.
-- **Aider** (terminal) — tight implement → test → fix → commit loops, excellent Git
-  awareness, and the architect/editor split above. Better fit for M0, M4, M5, M6, M7 —
-  bounded, code-heavy, test-verified work.
-
-Configure named model profiles once (bounded-cheap / cheap-agent / frontier / escalation)
-and switch deliberately by task class rather than letting a router spend for you. **Do not
-use Roo Code** — archived read-only since 2026-05-15, unmaintained, and it will drift as
-provider APIs change.
-
-One caveat on the cheapest tier: very small coding models are fine for *bounded* edits with
-a test oracle, and unreliable as long-horizon autonomous agents. Use them as a cheap pair,
-not as "go build M2 while I eat dinner".
-
 ## Definition of done for a milestone
 Every acceptance criterion in `spec/BUILD-PLAN.md` for that milestone, demonstrated with
 real command output or a screenshot. Not "implemented" — demonstrated.
