@@ -1,0 +1,1418 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Grad School Invitational</title>
+<meta name="description" content="Twelve guys'-trip destinations scored against a Scottsdale rental, with a live leaderboard, a weather card, and Thursday-to-Sunday itineraries for Las Vegas, Austin and San Diego.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="The Grad School Invitational">
+<meta property="og:description" content="Vegas wins. Austin and San Diego tie for second. Three itineraries, scored against the Scottsdale house.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jontidd.com/GSI/">
+<meta property="og:image" content="https://jontidd.com/GSI/img/vegas-strip.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; }
+  [hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Layout: a tournament program. Cover triptych, a hand-run leaderboard with a cut line (par = the Scottsdale house),
+   a weather card, course-guide pages per destination, then tee sheets for three itineraries. */
+:root {
+  --paper: #F3F5F0;
+  --board: #FFFFFF;
+  --ink: #12241A;
+  --ink-2: #3D4E44;
+  --muted: #64746A;
+  --rule: #D2D9CE;
+  --green: #0E4D31;
+  --green-2: #1D6A45;
+  --green-soft: #E1EBE3;
+  --on-green: #FFFFFF;
+  --red: #C21F32;
+  --flag: #E2B000;
+  --flag-ink: #6F5300;
+  --flag-soft: #FBF1CC;
+  --photo-ink: #FFFFFF;
+  --scrim: rgba(8, 18, 12, .72);
+  --heat-c3: #1c5cab; --heat-c2: #6da7ec; --heat-c1: #cde2fb;
+  --heat-mid: #F1F3EF;
+  --heat-h1: #f7d2c0; --heat-h2: #ec835a; --heat-h3: #c4352f;
+  --heat-ink: #12241A; --heat-ink-strong: #FFFFFF;
+  --shadow: 0 1px 0 rgba(18,36,26,.05), 0 14px 30px -18px rgba(18,36,26,.35);
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gutter: clamp(16px, 3.2vw, 44px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0B1410; --board: #111D16; --ink: #E6EEE8; --ink-2: #BAC8BF; --muted: #8B9C91; --rule: #23342A;
+    --green: #6CC394; --green-2: #8AD4AA; --green-soft: #16301F; --on-green: #08130D;
+    --red: #FF6B7A; --flag: #F2C230; --flag-ink: #F2C230; --flag-soft: #2E2711;
+    --scrim: rgba(4, 10, 7, .78);
+    --heat-c3: #3987e5; --heat-c2: #24599b; --heat-c1: #1b3350;
+    --heat-mid: #18241D;
+    --heat-h1: #4a2c22; --heat-h2: #a64a2e; --heat-h3: #e0574d;
+    --heat-ink: #E6EEE8; --heat-ink-strong: #FFFFFF;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -18px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0B1410; --board: #111D16; --ink: #E6EEE8; --ink-2: #BAC8BF; --muted: #8B9C91; --rule: #23342A;
+  --green: #6CC394; --green-2: #8AD4AA; --green-soft: #16301F; --on-green: #08130D;
+  --red: #FF6B7A; --flag: #F2C230; --flag-ink: #F2C230; --flag-soft: #2E2711;
+  --scrim: rgba(4, 10, 7, .78);
+  --heat-c3: #3987e5; --heat-c2: #24599b; --heat-c1: #1b3350;
+  --heat-mid: #18241D;
+  --heat-h1: #4a2c22; --heat-h2: #a64a2e; --heat-h3: #e0574d;
+  --heat-ink: #E6EEE8; --heat-ink-strong: #FFFFFF;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -18px rgba(0,0,0,.8);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body {
+  background: var(--paper); color: var(--ink);
+  font-family: var(--serif); font-size: 17.5px; line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; }
+a:hover { text-decoration-color: currentColor; }
+:focus-visible { outline: 2px solid var(--flag); outline-offset: 2px; }
+h1, h2, h3, h4 { text-wrap: balance; margin: 0; }
+p { margin: 0; }
+.page { padding-inline: var(--gutter); padding-block: 0 64px; max-width: 1320px; margin: 0 auto; }
+
+/* ---------- utility type ---------- */
+.eyebrow, .label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.label { font-size: 11px; }
+.num { font-variant-numeric: tabular-nums; }
+.section { padding-block: clamp(48px, 7vw, 88px) 0; }
+.section-head { display: grid; gap: 10px; margin-bottom: 28px; max-width: 760px; }
+.section-head h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(40px, 6vw, 72px); line-height: .88; letter-spacing: .005em; }
+.section-head p { color: var(--ink-2); font-size: 18px; }
+.lede { font-size: clamp(19px, 2.1vw, 23px); line-height: 1.45; color: var(--ink-2); max-width: 62ch; }
+
+/* ---------- nav ---------- */
+.nav {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+  margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter);
+}
+.nav-inner { display: flex; align-items: center; gap: 22px; height: 52px; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav .mark { font-family: var(--display); font-weight: 900; font-size: 20px; letter-spacing: .02em; white-space: nowrap; color: var(--green); }
+.nav a.lnk { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); white-space: nowrap; }
+.nav a.lnk:hover { color: var(--ink); }
+
+/* ---------- cover ---------- */
+.cover { padding-block: clamp(36px, 6vw, 72px) 0; display: grid; gap: 28px; }
+.cover h1 {
+  font-family: var(--display); font-weight: 900; text-transform: uppercase;
+  font-size: clamp(60px, 12.5vw, 172px); line-height: .82; letter-spacing: -.005em; color: var(--ink);
+}
+.cover h1 .line2 { color: var(--green); display: block; }
+.cover .top { display: grid; gap: 18px; }
+.cover-meta { display: flex; flex-wrap: wrap; gap: 8px 22px; }
+.podium { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: 14px; margin-top: 8px; }
+.pod { position: relative; border-radius: 6px; overflow: hidden; background: var(--board); box-shadow: var(--shadow); min-width: 0; text-decoration: none; color: var(--photo-ink); display: block; }
+.pod img { width: 100%; aspect-ratio: 4 / 4.6; object-fit: cover; transition: transform .6s ease; }
+.pod:hover img { transform: scale(1.03); }
+.pod .cap { position: absolute; inset: auto 0 0 0; padding: 60px 18px 16px; background: linear-gradient(to top, var(--scrim), transparent); display: grid; gap: 2px; }
+.pod .pos { font-family: var(--display); font-weight: 900; font-size: 64px; line-height: .8; }
+.pod .nm { font-family: var(--display); font-weight: 800; font-size: 30px; text-transform: uppercase; line-height: .95; }
+.pod .ln { font-family: var(--serif); font-size: 15.5px; opacity: .95; }
+.pod .topar { position: absolute; top: 14px; right: 14px; font-family: var(--display); font-weight: 800; font-size: 26px; background: var(--board); color: var(--ink); border-radius: 4px; padding: 2px 10px; min-width: 52px; text-align: center; }
+.pod .topar.under { color: var(--red); }
+.pod .credit { position: absolute; top: 14px; left: 14px; font-family: var(--mono); font-size: 10px; letter-spacing: .06em; opacity: .75; text-transform: uppercase; }
+
+.stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); }
+.stat { padding: 16px 16px 16px 0; display: grid; gap: 4px; min-width: 0; }
+.stat + .stat { padding-left: 16px; border-left: 1px solid var(--rule); }
+.stat b { font-family: var(--display); font-weight: 800; font-size: 34px; line-height: 1; }
+.stat span { font-size: 14.5px; color: var(--ink-2); line-height: 1.35; }
+
+/* ---------- verdict ---------- */
+.verdict { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; border-top: 1px solid var(--rule); }
+.pick { padding: 22px 20px 24px 0; display: grid; gap: 10px; align-content: start; min-width: 0; }
+.pick + .pick { padding-left: 20px; border-left: 1px solid var(--rule); }
+.pick h3 { font-family: var(--display); font-weight: 800; font-size: 28px; text-transform: uppercase; line-height: 1; }
+.pick .if { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); }
+.pick p { font-size: 16.5px; color: var(--ink-2); }
+.pick .go { font-family: var(--mono); font-size: 12.5px; color: var(--ink); }
+
+/* ---------- leaderboard ---------- */
+.board { background: var(--board); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); overflow: hidden; }
+.board-bar { background: var(--green); color: var(--on-green); display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 6px 20px; padding: 14px 20px; }
+.board-bar h3 { font-family: var(--display); font-weight: 900; font-size: 30px; letter-spacing: .06em; text-transform: uppercase; }
+.board-bar span { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; opacity: .9; }
+.controls { display: grid; grid-template-columns: minmax(200px, 260px) minmax(0, 1fr); gap: 18px 28px; padding: 18px 20px; border-bottom: 1px solid var(--rule); align-items: start; }
+.ctl { display: grid; gap: 6px; min-width: 0; }
+.ctl label, .ctl .label { color: var(--muted); }
+select, button { font: inherit; }
+.ctl select { font-family: var(--mono); font-size: 13.5px; padding: 9px 10px; border-radius: 4px; border: 1px solid var(--rule); background: var(--paper); color: var(--ink); }
+.weights { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 10px 14px; }
+.w { display: grid; gap: 4px; min-width: 0; }
+.w .top { display: flex; justify-content: space-between; gap: 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.w .top output { color: var(--ink); font-weight: 600; }
+.w input[type=range] { width: 100%; accent-color: var(--green-2); }
+.ctl-foot { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; grid-column: 1 / -1; font-size: 14px; color: var(--muted); }
+.btn { font-family: var(--mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; background: transparent; color: var(--ink); border: 1px solid var(--ink-2); border-radius: 4px; padding: 6px 10px; cursor: pointer; }
+.btn:hover { background: var(--ink); color: var(--paper); }
+.tbl-wrap { overflow-x: auto; }
+table.lb { width: 100%; border-collapse: collapse; min-width: 880px; }
+.lb th { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: center; padding: 12px 6px; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+.lb th.l, .lb td.l { text-align: left; }
+.lb td { padding: 8px 6px; text-align: center; border-bottom: 1px solid var(--rule); vertical-align: middle; }
+.lb tbody tr { transition: background .2s ease; }
+.lb tbody tr:hover { background: var(--green-soft); }
+.lb .pos { font-family: var(--display); font-weight: 800; font-size: 24px; width: 56px; }
+.lb .who { font-family: var(--display); font-weight: 800; font-size: 23px; text-transform: uppercase; letter-spacing: .01em; white-space: nowrap; }
+.lb .who a { text-decoration: none; }
+.lb .who a:hover { text-decoration: underline; }
+.lb .who small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; letter-spacing: .06em; color: var(--muted); text-transform: none; }
+.lb .topar { font-family: var(--display); font-weight: 800; font-size: 28px; width: 76px; }
+.lb .topar.under { color: var(--red); }
+.lb .tot { font-family: var(--display); font-weight: 700; font-size: 22px; width: 70px; color: var(--ink-2); }
+.lb .win { font-size: 14px; color: var(--ink-2); text-align: left; white-space: nowrap; }
+.sc { display: inline-grid; place-items: center; width: 40px; height: 40px; font-family: var(--display); font-weight: 700; font-size: 19px; font-variant-numeric: tabular-nums; line-height: 1; }
+.sc.birdie { border: 2px solid var(--red); border-radius: 50%; color: var(--red); }
+.sc.bogey { border: 2px solid var(--ink-2); }
+.sc small { display: block; font-family: var(--mono); font-size: 9px; font-weight: 400; color: var(--muted); letter-spacing: .04em; margin-top: 2px; }
+.sc.wx { width: 46px; }
+tr.bench td { background: var(--flag-soft); }
+tr.bench .who { color: var(--flag-ink); }
+tr.cut td { padding: 0; border-bottom: 0; }
+tr.cut td div { display: flex; align-items: center; gap: 12px; padding: 10px 6px; font-family: var(--mono); font-size: 11.5px; letter-spacing: .14em; text-transform: uppercase; color: var(--red); }
+tr.cut td div::before, tr.cut td div::after { content: ""; flex: 1; border-top: 2px dashed var(--red); }
+tr.missed td { color: var(--muted); }
+tr.missed .who, tr.missed .topar { color: var(--muted); }
+.legend { display: flex; flex-wrap: wrap; gap: 10px 22px; padding: 14px 20px; font-size: 14px; color: var(--ink-2); align-items: center; }
+.legend .sc { width: 30px; height: 30px; font-size: 15px; }
+.legend i { font-style: normal; display: inline-flex; align-items: center; gap: 8px; }
+
+/* ---------- heatmap ---------- */
+.heat-wrap { overflow-x: auto; background: var(--board); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); }
+table.heat { border-collapse: separate; border-spacing: 3px; width: 100%; min-width: 760px; padding: 10px; }
+.heat th { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding: 4px; }
+.heat th.season { color: var(--green); box-shadow: inset 0 -3px 0 var(--green); font-weight: 600; }
+.heat th.row { text-align: left; font-family: var(--display); font-weight: 800; font-size: 17px; letter-spacing: .02em; color: var(--ink); white-space: nowrap; padding-right: 10px; }
+.heat td { position: relative; height: 40px; text-align: center; font-family: var(--display); font-weight: 700; font-size: 17px; font-variant-numeric: tabular-nums; border-radius: 3px; color: var(--heat-ink); cursor: default; }
+.heat td.c3 { background: var(--heat-c3); color: var(--heat-ink-strong); }
+.heat td.c2 { background: var(--heat-c2); }
+.heat td.c1 { background: var(--heat-c1); }
+.heat td.mid { background: var(--heat-mid); box-shadow: inset 0 0 0 1px var(--rule); }
+.heat td.h1 { background: var(--heat-h1); }
+.heat td.h2 { background: var(--heat-h2); }
+.heat td.h3 { background: var(--heat-h3); color: var(--heat-ink-strong); }
+.heat td.ideal::after { content: ""; position: absolute; top: 5px; right: 5px; width: 7px; height: 7px; border-radius: 50%; background: var(--green-2); box-shadow: 0 0 0 1.5px var(--board); }
+.heat td.storm::before { content: "≈"; position: absolute; left: 4px; bottom: 1px; font-family: var(--mono); font-size: 12px; font-weight: 600; opacity: .9; }
+.heat tr.benchrow th.row { color: var(--flag-ink); }
+.heat-legend { display: flex; flex-wrap: wrap; gap: 10px 20px; align-items: center; margin-top: 14px; font-size: 14px; color: var(--ink-2); }
+.ramp { display: inline-flex; border-radius: 3px; overflow: hidden; }
+.ramp span { width: 30px; height: 16px; display: block; }
+.ramp-labels { display: inline-flex; gap: 8px; font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 12px; line-height: 1.45; padding: 8px 10px; border-radius: 4px; max-width: 260px; box-shadow: var(--shadow); }
+.tip b { font-weight: 600; }
+
+/* ---------- field / profiles ---------- */
+.feature { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(20px, 3.5vw, 48px); padding-block: 36px; border-top: 2px solid var(--ink); align-items: start; }
+.feature.flip { grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); }
+.feature.flip .ph { order: 2; }
+.ph { position: relative; min-width: 0; }
+.ph .main { width: 100%; aspect-ratio: 4 / 4.4; object-fit: cover; border-radius: 6px; }
+.ph .inset { position: absolute; width: 46%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 4px; border: 5px solid var(--paper); right: -12px; bottom: -22px; box-shadow: var(--shadow); }
+.feature.flip .ph .inset { right: auto; left: -12px; }
+.ph figcaption, .credit-line { font-family: var(--mono); font-size: 10.5px; color: var(--muted); margin-top: 8px; letter-spacing: .03em; }
+.prof { display: grid; gap: 16px; min-width: 0; }
+.prof-top { display: flex; align-items: flex-end; gap: 14px; flex-wrap: wrap; }
+.prof-top .bigpos { font-family: var(--display); font-weight: 900; font-size: 88px; line-height: .78; color: var(--green); }
+.prof-top h3 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 5vw, 58px); line-height: .85; text-transform: uppercase; }
+.prof-top .scorechip { margin-left: auto; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); text-align: right; }
+.prof-top .scorechip b { display: block; font-family: var(--display); font-weight: 800; font-size: 30px; color: var(--ink); letter-spacing: 0; }
+.prof-top .scorechip b.under { color: var(--red); }
+.tagline { font-style: italic; font-size: 21px; line-height: 1.35; color: var(--ink); }
+.facts { display: grid; gap: 0; margin: 0; border-top: 1px solid var(--rule); }
+.facts > div { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 14px; padding: 11px 0; border-bottom: 1px solid var(--rule); }
+.facts dt { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); padding-top: 3px; }
+.facts dd { margin: 0; font-size: 16px; line-height: 1.5; color: var(--ink-2); }
+.facts dd b { color: var(--ink); font-weight: 600; }
+.facts .catch dt { color: var(--red); }
+.flights { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); }
+
+.wide-card { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px); padding-block: 36px; border-top: 2px solid var(--ink); }
+.wide-card .pics { display: grid; grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; gap: 8px; min-width: 0; }
+.wide-card .pics img { width: 100%; height: 100%; object-fit: cover; border-radius: 4px; }
+.wide-card .pics img:first-child { grid-row: 1 / 3; aspect-ratio: 3 / 3.4; }
+.passport { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--flag-ink); background: var(--flag-soft); border-radius: 3px; padding: 3px 8px; }
+
+.cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px 24px; padding-top: 32px; border-top: 2px solid var(--ink); }
+.card { display: grid; gap: 12px; align-content: start; min-width: 0; }
+.card img { width: 100%; aspect-ratio: 16 / 10.5; object-fit: cover; border-radius: 5px; }
+.card .hd { display: flex; align-items: baseline; gap: 10px; }
+.card .hd .p { font-family: var(--display); font-weight: 900; font-size: 40px; line-height: .8; color: var(--green); }
+.card .hd h3 { font-family: var(--display); font-weight: 900; font-size: 32px; line-height: .9; text-transform: uppercase; }
+.card .hd .s { margin-left: auto; font-family: var(--display); font-weight: 800; font-size: 22px; }
+.card .tagline { font-size: 17.5px; }
+.card p.why { font-size: 15.5px; color: var(--ink-2); }
+.card .facts > div { grid-template-columns: 74px minmax(0, 1fr); padding: 8px 0; }
+.card .facts dd { font-size: 14.5px; }
+
+.also { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; margin-top: 40px; padding-top: 22px; border-top: 1px solid var(--rule); }
+.also-item { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 14px; align-items: start; min-width: 0; }
+.also-item img { width: 92px; height: 92px; object-fit: cover; border-radius: 4px; }
+.also-item h4 { font-family: var(--display); font-weight: 800; font-size: 21px; text-transform: uppercase; line-height: 1; margin-bottom: 4px; }
+.also-item p { font-size: 14.5px; color: var(--ink-2); }
+.also-item.bench h4 { color: var(--flag-ink); }
+
+/* ---------- crowd ---------- */
+.crowd-wrap { overflow-x: auto; }
+table.crowd { width: 100%; border-collapse: collapse; min-width: 760px; }
+.crowd th { font-family: var(--mono); font-weight: 500; font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 10px 10px 10px 0; border-bottom: 2px solid var(--ink); vertical-align: bottom; }
+.crowd td { padding: 11px 10px 11px 0; border-bottom: 1px solid var(--rule); font-size: 15.5px; color: var(--ink-2); vertical-align: top; }
+.crowd td.city { font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; color: var(--ink); white-space: nowrap; }
+.crowd td.n { font-family: var(--display); font-weight: 700; font-size: 21px; color: var(--ink); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.crowd td.n.top { color: var(--green); }
+.crowd td.n.na { color: var(--muted); font-weight: 600; font-size: 16px; }
+.crowd-notes { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; margin-top: 24px; }
+.crowd-notes p { font-size: 16px; color: var(--ink-2); }
+.crowd-notes b { font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; color: var(--ink); display: block; margin-bottom: 4px; }
+
+/* ---------- weird menu ---------- */
+.menu-grid { display: grid; grid-template-columns: minmax(0, 1.7fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start; }
+.menu { list-style: none; margin: 0; padding: 26px clamp(18px, 3vw, 34px); background: var(--board); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); display: grid; gap: 0; }
+.menu-title { font-family: var(--display); font-weight: 900; font-size: 30px; text-transform: uppercase; text-align: center; letter-spacing: .08em; padding-bottom: 12px; border-bottom: 3px double var(--rule); margin-bottom: 6px; }
+.menu li { padding: 13px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 3px; }
+.menu li:last-child { border-bottom: 0; }
+.menu .row { display: flex; align-items: baseline; gap: 8px; }
+.menu .item { font-weight: 600; font-size: 18px; color: var(--ink); }
+.menu .dots { flex: 1; border-bottom: 2px dotted var(--rule); transform: translateY(-5px); min-width: 20px; }
+.menu .price { font-family: var(--display); font-weight: 800; font-size: 20px; white-space: nowrap; color: var(--ink); }
+.menu .where { font-size: 14.5px; color: var(--muted); }
+.menu .where b { font-family: var(--mono); font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--green); font-weight: 500; margin-right: 6px; }
+.menu-pics { display: grid; gap: 14px; }
+.menu-pics figure { margin: 0; }
+.menu-pics img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; border-radius: 5px; }
+.menu-pics figcaption { font-size: 14.5px; color: var(--ink-2); margin-top: 6px; }
+.menu-pics figcaption span { display: block; font-family: var(--mono); font-size: 10.5px; color: var(--muted); }
+
+/* ---------- itineraries ---------- */
+.itin { padding-top: 44px; }
+.banner { position: relative; border-radius: 6px; overflow: hidden; color: var(--photo-ink); }
+.banner img { width: 100%; aspect-ratio: 21 / 8; object-fit: cover; }
+.banner .over { position: absolute; inset: 0; display: grid; align-content: end; gap: 6px; padding: clamp(18px, 3vw, 36px); background: linear-gradient(to top, var(--scrim), transparent 70%); }
+.banner .k { font-family: var(--mono); font-size: 12px; letter-spacing: .14em; text-transform: uppercase; opacity: .9; }
+.banner h3 { font-family: var(--display); font-weight: 900; font-size: clamp(42px, 7vw, 92px); line-height: .82; text-transform: uppercase; }
+.banner .dates { font-family: var(--display); font-weight: 700; font-size: clamp(20px, 2.4vw, 28px); letter-spacing: .02em; }
+.banner .credit { position: absolute; top: 12px; right: 14px; font-family: var(--mono); font-size: 10px; opacity: .75; }
+.itin-meta { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-bottom: 1px solid var(--rule); }
+.itin-meta > div { padding: 16px 16px 16px 0; display: grid; gap: 4px; min-width: 0; }
+.itin-meta > div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
+.itin-meta b { font-family: var(--display); font-weight: 800; font-size: 22px; line-height: 1.05; }
+.itin-meta span { font-size: 14.5px; color: var(--ink-2); }
+.days { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin-top: 4px; }
+.day { padding: 18px 18px 8px 0; min-width: 0; }
+.day + .day { padding-left: 18px; border-left: 1px solid var(--rule); }
+.day h4 { display: flex; align-items: baseline; justify-content: space-between; gap: 8px; border-bottom: 2px solid var(--ink); padding-bottom: 8px; margin-bottom: 4px; }
+.day h4 span:first-child { font-family: var(--display); font-weight: 900; font-size: 28px; text-transform: uppercase; }
+.day h4 span:last-child { font-family: var(--mono); font-size: 12px; color: var(--muted); letter-spacing: .06em; }
+.slots { list-style: none; margin: 0; padding: 0; }
+.slots li { display: grid; grid-template-columns: 62px minmax(0, 1fr); gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--rule); }
+.slots li:last-child { border-bottom: 0; }
+.slots time { font-family: var(--mono); font-size: 12px; color: var(--ink-2); padding-top: 3px; white-space: nowrap; }
+.slots .t { font-weight: 600; font-size: 16px; line-height: 1.3; color: var(--ink); }
+.slots p { font-size: 14.5px; line-height: 1.45; color: var(--ink-2); margin-top: 4px; }
+.slots img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; border-radius: 4px; margin-top: 8px; }
+.tag { display: inline-block; font-family: var(--mono); font-size: 9.5px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; margin-left: 6px; vertical-align: 2px; white-space: nowrap; }
+.tag.golf { background: var(--green); color: var(--on-green); }
+.tag.weird { background: var(--red); color: var(--board); }
+.tag.scene { background: var(--flag); color: #1d1600; }
+.tag.house { box-shadow: inset 0 0 0 1.5px var(--ink-2); color: var(--ink-2); }
+.tag.opt { box-shadow: inset 0 0 0 1.5px var(--muted); color: var(--muted); }
+.itin-foot { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 52px); margin-top: 22px; padding-top: 22px; border-top: 2px solid var(--ink); }
+.itin-foot h5 { font-family: var(--mono); font-weight: 500; font-size: 11.5px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+table.budget { width: 100%; border-collapse: collapse; font-size: 15px; }
+.budget td { padding: 7px 0; border-bottom: 1px solid var(--rule); color: var(--ink-2); vertical-align: top; }
+.budget td:last-child { text-align: right; font-family: var(--display); font-weight: 700; font-size: 18px; color: var(--ink); white-space: nowrap; padding-left: 12px; font-variant-numeric: tabular-nums; }
+.budget tr.total td { border-top: 2px solid var(--ink); border-bottom: 0; font-weight: 600; color: var(--ink); padding-top: 10px; }
+.budget tr.total td:last-child { font-size: 26px; font-weight: 800; }
+.budget small { display: block; font-size: 13px; color: var(--muted); }
+.bookby { list-style: none; margin: 0; padding: 0; display: grid; }
+.bookby li { display: grid; grid-template-columns: 112px minmax(0, 1fr); gap: 12px; padding: 9px 0; border-bottom: 1px solid var(--rule); font-size: 15px; color: var(--ink-2); }
+.bookby li b { font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--ink); padding-top: 2px; }
+
+/* ---------- fine print ---------- */
+.fine { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 clamp(24px, 4vw, 56px); }
+.fine > div { padding: 18px 0; border-top: 1px solid var(--rule); display: grid; gap: 6px; }
+.fine h4 { font-family: var(--display); font-weight: 800; font-size: 23px; text-transform: uppercase; line-height: 1; }
+.fine p { font-size: 16px; color: var(--ink-2); }
+.method { margin-top: 34px; padding: 22px clamp(18px, 3vw, 30px); background: var(--board); border: 1px solid var(--rule); border-radius: 6px; display: grid; gap: 10px; }
+.method h4 { font-family: var(--mono); font-weight: 500; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.method p { font-size: 15.5px; color: var(--ink-2); max-width: 90ch; }
+.sources { margin-top: 34px; columns: 3 260px; column-gap: 32px; font-size: 13.5px; color: var(--ink-2); }
+.sources h5 { font-family: var(--mono); font-weight: 600; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin: 0 0 6px; break-after: avoid; }
+.sources ul { list-style: none; margin: 0 0 16px; padding: 0; break-inside: avoid-column; }
+.sources li { padding: 2px 0; }
+.credits { margin-top: 28px; font-size: 12.5px; color: var(--muted); line-height: 1.6; }
+.credits h5 { font-family: var(--mono); font-weight: 600; font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--ink); margin: 0 0 6px; }
+.colophon { margin-top: 40px; padding-top: 18px; border-top: 2px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); letter-spacing: .06em; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1080px) {
+  .weights { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .days { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .day:nth-child(3) { padding-left: 0; border-left: 0; }
+  .verdict { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pick:nth-child(3) { padding-left: 0; border-left: 0; }
+  .pick:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 860px) {
+  .podium { grid-template-columns: 1fr 1fr; }
+  .podium .pod:first-child { grid-column: 1 / -1; }
+  .podium .pod:first-child img { aspect-ratio: 16 / 11; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .stat:nth-child(3) { padding-left: 0; border-left: 0; }
+  .stat:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .controls { grid-template-columns: 1fr; }
+  .feature, .feature.flip, .wide-card { grid-template-columns: 1fr; }
+  .feature.flip .ph { order: 0; }
+  .ph .inset { width: 40%; right: 10px; bottom: -18px; }
+  .feature.flip .ph .inset { left: 10px; }
+  .prof { padding-top: 14px; }
+  .itin-meta { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .itin-meta > div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .itin-meta > div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .itin-foot, .fine, .menu-grid { grid-template-columns: 1fr; }
+  .menu-pics { grid-template-columns: 1fr 1fr; }
+  .crowd-notes, .also { grid-template-columns: 1fr; }
+  .banner img { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16.5px; }
+  .podium { grid-template-columns: 1fr; }
+  .pod img { aspect-ratio: 16 / 11; }
+  .verdict { grid-template-columns: 1fr; }
+  .pick, .pick + .pick { padding-left: 0; border-left: 0; }
+  .pick + .pick { border-top: 1px solid var(--rule); }
+  .weights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .days { grid-template-columns: 1fr; }
+  .day, .day + .day { padding-left: 0; border-left: 0; }
+  .cards { grid-template-columns: 1fr; }
+  .facts > div { grid-template-columns: 1fr; gap: 2px; }
+  .menu-pics { grid-template-columns: 1fr; }
+  .bookby li { grid-template-columns: 1fr; gap: 2px; }
+  .wide-card .pics { grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; }
+  .wide-card .pics img:first-child { grid-column: 1 / -1; grid-row: auto; aspect-ratio: 16 / 11; }
+  .wide-card .pics img { aspect-ratio: 4 / 3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <span class="mark">GSI&nbsp;'27</span>
+    <a class="lnk" href="#verdict">The call</a>
+    <a class="lnk" href="#leaderboard">Leaderboard</a>
+    <a class="lnk" href="#weather">Weather</a>
+    <a class="lnk" href="#field">The field</a>
+    <a class="lnk" href="#crowd">The crowd</a>
+    <a class="lnk" href="#weird">Weird menu</a>
+    <a class="lnk" href="#itineraries">Itineraries</a>
+    <a class="lnk" href="#fineprint">Fine print</a>
+  </div>
+</nav>
+
+<header class="cover">
+  <div class="top">
+    <p class="eyebrow">Destination dossier for 8 · Prepared Oct 3, 2026, from the Scottsdale house</p>
+    <h1>The Grad School <span class="line2">Invitational</span></h1>
+    <p class="lede">I scored twelve destinations on golf, the crowd, the house, weather, weird activities and travel, using the Scottsdale house you're in now as par. Las Vegas wins. Austin and San Diego tie for second, and Cabo is the best answer if everyone brings a passport. All three winners get a Thursday-to-Sunday itinerary below.</p>
+  </div>
+
+  <div class="podium">
+    <a class="pod" href="#p-vegas">
+      <img src="/GSI/img/vegas-strip.jpg" alt="The Las Vegas Strip at night seen from above, lit hotel towers and traffic">
+      <span class="credit">Clément Bardot · CC BY-SA 3.0</span>
+      <span class="topar under">−3</span>
+      <span class="cap"><span class="pos">1</span><span class="nm">Las Vegas</span><span class="ln">Tank, dogfight, Wynn, Cascata, pool clubs. Mid-October.</span></span>
+    </a>
+    <a class="pod" href="#p-austin">
+      <img src="/GSI/img/austin-bridge.jpg" alt="Pennybacker Bridge over Lake Austin at dusk with the bridge lights on">
+      <span class="credit">Jared Tennant · CC BY 2.0</span>
+      <span class="topar">+2</span>
+      <span class="cap"><span class="pos">T2</span><span class="nm">Austin</span><span class="ln">Helicopter hog hunt, Barton Creek, Lake Travis.</span></span>
+    </a>
+    <a class="pod" href="#p-sandiego">
+      <img src="/GSI/img/sd-skyline.jpg" alt="San Diego skyline at dusk reflected in the bay, seen from Coronado">
+      <span class="credit">russellstreet · CC BY-SA 2.0</span>
+      <span class="topar">+2</span>
+      <span class="cap"><span class="pos">T2</span><span class="nm">San Diego</span><span class="ln">Torrey Pines South, cliff paragliding, 75° days.</span></span>
+    </a>
+  </div>
+
+  <div class="stats">
+    <div class="stat"><b class="num">12</b><span>destinations scored, 10 made the cut</span></div>
+    <div class="stat"><b class="num">8.80</b><span>Scottsdale's score. Only Vegas beats it on default weights.</span></div>
+    <div class="stat"><b class="num">Oct 14–17</b><span>2027 target window for Vegas and Austin. San Diego a week earlier.</span></div>
+    <div class="stat"><b class="num">$4.6–5.5k</b><span>estimated per person for the top three plans, before flights</span></div>
+  </div>
+</header>
+
+<section class="section" id="verdict">
+  <div class="section-head">
+    <p class="eyebrow">The call</p>
+    <h2>Pick by what the group wants most</h2>
+  </div>
+  <div class="verdict">
+    <div class="pick">
+      <span class="if">If you want the most stories</span>
+      <h3>Las Vegas</h3>
+      <p>Every weird thing on your list is within 30 minutes of the house: machine guns, a tank that crushes a car, aerial dogfights, a Grand Canyon helicopter. Go before the pool clubs close in late October.</p>
+      <span class="go">Thu Oct 14 – Sun Oct 17, 2027 · <a href="#it-vegas">itinerary</a></span>
+    </div>
+    <div class="pick">
+      <span class="if">If you want the best crowd</span>
+      <h3>Austin</h3>
+      <p>The youngest big city on the list, top-ten nightlife, and the single most memorable activity in this report: hunting feral hogs from a helicopter, which is legal in Texas.</p>
+      <span class="go">Thu Oct 14 – Sun Oct 17, 2027 · <a href="#it-austin">itinerary</a></span>
+    </div>
+    <div class="pick">
+      <span class="if">If you want perfect days</span>
+      <h3>San Diego</h3>
+      <p>75° and dry, the fittest city among the finalists, a U.S. Open course you can actually book, and paragliding off the cliffs beside it. It's the priciest house and has no full-auto.</p>
+      <span class="go">Thu Oct 7 – Sun Oct 10, 2027 · <a href="#it-sandiego">itinerary</a></span>
+    </div>
+    <div class="pick">
+      <span class="if">If passports are fine</span>
+      <h3>Los Cabos</h3>
+      <p>The best golf and the best house in the report: staffed villas with a chef, butler and bartender, plus Diamante's two championship courses. Mid-November, when the heat breaks.</p>
+      <span class="go">Thu Nov 11 – Sun Nov 14, 2027 · <a href="#p-cabo">profile</a></span>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="leaderboard">
+  <div class="section-head">
+    <p class="eyebrow">The leaderboard</p>
+    <h2>Twelve destinations, scored against Scottsdale</h2>
+    <p>Par is the house you're sitting in. Each tenth of a point below Scottsdale is a stroke over par. Change the month or re-weight what matters and the board re-sorts.</p>
+  </div>
+
+  <div class="board">
+    <div class="board-bar">
+      <h3>Leaders</h3>
+      <span id="lb-sub">Par 8.80 · Scottsdale · best of Sep–Nov</span>
+    </div>
+    <div class="controls">
+      <div class="ctl">
+        <label class="label" for="month">Trip month</label>
+        <select id="month">
+          <option value="fall" selected>Best of Sep–Nov</option>
+          <option value="0">January</option><option value="1">February</option><option value="2">March</option>
+          <option value="3">April</option><option value="4">May</option><option value="5">June</option>
+          <option value="6">July</option><option value="7">August</option><option value="8">September</option>
+          <option value="9">October</option><option value="10">November</option><option value="11">December</option>
+        </select>
+      </div>
+      <div class="ctl">
+        <span class="label">What matters (weights)</span>
+        <div class="weights" id="weights"></div>
+      </div>
+      <div class="ctl-foot">
+        <button class="btn" id="reset" type="button">Reset to your priorities</button>
+        <span>Defaults follow what you said mattered: golf first, then crowd, then house, weather and weird, then travel.</span>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <table class="lb" aria-describedby="lb-sub">
+        <thead>
+          <tr>
+            <th class="l">Pos</th><th class="l">Destination</th><th>To par</th><th>Score</th>
+            <th>Golf</th><th>Crowd</th><th>House</th><th>Weather</th><th>Weird</th><th>Travel</th><th class="l">Best window</th>
+          </tr>
+        </thead>
+        <tbody id="lb-body"></tbody>
+      </table>
+    </div>
+    <div class="legend">
+      <i><span class="sc birdie">9.5</span> Circled: 9 or better (a birdie)</i>
+      <i><span class="sc bogey">5.0</span> Boxed: under 6 (a bogey)</i>
+      <i><b style="color:var(--red);font-family:var(--display);font-size:20px">−3</b> Red: beats the Scottsdale house</i>
+      <i>Weather shows the month it was scored on.</i>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="weather">
+  <div class="section-head">
+    <p class="eyebrow">The weather card</p>
+    <h2>When each place is at its best</h2>
+    <p>Average daily high by month, from 1991–2020 normals. Pale cells are the sweet spot for golf and a pool (74–84°F, with humid places counted a few degrees hotter). A green dot means the month scores 9 or better. The wave marks rainy or hurricane season. Hover or tab onto a cell for the low and the score.</p>
+  </div>
+  <div class="heat-wrap">
+    <table class="heat" id="heat"><caption class="label" style="caption-side:bottom;text-align:left;padding:8px 4px 0">Average high °F · rows in leaderboard order · underlined months are the ones the leaderboard is scoring · Scottsdale (par) at the bottom</caption></table>
+  </div>
+  <div class="heat-legend">
+    <span class="ramp" aria-hidden="true">
+      <span style="background:var(--heat-c3)"></span><span style="background:var(--heat-c2)"></span><span style="background:var(--heat-c1)"></span><span style="background:var(--heat-mid)"></span><span style="background:var(--heat-h1)"></span><span style="background:var(--heat-h2)"></span><span style="background:var(--heat-h3)"></span>
+    </span>
+    <span class="ramp-labels"><span>&lt;55°</span><span>cold</span><span>·</span><span>74–84° ideal</span><span>·</span><span>hot</span><span>96°+</span></span>
+    <span><b style="color:var(--green-2)">●</b> scores 9+</span>
+    <span><b style="font-family:var(--mono)">≈</b> rain or hurricane season</span>
+  </div>
+  <div class="tip" id="tip" hidden></div>
+</section>
+
+<section class="section" id="field">
+  <div class="section-head">
+    <p class="eyebrow">The field</p>
+    <h2>The ten that made the cut</h2>
+    <p>Each profile lists the two rounds to play, a real house to start from, where the crowd is, the strangest good idea, and the catch. Prices are 2025–26 published rates; confirm before booking.</p>
+  </div>
+
+  <article class="feature" id="p-vegas">
+    <figure class="ph" style="margin:0">
+      <img class="main" src="/GSI/img/vegas-sphere.jpg" alt="The Sphere in Las Vegas lit up at night" loading="lazy">
+      <img class="inset" src="/GSI/img/vegas-calico.jpg" alt="Red sandstone of the Calico Hills at Red Rock Canyon" loading="lazy">
+      <figcaption>Sphere: Matt Walter, CC BY 2.0 · Calico Hills: The Cosmonaut, CC BY-SA 2.5</figcaption>
+    </figure>
+    <div class="prof">
+      <div class="prof-top">
+        <span class="bigpos">1</span>
+        <h3>Las Vegas</h3>
+        <span class="scorechip">To par<b class="under">−3</b></span>
+      </div>
+      <p class="tagline">Every item on your list, within 30 minutes of the house.</p>
+      <p>Vegas wins on the weird column by a mile, and its golf, weather and nightlife are all strong in mid-October. WalletHub ranks it first in the country for nightlife and second for singles. The locals aren't the athletic crowd (87th of 100 on the 2026 fitness index), but the pool clubs fill with visitors in their 20s and 30s until the season ends in late October.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd><b>Wynn Golf Club</b> (Tom Fazio, on the Strip; caddie, food every four holes and loaner Callaways included; dynamic $450–1,000). <b>Cascata</b> (Rees Jones, Boulder City; about $350–450 plus a required ~$50 caddie). Backup: Paiute's Wolf course (Pete Dye). Shadow Creek doesn't fit: public play is Monday–Thursday for MGM hotel guests.</dd></div>
+        <div><dt>House</dt><dd>A licensed home on the southwest side, 10–20 minutes from the Strip. Example: <b>"Grand Casa"</b> (Vrbo 4348055), 8 BR, sleeps 16, rooftop deck facing the Strip, heated spa, basketball hoop, fire pit, poker table, about $3,435/night. Only book listings that show a license number.</dd></div>
+        <div><dt>Crowd</dt><dd>Encore Beach Club, Tao Beach and LIV Beach run until late October. Circa's Stadium Swim is open all year with college football on a 143-ft screen. Nights: OMNIA, Zouk, LIV, Marquee, Hakkasan.</dd></div>
+        <div><dt>Weird</dt><dd>Drive a tank over a car at Battlefield Vegas. Dogfight in Extra 330s at Sky Combat Ace. Bulldozers at Dig This. Ferrari laps at Exotics Racing. Helicopter to a champagne landing in the Grand Canyon. Gentlemen's clubs: Sapphire, Spearmint Rhino, Crazy Horse 3.</dd></div>
+        <div><dt>Window</dt><dd>Oct 7–24 (pools open, 81° average high) or April. Avoid F1 week, Nov 18–20, 2027.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 5h47 · ORD 4h12 · DFW ~3h · LAX 1h17 · DEN 2h02</dd></div>
+        <div class="catch"><dt>The catch</dt><dd>Clark County had approved 209 rental permits against 11,000+ listings as of February 2026, so a legal, party-tolerant 8-bedroom house is the hard part, and most ban outdoor music. You've probably done Vegas before; the itinerary below skips the standard version.</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="feature flip" id="p-austin">
+    <figure class="ph" style="margin:0">
+      <img class="main" src="/GSI/img/austin-rainey.jpg" alt="The Rainey Street district towers reflected in Lady Bird Lake at sunset" loading="lazy">
+      <img class="inset" src="/GSI/img/austin-spoke.jpg" alt="The red facade of the Broken Spoke dance hall" loading="lazy">
+      <figcaption>Rainey Street: Oleg Yunakov, CC BY-SA 4.0 · Broken Spoke: Larry D. Moore, CC BY 4.0</figcaption>
+    </figure>
+    <div class="prof">
+      <div class="prof-top">
+        <span class="bigpos">T2</span>
+        <h3>Austin &amp; the Hill Country</h3>
+        <span class="scorechip">To par<b>+2</b></span>
+      </div>
+      <p class="tagline">The youngest big city on the list, and the only one where you can hunt from a helicopter.</p>
+      <p>Austin has the best crowd numbers of any finalist: median age 34.8, a record 55,000 students at UT, sixth in the country for nightlife and for singles, and 28th on the fitness index. October averages 83° by day and 61° at night. The golf is good rather than great, and the best of it sits behind a resort-guest rule you can solve by holding a couple of hotel rooms.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd><b>Omni Barton Creek, Fazio Canyons</b> (#20 in Texas per GOLF) and <b>Fazio Foothills</b>, both former Golf Digest 100 Greatest Public. Registered Omni guests only; estimated $250–300. Public fallback: <b>Lost Pines Golf Club</b> (formerly Wolfdancer; Arthur Hills, slope 141, about $150 on weekends), 45–50 minutes east and on the way to the airport.</dd></div>
+        <div><dt>House</dt><dd>Westlake or Lake Austin: 15–20 minutes to downtown, 10–15 to Barton Creek. Example: <b>ABOVE "Elite Estate"</b> on Lake Austin (7 BR, sleeps 16–17, pool and spa, basketball/pickleball court, sand volleyball, boat slip). The splurge: <b>Escondido Chateau</b> (Vrbo 490043), 10 BR on 12.6 acres with 800 ft of Lake Travis frontage, infinity pool, hot tub, two lit pickleball courts, a basketball court and a yacht dock, about $3,803/night, but an hour from downtown.</dd></div>
+        <div><dt>Crowd</dt><dd>Rainey Street bungalow bars, West 6th for young professionals, the White Horse honky-tonk, and Devil's Cove on Lake Travis, where about 200 boats raft up on Saturdays.</dd></div>
+        <div><dt>Weird</dt><dd>Helicopter hog hunting out of Temple or Bryan (feral hogs are an invasive pest in Texas, and shooting them from the air is legal). Full-auto at The Range at Austin. Two-step lessons at the Broken Spoke, open since 1964. Gentlemen's clubs: Yellow Rose, Sugar's, Perfect 10 (check they're still operating).</dd></div>
+        <div><dt>Window</dt><dd>Oct 14–17, 2027 sits between Austin City Limits (expected Oct 1–3 and 8–10) and the F1 U.S. Grand Prix (Oct 22–24). Late March–April also works.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 4h17 · ORD ~3h · DFW 1h07 · LAX ~3h · DEN 2h13</dd></div>
+        <div class="catch"><dt>The catch</dt><dd>The best courses are resort-gated. COTA's public driving days end in November 2026, when the track becomes a private club. Many big houses ban "bachelor parties," and Austin caps noise at 75 dB.</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="feature" id="p-sandiego">
+    <figure class="ph" style="margin:0">
+      <img class="main" src="/GSI/img/sd-cove.jpg" alt="La Jolla Cove with palm trees, sandstone cliffs and turquoise water" loading="lazy">
+      <img class="inset" src="/GSI/img/sd-cliffdive.jpg" alt="Sequence photo of a person cliff diving into the ocean at La Jolla" loading="lazy">
+      <figcaption>La Jolla Cove: Stephen Bay, CC BY 4.0 · Cliff diving: Jarek Tuszyński, CC BY 4.0</figcaption>
+    </figure>
+    <div class="prof">
+      <div class="prof-top">
+        <span class="bigpos">T2</span>
+        <h3>San Diego</h3>
+        <span class="scorechip">To par<b>+2</b></span>
+      </div>
+      <p class="tagline">Perfect weather, the fittest crowd, and a U.S. Open course anyone can book.</p>
+      <p>October in San Diego averages 75° and almost never rains. The city ranks 11th on the 2026 fitness index, the best of any finalist. Torrey Pines South is a public course that has hosted two U.S. Opens, and one person can book tee times for all eight of you. It gives up ground on cost and on the weird column, because California doesn't rent machine guns.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd><b>Torrey Pines South</b> (Rees Jones redesign; #40 on Golf Digest's 100 Greatest Public). Non-residents pay $322 Friday–Sunday plus a $50 booking fee and $48 cart. Times release at 7 PM Pacific, 90 days out, and one booker can hold two tee times. <b>Aviara</b> (Arnold Palmer, at the Park Hyatt; about $325). <b>Maderas</b> (Golf Digest 100 Greatest Public; about $200–275).</dd></div>
+        <div><dt>House</dt><dd>Bird Rock, La Jolla: 5 minutes to Pacific Beach, 15 to Torrey, 20 to the Gaslamp. Example: <b>"Celebrity Oceanfront Estate"</b> (AvantStay; Airbnb 23789760), 8 BR, sleeps 18, heated pool, hot tub, rooftop pickleball/tennis court, theater, gym, wine cellar and a street-legal golf cart, about $5,385/night, city license STR-00454L. Skip Del Mar, which now allows rentals only in primary residences.</dd></div>
+        <div><dt>Crowd</dt><dd>Pacific Beach for 20s energy (Thursday and Sunday afternoons are big), the Gaslamp on Friday and Saturday (Pendry's Pool House, Oxford Social Club, PARQ), Little Italy rooftops. UCSD and SDSU enroll about 87,000 between them.</dd></div>
+        <div><dt>Weird</dt><dd>Tandem paragliding off the Torrey Pines cliffs ($200). Skydiving from 13,000 ft ($229). Sportfishing for yellowfin and yellowtail out of Point Loma. A SEALFIT 20X challenge ($449–495, in Temecula). Gentlemen's clubs: Cheetahs, Pacers (California's nude clubs can't serve alcohol).</dd></div>
+        <div><dt>Window</dt><dd>Late September to mid-October: warmest ocean, driest weeks.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 6h11 · ORD 4h36 · DFW 3h13 · LAX 0h59 · DEN 2h30</dd></div>
+        <div class="catch"><dt>The catch</dt><dd>The most expensive houses on the list. No full-auto rentals anywhere in California. Weekend Torrey times go within minutes of release, and the tee time can't be transferred: the person who booked it has to show up.</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <article class="wide-card" id="p-cabo">
+    <div class="pics">
+      <img src="/GSI/img/cabo-arch.jpg" alt="El Arco rock formation at Land's End, Cabo San Lucas, under streaked clouds" loading="lazy">
+      <img src="/GSI/img/cabo-diamante.jpg" alt="A fairway at Diamante Dunes framed by sand dunes and the Pacific" loading="lazy">
+      <img src="/GSI/img/marlin.jpg" alt="A striped marlin leaping beside a boat" loading="lazy">
+    </div>
+    <div class="prof">
+      <div class="prof-top">
+        <span class="bigpos">4</span>
+        <h3>Los Cabos</h3>
+        <span class="scorechip">To par<b>+3</b></span>
+      </div>
+      <p><span class="passport">Passport required</span></p>
+      <p class="tagline">The best golf and the best house on the list.</p>
+      <p>If the group will fly to Mexico, Cabo has the strongest golf-and-villa combination in this report: fully staffed 8-bedroom villas, a course that hosts a PGA Tour event, and dry 84° days by mid-November. It's 2½ hours from LAX and about 3 from Dallas. It scored a stroke behind the top three only because October is still hot and you'd need passports.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd><b>Diamante Dunes</b> (Davis Love III; ranked #1 in Mexico) and <b>El Cardonal</b> (Tiger Woods; home of the PGA Tour's World Wide Technology Championship). You can only play them by renting a privately owned Diamante unit for at least three nights, which a Thursday–Sunday trip meets exactly; about $535 a round. Open to anyone: Solmar Golf Links (Greg Norman, $395) and the Cabo del Sol Course (Weiskopf).</dd></div>
+        <div><dt>House</dt><dd><b>Mantea Casa Cabo</b> in Pedregal: 8 BR / 10.5 BA with chef, butler, bartender and house manager included, heated infinity pool with a swim-up bar, about $5,500–6,500/night. <b>Casa Alcini</b>: 8 BR, infinity pool, hot tub, fire pit, $3,990/night. Diamante villas run 4–6 BR, so the golf-first version means two units side by side.</dd></div>
+        <div><dt>Crowd</dt><dd>Medano Beach by day (Taboo, Mango Deck, SUR Beach House, Bagatelle, Mandala), El Squid Roe and Cabo Wabo at night. Cabo was the #2 international spring-break destination in 2026.</dd></div>
+        <div><dt>Weird</dt><dd>Striped marlin season opens in November (full-day charters $445–3,500 per boat). A private yacht to El Arco runs about $1,500 for eight. UTVs, ziplines and bungee at Wild Canyon ($298). Whale sharks in La Paz, October–May. Gentlemen's clubs: Splash, Mermaids.</dd></div>
+        <div><dt>Window</dt><dd>Thu Nov 11 – Sun Nov 14, 2027, or early December. Avoid August–October (hurricane season peaks in September; Bisbee's marlin tournament fills the marina in late October).</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 6h14 · ORD 4h51 · DFW 3h02 · LAX 2h33 · DEN 3h09</dd></div>
+        <div class="catch"><dt>The catch</dt><dd>No shooting of any kind. Mexico has no tourist ranges, and bringing in even one round of ammunition can mean 5–30 years in prison, so check every golf bag. The best courses are gated. The State Department rates Baja California Sur Level 2 (exercise increased caution).</dd></div>
+      </dl>
+    </div>
+  </article>
+
+  <div class="cards">
+    <article class="card" id="p-miami">
+      <img src="/GSI/img/miami-lifeguard.jpg" alt="A purple and orange lifeguard tower on Miami Beach" loading="lazy">
+      <div class="hd"><span class="p">5</span><h3>Miami</h3><span class="s num">+7</span></div>
+      <p class="tagline">The nightlife ceiling, with a rental problem.</p>
+      <p class="why">WalletHub ranks Miami #2 in the country for nightlife. E11even never closes and Club Space runs past sunrise. Go mid-November, after the wet season and before Art Basel.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>Doral's Blue Monster ($566–714 with a required forecaddie), the 1925 Donald Ross course at the Biltmore (~$280), Crandon on Key Biscayne (~$225).</dd></div>
+        <div><dt>Weird</dt><dd>Lock &amp; Load Miami full-auto packages ($259–389), a yacht day at the Haulover sandbar, Everglades airboats.</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>Miami Beach bans rentals under six months in single-family homes (fines up to $100,000). Stay on the mainland in Coconut Grove.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 3h16 · ORD 3h17 · DFW 2h55 · LAX 5h01</dd></div>
+      </dl>
+    </article>
+
+    <article class="card" id="p-charleston">
+      <img src="/GSI/img/chs-ocean.jpg" alt="The 18th green of the Ocean Course at Kiawah Island beside the dunes and Atlantic" loading="lazy">
+      <div class="hd"><span class="p">T6</span><h3>Charleston</h3><span class="s num">+10</span></div>
+      <p class="tagline">The best single round in this report.</p>
+      <p class="why">The Ocean Course at Kiawah (Pete Dye; the 1991 Ryder Cup and two PGA Championships) beats anything else on the list, and October averages 78°. The nightlife is smaller and ends earlier.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>Ocean Course (est. $450–600 plus caddie), Osprey Point (Fazio), Turtle Point (Nicklaus). Book lodging through the resort for preferred tee times.</dd></div>
+        <div><dt>Weird</dt><dd>Quail hunts and sporting clays on 15,000 acres at Back Woods Quail Club; Gulf Stream fishing; sandbar days by Morris Island Lighthouse.</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>Kiawah houses top out near 7 BR and sit 40–45 minutes from King Street. Isle of Palms caps overnight guests at 12.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 2h21 · ORD 2h26 · DFW 2h34 · DEN 3h20</dd></div>
+      </dl>
+    </article>
+
+    <article class="card" id="p-rivieramaya">
+      <img src="/GSI/img/maya-tulum.jpg" alt="The Temple of the Wind God at Tulum on a rocky point above turquoise water" loading="lazy">
+      <div class="hd"><span class="p">T6</span><h3>Riviera Maya</h3><span class="s num">+10</span></div>
+      <p class="tagline">Tulum's crowd with Playa del Carmen's convenience.</p>
+      <p class="why">Tulum's beach clubs draw the most international crowd on the list, and staffed 8-bedroom villas cost less than Cabo's. Base in Playa del Carmen and make Tulum one big night.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>El Camaleón at Mayakoba (Greg Norman; a cenote in the first fairway; $329–349), Iberostar Playa Paraíso (P.B. Dye; $199).</dd></div>
+        <div><dt>Weird</dt><dd>Diving with bull sharks off Playa (Nov–Mar, Advanced cert, ~$180), cenote dives, a temazcal sweat lodge, Papaya Playa's full-moon parties.</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>Humid, October is the wettest month, and U.S. staff are told to be extra alert after dark in Playa, Tulum and Cancún.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 4h20 · ORD 3h57 · DFW 2h47 · LAX 4h43</dd></div>
+      </dl>
+    </article>
+
+    <article class="card" id="p-nashville">
+      <img src="/GSI/img/nash-skyline.jpg" alt="The Nashville skyline at night reflected in the Cumberland River" loading="lazy">
+      <div class="hd"><span class="p">8</span><h3>Nashville</h3><span class="s num">+15</span></div>
+      <p class="tagline">The most crowded bars in America, and the weakest golf here.</p>
+      <p class="why">Nashville hosted more than 30,000 bachelorette parties in 2022, and Lower Broadway plays live music from 10 AM to 3 AM with no covers. Most of that crowd moves in tight groups celebrating each other.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>Hermitage President's Reserve ($74–90), Gaylord Springs. Sweetens Cove, the cult favorite, is two hours away.</dd></div>
+        <div><dt>House</dt><dd>Lakehouse Mansion on Old Hickory Lake (Vrbo 3085140): 8 BR, heated saltwater pool, hot tub, dock, about $4,363/night with fees.</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>Mediocre golf, and pools turn cold by November.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">NYC 2h41 · ORD 1h48 · DFW 1h55 · LAX 3h58</dd></div>
+      </dl>
+    </article>
+
+    <article class="card" id="p-palmsprings">
+      <img src="/GSI/img/ps-pool.jpg" alt="A mid-century hotel pool in Palm Springs with mountains behind" loading="lazy">
+      <div class="hd"><span class="p">9</span><h3>Palm Springs</h3><span class="s num">+21</span></div>
+      <p class="tagline">Golf first, everything else a distant second.</p>
+      <p class="why">The Coachella Valley has the deepest bench of resort golf here and perfect November weather. It falls apart on the crowd: Palm Springs' median age is 58.5, and the young scene arrives for Coachella in April.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>PGA West Stadium (Pete Dye; the island-green 17th), PGA West Nicklaus Tournament, Indian Wells Players, Desert Willow Firecliff.</dd></div>
+        <div><dt>Weird</dt><dd>A ride in a P-51 Mustang at the Palm Springs Air Museum ($1,995; a T-33 jet is $4,995).</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>La Quinta hasn't issued new rental permits outside 18 resort areas since 2021, and courses close for overseeding in October.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">ORD 4h34 · DFW 3h12 · LAX 1h06 · NYC seasonal</dd></div>
+      </dl>
+    </article>
+
+    <article class="card" id="p-bend">
+      <img src="/GSI/img/bend-bachelor.jpg" alt="Mount Bachelor above Elk Lake in fall color" loading="lazy">
+      <div class="hd"><span class="p">10</span><h3>Bend, Oregon</h3><span class="s num">+22</span></div>
+      <p class="tagline">The wildcard: three top-100 public courses and a legal psychedelic session.</p>
+      <p class="why">Bend is the only place on this list where a group psilocybin session is legal under state law. Three Golf Digest 100 Greatest Public courses sit within 30 minutes. The crowd is very fit and in bed by ten.</p>
+      <dl class="facts">
+        <div><dt>Golf</dt><dd>Pronghorn Nicklaus (#41; $199–239), Tetherow (David McLay Kidd; #61), Crosswater (#69; Sunriver guests only, $395). Season ends around Nov 1.</dd></div>
+        <div><dt>Weird</dt><dd>Drop Thesis runs small-group psilocybin sessions ($1,050 low-dose; $1,900 with prep and integration). Oregon allows groups up to 25; everyone needs a one-on-one prep session at least 24 hours before.</dd></div>
+        <div class="catch"><dt>Catch</dt><dd>October nights hit 34°, there's no 8-bedroom house with a private pool, and no nonstops from NYC, Chicago or Dallas.</dd></div>
+        <div><dt>Nonstop</dt><dd class="flights">LAX 2h21 · DEN 2h42 · others connect</dd></div>
+      </dl>
+    </article>
+  </div>
+
+  <div class="also">
+    <div class="also-item bench">
+      <img src="/GSI/img/scottsdale.jpg" alt="View from Camelback Mountain over Scottsdale and a golf course" loading="lazy">
+      <div><h4>Par: Scottsdale · 8.80</h4><p>Scored the same way, the house you're in right now finishes second. Only Vegas beats it on default weights. That's the bar every pick has to clear.</p></div>
+    </div>
+    <div class="also-item">
+      <img src="/GSI/img/pr-dorado.jpg" alt="Palm-lined fairway and bunkers at TPC Dorado Beach, Puerto Rico" loading="lazy">
+      <div><h4>Missed cut: Puerto Rico · +24</h4><p>No passport, TPC Dorado Beach East, and the world's brightest bioluminescent bay. Cut for 86–89° highs through November, hurricane season, and few 8-bedroom villas.</p></div>
+    </div>
+    <div class="also-item">
+      <img src="/GSI/img/cr-papagayo.jpg" alt="A beach on the Papagayo Peninsula, Guanacaste, Costa Rica" loading="lazy">
+      <div><h4>Missed cut: Guanacaste · +32</h4><p>Ayahuasca retreats and volcano hot springs. Cut because October is the wettest month, the best golf is resort-only, and reputable ceremonies need 5–7 nights.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="crowd">
+  <div class="section-head">
+    <p class="eyebrow">The crowd</p>
+    <h2>Where it's young, fit and out late</h2>
+    <p>You asked for a younger, athletic crowd. No single statistic measures that, so here are four that together come close: how fit the city is, how old it is, how good the nightlife is, and how many college students live nearby.</p>
+  </div>
+  <div class="crowd-wrap">
+    <table class="crowd">
+      <thead>
+        <tr><th>City</th><th>Fitness rank<br>ACSM 2026, of 100</th><th>Median age<br>city proper</th><th>Nightlife rank<br>WalletHub 2026</th><th>Singles rank<br>WalletHub, of 182</th><th>Students nearby</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="city">Austin</td><td class="n">#28</td><td class="n top">34.8</td><td class="n top">#6</td><td class="n top">#6</td><td>UT Austin, a record ~55,000</td></tr>
+        <tr><td class="city">Las Vegas</td><td class="n">#87</td><td class="n">38.2</td><td class="n top">#1</td><td class="n top">#2</td><td>UNLV 33,700; the pool-club crowd is visitors</td></tr>
+        <tr><td class="city">San Diego</td><td class="n top">#11</td><td class="n">36.6</td><td class="n">#27</td><td class="n">#20</td><td>UCSD ~45,000 and SDSU ~41,000</td></tr>
+        <tr><td class="city">Miami</td><td class="n">#39</td><td class="n">38.8</td><td class="n top">#2</td><td class="n">#11</td><td>FIU ~56,000, University of Miami ~20,000</td></tr>
+        <tr><td class="city">Nashville</td><td class="n">#65–71</td><td class="n top">34.6</td><td class="n">#30</td><td class="n">#97</td><td>Vanderbilt 13,600, Belmont 9,000, plus 30,000+ bachelorette parties a year</td></tr>
+        <tr><td class="city">Charleston</td><td class="n na">not ranked</td><td class="n">36.3</td><td class="n">#72</td><td class="n">#95</td><td>College of Charleston ~11,700, downtown</td></tr>
+        <tr><td class="city">Scottsdale (par)</td><td class="n">#48</td><td class="n">47.7</td><td class="n">#60</td><td class="n">#89</td><td>ASU's Tempe campus, ~51,000, 15 minutes away</td></tr>
+        <tr><td class="city">Bend</td><td class="n na">not ranked</td><td class="n">42.5</td><td class="n na">—</td><td class="n na">—</td><td>OSU-Cascades, small</td></tr>
+        <tr><td class="city">Palm Springs</td><td class="n na">not ranked</td><td class="n">58.5</td><td class="n na">—</td><td class="n na">—</td><td>No four-year school</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="crowd-notes">
+    <p><b>Austin is the all-rounder</b>It's the only city in the top ten for nightlife and singles that's also young and reasonably fit. UT's football Saturdays put 100,000 people in the stadium a few miles from Rainey Street.</p>
+    <p><b>San Diego is the fittest</b>11th of 100 on the fitness index, and the Pacific Beach crowd skews toward people in their twenties who surf before work. Its nightlife ranks mid-pack.</p>
+    <p><b>Vegas and Miami are visitor crowds</b>Both top the nightlife rankings while ranking low for fitness. On a Saturday at Encore Beach Club, though, almost nobody is local.</p>
+  </div>
+  <p class="credit-line" style="margin-top:14px">Nashville's fitness rank is 65th in one reading of the 2026 ACSM report and 71st in another. Mexican destinations aren't covered by these indexes: Cancún was the #1 and Los Cabos the #2 international spring-break destination in 2026 (Allianz).</p>
+</section>
+
+<section class="section" id="weird">
+  <div class="section-head">
+    <p class="eyebrow">The weird menu</p>
+    <h2>Unforgettable, legal, and bookable</h2>
+    <p>Every item below is something you can book under your own names, ranked by how long the group will keep telling the story. The ones that didn't make it are under <a href="#fineprint">fine print</a>.</p>
+  </div>
+  <div class="menu-grid">
+    <ol class="menu">
+      <li class="menu-title" aria-hidden="true">À la carte</li>
+      <li><div class="row"><span class="item">Hunt feral hogs from a helicopter</span><span class="dots"></span><span class="price">$1,600–4,695</span></div><span class="where"><b>Austin</b>Last Shadow, Temple TX (1h10; $6,400 per flight of up to 4) or HeliBacon, Bryan TX ($2,995 pp; $4,695 adds full-auto and a night-vision ground hunt)</span></li>
+      <li><div class="row"><span class="item">Drive a tank over a car</span><span class="dots"></span><span class="price">~$2,500</span></div><span class="where"><b>Las Vegas</b>Battlefield Vegas, per driver, 24 hours' notice; everyone else shoots the minigun from $125</span></li>
+      <li><div class="row"><span class="item">Dogfight a buddy in aerobatic planes</span><span class="dots"></span><span class="price">from $1,299</span></div><span class="where"><b>Las Vegas</b>Sky Combat Ace, North Las Vegas airport; fly the aerobatics yourself for $999</span></li>
+      <li><div class="row"><span class="item">Ride in a P-51 Mustang</span><span class="dots"></span><span class="price">$1,995</span></div><span class="where"><b>Palm Springs</b>Palm Springs Air Museum; the T-33 jet is $4,995</span></li>
+      <li><div class="row"><span class="item">A legal group psilocybin session</span><span class="dots"></span><span class="price">$1,050–1,900</span></div><span class="where"><b>Bend</b>Drop Thesis, a state-licensed service center; one-on-one prep at least 24 hours ahead</span></li>
+      <li><div class="row"><span class="item">Paraglide off the Torrey Pines cliffs</span><span class="dots"></span><span class="price">$200</span></div><span class="where"><b>San Diego</b>Torrey Pines Gliderport, tandem with a pilot, above Black's Beach</span></li>
+      <li><div class="row"><span class="item">Dive with bull sharks</span><span class="dots"></span><span class="price">~$180</span></div><span class="where"><b>Riviera Maya</b>Playa del Carmen, November–March; requires Advanced Open Water</span></li>
+      <li><div class="row"><span class="item">Run excavators in a dirt pit</span><span class="dots"></span><span class="price">from $359</span></div><span class="where"><b>Las Vegas</b>Dig This</span></li>
+      <li><div class="row"><span class="item">Belt-fed and full-auto rentals</span><span class="dots"></span><span class="price">$115–389</span></div><span class="where"><b>Several</b>The Range at Austin, Lock &amp; Load Miami, Machine Guns Vegas</span></li>
+      <li><div class="row"><span class="item">Five laps in a Lamborghini Huracán</span><span class="dots"></span><span class="price">$399</span></div><span class="where"><b>Las Vegas</b>Exotics Racing, Las Vegas Motor Speedway</span></li>
+      <li><div class="row"><span class="item">Fight a striped marlin</span><span class="dots"></span><span class="price">$445–3,500/boat</span></div><span class="where"><b>Los Cabos</b>Pisces Sportfishing and others; striped marlin run November–May</span></li>
+      <li><div class="row"><span class="item">Quail hunt and sporting clays</span><span class="dots"></span><span class="price">call</span></div><span class="where"><b>Charleston</b>Back Woods Quail Club, 15,000 acres, 1h15 north</span></li>
+      <li><div class="row"><span class="item">Two-step lesson in a 1964 dance hall</span><span class="dots"></span><span class="price">cover</span></div><span class="where"><b>Austin</b>The Broken Spoke, Wednesday–Saturday at 8 PM. Cheapest item here, and the most useful on a Saturday night.</span></li>
+      <li><div class="row"><span class="item">In-house massage and a private chef</span><span class="dots"></span><span class="price">~$150–200 pp</span></div><span class="where"><b>Anywhere</b>Soothe sends licensed therapists to the house; Take a Chef runs about $150–160 per person for eight</span></li>
+    </ol>
+    <div class="menu-pics">
+      <figure><img src="/GSI/img/heli.jpg" alt="A small black helicopter flying among white clouds" loading="lazy"><figcaption>Texas lets you hunt hogs from one of these. <span>Robinson R44 · MKFI · public domain</span></figcaption></figure>
+      <figure><img src="/GSI/img/maya-cenote.jpg" alt="Swimmers in Cenote Ik Kil with hanging vines" loading="lazy"><figcaption>Cenote swims in the Riviera Maya, the calm half of a bull-shark weekend. <span>Shinya Suzuki · CC BY 2.0</span></figcaption></figure>
+      <figure><img src="/GSI/img/austin-sixth.jpg" alt="Crowds on Sixth Street in Austin at night" loading="lazy"><figcaption>Sixth Street on a Friday, after the two-step lesson. <span>Kevin Payravi · CC BY-SA 4.0</span></figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="itineraries">
+  <div class="section-head">
+    <p class="eyebrow">The tee sheets</p>
+    <h2>Three itineraries, Thursday to Sunday</h2>
+    <p>Each one assumes you land around 1 PM Thursday and fly out around lunch on Sunday. Shooting always comes before the first drink. Golf is always in the morning. The house gets real time, because it's half the point.</p>
+  </div>
+
+  <article class="itin" id="it-vegas">
+    <div class="banner">
+      <img src="/GSI/img/vegas-fire.jpg" alt="Swirling red and white sandstone of the Fire Wave in Valley of Fire State Park" loading="lazy">
+      <span class="credit">cjarv2010 · CC BY-SA 2.0</span>
+      <div class="over">
+        <span class="k">Itinerary 1 · Leader at −3</span>
+        <h3>Las Vegas</h3>
+        <span class="dates">Thu Oct 14 – Sun Oct 17, 2027</span>
+      </div>
+    </div>
+    <div class="itin-meta">
+      <div><span class="label">Base</span><b>Licensed 8 BR, southwest valley</b><span>Rooftop deck, spa, court, fire pit; 15 min to the Strip</span></div>
+      <div><span class="label">Rounds</span><b>Cascata · Wynn</b><span>Friday and Saturday mornings, caddies at both</span></div>
+      <div><span class="label">The story</span><b>Tank over a car</b><span>Thursday, two hours after landing</span></div>
+      <div><span class="label">Est. per person</span><b class="num">~$4,600</b><span>before flights; ~$5,900 with the dogfight</span></div>
+    </div>
+    <div class="days">
+      <div class="day">
+        <h4><span>Thursday</span><span>Oct 14</span></h4>
+        <ol class="slots">
+          <li><time>1:00 PM</time><div><span class="t">Land at LAS</span><span class="tag house">Move</span><p>A Sprinter van with a driver meets you and stays all four days. Nobody drives in Vegas.</p></div></li>
+          <li><time>1:45 PM</time><div><span class="t">Battlefield Vegas</span><span class="tag weird">Weird</span><p>Minigun and full-auto packages while everyone is sober. One volunteer drives a tank over a car (about $2,500; book with 24 hours' notice).</p></div></li>
+          <li><time>4:30 PM</time><div><span class="t">Check in</span><span class="tag house">House</span><p>Groceries and a liquor order delivered ahead. Pool, spa, first beers on the roof.</p></div></li>
+          <li><time>7:30 PM</time><div><span class="t">Private chef dinner at the house</span><span class="tag house">House</span><p>Steak and a cheese course, then the poker table.</p></div></li>
+          <li><time>11:00 PM</time><div><span class="t">Hakkasan at MGM Grand</span><span class="tag opt">Optional</span><p>Open Wednesday–Saturday. Or stay home and save it for Friday.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Friday</span><span>Oct 15</span></h4>
+        <ol class="slots">
+          <li><time>7:00 AM</time><div><span class="t">Round 1: Cascata</span><span class="tag golf">Golf</span><p>Rees Jones in a Boulder City canyon, with a waterfall that runs through the clubhouse. Caddie required. About 35 minutes away.</p></div></li>
+          <li><time>1:00 PM</time><div><span class="t">Lunch and in-house massages</span><span class="tag house">House</span><p>Book four Soothe therapists and rotate through the afternoon.</p></div></li>
+          <li><time>4:00 PM</time><div><span class="t">Dig This</span><span class="tag weird">Weird</span><p>Excavators and bulldozers in a giant sandbox (from $359). Or Exotics Racing: five laps in a Huracán ($399).</p></div></li>
+          <li><time>8:30 PM</time><div><span class="t">Steak dinner on the Strip</span><span class="tag scene">Scene</span></div></li>
+          <li><time>11:00 PM</time><div><span class="t">The big night: OMNIA or Zouk</span><span class="tag scene">Scene</span><p>Book one table through a host. Split eight ways, it costs less than a round at Wynn.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Saturday</span><span>Oct 16</span></h4>
+        <ol class="slots">
+          <li><time>8:30 AM</time><div><span class="t">Round 2: Wynn Golf Club</span><span class="tag golf">Golf</span><p>Fazio, on the Strip, ten minutes away. Caddies, food every four holes, loaner Callaways.</p></div></li>
+          <li><time>1:30 PM</time><div><span class="t">Circa Stadium Swim</span><span class="tag scene">Scene</span><p>Cabana, heated pools, college football on a 143-ft screen. Or one of Encore Beach Club's last weekends of the season.</p></div></li>
+          <li><time>6:30 PM</time><div><span class="t">Helicopter over the Strip at night</span><span class="tag weird">Weird</span><p>Maverick's night flight, $139.</p></div></li>
+          <li><time>8:00 PM</time><div><span class="t">Dinner, then Marquee or LIV</span><span class="tag scene">Scene</span><p>Late: Sapphire for whoever wants it.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Sunday</span><span>Oct 17</span></h4>
+        <ol class="slots">
+          <li><time>7:30 AM</time><div><span class="t">Sky Combat Ace</span><span class="tag opt">Optional</span><span class="tag weird">Weird</span><p>Two guys dogfight in Extra 330s (from $1,299) or fly the aerobatics themselves ($999). Ten minutes from the airport.</p></div></li>
+          <li><time>9:00 AM</time><div><span class="t">Breakfast burritos, hot tub</span><span class="tag house">House</span><p>For everyone not upside down over the desert.</p></div></li>
+          <li><time>11:15 AM</time><div><span class="t">Van to LAS</span><span class="tag house">Move</span><p>About 20 minutes.</p></div></li>
+        </ol>
+      </div>
+    </div>
+    <div class="itin-foot">
+      <div>
+        <h5>Budget per person (estimates)</h5>
+        <table class="budget">
+          <tr><td>House: 3 nights at ~$3,400 plus ~20% fees and tax</td><td>$1,530</td></tr>
+          <tr><td>Golf: Cascata with caddie, Wynn at a mid-range dynamic rate</td><td>$1,050</td></tr>
+          <tr><td>Battlefield Vegas package<small>The tank driver pays the ~$2,500 himself.</small></td><td>$300</td></tr>
+          <tr><td>Private chef dinner</td><td>$160</td></tr>
+          <tr><td>90-minute massage with tip</td><td>$200</td></tr>
+          <tr><td>Stadium Swim cabana and day drinks</td><td>$200</td></tr>
+          <tr><td>Nightclub tables, two nights, split eight ways</td><td>$400</td></tr>
+          <tr><td>Helicopter night flight</td><td>$139</td></tr>
+          <tr><td>Sprinter van with driver, four days</td><td>$250</td></tr>
+          <tr><td>Food, bar tabs, Dig This for some</td><td>$350</td></tr>
+          <tr class="total"><td>Total before flights</td><td>~$4,580</td></tr>
+        </table>
+      </div>
+      <div>
+        <h5>Book-by list</h5>
+        <ol class="bookby">
+          <li><b>Now</b><span>Lock the house. Confirm the license number, a heated pool, and the noise and party rules in writing.</span></li>
+          <li><b>Jan 2027</b><span>Ask Cascata and Wynn for their 2027 fall overseeding dates before you commit to Oct 14–17.</span></li>
+          <li><b>Summer 2027</b><span>Cascata tee times as soon as they'll book. Sprinter van.</span></li>
+          <li><b>Sep 16, 2027</b><span>Wynn opens tee times to non-guests about 30 days out. Book the Saturday 8:30.</span></li>
+          <li><b>Late Sep</b><span>Battlefield Vegas package and tank, Sky Combat Ace, the Stadium Swim cabana, the Maverick flight.</span></li>
+          <li><b>Week of</b><span>Nightclub tables through a host, Soothe therapists, chef menu.</span></li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="itin" id="it-austin">
+    <div class="banner">
+      <img src="/GSI/img/austin-lake.jpg" alt="Lake Travis at full capacity winding through the Texas Hill Country" loading="lazy">
+      <span class="credit">Trey Perry · CC BY 3.0</span>
+      <div class="over">
+        <span class="k">Itinerary 2 · Tied for second at +2</span>
+        <h3>Austin</h3>
+        <span class="dates">Thu Oct 14 – Sun Oct 17, 2027</span>
+      </div>
+    </div>
+    <div class="itin-meta">
+      <div><span class="label">Base</span><b>Lake Austin / Westlake estate</b><span>Pool, spa, sport court, boat slip; 15 min to downtown</span></div>
+      <div><span class="label">Rounds</span><b>Barton Creek Canyons · Foothills</b><span>Saturday and Sunday mornings, 10–15 min from the house</span></div>
+      <div><span class="label">The story</span><b>Helicopter hog hunt</b><span>Friday at sunrise, an hour north</span></div>
+      <div><span class="label">Est. per person</span><b class="num">~$5,500</b><span>before flights; ~$6,900 if you hunt with HeliBacon instead</span></div>
+    </div>
+    <div class="days">
+      <div class="day">
+        <h4><span>Thursday</span><span>Oct 14</span></h4>
+        <ol class="slots">
+          <li><time>1:00 PM</time><div><span class="t">Land at AUS</span><span class="tag house">Move</span><p>Van with a driver for the weekend.</p></div></li>
+          <li><time>1:45 PM</time><div><span class="t">The Range at Austin</span><span class="tag weird">Weird</span><p>Fifteen minutes from the airport on South I-35. Full-auto AR, Uzi, Tavor, and a belt-fed ($115–225 per gun). Shoot first, drink later.</p></div></li>
+          <li><time>4:00 PM</time><div><span class="t">Check in</span><span class="tag house">House</span><p>Pool, hot tub, pickup game on the court.</p></div></li>
+          <li><time>7:15 PM</time><div><span class="t">Broken Spoke</span><span class="tag scene">Scene</span><p>Chicken-fried steak, then the 8 PM two-step lesson. Every man learns the basic step tonight, and it pays off all weekend.</p><img src="/GSI/img/austin-spoke.jpg" alt="The Broken Spoke dance hall in Austin" loading="lazy"></div></li>
+          <li><time>10:00 PM</time><div><span class="t">White Horse</span><span class="tag scene">Scene</span><p>East Austin honky-tonk, open until 2 AM. Put the lesson to use.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Friday</span><span>Oct 15</span></h4>
+        <ol class="slots">
+          <li><time>6:00 AM</time><div><span class="t">Van north to Temple</span><span class="tag house">Move</span><p>About 1h10. Coffee and kolaches in the van.</p></div></li>
+          <li><time>7:30 AM</time><div><span class="t">Helicopter hog hunt</span><span class="tag weird">Weird</span><p>Last Shadow flies up to four shooters per flight (from $6,400 a flight), so book two flights back to back. Feral hogs are an invasive pest, and Texas allows hunting them from the air. Alternative: HeliBacon in Bryan, 1h45 away, at $2,995 per person, or $4,695 with full-auto guns and a night-vision ground hunt.</p><img src="/GSI/img/heli.jpg" alt="A helicopter in flight" loading="lazy"></div></li>
+          <li><time>12:30 PM</time><div><span class="t">Brisket on the way back</span><span class="tag scene">Food</span><p>Louie Mueller in Taylor is the classic detour. Check the hours.</p></div></li>
+          <li><time>3:00 PM</time><div><span class="t">Massages at the house</span><span class="tag house">House</span><p>Soothe therapists, then pool and a nap.</p></div></li>
+          <li><time>8:00 PM</time><div><span class="t">Downtown: Rainey Street to West 6th</span><span class="tag scene">Scene</span><p>Bungalow bars on Rainey, then West 6th, where the young-professional crowd goes.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Saturday</span><span>Oct 16</span></h4>
+        <ol class="slots">
+          <li><time>7:30 AM</time><div><span class="t">Round 1: Fazio Canyons</span><span class="tag golf">Golf</span><p>Omni Barton Creek, ranked #20 in Texas. Registered guests only, so hold two Omni rooms for the weekend.</p></div></li>
+          <li><time>1:00 PM</time><div><span class="t">Lake Travis, Devil's Cove</span><span class="tag scene">Scene</span><p>The Lakewind barge (about $400 an hour on Saturdays, 4-hour minimum) is the biggest boat allowed into the cove, where about 200 boats raft up.</p></div></li>
+          <li><time>6:00 PM</time><div><span class="t">Sunset at the pool</span><span class="tag house">House</span></div></li>
+          <li><time>8:00 PM</time><div><span class="t">Private chef, poker, fire pit</span><span class="tag house">House</span><p>Take a Chef runs about $161 a person for eight.</p></div></li>
+          <li><time>11:00 PM</time><div><span class="t">Sixth Street or Yellow Rose</span><span class="tag opt">Optional</span></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Sunday</span><span>Oct 17</span></h4>
+        <ol class="slots">
+          <li><time>7:00 AM</time><div><span class="t">Round 2: Fazio Foothills</span><span class="tag golf">Golf</span><p>The other Barton Creek course, also a former Golf Digest 100 Greatest Public. If Omni access falls through, play Lost Pines (public, Arthur Hills, slope 141), which is on the way to the airport.</p></div></li>
+          <li><time>11:30 AM</time><div><span class="t">Straight to AUS</span><span class="tag house">Move</span><p>About 25 minutes.</p></div></li>
+        </ol>
+      </div>
+    </div>
+    <div class="itin-foot">
+      <div>
+        <h5>Budget per person (estimates)</h5>
+        <table class="budget">
+          <tr><td>House: 3 nights at ~$3,500 plus ~20% fees and tax</td><td>$1,575</td></tr>
+          <tr><td>Two Omni Barton Creek rooms for golf access</td><td>$200</td></tr>
+          <tr><td>Golf: Fazio Canyons and Foothills (rates not published; estimate)</td><td>$550</td></tr>
+          <tr><td>Helicopter hog hunt: two Last Shadow flights at $6,400<small>HeliBacon's full-auto package adds about $3,100 per person.</small></td><td>$1,600</td></tr>
+          <tr><td>The Range at Austin, three or four guns</td><td>$300</td></tr>
+          <tr><td>Lake Travis barge, 4 hours plus tip</td><td>$230</td></tr>
+          <tr><td>Broken Spoke and White Horse</td><td>$80</td></tr>
+          <tr><td>Private chef</td><td>$161</td></tr>
+          <tr><td>90-minute massage with tip</td><td>$180</td></tr>
+          <tr><td>Van and driver</td><td>$250</td></tr>
+          <tr><td>Food, bar tabs, everything else</td><td>$400</td></tr>
+          <tr class="total"><td>Total before flights</td><td>~$5,530</td></tr>
+        </table>
+      </div>
+      <div>
+        <h5>Book-by list</h5>
+        <ol class="bookby">
+          <li><b>Now</b><span>Check the house rules. Many ban "bachelor parties"; tell the host it's an annual reunion of grad-school friends, because it is.</span></li>
+          <li><b>When posted</b><span>Confirm ACL 2027 dates and UT's home schedule. A home game on Oct 16 is either a bonus or a reason to shift a week.</span></li>
+          <li><b>Spring 2027</b><span>Call the Barton Creek pro shop (512-329-4653): does every golfer need to be a registered guest? Then book rooms and tee times.</span></li>
+          <li><b>Summer 2027</b><span>Helicopter hunt: two morning flights and the deposit. Ask what happens if weather grounds the flight.</span></li>
+          <li><b>Aug 2027</b><span>The Saturday barge. Saturdays on Lake Travis book out first.</span></li>
+          <li><b>Week of</b><span>The Range at Austin (book online), chef, Soothe.</span></li>
+        </ol>
+      </div>
+    </div>
+  </article>
+
+  <article class="itin" id="it-sandiego">
+    <div class="banner">
+      <img src="/GSI/img/sd-torrey.jpg" alt="Sandstone cliffs at Torrey Pines above the Pacific, with people at the overlook" loading="lazy">
+      <span class="credit">Dirk Hansen · CC BY-SA 3.0</span>
+      <div class="over">
+        <span class="k">Itinerary 3 · Tied for second at +2</span>
+        <h3>San Diego</h3>
+        <span class="dates">Thu Oct 7 – Sun Oct 10, 2027</span>
+      </div>
+    </div>
+    <div class="itin-meta">
+      <div><span class="label">Base</span><b>Bird Rock oceanfront, La Jolla</b><span>Heated pool, hot tub, rooftop court, theater, golf cart</span></div>
+      <div><span class="label">Rounds</span><b>Torrey Pines South · Aviara</b><span>Friday and Sunday mornings</span></div>
+      <div><span class="label">The story</span><b>Off the cliff, then on the course</b><span>Paraglide over Torrey, then play it the next morning</span></div>
+      <div><span class="label">Est. per person</span><b class="num">~$5,000</b><span>before flights; the house is half of it</span></div>
+    </div>
+    <div class="days">
+      <div class="day">
+        <h4><span>Thursday</span><span>Oct 7</span></h4>
+        <ol class="slots">
+          <li><time>1:00 PM</time><div><span class="t">Land at SAN</span><span class="tag house">Move</span><p>Twenty minutes to Bird Rock. Fish tacos on the way.</p></div></li>
+          <li><time>3:30 PM</time><div><span class="t">Torrey Pines Gliderport</span><span class="tag weird">Weird</span><p>Tandem paragliding off the cliffs above Black's Beach ($200; hang gliding $225). It depends on the wind, so hold Friday at 3 PM as a backup.</p></div></li>
+          <li><time>6:30 PM</time><div><span class="t">Sunset at Windansea</span><span class="tag house">House</span><p>Beers on the sand, five minutes from the house.</p></div></li>
+          <li><time>8:30 PM</time><div><span class="t">Pacific Beach</span><span class="tag scene">Scene</span><p>Five minutes north. Garnet Avenue, PB Shore Club, Mavericks Beach Club.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Friday</span><span>Oct 8</span></h4>
+        <ol class="slots">
+          <li><time>7:00 AM</time><div><span class="t">Round 1: Torrey Pines South</span><span class="tag golf">Golf</span><p>Site of the 2008 and 2021 U.S. Opens, 15 minutes away. The paragliders you saw yesterday will be overhead.</p></div></li>
+          <li><time>1:00 PM</time><div><span class="t">Lunch, massages, rooftop pickleball</span><span class="tag house">House</span><p>Soothe therapists in the afternoon. Losers of the pickleball bracket buy dinner.</p></div></li>
+          <li><time>8:00 PM</time><div><span class="t">Gaslamp</span><span class="tag scene">Scene</span><p>Dinner, then the Pendry's Pool House rooftop, Oxford Social Club and PARQ. Last call is 2 AM.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Saturday</span><span>Oct 9</span></h4>
+        <ol class="slots">
+          <li><time>6:00 AM</time><div><span class="t">Private sportfishing charter</span><span class="tag weird">Weird</span><p>Half day out of H&amp;M Landing in Point Loma. Recent Octobers have brought yellowfin and yellowtail. Keep the catch.</p></div></li>
+          <li><time>1:30 PM</time><div><span class="t">Beach clubs</span><span class="tag scene">Scene</span><p>Mavericks in Pacific Beach or Cannonball in Mission Beach. Or Skydive San Diego ($229 from 13,000 ft) for whoever skipped the paraglide.</p></div></li>
+          <li><time>7:30 PM</time><div><span class="t">The chef cooks your catch</span><span class="tag house">House</span><p>Then poker and the hot tub.</p></div></li>
+          <li><time>10:30 PM</time><div><span class="t">Little Italy rooftops</span><span class="tag opt">Optional</span><p>Kettner Exchange, or back to PB.</p></div></li>
+        </ol>
+      </div>
+      <div class="day">
+        <h4><span>Sunday</span><span>Oct 10</span></h4>
+        <ol class="slots">
+          <li><time>6:50 AM</time><div><span class="t">Round 2: Aviara</span><span class="tag golf">Golf</span><p>Arnold Palmer's course at the Park Hyatt, 30 minutes north. Closer option: Torrey Pines North, 15 minutes away.</p></div></li>
+          <li><time>11:15 AM</time><div><span class="t">Straight to SAN</span><span class="tag house">Move</span><p>About 35 minutes.</p></div></li>
+        </ol>
+      </div>
+    </div>
+    <div class="itin-foot">
+      <div>
+        <h5>Budget per person (estimates)</h5>
+        <table class="budget">
+          <tr><td>House: 3 nights at ~$5,400 plus ~20% fees and tax</td><td>$2,430</td></tr>
+          <tr><td>Torrey Pines South: $322 + $50 booking fee + $48 cart</td><td>$420</td></tr>
+          <tr><td>Aviara</td><td>$325</td></tr>
+          <tr><td>Tandem paragliding</td><td>$200</td></tr>
+          <tr><td>Private half-day fishing charter<small>Price not published; assumes about $3,200 for the boat.</small></td><td>$400</td></tr>
+          <tr><td>Private chef</td><td>$160</td></tr>
+          <tr><td>90-minute massage with tip</td><td>$180</td></tr>
+          <tr><td>Nightlife, two nights</td><td>$300</td></tr>
+          <tr><td>Van, driver and rides</td><td>$220</td></tr>
+          <tr><td>Food and everything else</td><td>$350</td></tr>
+          <tr class="total"><td>Total before flights</td><td>~$4,985</td></tr>
+        </table>
+      </div>
+      <div>
+        <h5>Book-by list</h5>
+        <ol class="bookby">
+          <li><b>Now</b><span>The Bird Rock house books up early. Confirm the city license number on the listing.</span></li>
+          <li><b>Jul 10, 2027</b><span>7:00 PM Pacific, exactly: Torrey Pines South opens for Friday Oct 8. One booker can hold two tee times (eight players), and that person must play.</span></li>
+          <li><b>Summer 2027</b><span>Aviara for Sunday. Private fishing charter at H&amp;M Landing.</span></li>
+          <li><b>Sep 2027</b><span>Gliderport tandem slots for Thursday, with Friday as the rain date.</span></li>
+          <li><b>Week of</b><span>Chef (tell them they're cooking fish you haven't caught yet), Soothe, Gaslamp dinner.</span></li>
+        </ol>
+      </div>
+    </div>
+  </article>
+</section>
+
+<section class="section" id="fineprint">
+  <div class="section-head">
+    <p class="eyebrow">Fine print</p>
+    <h2>What I ruled out, and why</h2>
+    <p>You said everything was on the table. Some of it doesn't survive contact with the law or a four-day schedule.</p>
+  </div>
+  <div class="fine">
+    <div><h4>Ayahuasca: not on this trip</h4><p>Reputable centers sell multi-night programs only (Soltara's minimum is 5 nights, Rythmia's 7). They screen out people on SSRIs and with some heart conditions, and each ceremony runs all night. The one-night ceremonies sold in Tulum aren't vetted. If the group is serious, make it a separate trip. For a legal session that fits a weekend, Bend's licensed psilocybin centers are the option.</p></div>
+    <div><h4>Guns in Mexico: none</h4><p>Mexico has no tourist shooting ranges, and bringing in even one round of ammunition can mean 5 to 30 years in prison. Check every golf bag and jacket pocket before Cabo or Playa. All the full-auto in this report is in Nevada, Texas and Florida.</p></div>
+    <div><h4>California: no machine guns</h4><p>Civilian full-auto rentals aren't available in San Diego or Palm Springs. Poway Weapons &amp; Gear has 42 lanes of ordinary shooting if someone insists.</p></div>
+    <div><h4>Rental rules are the new bouncer</h4><p>Las Vegas wants a licensed home and usually bans outdoor music. Miami Beach bans rentals under six months in single-family homes. Austin caps noise at 75 dB, and many listings ban "bachelor parties." Isle of Palms allows 12 overnight guests. Tell hosts the truth: it's an annual reunion of grad-school friends.</p></div>
+    <div><h4>Desert courses close to overseed</h4><p>Desert courses close or go cart-path-only for a couple of weeks each fall to overseed (SilverRock was closed Oct 12–30, 2026). Before you lock Vegas dates, ask Cascata and Wynn for their 2027 schedule.</p></div>
+    <div><h4>Vegas pools close in late October</h4><p>Encore Beach Club, Tao Beach and LIV Beach close in late October, and OMNIA's dayclub at the end of September. Circa's Stadium Swim stays open all year. That's why the Vegas plan is Oct 14–17.</p></div>
+    <div><h4>Shadow Creek doesn't fit</h4><p>Public play is Monday to Thursday, for guests of MGM hotels, at $1,250 with a limo and caddie. On a Thursday-arrival trip, it would mean playing straight off the plane.</p></div>
+    <div><h4>Massage: licensed only</h4><p>Book through an app like Soothe, which sends licensed therapists to the house in Las Vegas, Austin, San Diego and Nashville. It doesn't serve Charleston.</p></div>
+  </div>
+
+  <div class="method">
+    <h4>How the scores work</h4>
+    <p>Each destination gets six scores out of 10. Weather is calculated from 1991–2020 monthly normals (NOAA for U.S. cities, SMN for Mexico, IMN for Costa Rica). Average highs of 74–84°F get full marks. Every degree hotter costs 0.6, and humid places count 2–3°F hotter once highs pass 80. Every degree cooler costs 0.45, every degree the low falls under 50°F costs 0.12, and rainy or hurricane months cost 0.3 to 3 more. The other five are judgment calls from the research. Golf covers the quality and access of the best two courses within 45 minutes. The crowd score uses fitness rank, median age, nightlife and singles rankings, and campuses. House covers legal 8-bedroom homes with a pool, hot tub and court. Weird is how memorable the best unusual activity is. Travel covers nonstops, passports and airport-to-house time.</p>
+    <p>The default weights follow your priorities: golf 25%, crowd 20%, house, weather and weird 15% each, travel 10%. "To par" is the gap to Scottsdale under the same weights and month, at one stroke per tenth of a point. Research was done Oct 3, 2026. Prices are 2025–26 published rates and listings; confirm everything before booking.</p>
+  </div>
+
+  <div class="sources">
+    <ul><li><h5>Crowd and weather data</h5></li>
+      <li><a href="https://acsm.org/wp-content/uploads/2026-AFI-report_final.pdf">ACSM American Fitness Index 2026</a></li>
+      <li><a href="https://wallethub.com/edu/most-fun-cities-in-the-us/23455">WalletHub, Most Fun Cities</a></li>
+      <li><a href="https://wallethub.com/edu/best-worst-cities-for-singles/9015">WalletHub, Best Cities for Singles</a></li>
+      <li><a href="https://censusreporter.org/profiles/16000US4805000-austin-tx/">Census Reporter city profiles</a></li>
+      <li><a href="https://news.utexas.edu/2025/09/18/ut-sets-all-time-highs-for-enrollment-and-student-performance/">UT Austin enrollment, fall 2025</a></li>
+      <li><a href="https://whyy.org/episodes/the-nashville-bachelorette-party-industrial-complex">WHYY on Nashville bachelorette parties</a></li>
+      <li><a href="https://en.wikipedia.org/wiki/Template:Austin_weatherbox">Climate normals (Wikipedia weatherboxes citing NOAA, SMN, IMN)</a></li>
+      <li><a href="https://www.formula1.com/en/racing/2027">Formula 1 2027 calendar</a></li>
+    </ul>
+    <ul><li><h5>Las Vegas</h5></li>
+      <li><a href="https://golf.com/news/how-play-shadow-creek/">How to play Shadow Creek (GOLF)</a></li>
+      <li><a href="https://www.wynnlasvegas.com/amenities/golf">Wynn Golf Club</a></li>
+      <li><a href="https://nevadapolicy.org/the-licensing-system-that-licensed-nothing/">Clark County rental permits</a></li>
+      <li><a href="https://nocovervegas.com/guides/las-vegas-pool-parties-closing-2026">Pool club closing dates</a></li>
+      <li><a href="https://www.battlefieldvegas.com/">Battlefield Vegas</a> · <a href="https://www.skycombatace.com/book">Sky Combat Ace</a> · <a href="https://www.digthisvegas.com/">Dig This</a></li>
+      <li><a href="https://www.circalasvegas.com/stadium-swim/">Circa Stadium Swim</a> · <a href="https://www.maverickhelicopter.com/">Maverick Helicopters</a></li>
+    </ul>
+    <ul><li><h5>Austin</h5></li>
+      <li><a href="https://www.helibacon.com/helicopter-hog-hunting/">HeliBacon packages</a></li>
+      <li><a href="https://captainexperiences.com/guides/last-shadow">Last Shadow helicopter hunts</a></li>
+      <li><a href="https://therangeaustin.rezdy.com/698529/full-auto-premium-machine-gun-package">The Range at Austin full-auto</a></li>
+      <li><a href="https://golf.com/travel/best-golf-courses-texas-2024-25/">Best courses in Texas (GOLF)</a></li>
+      <li><a href="https://www.brokenspokeaustintx.net/">Broken Spoke</a> · <a href="https://www.thewhitehorseaustin.com/">White Horse</a></li>
+      <li><a href="https://www.thextremexperience.com/blog/last-chance-to-drive-cota">COTA's last public driving dates</a></li>
+      <li><a href="https://vrbo.com/490043">Escondido Chateau (Vrbo 490043)</a></li>
+    </ul>
+    <ul><li><h5>San Diego</h5></li>
+      <li><a href="https://www.sandiego.gov/torrey-pines/course-fees">Torrey Pines fees</a> · <a href="https://www.sandiego.gov/torrey-pines/tee-time-booking-information">booking rules</a></li>
+      <li><a href="https://avantstay.com/740025/san-diego/celebrity-oceanfront-estate">Celebrity Oceanfront Estate (AvantStay)</a></li>
+      <li><a href="https://www.flytorrey.com/">Torrey Pines Gliderport</a> · <a href="https://www.skydivesandiego.com/">Skydive San Diego</a></li>
+      <li><a href="https://www.hmlanding.com/">H&amp;M Landing</a></li>
+    </ul>
+    <ul><li><h5>Mexico</h5></li>
+      <li><a href="https://fore.scga.org/travel/cabo-evolves">Cabo golf access (SCGA FORE)</a></li>
+      <li><a href="https://quiviraloscabos.com/Golf">Quivira rates</a></li>
+      <li><a href="https://www.cabovillas.com/villa-rentals/mantea-casa-cabo">Mantea Casa Cabo</a></li>
+      <li><a href="https://www.piscessportfishing.com/">Pisces Sportfishing</a></li>
+      <li><a href="https://mexiconewsdaily.com/news/riviera-maya-regains-its-color-as-sargassum-subsides/">Riviera Maya sargassum outlook</a></li>
+      <li><a href="https://www.villasofdistinction.com/villa/riviera-maya/tulum/cenote-del-mar">Cenote del Mar villa</a></li>
+    </ul>
+    <ul><li><h5>Everywhere else</h5></li>
+      <li><a href="https://www.miamibeachfl.gov/business/vacation-short-term-rentals/">Miami Beach rental rules</a></li>
+      <li><a href="https://lockandloadmiami.com/shop/">Lock &amp; Load Miami</a></li>
+      <li><a href="https://kiawahresort.com/golf/the-ocean-course/">Kiawah Ocean Course</a> · <a href="https://www.backwoodsquailclub.com/">Back Woods Quail Club</a></li>
+      <li><a href="https://www.oregon.gov/oha/PH/PREVENTIONWELLNESS/Pages/Psilocybin-Access-Psilocybin-Services.aspx">Oregon Psilocybin Services</a> · <a href="https://drop-thesis.secure.retreat.guru/program/voyager-program">Drop Thesis</a></li>
+      <li><a href="https://palmspringsairmuseum.org/warbirdrides/">Palm Springs Air Museum warbird rides</a></li>
+      <li><a href="https://rythmia.com/">Rythmia</a> (ayahuasca program length)</li>
+    </ul>
+  </div>
+
+  <div class="credits">
+    <h5>Photographs</h5>
+    <p>All photos are from Wikimedia Commons, used under their licenses: Las Vegas Strip, Clément Bardot (CC BY-SA 3.0); Pennybacker Bridge, Jared Tennant (CC BY 2.0); San Diego skyline, russellstreet (CC BY-SA 2.0); Sphere, Matt Walter (CC BY 2.0); Calico Hills, The Cosmonaut (CC BY-SA 2.5 CA); Valley of Fire, cjarv2010 (CC BY-SA 2.0); Rainey Street, Oleg Yunakov (CC BY-SA 4.0); Broken Spoke, Larry D. Moore (CC BY 4.0); Sixth Street, Kevin Payravi (CC BY-SA 4.0); Lake Travis, Trey Perry (CC BY 3.0); helicopter, MKFI (public domain); La Jolla Cove, Stephen Bay (CC BY 4.0); cliff diving, Jarek Tuszyński (CC BY 4.0); Torrey Pines cliffs, Dirk Hansen (CC BY-SA 3.0); El Arco, Comisión Mexicana de Filmaciones (CC BY-SA 2.0); Diamante Dunes, Cal Wolfe (CC BY-SA 3.0); striped marlin, Jackiemora01 (CC BY-SA 3.0); Miami Beach lifeguard stand, Radomianin (CC BY-SA 4.0); Ocean Course 18th green, N75746 (CC BY-SA 4.0); Tulum, Martin Falbisoner (CC BY-SA 4.0); Cenote Ik Kil, Shinya Suzuki (CC BY 2.0); Nashville skyline, Kaldari (public domain); Palm Springs pool, Wgreaves (CC BY-SA 4.0); Elk Lake and Mount Bachelor, Bonnie Moreland (public domain); TPC Dorado Beach, EgorovaSvetlana (CC BY-SA 4.0); Papagayo Peninsula, LorraineAtkins (CC BY-SA 3.0); Camelback Mountain view, dconvertini (CC BY-SA 2.0).</p>
+  </div>
+
+  <div class="colophon">
+    <span>The Grad School Invitational · destination dossier</span>
+    <span>Researched Oct 3, 2026 · verify prices and dates before booking</span>
+  </div>
+</section>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  var CATS = [
+    { k: "golf", n: "Golf", d: 5 }, { k: "scene", n: "Crowd", d: 4 }, { k: "house", n: "House", d: 3 },
+    { k: "weather", n: "Weather", d: 3 }, { k: "weird", n: "Weird", d: 3 }, { k: "travel", n: "Travel", d: 2 }
+  ];
+  // hl = [avg high, avg low] °F by month; risk = rain / hurricane penalty by month; hum = humidity "feels-like" add above 80°F
+  var DEST = [
+    { id: "vegas", name: "Las Vegas", sub: "Nevada", s: { golf: 8.5, scene: 9.5, house: 7.5, weird: 10, travel: 9.5 }, hum: 0,
+      hl: [[59,41],[63,44],[71,51],[79,57],[89,66],[99,76],[105,82],[103,81],[95,72],[81,60],[67,47],[57,40]], risk: [0,0,0,0,0,0,0,0,0,0,0,0], win: "Oct 7–24 · Apr" },
+    { id: "austin", name: "Austin", sub: "Texas Hill Country", s: { golf: 7.5, scene: 9, house: 9, weird: 8.5, travel: 9 }, hum: 0,
+      hl: [[63,42],[67,46],[73,52],[80,59],[87,67],[93,73],[97,75],[98,75],[91,70],[83,61],[72,51],[64,43]], risk: [0,0,0,0,.5,.3,0,0,.3,.5,0,0], win: "Mid-Oct · late Mar–Apr" },
+    { id: "sandiego", name: "San Diego", sub: "La Jolla", s: { golf: 9, scene: 8, house: 9, weird: 7, travel: 8.5 }, hum: 0,
+      hl: [[66,50],[66,52],[67,55],[69,57],[70,60],[72,63],[75,66],[77,68],[77,66],[75,62],[71,55],[66,50]], risk: [.3,.3,0,0,0,0,0,0,0,0,0,.3], win: "Late Sep–mid-Oct" },
+    { id: "cabo", name: "Los Cabos", sub: "Mexico · passport", s: { golf: 9.5, scene: 8, house: 10, weird: 7.5, travel: 7 }, hum: 0,
+      hl: [[80,55],[81,55],[83,57],[86,60],[90,62],[91,65],[94,72],[94,75],[93,74],[92,70],[87,64],[81,57]], risk: [0,0,0,0,0,0,.5,1.5,2.5,1,.3,0], win: "Mid-Nov–early Dec · Mar–Apr" },
+    { id: "miami", name: "Miami", sub: "Florida", s: { golf: 7.5, scene: 10, house: 5, weird: 8, travel: 9 }, hum: 3,
+      hl: [[76,61],[78,63],[81,66],[84,70],[87,73],[89,76],[91,78],[91,78],[89,77],[86,74],[81,68],[78,64]], risk: [0,0,0,0,.5,1.5,1.5,2,2.5,2,.8,0], win: "Mid-Nov–early Dec · Mar–Apr" },
+    { id: "charleston", name: "Charleston", sub: "Kiawah · S.C.", s: { golf: 9.5, scene: 6.5, house: 6.5, weird: 6.5, travel: 8 }, hum: 1,
+      hl: [[60,39],[64,42],[70,47],[77,55],[84,63],[89,70],[91,74],[90,73],[85,68],[78,58],[69,47],[63,42]], risk: [0,0,0,0,0,.5,.7,1,1.5,.5,0,0], win: "Oct · Apr" },
+    { id: "rivieramaya", name: "Riviera Maya", sub: "Mexico · passport", s: { golf: 7, scene: 8.5, house: 9.5, weird: 8, travel: 7 }, hum: 3,
+      hl: [[82,64],[83,65],[85,66],[87,70],[89,73],[90,75],[91,74],[91,74],[91,74],[87,71],[85,67],[83,65]], risk: [.3,0,0,.5,1,2.5,2,2.5,2,2.5,1,.5], win: "Mid-Nov–Dec" },
+    { id: "nashville", name: "Nashville", sub: "Tennessee", s: { golf: 5, scene: 8, house: 7, weird: 6.5, travel: 9.5 }, hum: 1,
+      hl: [[49,30],[54,33],[63,40],[73,49],[80,58],[88,66],[91,71],[90,69],[84,62],[74,50],[61,39],[52,33]], risk: [0,0,.3,.3,.5,0,0,0,0,0,0,0], win: "Late Sep–mid-Oct" },
+    { id: "palmsprings", name: "Palm Springs", sub: "Coachella Valley", s: { golf: 8.5, scene: 4, house: 5, weird: 6.5, travel: 6 }, hum: 0,
+      hl: [[71,48],[74,50],[81,54],[87,59],[95,66],[104,73],[109,79],[108,80],[102,74],[91,65],[79,53],[69,46]], risk: [0,0,0,0,0,0,0,0,0,0,0,0], win: "Nov · Mar" },
+    { id: "bend", name: "Bend", sub: "Oregon", s: { golf: 8.5, scene: 4.5, house: 4, weird: 8, travel: 4.5 }, hum: 0,
+      hl: [[43,25],[46,24],[52,28],[58,31],[66,37],[74,42],[84,49],[83,48],[76,41],[63,34],[49,28],[41,23]], risk: [1,1,.5,0,0,0,0,.5,0,0,.5,1], win: "Mid–late Sep" },
+    { id: "puertorico", name: "Puerto Rico", sub: "Dorado · San Juan", s: { golf: 7, scene: 6.5, house: 5, weird: 7, travel: 7.5 }, hum: 3,
+      hl: [[83,72],[84,72],[85,72],[86,74],[87,76],[89,77],[89,78],[89,78],[89,78],[89,77],[86,75],[84,73]], risk: [0,0,0,0,.7,.7,.7,1.5,2.5,2,1.5,0], win: "Dec–Apr", noprofile: true },
+    { id: "guanacaste", name: "Guanacaste", sub: "Costa Rica · passport", s: { golf: 5, scene: 5.5, house: 6.5, weird: 7, travel: 5.5 }, hum: 2,
+      hl: [[92,69],[94,70],[96,71],[97,73],[93,74],[90,74],[90,73],[90,73],[88,72],[88,72],[89,71],[91,70]], risk: [0,0,0,0,1.5,1.5,1,1.5,2.5,3,1,0], win: "Mid-Dec–Apr", noprofile: true },
+    { id: "scottsdale", name: "Scottsdale", sub: "Par · where you are now", bench: true, s: { golf: 9, scene: 8, house: 9.5, weird: 7.5, travel: 9 }, hum: 0,
+      hl: [[67,43],[69,46],[76,52],[83,58],[93,67],[102,76],[104,83],[103,82],[98,75],[87,63],[75,51],[65,43]], risk: [0,0,0,0,0,0,.5,.5,0,0,0,0], win: "Oct–Nov · Feb–Apr" }
+  ];
+
+  function wx(d, m) {
+    var h = d.hl[m][0], l = d.hl[m][1];
+    var eff = h + (h >= 80 ? d.hum : 0), p = 0;
+    if (eff > 84) p += (eff - 84) * 0.6;
+    if (h < 74) p += (74 - h) * 0.45;
+    if (l < 50) p += (50 - l) * 0.12;
+    p += d.risk[m];
+    return Math.max(0, Math.min(10, 10 - p));
+  }
+  function bestWx(d, months) {
+    var best = -1, bm = months[0];
+    months.forEach(function (m) { var v = wx(d, m); if (v > best + 1e-9) { best = v; bm = m; } });
+    return { v: best, m: bm };
+  }
+
+  var store = {
+    get: function (k) { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } },
+    set: function (k, v) { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} }
+  };
+  var weights = {}; CATS.forEach(function (c) { weights[c.k] = c.d; });
+  var saved = store.get("gsi-weights");
+  if (saved && typeof saved === "object") CATS.forEach(function (c) { if (typeof saved[c.k] === "number") weights[c.k] = saved[c.k]; });
+  var month = store.get("gsi-month") || "fall";
+
+  function compute() {
+    var months = month === "fall" ? [8, 9, 10] : [parseInt(month, 10)];
+    var wsum = 0; CATS.forEach(function (c) { wsum += weights[c.k]; });
+    if (wsum === 0) wsum = 1;
+    var rows = DEST.map(function (d) {
+      var w = bestWx(d, months);
+      var sc = Object.assign({}, d.s, { weather: w.v });
+      var t = 0; CATS.forEach(function (c) { t += sc[c.k] * weights[c.k]; });
+      return { d: d, sc: sc, wm: w.m, total: t / wsum };
+    });
+    var bench = rows.filter(function (r) { return r.d.bench; })[0];
+    rows.forEach(function (r) { r.par = Math.round((bench.total - r.total) * 10 + 1e-9); });
+    rows.sort(function (a, b) { return b.total - a.total; });
+    var field = rows.filter(function (r) { return !r.d.bench; });
+    field.forEach(function (r, i) {
+      var first = field.findIndex(function (x) { return x.par === r.par; });
+      var n = field.filter(function (x) { return x.par === r.par; }).length;
+      r.pos = (n > 1 ? "T" : "") + (first + 1);
+      r.rank = i + 1;
+    });
+    return { rows: rows, bench: bench };
+  }
+
+  function fmtPar(p) { return p === 0 ? "E" : (p < 0 ? "−" + Math.abs(p) : "+" + p); }
+  function scCell(v, extra) {
+    var cls = v >= 9 ? "sc birdie" : (v < 6 ? "sc bogey" : "sc");
+    return '<span class="' + cls + (extra ? " wx" : "") + '">' + v.toFixed(1).replace(/\.0$/, ".0") + (extra || "") + "</span>";
+  }
+
+  var body = document.getElementById("lb-body");
+  var sub = document.getElementById("lb-sub");
+  function renderBoard() {
+    var res = compute();
+    var html = "", cutDone = false;
+    res.rows.forEach(function (r) {
+      if (!r.d.bench && r.rank === 11 && !cutDone) {
+        html += '<tr class="cut"><td colspan="11"><div>Projected cut</div></td></tr>';
+        cutDone = true;
+      }
+      var cls = r.d.bench ? "bench" : (r.rank > 10 ? "missed" : "");
+      var name = r.d.noprofile ? r.d.name : '<a href="#p-' + r.d.id + '">' + r.d.name + "</a>";
+      if (r.d.bench) name = '<a href="#field">' + r.d.name + "</a>";
+      html += '<tr class="' + cls + '">' +
+        '<td class="pos l">' + (r.d.bench ? "Par" : r.pos) + "</td>" +
+        '<td class="who l">' + name + "<small>" + r.d.sub + "</small></td>" +
+        '<td class="topar' + (r.par < 0 ? " under" : "") + '">' + (r.d.bench ? "E" : fmtPar(r.par)) + "</td>" +
+        '<td class="tot num">' + r.total.toFixed(2) + "</td>" +
+        "<td>" + scCell(r.sc.golf) + "</td>" +
+        "<td>" + scCell(r.sc.scene) + "</td>" +
+        "<td>" + scCell(r.sc.house) + "</td>" +
+        "<td>" + scCell(r.sc.weather, "<small>" + MONTHS[r.wm] + "</small>") + "</td>" +
+        "<td>" + scCell(r.sc.weird) + "</td>" +
+        "<td>" + scCell(r.sc.travel) + "</td>" +
+        '<td class="win">' + r.d.win + "</td></tr>";
+    });
+    body.innerHTML = html;
+    var mlabel = month === "fall" ? "best of Sep–Nov" : document.querySelector('#month option[value="' + month + '"]').textContent;
+    sub.textContent = "Par " + res.bench.total.toFixed(2) + " · Scottsdale · " + mlabel;
+    renderHeat(res);
+  }
+
+  // weight sliders
+  var wbox = document.getElementById("weights");
+  function pctText() {
+    var s = 0; CATS.forEach(function (c) { s += weights[c.k]; });
+    CATS.forEach(function (c) {
+      var o = document.getElementById("o-" + c.k);
+      if (o) o.textContent = s ? Math.round(weights[c.k] / s * 100) + "%" : "0%";
+    });
+  }
+  wbox.innerHTML = CATS.map(function (c) {
+    return '<div class="w"><div class="top"><label for="w-' + c.k + '">' + c.n + '</label><output id="o-' + c.k + '" for="w-' + c.k + '"></output></div>' +
+      '<input type="range" id="w-' + c.k + '" min="0" max="5" step="1" value="' + weights[c.k] + '" aria-label="' + c.n + ' weight"></div>';
+  }).join("");
+  CATS.forEach(function (c) {
+    document.getElementById("w-" + c.k).addEventListener("input", function (e) {
+      weights[c.k] = parseInt(e.target.value, 10); store.set("gsi-weights", weights); pctText(); renderBoard();
+    });
+  });
+  var msel = document.getElementById("month");
+  msel.value = month;
+  msel.addEventListener("change", function () { month = msel.value; store.set("gsi-month", month); renderBoard(); });
+  document.getElementById("reset").addEventListener("click", function () {
+    CATS.forEach(function (c) { weights[c.k] = c.d; document.getElementById("w-" + c.k).value = c.d; });
+    month = "fall"; msel.value = "fall";
+    store.set("gsi-weights", weights); store.set("gsi-month", month); pctText(); renderBoard();
+  });
+
+  // heatmap
+  var heat = document.getElementById("heat");
+  var tip = document.getElementById("tip");
+  function bin(d, m) {
+    var h = d.hl[m][0], eff = h + (h >= 80 ? d.hum : 0);
+    if (eff >= 96) return "h3"; if (eff >= 90) return "h2"; if (eff > 84) return "h1";
+    if (h >= 74) return "mid"; if (h >= 65) return "c1"; if (h >= 55) return "c2"; return "c3";
+  }
+  function riskNote(d, m) {
+    var r = d.risk[m];
+    if (d.id === "bend" && (m >= 10 || m <= 2)) return "snow and closed golf";
+    if (r >= 2) return "peak rain or hurricane season";
+    if (r >= 1) return "rainy or hurricane season";
+    if (r >= 0.3) return "a wetter month";
+    return "";
+  }
+  function renderHeat(res) {
+    var order = res.rows.filter(function (r) { return !r.d.bench; }).map(function (r) { return r.d; });
+    order.push(DEST[DEST.length - 1]);
+    var sel = month === "fall" ? [8, 9, 10] : [parseInt(month, 10)];
+    var h = '<thead><tr><th></th>' + MONTHS.map(function (mn, i) {
+      return '<th scope="col" class="' + (sel.indexOf(i) > -1 ? "season" : "") + '">' + mn + "</th>";
+    }).join("") + "</tr></thead><tbody>";
+    order.forEach(function (d) {
+      h += '<tr class="' + (d.bench ? "benchrow" : "") + '"><th scope="row" class="row">' + d.name + (d.bench ? " (par)" : "") + "</th>";
+      for (var m = 0; m < 12; m++) {
+        var v = wx(d, m), c = bin(d, m);
+        var cls = c + (v >= 9 ? " ideal" : "") + (d.risk[m] >= 1.5 ? " storm" : "") + (sel.indexOf(m) > -1 ? " sel" : "");
+        h += '<td tabindex="0" class="' + cls + '" data-d="' + d.id + '" data-m="' + m + '">' + d.hl[m][0] + "</td>";
+      }
+      h += "</tr>";
+    });
+    h += "</tbody>";
+    var cap = heat.querySelector("caption");
+    heat.innerHTML = h;
+    if (cap) heat.insertBefore(cap, heat.firstChild);
+  }
+  function showTip(td) {
+    var d = DEST.filter(function (x) { return x.id === td.dataset.d; })[0], m = +td.dataset.m;
+    var note = riskNote(d, m);
+    tip.innerHTML = "<b>" + d.name + " · " + MONTHS[m] + "</b><br>High " + d.hl[m][0] + "° · low " + d.hl[m][1] + "°<br>Weather score " + wx(d, m).toFixed(1) + (note ? "<br>" + note : "");
+    tip.hidden = false;
+    var r = td.getBoundingClientRect(), tw = tip.offsetWidth, th = tip.offsetHeight;
+    var x = Math.min(window.innerWidth - tw - 8, Math.max(8, r.left + r.width / 2 - tw / 2));
+    var y = r.top - th - 8; if (y < 60) y = r.bottom + 8;
+    tip.style.left = x + "px"; tip.style.top = y + "px";
+  }
+  function hideTip() { tip.hidden = true; }
+  heat.addEventListener("mouseover", function (e) { var td = e.target.closest("td[data-d]"); if (td) showTip(td); });
+  heat.addEventListener("mouseout", function (e) { if (e.target.closest("td[data-d]")) hideTip(); });
+  heat.addEventListener("focusin", function (e) { var td = e.target.closest("td[data-d]"); if (td) showTip(td); });
+  heat.addEventListener("focusout", hideTip);
+  window.addEventListener("scroll", hideTip, { passive: true });
+
+  pctText();
+  renderBoard();
+})();
+</script>
+
+</body>
+</html>
