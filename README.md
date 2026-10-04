@@ -14,7 +14,7 @@ Two kinds of things live at jontidd.com: **pages** that are folders in this repo
 | `/floorplan/` | IGCE Plan Studio (password) | [`jon-tidd/igce`](https://github.com/jon-tidd/igce) | `igce` → rewrite |
 | `/sitescreener/` | IGCE Site Screener (password) | [`jon-tidd/igce`](https://github.com/jon-tidd/igce) | `igce` → rewrite |
 | `/battleplan`, `/projectplan` | Nova Plan | [`jon-tidd/nova-plan`](https://github.com/jon-tidd/nova-plan) | `nova-plan` → rewrite |
-| `/GSI` | Grad School Invitational trip dossier (unlisted, `noindex`) | this repo, `GSI/` | jontidd-homepage |
+| `/GSI` (also `/gsi`) | Grad School Invitational trip dossier (unlisted, `noindex`) | this repo, `GSI/` | jontidd-homepage |
 | `/tiger/`, `/tylerplace/`, `/writing/`, `/familyhistory/`, `/MRIReport/` | Static pages | this repo | jontidd-homepage |
 
 Rule of thumb: a static page you alone edit is a folder here. Anything with an API, secrets, a database, or other people editing it gets its own repo and Vercel project and a rewrite here.

@@ -2,7 +2,9 @@
   "redirects": [
     { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true },
     { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true },
-    { "source": "/floorplan", "destination": "/floorplan/", "permanent": true }
+    { "source": "/floorplan", "destination": "/floorplan/", "permanent": true },
+    { "source": "/gsi", "destination": "/GSI/", "permanent": false },
+    { "source": "/gsi/", "destination": "/GSI/", "permanent": false }
   ],
   "rewrites": [
     { "source": "/floorplan/", "destination": "https://igce.vercel.app/floorplan/" },
