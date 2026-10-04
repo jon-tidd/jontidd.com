@@ -4,7 +4,7 @@
     { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true },
     { "source": "/floorplan", "destination": "/floorplan/", "permanent": true },
     { "source": "/gsi", "destination": "/GSI/", "permanent": false },
-    { "source": "/gsi/", "destination": "/GSI/", "permanent": false }
+    { "source": "/gsi/:path(.*)", "destination": "/GSI/:path", "permanent": false }
   ],
   "rewrites": [
     { "source": "/floorplan/", "destination": "https://igce.vercel.app/floorplan/" },
