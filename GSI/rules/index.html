@@ -1,0 +1,966 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>GSI Rules Committee</title>
+<meta name="description" content="Sixty-three golf wagers and loser punishments for the Grad School Invitational, 43 proven and 20 original, plotted by shame and money.">
+<meta name="robots" content="noindex">
+<meta property="og:title" content="GSI Rules Committee">
+<meta property="og:description" content="63 wagers and punishments. Vote them in or out.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://jontidd.com/GSI/rules/">
+<meta property="og:image" content="https://jontidd.com/GSI/img/heli.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+  :root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+  body { margin: 0; }
+  [hidden] { display: none !important; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&display=swap">
+<style>
+/* Layout: the trip's rules-committee meeting. A live ballot header, the Shame Map (shame × money scatter),
+   the adopted rulebook, then a filterable card deck of every wager with In / Out / Veto, and a Wheel of Shame. */
+:root {
+  --paper: #F3F5F0; --board: #FFFFFF; --ink: #12241A; --ink-2: #3D4E44; --muted: #64746A; --rule: #D2D9CE;
+  --green: #0E4D31; --green-2: #1D6A45; --green-soft: #E1EBE3; --on-green: #FFFFFF;
+  --red: #C21F32; --red-soft: #F8E1E3; --flag: #E2B000; --flag-ink: #6F5300; --flag-soft: #FBF1CC;
+  --cat-game: #2a78d6; --cat-eq: #eb6834; --cat-pun: #1baf7a;
+  --cat-game-ink: #FFFFFF; --cat-eq-ink: #1B0D05; --cat-pun-ink: #04150E;
+  --shadow: 0 1px 0 rgba(18,36,26,.05), 0 14px 30px -18px rgba(18,36,26,.35);
+  --display: "Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --serif: "Newsreader", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --gutter: clamp(16px, 3.2vw, 44px);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0B1410; --board: #111D16; --ink: #E6EEE8; --ink-2: #BAC8BF; --muted: #8B9C91; --rule: #23342A;
+    --green: #6CC394; --green-2: #8AD4AA; --green-soft: #16301F; --on-green: #08130D;
+    --red: #FF6B7A; --red-soft: #3A1A1F; --flag: #F2C230; --flag-ink: #F2C230; --flag-soft: #2E2711;
+    --cat-game: #3987e5; --cat-eq: #d95926; --cat-pun: #199e70;
+    --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -18px rgba(0,0,0,.8);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #0B1410; --board: #111D16; --ink: #E6EEE8; --ink-2: #BAC8BF; --muted: #8B9C91; --rule: #23342A;
+  --green: #6CC394; --green-2: #8AD4AA; --green-soft: #16301F; --on-green: #08130D;
+  --red: #FF6B7A; --red-soft: #3A1A1F; --flag: #F2C230; --flag-ink: #F2C230; --flag-soft: #2E2711;
+  --cat-game: #3987e5; --cat-eq: #d95926; --cat-pun: #199e70;
+  --shadow: 0 1px 0 rgba(0,0,0,.3), 0 14px 30px -18px rgba(0,0,0,.8);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+body { background: var(--paper); color: var(--ink); font-family: var(--serif); font-size: 17px; line-height: 1.55; -webkit-font-smoothing: antialiased; }
+img { max-width: 100%; display: block; }
+a { color: inherit; text-underline-offset: 3px; text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); }
+:focus-visible { outline: 2px solid var(--flag); outline-offset: 2px; }
+h1, h2, h3, h4 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+button { font: inherit; color: inherit; cursor: pointer; }
+.page { padding-inline: var(--gutter); padding-block: 0 64px; max-width: 1320px; margin: 0 auto; }
+.eyebrow, .label { font-family: var(--mono); font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.label { font-size: 11px; }
+
+/* nav */
+.nav { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 20; background: color-mix(in srgb, var(--paper) 88%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); border-bottom: 1px solid var(--rule); margin-inline: calc(var(--gutter) * -1); padding-inline: var(--gutter); }
+.nav-inner { display: flex; align-items: center; gap: 22px; height: 52px; overflow-x: auto; scrollbar-width: none; }
+.nav-inner::-webkit-scrollbar { display: none; }
+.nav .mark { font-family: var(--display); font-weight: 900; font-size: 20px; color: var(--green); white-space: nowrap; }
+.nav a { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); white-space: nowrap; }
+.nav a.out { color: var(--red); font-weight: 600; }
+
+/* header */
+.cover { padding-block: clamp(32px, 5vw, 64px) 0; display: grid; grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr); gap: 28px 48px; align-items: end; }
+.cover h1 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(56px, 10vw, 140px); line-height: .82; }
+.cover h1 span { color: var(--red); display: block; }
+.cover .lede { font-size: clamp(18px, 2vw, 21px); line-height: 1.45; color: var(--ink-2); margin-top: 18px; max-width: 60ch; }
+.ballot { background: var(--board); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); padding: 18px; display: grid; gap: 12px; }
+.ballot h2 { font-family: var(--display); font-weight: 800; font-size: 26px; text-transform: uppercase; line-height: 1; }
+.ballot p { font-size: 15px; color: var(--ink-2); }
+.voters { display: flex; flex-wrap: wrap; gap: 8px; }
+.voter { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px 3px 3px; border-radius: 999px; background: var(--green-soft); font-size: 13.5px; }
+.voter img { width: 24px; height: 24px; border-radius: 50%; }
+.voter b { font-family: var(--mono); font-size: 11px; font-weight: 500; color: var(--muted); }
+.status { font-family: var(--mono); font-size: 12px; color: var(--muted); }
+.elsewhere { font-size: 15px; font-weight: 600; }
+.elsewhere a { color: var(--red); }
+.status.ok { color: var(--green); }
+.status.warn { color: var(--flag-ink); }
+.rules-strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border-top: 2px solid var(--ink); border-bottom: 1px solid var(--rule); margin-top: 28px; }
+.rules-strip > div { padding: 14px 16px 14px 0; display: grid; gap: 4px; min-width: 0; }
+.rules-strip > div + div { padding-left: 16px; border-left: 1px solid var(--rule); }
+.rules-strip b { font-family: var(--display); font-weight: 800; font-size: 20px; text-transform: uppercase; line-height: 1.05; }
+.rules-strip span { font-size: 14.5px; color: var(--ink-2); }
+
+.section { padding-block: clamp(44px, 6vw, 80px) 0; }
+.section-head { display: grid; gap: 10px; margin-bottom: 24px; max-width: 780px; }
+.section-head h2 { font-family: var(--display); font-weight: 900; text-transform: uppercase; font-size: clamp(38px, 5.5vw, 66px); line-height: .88; }
+.section-head p { color: var(--ink-2); font-size: 17.5px; }
+
+/* shame map */
+.map-wrap { display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: 20px; align-items: start; }
+.map { background: var(--board); border: 1px solid var(--rule); border-radius: 6px; box-shadow: var(--shadow); padding: 12px; min-width: 0; }
+.map svg { width: 100%; height: auto; display: block; overflow: visible; }
+.map .grid line { stroke: var(--rule); stroke-width: 1; }
+.map .zone { fill: var(--red-soft); }
+.map .axis text, .map .zone-label { font-family: var(--mono); font-size: 11px; fill: var(--muted); }
+.map .zone-label { font-size: 10.5px; letter-spacing: .1em; text-transform: uppercase; fill: var(--red); }
+.map .dot { cursor: pointer; transition: transform .15s ease; }
+.map .dot circle { stroke: var(--board); stroke-width: 2; }
+.map .dot.orig circle { stroke-width: 2.5; }
+.map .dot:hover circle, .map .dot:focus circle, .map .dot.on circle { stroke: var(--ink); stroke-width: 2.5; }
+.map .dot.dim { opacity: .18; }
+.map .dot text { font-family: var(--display); font-weight: 700; font-size: 12.5px; fill: var(--ink); pointer-events: none; }
+.map-side { display: grid; gap: 14px; }
+.legend { display: grid; gap: 8px; font-size: 14px; color: var(--ink-2); background: var(--board); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 50%; margin-right: 8px; vertical-align: -1px; }
+.legend i.hollow { background: transparent !important; box-shadow: inset 0 0 0 2.5px var(--ink-2); }
+.peek { background: var(--board); border: 1px solid var(--rule); border-radius: 6px; padding: 14px; display: grid; gap: 6px; min-height: 160px; }
+.peek h4 { font-family: var(--display); font-weight: 800; font-size: 22px; text-transform: uppercase; line-height: 1; }
+.peek p { font-size: 14.5px; color: var(--ink-2); }
+.peek .meta { font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+.tip { position: fixed; z-index: 50; pointer-events: none; background: var(--ink); color: var(--paper); font-family: var(--mono); font-size: 12px; line-height: 1.45; padding: 8px 10px; border-radius: 4px; max-width: 260px; }
+
+/* rulebook */
+.book { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border-top: 2px solid var(--ink); }
+.book-col { padding: 16px 18px 8px 0; min-width: 0; }
+.book-col + .book-col { padding-left: 18px; border-left: 1px solid var(--rule); }
+.book-col h3 { font-family: var(--display); font-weight: 900; font-size: 24px; text-transform: uppercase; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+.book-col h3 i { width: 12px; height: 12px; border-radius: 50%; display: inline-block; }
+.book ol { list-style: none; margin: 0; padding: 0; }
+.book li { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 8px; align-items: baseline; padding: 9px 0; border-bottom: 1px solid var(--rule); }
+.book li .n { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--muted); }
+.book li a { font-weight: 600; text-decoration: none; }
+.book li a:hover { text-decoration: underline; }
+.book li .net { font-family: var(--display); font-weight: 800; font-size: 20px; }
+.book li .net.pos { color: var(--green); } .book li .net.neg { color: var(--red); }
+.book .empty { font-size: 15px; color: var(--muted); padding: 12px 0; }
+
+/* controls */
+.filters { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-bottom: 18px; }
+.seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 999px; overflow: hidden; background: var(--board); }
+.seg button { border: 0; background: transparent; padding: 7px 14px; font-family: var(--mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-2); }
+.seg button[aria-pressed="true"] { background: var(--ink); color: var(--paper); }
+.filters .count { font-family: var(--mono); font-size: 12px; color: var(--muted); margin-left: auto; }
+
+/* cards */
+.deck { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.card { background: var(--board); border: 1px solid var(--rule); border-radius: 6px; padding: 18px; display: grid; gap: 10px; align-content: start; min-width: 0; position: relative; box-shadow: var(--shadow); }
+.card.vetoed { opacity: .55; }
+.card.vetoed::after { content: "VETOED"; position: absolute; top: 14px; right: -8px; transform: rotate(8deg); font-family: var(--display); font-weight: 900; font-size: 28px; color: var(--red); border: 3px solid var(--red); padding: 0 8px; border-radius: 4px; background: var(--board); }
+.card .top { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.chip { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; padding: 2px 7px; border-radius: 3px; white-space: nowrap; }
+.chip.game { background: var(--cat-game); color: var(--cat-game-ink); }
+.chip.equalizer { background: var(--cat-eq); color: var(--cat-eq-ink); }
+.chip.punishment { background: var(--cat-pun); color: var(--cat-pun-ink); }
+.chip.proven { box-shadow: inset 0 0 0 1.5px var(--ink-2); color: var(--ink-2); }
+.chip.original { background: var(--flag); color: #1d1600; }
+.card h3 { font-family: var(--display); font-weight: 900; font-size: 27px; text-transform: uppercase; line-height: .95; }
+.card .how { font-size: 15.5px; color: var(--ink-2); }
+.card .why { font-size: 14.5px; color: var(--ink); font-style: italic; }
+.meters { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.meter { display: grid; gap: 3px; }
+.meter span { font-family: var(--mono); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.meter b { font-family: var(--display); font-weight: 800; font-size: 18px; }
+.bar { height: 5px; background: var(--rule); border-radius: 3px; overflow: hidden; }
+.bar i { display: block; height: 100%; background: var(--red); border-radius: 3px; }
+.bar.money i { background: var(--flag); } .bar.fair i { background: var(--green-2); }
+.src { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+.src a { color: var(--muted); }
+.vote { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; border-top: 1px solid var(--rule); padding-top: 12px; }
+.vbtn { border: 1.5px solid var(--rule); background: var(--paper); border-radius: 4px; padding: 6px 12px; font-family: var(--display); font-weight: 800; font-size: 16px; letter-spacing: .04em; text-transform: uppercase; display: inline-flex; gap: 6px; align-items: center; }
+.vbtn .c { font-family: var(--mono); font-size: 12px; font-weight: 600; }
+.vbtn.in[aria-pressed="true"] { background: var(--green); border-color: var(--green); color: var(--on-green); }
+.vbtn.out[aria-pressed="true"] { background: var(--red); border-color: var(--red); color: var(--board); }
+.vbtn.veto { margin-left: auto; font-size: 13px; border-style: dashed; color: var(--red); }
+.vbtn.veto[aria-pressed="true"] { background: var(--red); color: var(--board); border-style: solid; }
+.vbtn:disabled { opacity: .45; cursor: not-allowed; }
+.who { display: flex; gap: 3px; flex-wrap: wrap; }
+.who img { width: 20px; height: 20px; border-radius: 50%; box-shadow: 0 0 0 1.5px var(--board); }
+.who img.no { filter: grayscale(1); opacity: .6; }
+.vetoby { font-family: var(--mono); font-size: 11px; color: var(--red); }
+
+/* wheel */
+.wheel { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 28px; align-items: center; background: var(--ink); color: var(--paper); border-radius: 8px; padding: clamp(22px, 4vw, 44px); }
+.wheel h2 { font-family: var(--display); font-weight: 900; font-size: clamp(40px, 6vw, 72px); text-transform: uppercase; line-height: .85; }
+.wheel p { color: color-mix(in srgb, var(--paper) 78%, transparent); margin-top: 12px; font-size: 16.5px; }
+.slot { background: var(--paper); color: var(--ink); border-radius: 6px; min-height: 180px; display: grid; place-items: center; text-align: center; padding: 22px; }
+.slot b { font-family: var(--display); font-weight: 900; font-size: clamp(30px, 4vw, 46px); text-transform: uppercase; line-height: .95; display: block; }
+.slot span { font-size: 15px; color: var(--ink-2); display: block; margin-top: 8px; }
+.spin { margin-top: 18px; background: var(--red); color: #fff; border: 0; border-radius: 6px; padding: 12px 22px; font-family: var(--display); font-weight: 900; font-size: 24px; letter-spacing: .06em; text-transform: uppercase; }
+.spin-scope { margin-top: 10px; font-family: var(--mono); font-size: 12px; color: color-mix(in srgb, var(--paper) 70%, transparent); }
+.spin-scope button { background: transparent; border: 1px solid color-mix(in srgb, var(--paper) 40%, transparent); color: var(--paper); border-radius: 999px; padding: 3px 10px; font-family: var(--mono); font-size: 11px; margin-left: 6px; }
+.spin-scope button[aria-pressed="true"] { background: var(--paper); color: var(--ink); }
+
+/* fine print */
+.fine { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 48px; }
+.fine > div { padding: 16px 0; border-top: 1px solid var(--rule); display: grid; gap: 6px; }
+.fine h4 { font-family: var(--display); font-weight: 800; font-size: 22px; text-transform: uppercase; line-height: 1; }
+.fine p { font-size: 15.5px; color: var(--ink-2); }
+.colophon { margin-top: 40px; padding-top: 16px; border-top: 2px solid var(--ink); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; font-family: var(--mono); font-size: 11.5px; color: var(--muted); }
+
+@media (max-width: 1080px) {
+  .deck { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .map-wrap { grid-template-columns: 1fr; }
+  .map-side { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 860px) {
+  .cover { grid-template-columns: 1fr; }
+  .rules-strip { grid-template-columns: 1fr 1fr; }
+  .rules-strip > div:nth-child(3) { padding-left: 0; border-left: 0; }
+  .rules-strip > div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .book { grid-template-columns: 1fr; }
+  .book-col + .book-col { padding-left: 0; border-left: 0; border-top: 1px solid var(--rule); }
+  .wheel, .fine { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  body { font-size: 16.5px; }
+  .deck, .map-side { grid-template-columns: 1fr; }
+  .filters .count { margin-left: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+
+<div class="page">
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <span class="mark">GSI Rules Committee</span>
+    <a href="#ballot">Ballot</a>
+    <a href="#map">Shame map</a>
+    <a href="#rulebook">The rules</a>
+    <a href="#deck-sec">Every wager</a>
+    <a href="#wheel">Wheel of shame</a>
+    <a href="#fine">Ground rules</a>
+    <a class="out" href="/GSI/">← Destinations</a>
+  </div>
+</nav>
+
+<header class="cover" id="ballot">
+  <div>
+    <p class="eyebrow">The Grad School Invitational · Rules of play</p>
+    <h1>The Rules <span>Committee</span></h1>
+    <p class="lede">Sixty-three ways to settle it. Forty-three are proven: betting games real groups play, and punishments that made the local news. Twenty are originals, built for a group where two guys shoot par and two lose a sleeve a nine. Vote each one In or Out and use your one veto. The top of the board becomes this year's rules.</p>
+  </div>
+  <aside class="ballot" aria-live="polite">
+    <h2>Your ballot</h2>
+    <p>Vote each wager <b>In</b> or <b>Out</b>. Tap again to take a vote back. You get <b>one veto</b>, which kills a wager no matter how the others vote.</p>
+    <p class="status" id="status">Loading the ballot box…</p>
+    <p class="elsewhere" id="vote-elsewhere" hidden>Votes are cast on the claude.ai copy of this page. <a href="https://claude.ai/artifact/7UvEAo4Ve6HmKAcb5LaGnf">Open the ballot box →</a></p>
+    <p class="label">You've voted on <span id="mine">0</span> · your veto: <span id="myveto">unused</span></p>
+    <p class="label">Voted so far: <span id="voted">0 of 8</span></p>
+    <div class="voters" id="voters"></div>
+  </aside>
+</header>
+<div class="rules-strip">
+  <div><b>Shame over money</b><span>Stakes stay small enough that nobody's marriage is at risk. The punishment is what people remember.</span></div>
+  <div><b>Handicaps are sacred</b><span>Post your real number. Anyone who beats it by five gets tried at the fire pit.</span></div>
+  <div><b>Friends only</b><span>Every punishment lands on someone who agreed to play. No strangers, no employers, no exes.</span></div>
+  <div><b>Pay by Sunday</b><span>Debts settle before the first flight home. Unpaid by Monday and the debt doubles.</span></div>
+</div>
+
+<section class="section" id="map">
+  <div class="section-head">
+    <p class="eyebrow">The shame map</p>
+    <h2>How much it hurts, and where</h2>
+    <p>Every wager plotted by how much shame it delivers and how much money changes hands per man over a weekend. Circles are proven, documented wagers; squares are originals. A gold ring means it's currently in the rules. Filters below dim the map too.</p>
+  </div>
+  <div class="map-wrap">
+    <div class="map"><svg id="mapsvg" role="img" aria-label="Scatter plot of wagers by shame and money"></svg></div>
+    <div class="map-side">
+      <div class="legend">
+        <span><i style="background:var(--cat-game)"></i>Game: how the money moves</span>
+        <span><i style="background:var(--cat-eq)"></i>Equalizer: keeps the hackers alive</span>
+        <span><i style="background:var(--cat-pun)"></i>Punishment: what the loser does</span>
+        <span><i class="hollow"></i>Circle = proven · square = original</span>
+        <span><i style="background:transparent;box-shadow:inset 0 0 0 3px var(--flag)"></i>Gold ring = in the rules now</span>
+      </div>
+      <div class="peek" id="peek"></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="rulebook">
+  <div class="section-head">
+    <p class="eyebrow">The rules, live</p>
+    <h2>What the committee has adopted</h2>
+    <p>The top five net-positive vote-getters in each category, recalculated every time anyone votes. A single veto knocks a wager out.</p>
+  </div>
+  <div class="book">
+    <div class="book-col"><h3><i style="background:var(--cat-game)"></i>Games</h3><ol id="book-game"></ol></div>
+    <div class="book-col"><h3><i style="background:var(--cat-eq)"></i>Equalizers</h3><ol id="book-equalizer"></ol></div>
+    <div class="book-col"><h3><i style="background:var(--cat-pun)"></i>Punishments</h3><ol id="book-punishment"></ol></div>
+  </div>
+</section>
+
+<section class="section" id="deck-sec">
+  <div class="section-head">
+    <p class="eyebrow">Every wager</p>
+    <h2>63 ways to settle it</h2>
+    <p>"Hacker-proof" scores how well a wager keeps the guy who loses a sleeve a nine in contention against the guy who shoots par.</p>
+  </div>
+  <div class="filters">
+    <div class="seg" id="f-cat" role="group" aria-label="Category">
+      <button type="button" data-v="all">All</button><button type="button" data-v="game">Games</button><button type="button" data-v="equalizer">Equalizers</button><button type="button" data-v="punishment">Punishments</button>
+    </div>
+    <div class="seg" id="f-origin" role="group" aria-label="Origin">
+      <button type="button" data-v="all">All</button><button type="button" data-v="proven">Proven</button><button type="button" data-v="original">Originals</button>
+    </div>
+    <div class="seg" id="f-sort" role="group" aria-label="Sort">
+      <button type="button" data-v="votes">Most votes</button><button type="button" data-v="shame">Most shame</button><button type="button" data-v="money">Most money</button><button type="button" data-v="number">Number</button>
+    </div>
+    <span class="count" id="count"></span>
+  </div>
+  <div class="deck" id="deck"></div>
+</section>
+
+<section class="section" id="wheel">
+  <div class="wheel">
+    <div>
+      <h2>The Wheel of Shame</h2>
+      <p>For the fire pit on Saturday night. Spin it for the loser, or for anyone caught sandbagging. It draws from the punishments the committee adopted, or from all of them.</p>
+      <button class="spin" id="spin" type="button">Spin</button>
+      <p class="spin-scope" id="spin-scope">Draw from <button type="button" data-v="adopted" aria-pressed="true">Adopted</button><button type="button" data-v="all" aria-pressed="false">All punishments</button></p>
+    </div>
+    <div class="slot" aria-live="polite"><div><b id="slot-name">Spin to choose</b><span id="slot-line">Somebody's having a bad Sunday.</span></div></div>
+  </div>
+</section>
+
+<section class="section" id="fine">
+  <div class="section-head">
+    <p class="eyebrow">Ground rules</p>
+    <h2>Fine print</h2>
+  </div>
+  <div class="fine"><div><h4>How the rules get made</h4><p>The top five net-positive wagers in each category are adopted, recalculated live. Any single veto kills a wager outright, and every vote is public: there are no secret ballots on this committee.</p></div>
+    <div><h4>Size the stakes like Mickelson</h4><p>His rule for Tuesday money games: "enough where you feel it, but it's not going to affect you." Agree on a per-man cap for the weekend before the first tee, and let the shame carry the rest.</p></div>
+    <div><h4>Real numbers only</h4><p>Official GHIN indexes, locked a week before the trip, played at USGA allowances. Use the rolling trip handicap so nobody wins three days running, and the Sandbag Tribunal for anyone who beats his number by five.</p></div>
+    <div><h4>Let an app keep the books</h4><p>Squabbit is free and runs trip-long leaderboards across Ryder Cup, skins and Stableford. 18Birdies runs Wolf, Vegas, Nassau and dots. Golf GameBook applies handicap allowances automatically. Settle up before you leave the course.</p></div>
+    <div><h4>What didn't make the list</h4><p>Real leagues have done all of these, and they're out: a naked walk through Minneapolis (legal exposure), the One Chip Challenge (pulled from sale after a teenager died), a loser covered in peanut butter in a public dog park (strangers' dogs), and any punishment that reaches a man's employer. A forced political profile picture worried one loser's school administration.</p></div>
+    <div><h4>Who can vote</h4><p>Everyone Jon invites by email as an Editor can vote. Viewers and public-link visitors can read the page but can't vote. Your vote saves the moment you tap it, and you can change it anytime.</p></div></div>
+  <div class="colophon"><span>GSI Rules Committee · companion to the trip dossier</span><span>Votes are live for everyone with an invite</span></div>
+</section>
+</div>
+<div class="tip" id="tip" hidden></div>
+<script>
+// shame 0-10 · money 0-5 ($0, ~$20, ~$50, ~$100, ~$250, $500+ per man per weekend) · fair 0-10 (keeps the hackers alive)
+var GAMES = [
+  { id: "nassau", name: "Nassau with auto-press", kind: "game", origin: "proven", shame: 2, money: 3, fair: 6,
+    how: "Three bets in one: front nine, back nine, and the full 18. Whoever falls two holes down automatically opens a new bet of the same size that runs to the end of that nine.",
+    why: "GOLF.com suggests $10/$10/$20 among friends. Presses mean nobody is ever mathematically out.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/?p=15496245" }, { label: "GolfNewsNet on presses", url: "https://thegolfnewsnet.com/ryan_ballengee/2023/04/14/what-is-a-press-golf-bet-when-to-press-auto-press-107060/" }] },
+  { id: "skins", name: "Net skins with validation", kind: "game", origin: "proven", shame: 2, money: 3, fair: 5,
+    how: "Each hole is worth a skin; only an outright low net score wins it, and ties carry over. To keep a carryover, the winner has to par the next hole. One pot across both foursomes.",
+    why: "Give strokes off the best player, who plays at zero. Without strokes, the beginners never touch the pot.",
+    src: [{ label: "LiveTourney", url: "https://www.livetourney.com/blog/skins-game-rules-golf" }, { label: "GolfPass", url: "https://www.golfpass.com/travel-advisor/articles/beware-of-the-sandbagger-how-to-properly-handicap-your-golf-matches" }] },
+  { id: "wolf", name: "Wolf (Lone and Blind)", kind: "game", origin: "proven", shame: 4, money: 3, fair: 7,
+    how: "The Wolf rotates each hole and picks a partner right after that man's drive, or passes. Going alone after the drives doubles the points; declaring Blind Wolf before anyone tees off triples them.",
+    why: "Self-correcting: everyone wants the assassin as a partner, and the assassin can't resist going Lone Wolf.",
+    src: [{ label: "GolfNewsNet", url: "https://thegolfnewsnet.com/ryan_ballengee/2024/05/04/golf-betting-games-how-to-play-wolf-rules-46095" }, { label: "18Birdies", url: "https://help.18birdies.com/article/108-wolf" }] },
+  { id: "wolfhammer", name: "Wolf Hammer", kind: "game", origin: "proven", shame: 5, money: 4, fair: 6,
+    how: "No Laying Up's monster: Wolf, plus the right to Hammer (double the hole) at any moment, plus 40-odd junk items. From the 16th, the man furthest down becomes Wolf and sets the stakes.",
+    why: "Their worked example loses $168 on one hole while making par. That's the point.",
+    src: [{ label: "No Laying Up", url: "https://nolayingup.com/2017/09/11/wolfhammer/" }] },
+  { id: "vegas", name: "Vegas, with flipping the bird", kind: "game", origin: "proven", shame: 4, money: 4, fair: 3,
+    how: "Two-man teams join their scores into a number, low digit first: a 4 and a 5 make 45. Low team wins the difference. A birdie flips the other team's number, so 48 becomes 84.",
+    why: "One hole can swing 18 points or more. Cap each player's hole at a 9, or one beginner's snowman bankrupts his partner.",
+    src: [{ label: "The Fried Egg", url: "https://thefriedegg.com/vegas-golf-game/" }] },
+  { id: "sixes", name: "Sixes (round robin)", kind: "game", origin: "proven", shame: 2, money: 2, fair: 8,
+    how: "Partners rotate every six holes, so each man partners every other man in his foursome once. Each six is a separate best-ball match.",
+    why: "GOLF.com picks it specifically for foursomes with a wide range of handicaps.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/lifestyle/3-easy-gambling-games-wide-range-handicaps/" }] },
+  { id: "hammer", name: "Hammer", kind: "game", origin: "proven", shame: 5, money: 4, fair: 6,
+    how: "Every hole is a match. At any point either side can drop the hammer and double it; refuse and you concede the hole. The hammer then passes to the other side, so it can double again.",
+    why: "Nerve beats skill. The 30-handicap can hammer the assassin the moment his drive finds the trees.",
+    src: [{ label: "Golf Digest", url: "https://www.golfdigest.com/story/how-to-play-hammer-golf-game-explained" }] },
+  { id: "banker", name: "Banker", kind: "game", origin: "proven", shame: 3, money: 3, fair: 7,
+    how: "The banker rotates each hole. Everyone else picks his own stake against the banker within a set range, and can press before the banker hits.",
+    why: "Beginners bet the minimum and the assassins bet the house, which is how it should be.",
+    src: [{ label: "Golf Digest", url: "https://www.golfdigest.com/story/how-to-play-banker-golf-games-explained" }] },
+  { id: "snake", name: "The Snake", kind: "game", origin: "proven", shame: 6, money: 2, fair: 5,
+    how: "Three-putt and you take a rubber snake, clipped to your bag until someone else three-putts. Whoever holds it at the end of the round pays everyone; in the nasty version the pot doubles with each new three-putt.",
+    why: "A physical object of shame that hangs off your bag all day is worth more than the money.",
+    src: [{ label: "GolfNewsNet", url: "https://thegolfnewsnet.com/ryan_ballengee/2024/01/29/golf-betting-games-how-to-play-snake-rules-44859" }] },
+  { id: "bbb", name: "Bingo Bango Bongo", kind: "game", origin: "proven", shame: 1, money: 1, fair: 9,
+    how: "Three points a hole: first on the green, closest once everyone's on, first in the hole.",
+    why: "Farthest away plays first, so the guy who hit three to get there often wins Bingo.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/lifestyle/best-golf-gambling-games-how-to-play/" }] },
+  { id: "acey", name: "Aces and Deuces", kind: "game", origin: "proven", shame: 4, money: 2, fair: 4,
+    how: "On each hole the low score collects the ace from the other three; the high score pays the deuce to all three. The ace is usually double the deuce.",
+    why: "Paying everyone because you were the worst on a hole stings. Use net scores or the assassin farms it.",
+    src: [{ label: "Golf Compendium", url: "https://www.golfcompendium.com/2019/02/golf-game-acey-ducey.html" }] },
+  { id: "dots", name: "Junk, both directions", kind: "game", origin: "proven", shame: 5, money: 2, fair: 7,
+    how: "Get paid a dot for greenies, sandies, barkies (par after hitting a tree), Arnies (par without touching a fairway) and chip-ins. Pay a dot for three-putts, shanks, water, OB, and Moles (failing to get out of a bunker in one).",
+    why: "Half the positive dots are hacker achievements. The negative ones turn every shank into an invoice.",
+    src: [{ label: "GolfNewsNet", url: "https://thegolfnewsnet.com/ryan_ballengee/2016/07/08/what-is-junk-in-golf-dots-trash-garbage-birdies-greenies-sandies-50976/" }, { label: "18Birdies dots", url: "https://help.18birdies.com/article/477-how-to-play-the-dots-golf-betting-game" }, { label: "Moles", url: "https://www.golfcompendium.com/2022/05/moles-golf-betting-game.html" }] },
+  { id: "murphy", name: "The Murphy", kind: "game", origin: "proven", shame: 3, money: 2, fair: 6,
+    how: "From anywhere off the green, call \"Murphy\" and bet you'll get up and down. Some groups set odds by the lie, up to 28-to-1 from somewhere stupid.",
+    why: "Gives beginners a lottery ticket on every hole.",
+    src: [{ label: "Action Network", url: "https://actionnetwork.com/golf/golf-betting-game-gambling-course-jason-sobel-mailbag-rules" }] },
+  { id: "calcutta", name: "The Calcutta", kind: "game", origin: "proven", shame: 4, money: 4, fair: 7,
+    how: "The night before, auction every player (or two-man team) to the group. Owners split the pot by finish. Payouts are set after bidding closes, so the bank can't be broken.",
+    why: "Going for $15 while the assassin goes for $300, in front of your friends, is its own punishment.",
+    src: [{ label: "Golfbreaks on pari-mutuels", url: "https://www.golfbreaks.com/en-us/inspiration/blogs/pari-mutuels-for-betting-on-golf-trips-is-a-winning-strategy/" }] },
+  { id: "ryder", name: "The Ryder Cup draft", kind: "game", origin: "proven", shame: 5, money: 2, fair: 8,
+    how: "Two captains of similar ability hold a live draft on a video call a month out, with everyone heckling each pick. Four-ball, alternate shot and singles; a point a match.",
+    why: "Being the last man picked, live, on camera, a month before the trip.",
+    src: [{ label: "Myrtle Beach Golf Trips", url: "https://www.myrtlebeachgolftrips.com/news/captains-drafts-and-trash-talk-reinventing-the-buddy-golf-trip/" }] },
+  { id: "pinkball", name: "Pink Ball (Lone Ranger)", kind: "game", origin: "proven", shame: 5, money: 2, fair: 7,
+    how: "Each foursome carries one pink ball, rotated through the players hole by hole. The pink ball's score always counts for the team. Lose it, and the team loses its bonus.",
+    why: "Everyone watches when the beginner has the pink ball on the island green.",
+    src: [{ label: "Golf Compendium", url: "https://www.golfcompendium.com/2021/10/lone-ranger-golf-format.html" }] }
+];
+
+var EQUALIZERS = [
+  { id: "stableford", name: "Net Stableford", kind: "equalizer", origin: "proven", shame: 1, money: 2, fair: 9,
+    how: "Points instead of strokes: net bogey 1, par 2, birdie 3, eagle 4. Once you can't score on a hole, pick up.",
+    why: "A beginner's 11 counts the same as a 7. It also speeds up play by about an hour.",
+    src: [{ label: "Golfbreaks", url: "https://www.golfbreaks.com/en-us/inspiration/articles/best-golf-formats-for-your-trip/" }] },
+  { id: "quota", name: "Quota (Chicago)", kind: "equalizer", origin: "proven", shame: 2, money: 2, fair: 9,
+    how: "Bogey 1, par 2, birdie 4, eagle 8. Each man's quota is 36 minus his handicap. Most points over quota wins the pot.",
+    why: "Runs across both foursomes from one pot. The guy who shoots 101 can win it.",
+    src: [{ label: "Golf Digest", url: "https://www.golfdigest.com/story/how-to-play-chicago-golf-game-explained" }, { label: "CaddieHQ", url: "https://www.caddiehq.com/resources/what-is-a-quota-game-in-golf" }] },
+  { id: "string", name: "The String Game", kind: "equalizer", origin: "proven", shame: 3, money: 0, fair: 9,
+    how: "Each man gets a foot of string per handicap stroke. Use it to move your ball anywhere, out of the water or into the cup, and cut off what you used.",
+    why: "A lost-ball buyback for the beginners. Watching a man measure string from his ball to the hole is worth the price of admission.",
+    src: [{ label: "Golf Monthly", url: "https://www.golfmonthly.com/features/the-game/what-is-the-golf-string-game-83142" }] },
+  { id: "bisques", name: "Bisques", kind: "equalizer", origin: "proven", shame: 1, money: 0, fair: 8,
+    how: "You get your strokes, but you choose which holes to use them on, announced before you tee off, one per hole.",
+    why: "Strategy for the hackers: save them for the holes with water.",
+    src: [{ label: "Golf Digest", url: "https://www.golfdigest.com/story/how-to-play-bisque-golf-games-explained" }] },
+  { id: "worstball", name: "Worst ball for the assassin", kind: "equalizer", origin: "proven", shame: 3, money: 0, fair: 8,
+    how: "The scratch player hits two balls on every shot and has to play the worse one.",
+    why: "His worst is still pretty good, which is exactly why it's fair.",
+    src: [{ label: "Golf Compendium", url: "https://www.golfcompendium.com/2021/01/worst-ball-scramble-golf.html" }] },
+  { id: "rolling", name: "The rolling trip handicap", kind: "equalizer", origin: "proven", shame: 3, money: 0, fair: 9,
+    how: "After every round, the winner gives back two strokes and second place one; last place gets two and second-to-last one.",
+    why: "The trip corrects itself. Nobody wins three days running.",
+    src: [{ label: "Practical Golf forum", url: "https://forum.practical-golf.com/t/how-to-handicap-a-buddies-trip/2050" }] },
+  { id: "sunningdale", name: "Sunningdale", kind: "equalizer", origin: "proven", shame: 2, money: 1, fair: 8,
+    how: "In a one-on-one match, win two holes in a row and your opponent gets a stroke on the next hole.",
+    why: "A built-in rubber band for the assassin-versus-hacker grudge match.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/lifestyle/3-easy-gambling-games-wide-range-handicaps/" }] },
+  { id: "realnumbers", name: "Real numbers, locked", kind: "equalizer", origin: "proven", shame: 2, money: 0, fair: 8,
+    how: "Official GHIN indexes only, locked a week before the trip, played at the USGA allowances: 100% singles, 95% Stableford, 90% four-ball.",
+    why: "The boring rule that makes every other bet on this page fair.",
+    src: [{ label: "WHS allowances", url: "https://www.nationalclubgolfer.com/whs/world-handicap-system-handicap-allowances/" }, { label: "USGA", url: "https://www.usga.org/content/dam/usga/pdf/WHS_Change_Summaries_2020.pdf" }] }
+];
+
+var ORIGINALS = [
+  { id: "bounty", name: "The Bounty", kind: "equalizer", origin: "original", shame: 5, money: 3, fair: 9,
+    how: "The best player wears a bounty all round. Anyone who beats him net on a hole collects $10 from him on the spot. If he gets through a nine without losing a hole, every man pays him $20 and the last-place finisher caddies for him on the next nine.",
+    why: "Turns eight separate matches into seven men hunting one." },
+  { id: "robinhood", name: "Robin Hood birdies", kind: "equalizer", origin: "original", shame: 3, money: 2, fair: 9,
+    how: "Every gross birdie by a single-digit player pays $10 to whoever has lost the most balls that day. Every gross par by a 25-plus pays him $5 from each single-digit.",
+    why: "The assassin's best shots fund the hacker's ball budget." },
+  { id: "mulligans", name: "The Mulligan Market", kind: "equalizer", origin: "original", shame: 5, money: 2, fair: 8,
+    how: "High handicaps start each round with a mulligan for every three strokes of handicap. Mulligans are currency: sell them to anyone at any price, assassins included. Every mulligan an assassin buys is announced in the group chat with a siren emoji.",
+    why: "A real market forms on the 14th tee, and the scratch golfer has to decide what his pride is worth." },
+  { id: "tradingplaces", name: "Trading Places", kind: "equalizer", origin: "original", shame: 4, money: 1, fair: 8,
+    how: "Once per nine, the worst player in a foursome calls \"Trading Places\" on a tee. He and the best player swap bags and balls for that hole, and both scores count.",
+    why: "The assassin gets to find out what a 2009 Big Bertha and a range ball feel like." },
+  { id: "leash", name: "The Leash", kind: "equalizer", origin: "original", shame: 4, money: 1, fair: 9,
+    how: "The String Game with a twist: beginners get string, and the assassin gets a negative string. Once a nine, anyone may move the assassin's ball that many feet in any direction he chooses, including into a divot.",
+    why: "Proven fairness plus deliberate sabotage." },
+  { id: "court", name: "Double or nothing on the court", kind: "game", origin: "original", shame: 5, money: 4, fair: 6,
+    how: "Every night at the house, the day's biggest loser may challenge the day's biggest winner to H-O-R-S-E on the basketball court. Win and his debt is halved; lose and it doubles.",
+    why: "Uses the court you loved in Scottsdale, and gives the worst golfer a shot at redemption with a sport he might be good at." },
+  { id: "chiporswim", name: "Chip or Swim", kind: "game", origin: "original", shame: 4, money: 1, fair: 6,
+    how: "Every tie and every disputed bet is settled at the house: one chip from the patio to a floating target in the pool. Miss, and you jump in fully clothed, golf shoes on, phone out.",
+    why: "Settles arguments in thirty seconds and produces the best video of the trip." },
+  { id: "captainscurse", name: "The Captain's Curse", kind: "game", origin: "original", shame: 6, money: 3, fair: 7,
+    how: "Ryder Cup format with the two best players as captains. The losing captain takes the trip's top punishment personally, whatever the committee adopts, because he drafted badly.",
+    why: "Gives the assassins real skin in how the hackers play. Captains start coaching." },
+  { id: "ballpot", name: "The Ball Pot", kind: "game", origin: "original", shame: 3, money: 2, fair: 7,
+    how: "Every lost ball costs $5 into a pot. Every ball the best player loses costs $25. The pot goes to whoever scores the most net Stableford points in the final round.",
+    why: "The beginners fund it, and one of them usually wins it back." },
+  { id: "cartjail", name: "Cart Jail", kind: "game", origin: "original", shame: 4, money: 0, fair: 5,
+    how: "Lose a ball and you walk until you make a net par. Your cart partner is required to drive off without you.",
+    why: "Free, immediate, visible, and good cardio." },
+  { id: "tribunal", name: "The Sandbag Tribunal", kind: "punishment", origin: "original", shame: 7, money: 3, fair: 8, lasts: 2,
+    how: "Anyone who beats his handicap by five or more is tried at the fire pit by the other seven. If found guilty, he forfeits that round's winnings to the pot and carries a real 10-pound sandbag in his golf bag the next round.",
+    why: "Golf's worst crime gets golf's most literal punishment." },
+  { id: "caddieyear", name: "The Caddie Year", kind: "punishment", origin: "original", shame: 7, money: 1, fair: 5, lasts: 6,
+    how: "Last place caddies for the champion for the first round of next year's trip, in a white Augusta-style jumpsuit with LOSER where the number goes. He carries the bag, rakes the bunkers, tends the flag and reads putts on command. He may not speak unless asked for a yardage.",
+    why: "The punishment arrives a full year after the loss, so the whole year is spent dreading it." },
+  { id: "portrait", name: "The Portrait", kind: "punishment", origin: "original", shame: 9, money: 3, fair: 5, lasts: 8,
+    how: "The loser commissions an oil painting of the champion holding the trophy (online portrait studios charge about $150–400) and hangs it over his own fireplace until next year's trip. Photo proof due by Thanksgiving.",
+    why: "His family has to look at it every day. So do his dinner guests." },
+  { id: "venmo", name: "The Venmo Memo", kind: "punishment", origin: "original", shame: 6, money: 2, fair: 5, lasts: 6,
+    how: "Every debt is paid on Venmo, set to public, with the memo written by the man being paid.",
+    why: "Everyone in his contacts sees \"for being the worst golfer in the Southern Hemisphere and also the Northern.\"" },
+  { id: "reel", name: "The Shank Reel", kind: "punishment", origin: "original", shame: 7, money: 0, fair: 5, lasts: 9,
+    how: "Every shank, whiff and lost ball the last-place man hits gets filmed. The champion edits it into a slow-motion highlight reel set to the Chariots of Fire theme, premieres it at the fire pit, and pins it in the group chat for a year.",
+    why: "Costs nothing and lasts forever." },
+  { id: "cameo", name: "The Cameo Roast", kind: "punishment", origin: "original", shame: 7, money: 3, fair: 5, lasts: 8,
+    how: "The group picks a celebrity on Cameo to roast the loser by name, using material the group supplies. The loser pays for it and has to post it.",
+    why: "Being roasted by a stranger who's being paid to do it, with your friends' best material." },
+  { id: "toast", name: "The Toast", kind: "punishment", origin: "original", shame: 7, money: 0, fair: 5, lasts: 2,
+    how: "At the final dinner, the loser gives a three-minute wedding toast to the champion as if the champion were his bride, including a story from grad school. The table scores it; under a 7 and he gives it again at Sunday breakfast.",
+    why: "Sincerity is the cruelest punishment you can give a man in his forties." },
+  { id: "travelagent", name: "The Travel Agent", kind: "punishment", origin: "original", shame: 4, money: 4, fair: 5, lasts: 7,
+    how: "Last place books next year's entire trip from the GSI leaderboard, fronts every deposit, and takes direction from the champion, who picks the destination.",
+    why: "A year of emails that start \"Per the champion's wishes.\"" },
+  { id: "threepeat", name: "The Three-Peat Tattoo", kind: "punishment", origin: "original", shame: 10, money: 2, fair: 3, lasts: 10,
+    how: "Finish last three years in a row and you get a small GSI tattoo. The champion chooses the placement, anywhere a swimsuit covers.",
+    why: "The nuclear option, rare enough to be fair. Every year it's in play, the bottom of the leaderboard gets very interesting." },
+  { id: "lockscreen", name: "Lock Screen Custody", kind: "punishment", origin: "original", shame: 6, money: 2, fair: 5, lasts: 8,
+    how: "For a year, the loser's phone lock screen is a trip photo of the champion's choosing. Random audits at any gathering; get caught with it changed and you owe the champion $100.",
+    why: "Every time he checks the time at work." }
+];
+// lasts: 1-2 one night · 3 a weekend · 4-5 a month · 6-7 months · 8-9 a year · 10 forever
+var PUNISHMENTS = [
+  { id: "waffle", name: "The Waffle House 24", kind: "punishment", origin: "proven", shame: 6, money: 2, fair: 5, lasts: 3,
+    how: "The loser stays in a Waffle House for 24 hours. Every waffle he eats takes an hour off. The man who invented it lost his own league: nine waffles, 15 hours. A harsher league allowed only 20 minutes off per waffle.",
+    why: "The most famous loser punishment in America, and it's on the way home from the airport.",
+    src: [{ label: "NPR", url: "https://www.npr.org/transcripts/1008986936" }, { label: "CBS17", url: "https://digital-release.cbs17.com/news/fantasy-football-loss-leads-to-man-spending-24-hours-in-nc-waffle-house" }] },
+  { id: "billboard", name: "The billboard and roast hotline", kind: "punishment", origin: "proven", shame: 9, money: 5, fair: 5, lasts: 5,
+    how: "A month-long billboard in the loser's hometown with his photo, \"I suck at golf,\" and a Google Voice number for roasts. One Buffalo league collected hundreds of texts and voicemails. A Lincoln chiropractor's read \"Great at back adjustments. Awful at lineup adjustments.\"",
+    why: "Strangers keep the roast going for 30 days, and the loser has to design it himself. The deluxe version is a car wrapped in pink for a month.",
+    src: [{ label: "CBS Texas", url: "https://www.cbsnews.com/texas/news/fantasy-football-loser-fort-worth-billboard" }, { label: "WIVB Buffalo", url: "https://digital-release.wivb.com/?p=2065679" }, { label: "Pink car, NBC NY", url: "https://www.nbcnewyork.com/news/local/fantasy-football-player-drives-pink-loser-mobile-after-defeat/2269972/" }] },
+  { id: "costumeday", name: "A day in costume, with a sign", kind: "punishment", origin: "proven", shame: 7, money: 1, fair: 5, lasts: 2,
+    how: "A full day in public in a costume the champion picks, holding a sign that says what happened. Documented: a giant baby outside a BBQ joint, a dress at a mall entrance, and a duck suit for a full workday on Boston's duck boats.",
+    why: "Cheap, visual, and it ends up in the group chat permanently.",
+    src: [{ label: "Giant baby, KEPR", url: "https://keprtv.com/news/local/definitely-worth-it-kennewick-man-sacrifices-dignity-after-losing-bet" }, { label: "Dress, WFTV", url: "https://www.wftv.com/news/fantasy-football-loss-takes-viral-turn-for-mass-man/479626201" }, { label: "Duck suit, Boston.com", url: "https://www.boston.com/news/local-news/2023/08/30/whats-it-like-to-spend-all-day-aboard-duck-boats-inside-a-duck-suit-ask-this-fantasy-football-loser/" }] },
+  { id: "lemonade", name: "The lemonade stand", kind: "punishment", origin: "proven", shame: 6, money: 1, fair: 5, lasts: 2,
+    how: "The loser runs a free lemonade stand outside a bar in a Girl Scout uniform. The Houston champion who imposed it: \"Lemonade has never tasted sweeter.\"",
+    why: "Children's job, adult setting, and the champion gets to drink one in front of him.",
+    src: [{ label: "ABC11", url: "https://abc11.com/914415/" }] },
+  { id: "bodybuilding", name: "Enter a bodybuilding show", kind: "punishment", origin: "proven", shame: 10, money: 3, fair: 5, lasts: 8,
+    how: "The loser enters a real, sanctioned bodybuilding competition and poses on stage in trunks with no real preparation. Ty Harrelson did it in 2024; the clip got 650,000 likes and he keeps a life-size cutout of himself in his office.",
+    why: "Safe, legal, and the most brutal thing on this list that doesn't involve ink.",
+    src: [{ label: "Generation Iron", url: "https://generationiron.com/fantasy-football-loser-real-bodybuilding-show/" }] },
+  { id: "openmic", name: "Five minutes at an open mic", kind: "punishment", origin: "proven", shame: 8, money: 0, fair: 5, lasts: 3,
+    how: "The loser writes and performs a stand-up set at a real open mic. The same league's follow-up: earn $10 busking in Central Park with no instrument.",
+    why: "Maximum fear, zero cost. The group sits in the front row.",
+    src: [{ label: "WBUR Only a Game", url: "https://www.wbur.org/onlyagame/2016/08/26/fantasy-football-last-place-punishment" }] },
+  { id: "sat", name: "Retake the SAT", kind: "punishment", origin: "proven", shame: 7, money: 1, fair: 5, lasts: 9,
+    how: "The loser sits for an official SAT and publishes his score to the group. One league of grad students, engineers and lawyers runs this as its standing punishment.",
+    why: "Built for a group that met in grad school. The score lives on the College Board's servers forever.",
+    src: [{ label: "Central Track", url: "https://centraltrack.com/?p=113940" }, { label: "TestMax", url: "https://testmaxprep.com/blog/lsat/standardized-testing-penance-for-fantasy-football-loser" }] },
+  { id: "tattoo", name: "The tattoo league", kind: "punishment", origin: "proven", shame: 10, money: 3, fair: 5, lasts: 10,
+    how: "A ten-man Nebraska league where the champion designs the loser's tattoo. Its first loser got a unicorn. ESPN ran a feature on it.",
+    why: "Permanent. Pair it with the Three-Peat rule below if one loss is too harsh.",
+    src: [{ label: "ESPN Front Row", url: "https://www.espnfrontrow.com/?p=87012" }] },
+  { id: "butler", name: "The Butler", kind: "punishment", origin: "proven", shame: 8, money: 1, fair: 5, lasts: 2,
+    how: "Last place serves the final dinner at the house in a tuxedo and white gloves, pours every drink, answers only to \"Jeeves,\" and doesn't eat until the champion has had dessert. Leagues have done exactly this at the next year's draft.",
+    why: "A full evening of shame, in front of everyone, with no lasting damage.",
+    src: [{ label: "CBS Sports reader punishments", url: "https://www.cbssports.com/fantasy/football/news/fantasy-football-10-of-our-favorite-reader-submitted-fantasy-league-loser-punishments/" }] },
+  { id: "costumeround", name: "Play the round in costume", kind: "punishment", origin: "proven", shame: 6, money: 1, fair: 5, lasts: 2,
+    how: "The loser plays the next round in the winner's choice of costume. Tour precedent: Fred Funk played a hole of the Skins Game in a skirt after Annika Sorenstam outdrove him; Jerry Kelly played the Colonial pro-am in a full TCU SuperFrog mascot suit; Kevin Kisner wore an Alabama jersey on the 17th at the Sony Open.",
+    why: "If it's good enough for the PGA Tour, it's good enough for the Grad School Invitational.",
+    src: [{ label: "Funk, Seattle Times", url: "https://archive.seattletimes.com/archive/20051127/golf27/golf-roundup-skirt-wearing-funk-dresses-for-success" }, { label: "Kelly", url: "https://larrybrownsports.com/golf/jerry-kelly-dresses-up-as-tcu-mascot-for-colonial-proam-after-losing-rose-bowl-bet/68934" }, { label: "Kisner, GOLF.com", url: "https://golf.com/news/watch-justin-thomas-makes-georgia-alum-kevin-kisner-don-alabama-jersey-during-sony-open/" }] },
+  { id: "forfeitpost", name: "Post it yourself", kind: "punishment", origin: "proven", shame: 4, money: 0, fair: 5, lasts: 4,
+    how: "The loser announces his own loss on his own social media, in his own words, with a photo of the champion. Phil Mickelson did it after losing a match to a YouTuber: he posted himself in the joggers he had to wear at the Open.",
+    why: "Shame that's self-inflicted reads as sincere, which makes it worse.",
+    src: [{ label: "Fox News", url: "https://www.foxnews.com/sports/phil-mickleson-dons-joggers-british-open-after-losing-bet-youtube-golfer" }] },
+  { id: "benjamins", name: "The Mickelson collection", kind: "punishment", origin: "proven", shame: 6, money: 3, fair: 5, lasts: 6,
+    how: "The winner chooses how he gets paid: in British pounds, in rolled quarters, in $1 bills. Then he leaves a taunt in the loser's bag. After beating Tiger Woods, Mickelson left photocopies of Tiger's $100 bills in his locker: \"Benji and his friends are very happy in their new home.\"",
+    why: "Golf's gold standard for trash talk. Nick Watney stopped playing Mickelson after being made to pay in pounds.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/news/phil-mickelson-best-gambling-stories/" }] },
+  { id: "jacket", name: "The jacket with names", kind: "punishment", origin: "proven", shame: 5, money: 2, fair: 5, lasts: 8,
+    how: "A jacket that travels with the trip, with each year's name embroidered on the back. A 16-man Michigan group does this for winners; flip it into the loser's jacket, worn at every group meal and the first tee of next year's trip.",
+    why: "The names accumulate. Ten years from now, someone's name is on it three times.",
+    src: [{ label: "Golf Digest buddies trips", url: "https://www.golfdigest.com/story/buddies-2010-02" }] },
+  { id: "menu", name: "Champion's menu, loser cooks", kind: "punishment", origin: "proven", shame: 4, money: 3, fair: 5, lasts: 3,
+    how: "Like the Masters Champions Dinner, the champion picks next year's dinner menu, and the loser buys and cooks it himself. Sandy Lyle served haggis in a kilt. An eight-man Alabama group, the Tripod Golf Tournament, gives its champion the menu at its annual Sandbagger's Ball.",
+    why: "Your exact group size, already running this tradition.",
+    src: [{ label: "Augusta.com", url: "https://augusta.com/masters/story/news/tuesday-champions-dinner-has-evolved-much-discussed-feast" }, { label: "Golf Digest, T.G.T.", url: "https://www.golfdigest.com/story/ambush-buddies-trips" }] },
+  { id: "trophy", name: "The shame trophy", kind: "punishment", origin: "proven", shame: 5, money: 1, fair: 5, lasts: 8,
+    how: "A rotating object the loser keeps on display at home all year: a toilet seat engraved \"you played like #2,\" the worst pants on the trip, or a bugle with every loser's name on it.",
+    why: "Every documented version has lasted for years. The Bad Pants Open's pants hang in the clubhouse restaurant.",
+    src: [{ label: "CBS Sports", url: "https://www.cbssports.com/fantasy/football/news/fantasy-football-10-of-our-favorite-reader-submitted-fantasy-league-loser-punishments/" }, { label: "Bad Pants, Daily Herald", url: "https://www.dailyherald.com/20070910/news/bad-pants-see-the-light-of-day-in-bloomingdale/" }, { label: "The bugle", url: "https://www.lighthorseaircav.com/re-17-003.html" }] },
+  { id: "solheim", name: "The Solheim prop", kind: "game", origin: "proven", shame: 6, money: 1, fair: 7,
+    how: "Anyone can offer a prop bet on someone else's shot, and the shooter can counter with anything the group can do on the spot. At the 2024 Solheim Cup, caddies offered $500 for a hole-out; Alison Lee countered \"take your shirts off,\" holed an 86-yard wedge, and both caddies stripped on NBC.",
+    why: "Spontaneous, unscripted, and it creates the best moment of most rounds.",
+    src: [{ label: "GOLF.com", url: "https://golf.com/news/solheim-cup-caddies-shirts/" }] },
+  { id: "suit5k", name: "The 5K in a suit", kind: "punishment", origin: "proven", shame: 4, money: 1, fair: 5, lasts: 2,
+    how: "The loser runs a public 5K in a business suit and dress shoes. Everyone else bets on his finish time.",
+    why: "The side bet turns his suffering into a game for the other seven.",
+    src: [{ label: "ABC Action News", url: "https://abcactionnews.com/news/local-news/man-loses-fantasy-football-league-plans-to-run-race-in-business-suit" }] },
+  { id: "phantom", name: "The phantom nine", kind: "punishment", origin: "proven", shame: 7, money: 1, fair: 5, lasts: 2,
+    how: "The loser plays nine holes with no ball: full pre-shot routine, real swings, mimed putts, honest score. A Canadian did it in 2026 and drew millions of views. Run it inside your own group, not with paired strangers.",
+    why: "Golf-specific, filmable, and the ultimate commentary on a man who loses a sleeve a nine.",
+    src: [{ label: "Yahoo Sports", url: "https://sports.yahoo.com/nfl/article/lose-your-fantasy-league-suffer-the-consequences-inside-the-wild-world-of-last-place-punishments-135717945.html" }] },
+  { id: "loserpicks", name: "Last year's loser picks", kind: "punishment", origin: "proven", shame: 7, money: 0, fair: 5, lasts: 10,
+    how: "Each year's punishment is chosen by the previous year's loser. The Buffalo league's previous loser had been dunked in a frozen lake, so he chose a month-long billboard for the next man.",
+    why: "An escalation engine. Every loser spends a year designing revenge.",
+    src: [{ label: "WIVB Buffalo", url: "https://digital-release.wivb.com/?p=2065679" }] }
+];
+window.WAGERS = GAMES.concat(EQUALIZERS, PUNISHMENTS, ORIGINALS);
+(function () {
+  "use strict";
+  var W = window.WAGERS;
+  W.forEach(function (w, i) { w.n = i + 1; });
+  var byId = {}; W.forEach(function (w) { byId[w.id] = w; });
+  var MONEY = ["$0", "~$20", "~$50", "~$100", "~$250", "$500+"];
+  var CAT = { game: "Game", equalizer: "Equalizer", punishment: "Punishment" };
+  var GROUP_SIZE = 8;
+  function lastsText(n) { n = n || 1; return n <= 2 ? "One night" : n === 3 ? "A weekend" : n <= 5 ? "A month" : n <= 7 ? "Months" : n <= 9 ? "A year" : "Forever"; }
+
+  var state = {
+    votes: {},          // uid -> { v: {wagerId: 1|-1}, veto: wagerId|null }
+    me: null,           // my uid
+    canVote: false,
+    profiles: {},
+    cat: "all", origin: "all", sort: "votes",
+    sel: null, spinScope: "adopted"
+  };
+  try { var saved = JSON.parse(localStorage.getItem("gsi-rc-filters") || "{}"); ["cat", "origin", "sort"].forEach(function (k) { if (saved[k]) state[k] = saved[k]; }); } catch (e) {}
+  function saveFilters() { try { localStorage.setItem("gsi-rc-filters", JSON.stringify({ cat: state.cat, origin: state.origin, sort: state.sort })); } catch (e) {} }
+
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  function el(tag, attrs, kids) {
+    var e = document.createElement(tag);
+    if (attrs) Object.keys(attrs).forEach(function (k) {
+      if (k === "text") e.textContent = attrs[k];
+      else if (k === "html") e.innerHTML = attrs[k];
+      else if (k === "class") e.className = attrs[k];
+      else e.setAttribute(k, attrs[k]);
+    });
+    (kids || []).forEach(function (c) { if (c) e.appendChild(c); });
+    return e;
+  }
+
+  // ---------- tallies ----------
+  function tally() {
+    var t = {};
+    W.forEach(function (w) { t[w.id] = { inn: [], out: [], veto: [] }; });
+    Object.keys(state.votes).forEach(function (uid) {
+      var d = state.votes[uid] || {};
+      var v = d.v || {};
+      Object.keys(v).forEach(function (id) {
+        if (!t[id]) return;
+        if (v[id] === 1) t[id].inn.push(uid); else if (v[id] === -1) t[id].out.push(uid);
+      });
+      if (d.veto && t[d.veto]) t[d.veto].veto.push(uid);
+    });
+    W.forEach(function (w) { var x = t[w.id]; x.net = x.inn.length - x.out.length; x.total = x.inn.length + x.out.length; });
+    return t;
+  }
+  function adopted(t) {
+    var out = { game: [], equalizer: [], punishment: [] };
+    W.forEach(function (w) {
+      var x = t[w.id];
+      if (x.veto.length || x.net <= 0) return;
+      out[w.kind].push(w);
+    });
+    Object.keys(out).forEach(function (k) {
+      out[k].sort(function (a, b) { return t[b.id].net - t[a.id].net || t[b.id].inn.length - t[a.id].inn.length || a.n - b.n; });
+      out[k] = out[k].slice(0, 5);
+    });
+    return out;
+  }
+
+  // ---------- ballot header ----------
+  function renderBallot(t) {
+    var ids = Object.keys(state.votes).filter(function (u) { var d = state.votes[u]; return d && ((d.v && Object.keys(d.v).length) || d.veto); });
+    var box = $("#voters"); box.textContent = "";
+    ids.forEach(function (u) {
+      var p = state.profiles[u] || {};
+      var n = Object.keys((state.votes[u] || {}).v || {}).length;
+      var chip = el("span", { class: "voter" }, [
+        el("img", { src: p.avatarUrl || "", alt: "" }),
+        el("span", { text: (p.isMe ? "You" : (p.name || "Someone")) }),
+        el("b", { text: n + (n === 1 ? " vote" : " votes") + (state.votes[u].veto ? " · veto used" : "") })
+      ]);
+      box.appendChild(chip);
+    });
+    $("#voted").textContent = ids.length + " of " + GROUP_SIZE;
+    var mine = state.me && state.votes[state.me] && state.votes[state.me].v ? Object.keys(state.votes[state.me].v).length : 0;
+    $("#mine").textContent = mine + " of " + W.length;
+    var myVeto = state.me && state.votes[state.me] && state.votes[state.me].veto;
+    $("#myveto").textContent = myVeto ? byId[myVeto].name : "unused";
+  }
+  function setStatus(msg, cls) { var s = $("#status"); s.textContent = msg; s.className = "status " + (cls || ""); }
+
+  // ---------- shame map ----------
+  var MAP = { w: 820, h: 512, l: 64, r: 18, t: 30, b: 52 };
+  function sx(v) { return MAP.l + (v / 10) * (MAP.w - MAP.l - MAP.r); }
+  function sy(v) { return MAP.h - MAP.b - (v / 5) * (MAP.h - MAP.t - MAP.b); }
+  var positions = null;
+  function layout() {
+    var pts = W.map(function (w) { return { id: w.id, x: sx(w.shame), y: sy(w.money), ox: sx(w.shame), oy: sy(w.money) }; });
+    var R = 14.5;
+    for (var it = 0; it < 120; it++) {
+      for (var i = 0; i < pts.length; i++) for (var j = i + 1; j < pts.length; j++) {
+        var a = pts[i], b = pts[j], dx = b.x - a.x, dy = b.y - a.y, d = Math.sqrt(dx * dx + dy * dy) || 0.01;
+        if (d < 2 * R) { var push = (2 * R - d) / 2, ux = dx / d, uy = dy / d; if (d < 0.02) { ux = (i % 2 ? 1 : -1); uy = 0; } a.x -= ux * push; a.y -= uy * push; b.x += ux * push; b.y += uy * push; }
+      }
+      pts.forEach(function (p) { p.x += (p.ox - p.x) * 0.04; p.y += (p.oy - p.y) * 0.04; p.x = Math.max(MAP.l + R, Math.min(MAP.w - MAP.r - R, p.x)); p.y = Math.max(MAP.t + R, Math.min(MAP.h - MAP.b - R, p.y)); });
+    }
+    var o = {}; pts.forEach(function (p) { o[p.id] = p; }); return o;
+  }
+  function visible(w) {
+    return (state.cat === "all" || w.kind === state.cat) && (state.origin === "all" || w.origin === state.origin);
+  }
+  function renderMap(t, adoptedSet) {
+    if (!positions) positions = layout();
+    var NS = "http://www.w3.org/2000/svg";
+    var svg = $("#mapsvg"); svg.textContent = "";
+    function s(tag, attrs, text) { var e = document.createElementNS(NS, tag); Object.keys(attrs || {}).forEach(function (k) { e.setAttribute(k, attrs[k]); }); if (text != null) e.textContent = text; return e; }
+    svg.setAttribute("viewBox", "0 0 " + MAP.w + " " + MAP.h);
+    svg.appendChild(s("rect", { class: "zone", x: sx(7), y: MAP.t, width: sx(10) - sx(7), height: MAP.h - MAP.t - MAP.b, rx: 4 }));
+    svg.appendChild(s("text", { class: "zone-label", x: sx(10), y: MAP.t - 9, "text-anchor": "end" }, "Maximum shame zone"));
+    var g = s("g", { class: "grid" });
+    for (var x = 0; x <= 10; x += 2) g.appendChild(s("line", { x1: sx(x), x2: sx(x), y1: MAP.t, y2: MAP.h - MAP.b }));
+    for (var y = 0; y <= 5; y++) g.appendChild(s("line", { x1: MAP.l, x2: MAP.w - MAP.r, y1: sy(y), y2: sy(y) }));
+    svg.appendChild(g);
+    var ax = s("g", { class: "axis" });
+    for (x = 0; x <= 10; x += 2) ax.appendChild(s("text", { x: sx(x), y: MAP.h - MAP.b + 18, "text-anchor": "middle" }, String(x)));
+    for (y = 0; y <= 5; y++) ax.appendChild(s("text", { x: MAP.l - 10, y: sy(y) + 4, "text-anchor": "end" }, MONEY[y]));
+    ax.appendChild(s("text", { x: (MAP.l + MAP.w - MAP.r) / 2, y: MAP.h - 10, "text-anchor": "middle" }, "SHAME →  (1 = mild ribbing, 10 = permanent)"));
+    var yl = s("text", { x: 14, y: (MAP.t + MAP.h - MAP.b) / 2, "text-anchor": "middle", transform: "rotate(-90 14 " + ((MAP.t + MAP.h - MAP.b) / 2) + ")" }, "MONEY →");
+    ax.appendChild(yl);
+    svg.appendChild(ax);
+    W.forEach(function (w) {
+      var p = positions[w.id];
+      var gg = s("g", { class: "dot " + (w.origin === "original" ? "orig" : "prov") + (visible(w) ? "" : " dim") + (state.sel === w.id ? " on" : ""), tabindex: "0", role: "button", "aria-label": "#" + w.n + " " + w.name + ", shame " + w.shame + ", money " + MONEY[w.money], "data-id": w.id });
+      if (adoptedSet[w.id]) gg.appendChild(s("circle", { cx: p.x, cy: p.y, r: 18.5, fill: "none", stroke: "var(--flag)", "stroke-width": 3 }));
+      if (w.origin === "original") gg.appendChild(s("rect", { x: p.x - 12.5, y: p.y - 12.5, width: 25, height: 25, rx: 5, fill: "var(--cat-" + (w.kind === "equalizer" ? "eq" : w.kind === "punishment" ? "pun" : "game") + ")", stroke: "var(--board)", "stroke-width": 2 }));
+      else gg.appendChild(s("circle", { cx: p.x, cy: p.y, r: 13.5, fill: "var(--cat-" + (w.kind === "equalizer" ? "eq" : w.kind === "punishment" ? "pun" : "game") + ")" }));
+      var tx = s("text", { x: p.x, y: p.y + 4.5, "text-anchor": "middle", fill: "var(--cat-" + (w.kind === "equalizer" ? "eq" : w.kind === "punishment" ? "pun" : "game") + "-ink)" }, String(w.n));
+      tx.setAttribute("style", "fill: var(--cat-" + (w.kind === "equalizer" ? "eq" : w.kind === "punishment" ? "pun" : "game") + "-ink)");
+      gg.appendChild(tx);
+      svg.appendChild(gg);
+    });
+  }
+  function peek(w, t) {
+    var box = $("#peek"); box.textContent = "";
+    if (!w) { box.appendChild(el("p", { text: "Hover or tap a dot to see the wager. Tap again to jump to its card." })); return; }
+    var x = t[w.id];
+    box.appendChild(el("span", { class: "meta", text: "#" + w.n + " · " + CAT[w.kind] + " · " + (w.origin === "original" ? "Original" : "Proven") }));
+    box.appendChild(el("h4", { text: w.name }));
+    box.appendChild(el("p", { text: w.how }));
+    box.appendChild(el("span", { class: "meta", text: "Shame " + w.shame + "/10 · " + MONEY[w.money] + (w.kind === "punishment" ? " · lasts: " + lastsText(w.lasts).toLowerCase() : "") + " · In " + x.inn.length + " · Out " + x.out.length + (x.veto.length ? " · VETOED" : "") }));
+  }
+
+  // ---------- rulebook ----------
+  function renderBook(t, ad) {
+    ["game", "equalizer", "punishment"].forEach(function (k) {
+      var ol = $("#book-" + k); ol.textContent = "";
+      if (!ad[k].length) { ol.appendChild(el("li", { class: "empty", text: "Nothing has a net-positive vote yet." })); return; }
+      ad[k].forEach(function (w, i) {
+        var x = t[w.id];
+        ol.appendChild(el("li", {}, [
+          el("span", { class: "n", text: String(i + 1) }),
+          el("a", { href: "#w-" + w.id, text: w.name }),
+          el("span", { class: "net " + (x.net > 0 ? "pos" : x.net < 0 ? "neg" : ""), text: (x.net > 0 ? "+" : "") + x.net })
+        ]));
+      });
+    });
+  }
+
+  // ---------- deck ----------
+  function meter(label, val, max, cls, text) {
+    return el("div", { class: "meter" }, [
+      el("span", { text: label }),
+      el("b", { text: text }),
+      el("div", { class: "bar " + (cls || "") }, [el("i", { style: "width:" + Math.round(val / max * 100) + "%" })])
+    ]);
+  }
+  function faces(uids, cls) {
+    var w = el("span", { class: "who" });
+    uids.slice(0, 8).forEach(function (u) { var p = state.profiles[u] || {}; w.appendChild(el("img", { src: p.avatarUrl || "", alt: (p.name || "Someone") + (cls === "no" ? " voted out" : " voted in"), title: (p.isMe ? "You" : (p.name || "Someone")), class: cls || "" })); });
+    return w;
+  }
+  function renderDeck(t) {
+    var deck = $("#deck"); deck.textContent = "";
+    var list = W.filter(visible);
+    var sorters = {
+      votes: function (a, b) { return t[b.id].net - t[a.id].net || t[b.id].total - t[a.id].total || a.n - b.n; },
+      shame: function (a, b) { return b.shame - a.shame || a.n - b.n; },
+      money: function (a, b) { return b.money - a.money || a.n - b.n; },
+      number: function (a, b) { return a.n - b.n; }
+    };
+    list.sort(sorters[state.sort] || sorters.number);
+    $("#count").textContent = list.length + " of " + W.length + " shown";
+    var my = (state.me && state.votes[state.me]) || {};
+    var myV = my.v || {};
+    list.forEach(function (w) {
+      var x = t[w.id];
+      var card = el("article", { class: "card" + (x.veto.length ? " vetoed" : ""), id: "w-" + w.id });
+      card.appendChild(el("div", { class: "top" }, [
+        el("span", { class: "chip " + w.kind, text: "#" + w.n + " " + CAT[w.kind] }),
+        el("span", { class: "chip " + w.origin, text: w.origin === "original" ? "Original" : "Proven" })
+      ]));
+      card.appendChild(el("h3", { text: w.name }));
+      card.appendChild(el("p", { class: "how", text: w.how }));
+      if (w.why) card.appendChild(el("p", { class: "why", text: w.why }));
+      card.appendChild(el("div", { class: "meters" }, [
+        meter("Shame", w.shame, 10, "", w.shame + "/10"),
+        meter("Money", w.money, 5, "money", MONEY[w.money]),
+        w.kind === "punishment" ? meter("Lasts", w.lasts || 1, 10, "fair", lastsText(w.lasts)) : meter("Hacker-proof", w.fair, 10, "fair", w.fair + "/10")
+      ]));
+      if (w.src && w.src.length) {
+        var src = el("p", { class: "src" }, [document.createTextNode("Proof: ")]);
+        w.src.forEach(function (s, i) { if (i) src.appendChild(document.createTextNode(" · ")); src.appendChild(el("a", { href: s.url, target: "_blank", rel: "noopener", text: s.label })); });
+        card.appendChild(src);
+      }
+      var vote = el("div", { class: "vote" });
+      var inB = el("button", { class: "vbtn in", type: "button", "aria-pressed": String(myV[w.id] === 1), "aria-label": "Vote " + w.name + " in" }, [el("span", { text: "In" }), el("span", { class: "c", text: String(x.inn.length) })]);
+      var outB = el("button", { class: "vbtn out", type: "button", "aria-pressed": String(myV[w.id] === -1), "aria-label": "Vote " + w.name + " out" }, [el("span", { text: "Out" }), el("span", { class: "c", text: String(x.out.length) })]);
+      var vetoB = el("button", { class: "vbtn veto", type: "button", "aria-pressed": String(my.veto === w.id), title: "Each man gets one veto" }, [el("span", { text: my.veto === w.id ? "Vetoed" : "Veto" })]);
+      if (!state.canVote) { inB.disabled = outB.disabled = vetoB.disabled = true; }
+      inB.addEventListener("click", function () { castVote(w.id, 1); });
+      outB.addEventListener("click", function () { castVote(w.id, -1); });
+      vetoB.addEventListener("click", function () { castVeto(w.id); });
+      vote.appendChild(inB); vote.appendChild(outB);
+      if (x.inn.length) vote.appendChild(faces(x.inn, ""));
+      if (x.out.length) vote.appendChild(faces(x.out, "no"));
+      vote.appendChild(vetoB);
+      card.appendChild(vote);
+      if (x.veto.length) {
+        var names = x.veto.map(function (u) { var p = state.profiles[u] || {}; return p.isMe ? "you" : (p.name || "someone"); }).join(", ");
+        card.appendChild(el("p", { class: "vetoby", text: "Vetoed by " + names }));
+      }
+      deck.appendChild(card);
+    });
+  }
+
+  // ---------- render all ----------
+  var renderQueued = false;
+  function renderAll() {
+    if (renderQueued) return; renderQueued = true;
+    Promise.resolve().then(function () {
+      renderQueued = false;
+      var t = tally(), ad = adopted(t), set = {};
+      Object.keys(ad).forEach(function (k) { ad[k].forEach(function (w) { set[w.id] = 1; }); });
+      renderBallot(t); renderMap(t, set); renderBook(t, ad); renderDeck(t);
+      peek(state.sel ? byId[state.sel] : null, t);
+      state._adopted = ad;
+    });
+  }
+
+  // ---------- voting ----------
+  var db = null, user = null, writing = Promise.resolve(), pendingDoc = null;
+  function myDoc() { var d = state.votes[state.me] || {}; return { v: Object.assign({}, d.v || {}), veto: d.veto || null }; }
+  function save(doc) {
+    state.votes[state.me] = doc; renderAll();
+    pendingDoc = doc;
+    writing = writing.then(function () {
+      if (!pendingDoc) return;
+      var body = pendingDoc; pendingDoc = null;
+      return db.doc("votes/" + state.me).set(body).then(function () { setStatus("Saved. Everyone sees your votes live.", "ok"); }, function (e) {
+        if (e && e.code === "invalid_argument") { state.canVote = false; setStatus("This invitation can view but not vote. Ask Jon to invite you as an Editor.", "warn"); renderAll(); }
+        else setStatus("Couldn't save that vote. Try again in a moment.", "warn");
+      });
+    });
+  }
+  function castVote(id, val) {
+    if (!state.canVote) return;
+    var d = myDoc();
+    if (d.v[id] === val) delete d.v[id]; else d.v[id] = val;
+    save(d);
+  }
+  function castVeto(id) {
+    if (!state.canVote) return;
+    var d = myDoc();
+    d.veto = d.veto === id ? null : id;
+    save(d);
+  }
+
+  async function initVoting() {
+    setStatus("Connecting to the ballot box…");
+    try { db = await window.claude.use("db"); user = await window.claude.use("user"); } catch (e) { db = null; }
+    if (!db || !user) {
+      setStatus("Voting works when this page is opened on claude.ai by someone Jon has invited. You can still read everything.", "warn");
+      var ve = document.getElementById("vote-elsewhere"); if (ve) ve.hidden = false;
+      return;
+    }
+    state.me = await user.id();
+    if (!state.me) { setStatus("Sign in to claude.ai to vote. You can still read everything.", "warn"); }
+    var can = await user.can("data.write");
+    state.canVote = !!state.me && can !== false;
+    if (state.me && can === false) setStatus("You can view but not vote. Ask Jon to invite you as an Editor.", "warn");
+    else if (state.me) setStatus("You're on the ballot. Votes save instantly.", "ok");
+    db.collection("votes").onSnapshot(async function (snap) {
+      var next = {};
+      snap.docs.forEach(function (d) { if (d.exists) next[d.id] = d.data(); });
+      if (pendingDoc && state.me) next[state.me] = pendingDoc;
+      state.votes = next;
+      var ids = Object.keys(next); if (state.me && ids.indexOf(state.me) < 0) ids.push(state.me);
+      try { state.profiles = await user.profiles(ids); } catch (e) {}
+      renderAll();
+    }, function () { setStatus("Lost the live connection. Reload to reconnect.", "warn"); });
+    if (state.me) { try { state.profiles = await user.profiles([state.me]); } catch (e) {} }
+    renderAll();
+  }
+
+  // ---------- interactions ----------
+  function bindSeg(id, key) {
+    var seg = $(id);
+    seg.querySelectorAll("button").forEach(function (b) {
+      b.setAttribute("aria-pressed", String(b.dataset.v === state[key]));
+      b.addEventListener("click", function () {
+        state[key] = b.dataset.v; saveFilters();
+        seg.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+        renderAll();
+      });
+    });
+  }
+  bindSeg("#f-cat", "cat"); bindSeg("#f-origin", "origin"); bindSeg("#f-sort", "sort");
+
+  var tip = $("#tip");
+  $("#mapsvg").addEventListener("mouseover", function (e) {
+    var g = e.target.closest(".dot"); if (!g) return;
+    var w = byId[g.dataset.id]; state.sel = w.id; peek(w, tally());
+    tip.textContent = "#" + w.n + " " + w.name + " · shame " + w.shame + " · " + MONEY[w.money];
+    tip.hidden = false; var r = g.getBoundingClientRect();
+    tip.style.left = Math.min(innerWidth - tip.offsetWidth - 8, Math.max(8, r.left + r.width / 2 - tip.offsetWidth / 2)) + "px";
+    tip.style.top = (r.top - tip.offsetHeight - 8 < 60 ? r.bottom + 8 : r.top - tip.offsetHeight - 8) + "px";
+  });
+  $("#mapsvg").addEventListener("mouseout", function (e) { if (e.target.closest(".dot")) tip.hidden = true; });
+  function jump(g) {
+    var id = g.dataset.id;
+    if (state.sel === id) {
+      var w = byId[id];
+      if (!visible(w)) { state.cat = "all"; state.origin = "all"; ["#f-cat", "#f-origin"].forEach(function (s) { $(s).querySelectorAll("button").forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.v === "all")); }); }); renderAll(); }
+      setTimeout(function () { var c = document.getElementById("w-" + id); if (c) c.scrollIntoView({ behavior: "smooth", block: "center" }); }, 60);
+    } else { state.sel = id; renderAll(); }
+  }
+  $("#mapsvg").addEventListener("click", function (e) { var g = e.target.closest(".dot"); if (g) jump(g); });
+  $("#mapsvg").addEventListener("keydown", function (e) { var g = e.target.closest(".dot"); if (g && (e.key === "Enter" || e.key === " ")) { e.preventDefault(); jump(g); } });
+  window.addEventListener("scroll", function () { tip.hidden = true; }, { passive: true });
+
+  // ---------- wheel of shame ----------
+  var spinning = false;
+  document.querySelectorAll("#spin-scope button").forEach(function (b) {
+    b.addEventListener("click", function () {
+      state.spinScope = b.dataset.v;
+      document.querySelectorAll("#spin-scope button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+    });
+  });
+  $("#spin").addEventListener("click", function () {
+    if (spinning) return;
+    var pool = W.filter(function (w) { return w.kind === "punishment"; });
+    if (state.spinScope === "adopted" && state._adopted && state._adopted.punishment.length >= 2) pool = state._adopted.punishment.slice();
+    var pick = pool[Math.floor(Math.random() * pool.length)];
+    var nameEl = $("#slot-name"), lineEl = $("#slot-line");
+    var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { nameEl.textContent = pick.name; lineEl.textContent = pick.how; return; }
+    spinning = true; var steps = 26, i = 0;
+    (function tick() {
+      var w = i < steps - 1 ? pool[Math.floor(Math.random() * pool.length)] : pick;
+      nameEl.textContent = w.name; lineEl.textContent = i < steps - 1 ? "" : w.how;
+      i++;
+      if (i < steps) setTimeout(tick, 40 + i * i * 0.55); else spinning = false;
+    })();
+  });
+
+  renderAll();
+  initVoting();
+})();
+</script>
+
+</body>
+</html>

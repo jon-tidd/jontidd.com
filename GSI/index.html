@@ -116,6 +116,7 @@ p { margin: 0; }
 .nav .mark { font-family: var(--display); font-weight: 900; font-size: 20px; letter-spacing: .02em; white-space: nowrap; color: var(--green); }
 .nav a.lnk { font-family: var(--mono); font-size: 11.5px; letter-spacing: .1em; text-transform: uppercase; text-decoration: none; color: var(--ink-2); white-space: nowrap; }
 .nav a.lnk:hover { color: var(--ink); }
+.nav a.lnk.out { color: var(--red); font-weight: 600; }
 
 /* ---------- cover ---------- */
 .cover { padding-block: clamp(36px, 6vw, 72px) 0; display: grid; gap: 28px; }
@@ -340,7 +341,7 @@ table.crowd { width: 100%; border-collapse: collapse; min-width: 760px; }
 .missed-head { display: grid; gap: 6px; margin-top: 44px; padding-top: 22px; border-top: 2px solid var(--ink); max-width: 760px; }
 .missed-head h3 { font-family: var(--display); font-weight: 900; font-size: clamp(30px, 4vw, 44px); text-transform: uppercase; line-height: .9; }
 .missed-head p { color: var(--ink-2); font-size: 16.5px; }
-.missed { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; margin-top: 14px; }
+.mc-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0 28px; margin-top: 14px; }
 .mc { padding: 14px 0; border-bottom: 1px solid var(--rule); display: grid; gap: 5px; align-content: start; min-width: 0; }
 .mc-top { display: flex; align-items: baseline; gap: 10px; }
 .mc-top .p { font-family: var(--display); font-weight: 800; font-size: 20px; color: var(--muted); min-width: 38px; }
@@ -440,7 +441,7 @@ table.budget { width: 100%; border-collapse: collapse; font-size: 15px; }
   .pick:nth-child(3) { padding-left: 0; border-left: 0; }
   .pick:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .cards.three, .missed { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cards.three, .mc-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 860px) {
   .podium { grid-template-columns: 1fr 1fr; }
@@ -473,7 +474,7 @@ table.budget { width: 100%; border-collapse: collapse; font-size: 15px; }
   .weights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .days { grid-template-columns: 1fr; }
   .day, .day + .day { padding-left: 0; border-left: 0; }
-  .cards, .cards.three, .missed { grid-template-columns: 1fr; }
+  .cards, .cards.three, .mc-grid { grid-template-columns: 1fr; }
   .facts > div { grid-template-columns: 1fr; gap: 2px; }
   .menu-pics { grid-template-columns: 1fr; }
   .bookby li { grid-template-columns: 1fr; gap: 2px; }
@@ -507,6 +508,7 @@ table.budget { width: 100%; border-collapse: collapse; font-size: 15px; }
     <a class="lnk" href="#weird">Weird menu</a>
     <a class="lnk" href="#itineraries">Itineraries</a>
     <a class="lnk" href="#fineprint">Fine print</a>
+    <a class="lnk out" href="/GSI/rules/">Rules Committee →</a>
   </div>
 </nav>
 
@@ -869,7 +871,7 @@ table.budget { width: 100%; border-collapse: collapse; font-size: 15px; }
     <h3>Eighteen more, all scored</h3>
     <p>Every destination considered stays on the board. Here's why each one missed and the best reason to go anyway.</p>
   </div>
-  <div class="missed">
+  <div class="mc-grid">
     <div class="mc" id="m-rivieramaya"><div class="mc-top"><span class="p">T11</span><b>Riviera Maya</b><span class="tp">+7</span></div><span class="label">Crowd 5.3</span><p><i>Missed because</i> Humid, October is the wettest month, and you need passports.</p><p><i>Go anyway for</i> Tulum's international beach-club crowd and staffed 8-bedroom villas for less than Cabo.</p></div>
     <div class="mc" id="m-orangecounty"><div class="mc-top"><span class="p">T11</span><b>Orange County</b><span class="tp">+7</span></div><span class="label">Crowd 5.8</span><p><i>Missed because</i> Newport Beach caps rental permits with a waitlist, and Boston has no nonstop to SNA.</p><p><i>Go anyway for</i> Pelican Hill's two Fazio ocean courses and 7th place on the ACSM fitness index (Irvine).</p></div>
     <div class="mc" id="m-parkcity"><div class="mc-top"><span class="p">13</span><b>Park City</b><span class="tp">+8</span></div><span class="label">Crowd 6.7</span><p><i>Missed because</i> Golf winds down by mid-October and the best courses are private.</p><p><i>Go anyway for</i> A young, fit metro (median age 34.3) and lodges with 20-foot ceilings.</p></div>
