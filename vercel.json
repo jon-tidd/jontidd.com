@@ -5,35 +5,37 @@
     { "source": "/floorplan", "destination": "/floorplan/", "permanent": true },
     { "source": "/gsi", "destination": "/GSI/", "permanent": false },
     { "source": "/gsi/:path(.*)", "destination": "/GSI/:path", "permanent": false },
-    { "source": "/listen", "destination": "/listen/", "permanent": true }
+    { "source": "/spotify", "destination": "/spotify/", "permanent": true },
+    { "source": "/listen", "destination": "/spotify/", "permanent": true },
+    { "source": "/listen/(.*)", "destination": "/spotify/$1", "permanent": true }
   ],
   "headers": [
     {
-      "source": "/listen/(covers|showart|fonts)/(.*)",
+      "source": "/spotify/(covers|showart|fonts)/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
       ]
     },
     {
-      "source": "/listen/clips/(.*)",
+      "source": "/spotify/clips/(.*)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=86400" }
       ]
     },
     {
-      "source": "/listen/(.*)\\.(css|js)",
+      "source": "/spotify/(.*)\\.(css|js)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=3600" }
       ]
     },
     {
-      "source": "/listen/",
+      "source": "/spotify/",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
     },
     {
-      "source": "/listen/(.*)\\.html",
+      "source": "/spotify/(.*)\\.html",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]
