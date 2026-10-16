@@ -4,7 +4,42 @@
     { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true },
     { "source": "/floorplan", "destination": "/floorplan/", "permanent": true },
     { "source": "/gsi", "destination": "/GSI/", "permanent": false },
-    { "source": "/gsi/:path(.*)", "destination": "/GSI/:path", "permanent": false }
+    { "source": "/gsi/:path(.*)", "destination": "/GSI/:path", "permanent": false },
+    { "source": "/spotify", "destination": "/spotify/", "permanent": true },
+    { "source": "/listen", "destination": "/spotify/", "permanent": true },
+    { "source": "/listen/(.*)", "destination": "/spotify/$1", "permanent": true }
+  ],
+  "headers": [
+    {
+      "source": "/spotify/(covers|showart|fonts)/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+      ]
+    },
+    {
+      "source": "/spotify/clips/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=86400" }
+      ]
+    },
+    {
+      "source": "/spotify/(.*)\\.(css|js)",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=3600" }
+      ]
+    },
+    {
+      "source": "/spotify/",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    },
+    {
+      "source": "/spotify/(.*)\\.html",
+      "headers": [
+        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+      ]
+    }
   ],
   "rewrites": [
     { "source": "/floorplan/", "destination": "https://igce.vercel.app/floorplan/" },
