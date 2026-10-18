@@ -648,6 +648,25 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   .contact-form{padding:0 8px}
   .connect-grid{max-width:400px;grid-template-columns:repeat(3,1fr)}
 }
+
+/* ═══ Spotify listening site + Kids' math bot ═══ */
+.card-spotify .proj-label{color:#e27fd6;background:rgba(226,127,214,.08);border-color:rgba(226,127,214,.24)}
+.card-spotify h3{color:#f6d9f1}
+.card-spotify .card-status{color:#e27fd6}
+.card-spotify .card-link{color:#e27fd6}
+.card-spotify .card-header{background:linear-gradient(180deg,rgba(226,127,214,.06) 0%,rgba(226,127,214,.02) 70%,transparent 100%)}
+.card-spotify .card-media{border-top:none}
+.card-spotify .card-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.card-math .proj-label{color:#60a5fa;background:rgba(96,165,250,.07);border-color:rgba(96,165,250,.22)}
+.card-math h3{color:#cfe3fd}
+.card-math .card-status{color:#60a5fa}
+.card-math .card-header{background:linear-gradient(180deg,rgba(96,165,250,.06) 0%,rgba(96,165,250,.02) 70%,transparent 100%)}
+.card-math .card-media{border-top:none}
+.card-math .card-media img{width:100%;height:100%;object-fit:contain;background:#fff;object-position:center;display:block}
+.math-ph{height:100%;display:flex;align-items:center;justify-content:center;gap:18px;
+  font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:500;color:rgba(96,165,250,.35);
+  background:radial-gradient(ellipse at 50% 0%,rgba(96,165,250,.08),transparent 70%),linear-gradient(180deg,#0b0d14,#0a0b10)}
+.math-ph span:nth-child(even){color:rgba(96,165,250,.6)}
 </style>
 </head>
 <body>
@@ -1013,6 +1032,55 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
         </div>
         <span class="card-meta">Built for the 2026 season · invite only</span>
         <p class="card-disclaimer">An independent hobby project. Not affiliated with Tyler Place Family Resort.</p>
+      </div>
+    </article>
+
+    <!-- ═══ Spotify / Listen ═══ -->
+    <a href="/spotify/" target="_blank" class="project-card card-spotify" data-reveal data-delay="1" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #10</span>
+        <div class="card-question">"Can twelve years of my Spotify history figure out who I am, and then tell me what I'm missing?"</div>
+        <div class="card-title-row">
+          <h3>Drop the Needle</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Live · sound on</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <img src="images/cards/spotify-1.jpg" alt="A turntable with orbiting album covers under the headline What would Jon listen to?" loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="desc">It read 12 years of plays and called me out: a <strong>retro-future escapist</strong> who wants songs that <strong>build over hooks</strong>, goes <strong>heavy, but warm</strong>, and listens <strong>album, not algorithm</strong>. Then it got cocky and picked <strong>five bands it's shocked I don't play</strong>.</p>
+        <div class="card-tech">A spinning turntable of my real top records · <strong>free 30-second clips, no login</strong> · 12 years, 14 genres · a podcasts side too.</div>
+        <span class="card-link">
+          Drop the needle
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
+    <!-- ═══ PokéMath (private) ═══ -->
+    <article class="project-card card-math no-link" data-reveal data-delay="2" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #11</span>
+        <div class="card-question">"My boys are Pokémon-obsessed. What if their math practice was a Pokémon adventure they'd beg to go on?"</div>
+        <div class="card-title-row">
+          <h3>PokéMath</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Family project · private</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <img src="images/cards/pokemath-1.png" alt="Trainer Mason's Gym Challenge sheet: 17 + 17, 21 + 21, 23 + 24, 27 + 27" loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="desc">Daily <strong>Pokémon missions</strong> for two trainers: crack a <strong>Who's That Pokémon?</strong> mystery, battle a <strong>Gym Challenge</strong>, color in your badge. The fun is the hook. Underneath, it's a coach that <strong>learns every week</strong>.</p>
+        <div class="card-tech">
+          Aligned to the <strong>kindergarten &amp; 2nd-grade curriculum</strong> · reads the <strong>weekly class newsletter</strong> and pulls that week's lessons into the challenges · <strong>photos of finished sheets</strong> show what they got right and wrong · then it <strong>throttles difficulty and question count</strong> up or down each week to accelerate learning.
+        </div>
+        <span class="card-meta">Family project · private</span>
       </div>
     </article>
 
