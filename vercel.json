@@ -1,6 +1,7 @@
 {
   "redirects": [
     { "source": "/familyhistory", "destination": "/familyhistory/", "permanent": true },
+    { "source": "/kidsroom", "destination": "/kidsroom/", "permanent": true },
     { "source": "/sitescreener", "destination": "/sitescreener/", "permanent": true },
     { "source": "/floorplan", "destination": "/floorplan/", "permanent": true },
     { "source": "/gsi", "destination": "/GSI/", "permanent": false },

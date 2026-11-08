@@ -1,0 +1,2653 @@
+[
+ {
+  "id": "nightstand",
+  "name": "Nightstand (2 drawers)",
+  "category": "furniture",
+  "mount": "floor",
+  "w": 0.45,
+  "d": 0.38,
+  "h": 0.58,
+  "color": "#f3efe9",
+  "parts": [
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.565,
+     0
+    ],
+    "size": [
+     0.45,
+     0.03,
+     0.38
+    ],
+    "radius": 0.006,
+    "mat": "painted"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.34,
+     -0.015
+    ],
+    "size": [
+     0.43,
+     0.42,
+     0.34
+    ],
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.44,
+     0.165
+    ],
+    "size": [
+     0.39,
+     0.18,
+     0.02
+    ],
+    "radius": 0.005,
+    "mat": "painted",
+    "repeat": [
+     2,
+     0,
+     -0.205,
+     0
+    ]
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.44,
+     0.177
+    ],
+    "r": 0.012,
+    "mat": "brass",
+    "color": "#c9a45c",
+    "repeat": [
+     2,
+     0,
+     -0.205,
+     0
+    ]
+   },
+   {
+    "shape": "legs4",
+    "at": [
+     0,
+     0.065,
+     -0.01
+    ],
+    "size": [
+     0.41,
+     0.13,
+     0.34
+    ],
+    "r": 0.018,
+    "taper": 0.6,
+    "mat": "wood",
+    "color": "#c9a074"
+   }
+  ]
+ },
+ {
+  "id": "table_lamp",
+  "name": "Bedside lamp (drum shade)",
+  "category": "lighting",
+  "mount": "floor",
+  "w": 0.32,
+  "d": 0.32,
+  "h": 0.52,
+  "color": "#e9c8cf",
+  "parts": [
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.01,
+     0
+    ],
+    "r": 0.065,
+    "h": 0.02,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.13,
+     0
+    ],
+    "size": [
+     0.2,
+     0.22,
+     0.2
+    ],
+    "mat": "ceramic"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.25,
+     0
+    ],
+    "r1": 0.045,
+    "r2": 0.03,
+    "h": 0.03,
+    "mat": "ceramic"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.3,
+     0
+    ],
+    "r": 0.009,
+    "h": 0.08,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.36,
+     0
+    ],
+    "r": 0.03,
+    "mat": "emissive",
+    "color": "#fff4dc"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.42,
+     0
+    ],
+    "r": 0.16,
+    "h": 0.2,
+    "open": true,
+    "mat": "fabric",
+    "color": "#f6efe4",
+    "glow": true
+   },
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     0.516,
+     0
+    ],
+    "r": 0.156,
+    "tube": 0.004,
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "mat": "brass",
+    "color": "#c9a45c"
+   }
+  ],
+  "light": {
+   "at": [
+    0,
+    0.4,
+    0
+   ],
+   "color": "#ffd9a8",
+   "intensity": 3,
+   "distance": 3.5
+  }
+ },
+ {
+  "id": "arc_floor_lamp",
+  "name": "Arc floor lamp",
+  "category": "lighting",
+  "mount": "floor",
+  "w": 1.03,
+  "d": 0.34,
+  "h": 1.75,
+  "color": "#f2d5d9",
+  "parts": [
+   {
+    "shape": "rcyl",
+    "at": [
+     -0.35,
+     0.0175,
+     0
+    ],
+    "r": 0.16,
+    "h": 0.035,
+    "radius": 0.01,
+    "mat": "ceramic",
+    "color": "#efece6"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.35,
+     0.7124999999999999,
+     0
+    ],
+    "r": 0.013,
+    "h": 1.355,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     1.39,
+     0
+    ],
+    "r": 0.35,
+    "tube": 0.012,
+    "arc": 180,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.35,
+     1.3299999999999998,
+     0
+    ],
+    "r": 0.008,
+    "h": 0.12,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.35,
+     1.2,
+     0
+    ],
+    "r1": 0.17,
+    "r2": 0.05,
+    "h": 0.15,
+    "open": true,
+    "mat": "painted"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.35,
+     1.28,
+     0
+    ],
+    "r": 0.05,
+    "h": 0.012,
+    "mat": "painted"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.35,
+     1.17,
+     0
+    ],
+    "r": 0.04,
+    "mat": "emissive",
+    "color": "#fff4dc"
+   }
+  ],
+  "light": {
+   "at": [
+    0.35,
+    1.12,
+    0
+   ],
+   "color": "#ffd9a8",
+   "intensity": 4,
+   "distance": 4
+  }
+ },
+ {
+  "id": "toy_bench",
+  "name": "Toy chest bench + cushion",
+  "category": "storage",
+  "mount": "floor",
+  "w": 0.9,
+  "d": 0.42,
+  "h": 0.48,
+  "color": "#f3efe9",
+  "parts": [
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.02,
+     -0.01
+    ],
+    "size": [
+     0.86,
+     0.04,
+     0.38
+    ],
+    "mat": "painted",
+    "color": "#e4ddd2"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.23,
+     -0.01
+    ],
+    "size": [
+     0.9,
+     0.38,
+     0.4
+    ],
+    "radius": 0.008,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.21,
+     0.23,
+     0.197
+    ],
+    "size": [
+     0.38,
+     0.26,
+     0.012
+    ],
+    "radius": 0.004,
+    "mat": "painted",
+    "repeat": [
+     2,
+     0.42,
+     0,
+     0
+    ]
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.21,
+     0.32,
+     0.205
+    ],
+    "size": [
+     0.1,
+     0.022,
+     0.006
+    ],
+    "radius": 0.002,
+    "mat": "brass",
+    "color": "#c9a45c",
+    "repeat": [
+     2,
+     0.42,
+     0,
+     0
+    ]
+   },
+   {
+    "shape": "cushion",
+    "at": [
+     0,
+     0.45,
+     0
+    ],
+    "size": [
+     0.9,
+     0.06,
+     0.42
+    ],
+    "mat": "fabric",
+    "color": "#d7c6e0"
+   }
+  ]
+ },
+ {
+  "id": "bean_bag",
+  "name": "Bean bag chair",
+  "category": "seating",
+  "mount": "floor",
+  "w": 0.75,
+  "d": 0.75,
+  "h": 0.65,
+  "color": "#e8b9c6",
+  "parts": [
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.24,
+     0.03
+    ],
+    "size": [
+     0.75,
+     0.48,
+     0.69
+    ],
+    "mat": "velvet"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.4,
+     -0.17
+    ],
+    "size": [
+     0.68,
+     0.5,
+     0.4
+    ],
+    "rot": [
+     -18,
+     0,
+     0
+    ],
+    "mat": "velvet"
+   }
+  ]
+ },
+ {
+  "id": "kids_table_set",
+  "name": "Kids table + 2 chairs",
+  "category": "furniture",
+  "mount": "floor",
+  "w": 1.14,
+  "d": 0.6,
+  "h": 0.56,
+  "color": "#f3efe9",
+  "parts": [
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.485,
+     0
+    ],
+    "size": [
+     0.6,
+     0.03,
+     0.6
+    ],
+    "radius": 0.012,
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "legs4",
+    "at": [
+     0,
+     0.235,
+     0
+    ],
+    "size": [
+     0.54,
+     0.47,
+     0.54
+    ],
+    "r": 0.022,
+    "taper": 0.7,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.42,
+     0.28,
+     0
+    ],
+    "size": [
+     0.3,
+     0.025,
+     0.3
+    ],
+    "radius": 0.008,
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "legs4",
+    "at": [
+     -0.42,
+     0.134,
+     0
+    ],
+    "size": [
+     0.27,
+     0.268,
+     0.27
+    ],
+    "r": 0.014,
+    "taper": 0.75,
+    "mat": "painted"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.555,
+     0.425,
+     -0.12
+    ],
+    "r": 0.012,
+    "h": 0.27,
+    "mat": "painted",
+    "repeat": [
+     2,
+     0,
+     0,
+     0.24
+    ]
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.555,
+     0.5,
+     0
+    ],
+    "size": [
+     0.025,
+     0.11,
+     0.28
+    ],
+    "radius": 0.008,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.42,
+     0.28,
+     0
+    ],
+    "size": [
+     0.3,
+     0.025,
+     0.3
+    ],
+    "radius": 0.008,
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "legs4",
+    "at": [
+     0.42,
+     0.134,
+     0
+    ],
+    "size": [
+     0.27,
+     0.268,
+     0.27
+    ],
+    "r": 0.014,
+    "taper": 0.75,
+    "mat": "painted"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.555,
+     0.425,
+     -0.12
+    ],
+    "r": 0.012,
+    "h": 0.27,
+    "mat": "painted",
+    "repeat": [
+     2,
+     0,
+     0,
+     0.24
+    ]
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.555,
+     0.5,
+     0
+    ],
+    "size": [
+     0.025,
+     0.11,
+     0.28
+    ],
+    "radius": 0.008,
+    "mat": "painted"
+   }
+  ]
+ },
+ {
+  "id": "round_pouf",
+  "name": "Round pouf",
+  "category": "seating",
+  "mount": "floor",
+  "w": 0.45,
+  "d": 0.45,
+  "h": 0.38,
+  "color": "#f3c9c4",
+  "parts": [
+   {
+    "shape": "rcyl",
+    "at": [
+     0,
+     0.19,
+     0
+    ],
+    "r": 0.225,
+    "h": 0.38,
+    "radius": 0.07,
+    "mat": "fabric"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.37,
+     0
+    ],
+    "size": [
+     0.03,
+     0.016,
+     0.03
+    ],
+    "mat": "fabric",
+    "color": "#e6b2ad"
+   }
+  ]
+ },
+ {
+  "id": "fiddle_leaf_plant",
+  "name": "Faux fiddle-leaf fig",
+  "category": "decor",
+  "mount": "floor",
+  "w": 0.5,
+  "d": 0.5,
+  "h": 1.25,
+  "color": "#f2efe9",
+  "parts": [
+   {
+    "shape": "rcyl",
+    "at": [
+     0,
+     0.16,
+     0
+    ],
+    "r": 0.15,
+    "h": 0.32,
+    "radius": 0.02,
+    "mat": "ceramic"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.312,
+     0
+    ],
+    "r": 0.14,
+    "h": 0.012,
+    "mat": "fabric",
+    "color": "#3b2a20"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.68,
+     0
+    ],
+    "r1": 0.018,
+    "r2": 0.01,
+    "h": 0.74,
+    "rot": [
+     0,
+     0,
+     3
+    ],
+    "mat": "wood",
+    "color": "#6b4f3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     0.62,
+     0.12
+    ],
+    "size": [
+     0.17,
+     0.25,
+     0.025
+    ],
+    "rot": [
+     -60,
+     0,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#4d7d45"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.09,
+     0.659,
+     -0.098
+    ],
+    "size": [
+     0.16714285714285715,
+     0.24571428571428572,
+     0.025
+    ],
+    "rot": [
+     -58.214285714285715,
+     137.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.145,
+     0.699,
+     0.013
+    ],
+    "size": [
+     0.16428571428571428,
+     0.24142857142857144,
+     0.025
+    ],
+    "rot": [
+     -56.42857142857143,
+     275,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.125,
+     0.738,
+     0.096
+    ],
+    "size": [
+     0.16142857142857145,
+     0.23714285714285716,
+     0.025
+    ],
+    "rot": [
+     -54.64285714285714,
+     412.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#4d7d45"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.029,
+     0.777,
+     -0.164
+    ],
+    "size": [
+     0.15857142857142859,
+     0.23285714285714287,
+     0.025
+    ],
+    "rot": [
+     -52.85714285714286,
+     550,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.094,
+     0.816,
+     0.147
+    ],
+    "size": [
+     0.15571428571428572,
+     0.22857142857142856,
+     0.025
+    ],
+    "rot": [
+     -51.07142857142857,
+     687.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.172,
+     0.856,
+     -0.046
+    ],
+    "size": [
+     0.15285714285714286,
+     0.22428571428571428,
+     0.025
+    ],
+    "rot": [
+     -49.285714285714285,
+     825,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#4d7d45"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.16,
+     0.895,
+     -0.083
+    ],
+    "size": [
+     0.15000000000000002,
+     0.22,
+     0.025
+    ],
+    "rot": [
+     -47.5,
+     962.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.061,
+     0.934,
+     0.168
+    ],
+    "size": [
+     0.14714285714285716,
+     0.21571428571428572,
+     0.025
+    ],
+    "rot": [
+     -45.714285714285715,
+     1100,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.067,
+     0.974,
+     -0.161
+    ],
+    "size": [
+     0.1442857142857143,
+     0.2114285714285714,
+     0.025
+    ],
+    "rot": [
+     -43.92857142857143,
+     1237.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#4d7d45"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.151,
+     1.013,
+     0.071
+    ],
+    "size": [
+     0.14142857142857143,
+     0.20714285714285713,
+     0.025
+    ],
+    "rot": [
+     -42.14285714285714,
+     1375,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.15,
+     1.052,
+     0.047
+    ],
+    "size": [
+     0.13857142857142857,
+     0.20285714285714285,
+     0.025
+    ],
+    "rot": [
+     -40.35714285714286,
+     1512.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.073,
+     1.091,
+     -0.126
+    ],
+    "size": [
+     0.13571428571428573,
+     0.19857142857142857,
+     0.025
+    ],
+    "rot": [
+     -38.57142857142857,
+     1650,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#4d7d45"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.029,
+     1.131,
+     0.13
+    ],
+    "size": [
+     0.13285714285714287,
+     0.19428571428571428,
+     0.025
+    ],
+    "rot": [
+     -36.785714285714285,
+     1787.5,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.098,
+     1.17,
+     -0.069
+    ],
+    "size": [
+     0.13,
+     0.19,
+     0.025
+    ],
+    "rot": [
+     -35,
+     1925,
+     0
+    ],
+    "mat": "plastic",
+    "color": "#3f6b3a"
+   }
+  ]
+ },
+ {
+  "id": "play_teepee",
+  "name": "Play teepee",
+  "category": "decor",
+  "mount": "floor",
+  "w": 1.17,
+  "d": 1.11,
+  "h": 1.61,
+  "color": "#f6efe6",
+  "parts": [
+   {
+    "shape": "cone",
+    "at": [
+     0,
+     0.675,
+     0
+    ],
+    "r": 0.58,
+    "h": 1.35,
+    "seg": 5,
+    "open": true,
+    "rot": [
+     0,
+     36,
+     0
+    ],
+    "mat": "fabric"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.144,
+     0.8,
+     0.198
+    ],
+    "r": 0.014,
+    "h": 1.751,
+    "rot": [
+     -23.962,
+     36,
+     0
+    ],
+    "mat": "wood",
+    "color": "#d8b98f"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.232,
+     0.8,
+     -0.076
+    ],
+    "r": 0.014,
+    "h": 1.751,
+    "rot": [
+     -23.962,
+     108,
+     0
+    ],
+    "mat": "wood",
+    "color": "#d8b98f"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.8,
+     -0.244
+    ],
+    "r": 0.014,
+    "h": 1.751,
+    "rot": [
+     -23.962,
+     180,
+     0
+    ],
+    "mat": "wood",
+    "color": "#d8b98f"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.232,
+     0.8,
+     -0.076
+    ],
+    "r": 0.014,
+    "h": 1.751,
+    "rot": [
+     -23.962,
+     252,
+     0
+    ],
+    "mat": "wood",
+    "color": "#d8b98f"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.144,
+     0.8,
+     0.198
+    ],
+    "r": 0.014,
+    "h": 1.751,
+    "rot": [
+     -23.962,
+     324,
+     0
+    ],
+    "mat": "wood",
+    "color": "#d8b98f"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0.405,
+     0.326
+    ],
+    "size": [
+     0.55,
+     0.006,
+     0.85
+    ],
+    "seg": 3,
+    "rot": [
+     -109.166,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#5a4a44"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.24,
+     1,
+     0.128
+    ],
+    "size": [
+     0.07,
+     0.004,
+     0.09
+    ],
+    "seg": 3,
+    "rot": [
+     70.834,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#f2a7bf"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.12,
+     1,
+     0.128
+    ],
+    "size": [
+     0.07,
+     0.004,
+     0.09
+    ],
+    "seg": 3,
+    "rot": [
+     70.834,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#c8b6dc"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     1,
+     0.128
+    ],
+    "size": [
+     0.07,
+     0.004,
+     0.09
+    ],
+    "seg": 3,
+    "rot": [
+     70.834,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#a9d3c9"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.12,
+     1,
+     0.128
+    ],
+    "size": [
+     0.07,
+     0.004,
+     0.09
+    ],
+    "seg": 3,
+    "rot": [
+     70.834,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#f6d36b"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.24,
+     1,
+     0.128
+    ],
+    "size": [
+     0.07,
+     0.004,
+     0.09
+    ],
+    "seg": 3,
+    "rot": [
+     70.834,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#a8d0ec"
+   }
+  ]
+ },
+ {
+  "id": "cube_shelf_3x2",
+  "name": "Cube shelf 3x2 + bins",
+  "category": "storage",
+  "mount": "floor",
+  "w": 1.032,
+  "d": 0.33,
+  "h": 0.734,
+  "color": "#f3efe9",
+  "parts": [
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.02,
+     0
+    ],
+    "size": [
+     0.992,
+     0.04,
+     0.30000000000000004
+    ],
+    "mat": "painted",
+    "color": "#e4ddd2"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.725,
+     0
+    ],
+    "size": [
+     1.032,
+     0.018,
+     0.33
+    ],
+    "mat": "painted"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.049,
+     0
+    ],
+    "size": [
+     1.032,
+     0.018,
+     0.33
+    ],
+    "mat": "painted"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.387,
+     0
+    ],
+    "size": [
+     0.996,
+     0.018,
+     0.33
+    ],
+    "mat": "painted"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.507,
+     0.387,
+     0
+    ],
+    "size": [
+     0.018,
+     0.694,
+     0.33
+    ],
+    "mat": "painted",
+    "repeat": [
+     4,
+     0.338,
+     0,
+     0
+    ]
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.387,
+     -0.162
+    ],
+    "size": [
+     0.996,
+     0.6579999999999999,
+     0.006
+    ],
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.338,
+     0.203,
+     0.005
+    ],
+    "size": [
+     0.3,
+     0.29000000000000004,
+     0.31
+    ],
+    "radius": 0.012,
+    "mat": "fabric",
+    "color": "#f3d1d3"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.338,
+     0.298,
+     0.161
+    ],
+    "size": [
+     0.09,
+     0.024,
+     0.006
+    ],
+    "radius": 0.006,
+    "mat": "fabric",
+    "color": "#5f5560"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.203,
+     0.005
+    ],
+    "size": [
+     0.3,
+     0.29000000000000004,
+     0.31
+    ],
+    "radius": 0.012,
+    "mat": "fabric",
+    "color": "#c8b6dc"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.298,
+     0.161
+    ],
+    "size": [
+     0.09,
+     0.024,
+     0.006
+    ],
+    "radius": 0.006,
+    "mat": "fabric",
+    "color": "#5f5560"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.338,
+     0.203,
+     0.005
+    ],
+    "size": [
+     0.3,
+     0.29000000000000004,
+     0.31
+    ],
+    "radius": 0.012,
+    "mat": "fabric",
+    "color": "#a9d3c9"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.338,
+     0.298,
+     0.161
+    ],
+    "size": [
+     0.09,
+     0.024,
+     0.006
+    ],
+    "radius": 0.006,
+    "mat": "fabric",
+    "color": "#5f5560"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.338,
+     0.541,
+     0.005
+    ],
+    "size": [
+     0.3,
+     0.29000000000000004,
+     0.31
+    ],
+    "radius": 0.012,
+    "mat": "fabric",
+    "color": "#f6e3b4"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.338,
+     0.636,
+     0.161
+    ],
+    "size": [
+     0.09,
+     0.024,
+     0.006
+    ],
+    "radius": 0.006,
+    "mat": "fabric",
+    "color": "#5f5560"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.338,
+     0.541,
+     0.005
+    ],
+    "size": [
+     0.3,
+     0.29000000000000004,
+     0.31
+    ],
+    "radius": 0.012,
+    "mat": "fabric",
+    "color": "#f3d1d3"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.338,
+     0.636,
+     0.161
+    ],
+    "size": [
+     0.09,
+     0.024,
+     0.006
+    ],
+    "radius": 0.006,
+    "mat": "fabric",
+    "color": "#5f5560"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.13,
+     0.496,
+     0
+    ],
+    "size": [
+     0.026,
+     0.2,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#d0473f"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.1,
+     0.508,
+     0
+    ],
+    "size": [
+     0.026,
+     0.224,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#6fa8dc"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.07,
+     0.52,
+     0
+    ],
+    "size": [
+     0.026,
+     0.248,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#f6d36b"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.04,
+     0.532,
+     0
+    ],
+    "size": [
+     0.026,
+     0.272,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#7fb77e"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.01,
+     0.502,
+     0
+    ],
+    "size": [
+     0.026,
+     0.212,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#c8b6dc"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0.02,
+     0.514,
+     0
+    ],
+    "size": [
+     0.026,
+     0.236,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#f4a261"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0.05,
+     0.526,
+     0
+    ],
+    "size": [
+     0.026,
+     0.26,
+     0.18
+    ],
+    "mat": "painted",
+    "color": "#7d55a8"
+   }
+  ]
+ },
+ {
+  "id": "ledge_shelves",
+  "name": "Floating book ledges",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.6,
+  "d": 0.11,
+  "h": 0.55,
+  "y": 1.25,
+  "color": "#d2ab7c",
+  "parts": [
+   {
+    "shape": "box",
+    "at": [
+     0,
+     -0.25,
+     0.055
+    ],
+    "size": [
+     0.6,
+     0.025,
+     0.11
+    ],
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     -0.22,
+     0.104
+    ],
+    "size": [
+     0.6,
+     0.035,
+     0.012
+    ],
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.19,
+     -0.139,
+     0.05
+    ],
+    "size": [
+     0.17,
+     0.2,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#f2a7bf"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     -0.124,
+     0.05
+    ],
+    "size": [
+     0.19,
+     0.23,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#a8d0ec"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.19,
+     -0.139,
+     0.05
+    ],
+    "size": [
+     0.17,
+     0.2,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#f6d36b"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.05,
+     0.055
+    ],
+    "size": [
+     0.6,
+     0.025,
+     0.11
+    ],
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0.08,
+     0.104
+    ],
+    "size": [
+     0.6,
+     0.035,
+     0.012
+    ],
+    "mat": "wood",
+    "color": "#d2ab7c"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.19,
+     0.161,
+     0.05
+    ],
+    "size": [
+     0.17,
+     0.2,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#a9d3c9"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.176,
+     0.05
+    ],
+    "size": [
+     0.19,
+     0.23,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#c8b6dc"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.19,
+     0.161,
+     0.05
+    ],
+    "size": [
+     0.17,
+     0.2,
+     0.012
+    ],
+    "radius": 0.003,
+    "rot": [
+     -10,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#f4a261"
+   }
+  ]
+ },
+ {
+  "id": "round_mirror",
+  "name": "Round rattan mirror",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.6,
+  "d": 0.05,
+  "h": 0.6,
+  "y": 1.45,
+  "color": "#c8a26b",
+  "parts": [
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     0,
+     0.025
+    ],
+    "r": 0.275,
+    "tube": 0.025,
+    "mat": "rattan"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0,
+     0.02
+    ],
+    "r": 0.26,
+    "h": 0.006,
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "mat": "mirror",
+    "color": "#e8eef0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     0,
+     0.008
+    ],
+    "r": 0.27,
+    "h": 0.012,
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "mat": "painted",
+    "color": "#d9cdb8"
+   }
+  ]
+ },
+ {
+  "id": "cork_board",
+  "name": "Cork bulletin board",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.8,
+  "d": 0.025,
+  "h": 0.6,
+  "y": 1.2,
+  "color": "#f3efe9",
+  "parts": [
+   {
+    "shape": "box",
+    "at": [
+     0,
+     0,
+     0.012
+    ],
+    "size": [
+     0.74,
+     0.54,
+     0.012
+    ],
+    "mat": "cork",
+    "color": "#c49a6c"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.285,
+     0.0125
+    ],
+    "size": [
+     0.8,
+     0.03,
+     0.025
+    ],
+    "radius": 0.004,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     -0.285,
+     0.0125
+    ],
+    "size": [
+     0.8,
+     0.03,
+     0.025
+    ],
+    "radius": 0.004,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     -0.385,
+     0,
+     0.0125
+    ],
+    "size": [
+     0.03,
+     0.54,
+     0.025
+    ],
+    "radius": 0.004,
+    "mat": "painted"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0.385,
+     0,
+     0.0125
+    ],
+    "size": [
+     0.03,
+     0.54,
+     0.025
+    ],
+    "radius": 0.004,
+    "mat": "painted"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.2,
+     0.1,
+     0.0195
+    ],
+    "size": [
+     0.21,
+     0.28,
+     0.002
+    ],
+    "rot": [
+     0,
+     0,
+     4
+    ],
+    "mat": "painted",
+    "color": "#fbf7ee"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.2,
+     0.22,
+     0.023
+    ],
+    "size": [
+     0.014,
+     0.014,
+     0.004
+    ],
+    "mat": "plastic",
+    "color": "#d0473f"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0.06,
+     0.12,
+     0.0195
+    ],
+    "size": [
+     0.15,
+     0.15,
+     0.002
+    ],
+    "rot": [
+     0,
+     0,
+     -6
+    ],
+    "mat": "painted",
+    "color": "#f6d36b"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.06,
+     0.175,
+     0.023
+    ],
+    "size": [
+     0.014,
+     0.014,
+     0.004
+    ],
+    "mat": "plastic",
+    "color": "#6fa8dc"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0.24,
+     0.06,
+     0.0195
+    ],
+    "size": [
+     0.16,
+     0.22,
+     0.002
+    ],
+    "rot": [
+     0,
+     0,
+     3
+    ],
+    "mat": "painted",
+    "color": "#a9d3c9"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.24,
+     0.15,
+     0.023
+    ],
+    "size": [
+     0.014,
+     0.014,
+     0.004
+    ],
+    "mat": "plastic",
+    "color": "#f6d36b"
+   },
+   {
+    "shape": "box",
+    "at": [
+     -0.04,
+     -0.13,
+     0.0195
+    ],
+    "size": [
+     0.22,
+     0.16,
+     0.002
+    ],
+    "rot": [
+     0,
+     0,
+     -2
+    ],
+    "mat": "painted",
+    "color": "#f2a7bf"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.04,
+     -0.07,
+     0.023
+    ],
+    "size": [
+     0.014,
+     0.014,
+     0.004
+    ],
+    "mat": "plastic",
+    "color": "#7fb77e"
+   },
+   {
+    "shape": "box",
+    "at": [
+     0.24,
+     -0.16,
+     0.0195
+    ],
+    "size": [
+     0.13,
+     0.13,
+     0.002
+    ],
+    "rot": [
+     0,
+     0,
+     8
+    ],
+    "mat": "painted",
+    "color": "#c8b6dc"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.24,
+     -0.115,
+     0.023
+    ],
+    "size": [
+     0.014,
+     0.014,
+     0.004
+    ],
+    "mat": "plastic",
+    "color": "#7d55a8"
+   }
+  ]
+ },
+ {
+  "id": "reading_canopy",
+  "name": "Reading nook canopy",
+  "category": "wall",
+  "mount": "wall",
+  "w": 1,
+  "d": 0.5,
+  "h": 1.6,
+  "y": 1.4,
+  "color": "#f6e3e0",
+  "parts": [
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     0.78,
+     0
+    ],
+    "r": 0.27,
+    "tube": 0.012,
+    "arc": 180,
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "rbox",
+    "at": [
+     0,
+     0.78,
+     0.01
+    ],
+    "size": [
+     0.08,
+     0.04,
+     0.02
+    ],
+    "radius": 0.005,
+    "mat": "brass",
+    "color": "#c9a45c"
+   },
+   {
+    "shape": "drape",
+    "at": [
+     0,
+     0,
+     0
+    ],
+    "arc": 180,
+    "r": 0.28,
+    "r2": 0.48,
+    "size": [
+     0,
+     1.56,
+     0.05
+    ],
+    "folds": 9,
+    "mat": "sheer"
+   },
+   {
+    "shape": "drape",
+    "at": [
+     0,
+     0.7,
+     0
+    ],
+    "arc": 180,
+    "r": 0.285,
+    "r2": 0.31,
+    "size": [
+     0,
+     0.18,
+     0.03
+    ],
+    "folds": 12,
+    "mat": "sheer"
+   },
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     0.61,
+     0
+    ],
+    "r": 0.31,
+    "tube": 0.006,
+    "arc": 180,
+    "rot": [
+     90,
+     0,
+     0
+    ],
+    "mat": "fabric",
+    "color": "#efc3cb"
+   }
+  ]
+ },
+ {
+  "id": "string_lights",
+  "name": "String-light garland",
+  "category": "lighting",
+  "mount": "wall",
+  "w": 1.2,
+  "d": 0.036,
+  "h": 0.28,
+  "y": 1.9,
+  "color": "#fff1d0",
+  "parts": [
+   {
+    "shape": "torus",
+    "at": [
+     0,
+     0.778,
+     0.01
+    ],
+    "r": 0.928,
+    "tube": 0.003,
+    "arc": 80.545,
+    "rot": [
+     0,
+     0,
+     229.727
+    ],
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.554,
+     0.021,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.554,
+     -0.005,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.454,
+     -0.043,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.454,
+     -0.069,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#fff1d0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.347,
+     -0.095,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.347,
+     -0.121,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.235,
+     -0.132,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.235,
+     -0.158,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#fff1d0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     -0.118,
+     -0.154,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     -0.118,
+     -0.18,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0,
+     -0.162,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0,
+     -0.188,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#fff1d0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.118,
+     -0.154,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.118,
+     -0.18,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.235,
+     -0.132,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.235,
+     -0.158,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#fff1d0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.347,
+     -0.095,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.347,
+     -0.121,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.454,
+     -0.043,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.454,
+     -0.069,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#fff1d0"
+   },
+   {
+    "shape": "cyl",
+    "at": [
+     0.554,
+     0.021,
+     0.01
+    ],
+    "r": 0.005,
+    "h": 0.018,
+    "mat": "plastic",
+    "color": "#efe9de"
+   },
+   {
+    "shape": "sphere",
+    "at": [
+     0.554,
+     -0.005,
+     0.01
+    ],
+    "r": 0.018,
+    "mat": "emissive",
+    "color": "#ffe2b8"
+   }
+  ],
+  "light": {
+   "at": [
+    0,
+    -0.1,
+    0.35
+   ],
+   "color": "#ffcf8a",
+   "intensity": 0.8,
+   "distance": 2.5
+  }
+ },
+ {
+  "id": "art_east_1",
+  "name": "Illustrated print (lilac mat)",
+  "kind": "art",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.7,
+  "h": 0.5,
+  "d": 0.03,
+  "y": 1.7,
+  "frame": "#f4f2ee",
+  "mat": "#c8b6dc",
+  "style": "white frame, lilac mat, colorful illustrated print (above the bed)",
+  "default_place": {
+   "wall": "east",
+   "y": 1.7,
+   "z": -1.15
+  },
+  "room_ref": "finishes.wall_art.items[0]"
+ },
+ {
+  "id": "art_east_2",
+  "name": "Small framed print",
+  "kind": "art",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.25,
+  "h": 0.3,
+  "d": 0.03,
+  "y": 1.55,
+  "frame": "#1d1d1f",
+  "mat": "#f4f1ea",
+  "style": "black frame, small print (above the glider); forest landscape in soft greens",
+  "default_place": {
+   "wall": "east",
+   "y": 1.55,
+   "z": 1.05
+  },
+  "room_ref": "finishes.wall_art.items[1]"
+ },
+ {
+  "id": "art_north_1",
+  "name": "Unicorn canvas",
+  "kind": "art",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.3,
+  "h": 0.4,
+  "d": 0.03,
+  "y": 1.6,
+  "frame": null,
+  "mat": null,
+  "style": "purple canvas, unicorns",
+  "default_place": {
+   "wall": "north",
+   "y": 1.6,
+   "x": 1
+  },
+  "room_ref": "finishes.wall_art.items[2]"
+ },
+ {
+  "id": "art_north_2",
+  "name": "Pink/red poster",
+  "kind": "art",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.45,
+  "h": 0.6,
+  "d": 0.03,
+  "y": 1.6,
+  "frame": "#1d1d1f",
+  "mat": null,
+  "style": "black frame, pink/red poster",
+  "default_place": {
+   "wall": "north",
+   "y": 1.6,
+   "x": -1.1
+  },
+  "room_ref": "finishes.wall_art.items[3]"
+ },
+ {
+  "id": "art_west_1",
+  "name": "Night-sky poster",
+  "kind": "art",
+  "category": "wall",
+  "mount": "wall",
+  "w": 0.3,
+  "h": 0.4,
+  "d": 0.012,
+  "y": 1.55,
+  "frame": null,
+  "mat": null,
+  "style": "small poster above the dresser; night sky, pine forest, flying saucer beam",
+  "default_place": {
+   "wall": "west",
+   "y": 1.55,
+   "z": -0.1
+  },
+  "room_ref": "finishes.wall_art.items[4]"
+ }
+]
