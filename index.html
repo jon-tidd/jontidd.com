@@ -667,6 +667,19 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
   font-family:'JetBrains Mono',monospace;font-size:44px;font-weight:500;color:rgba(96,165,250,.35);
   background:radial-gradient(ellipse at 50% 0%,rgba(96,165,250,.08),transparent 70%),linear-gradient(180deg,#0b0d14,#0a0b10)}
 .math-ph span:nth-child(even){color:rgba(96,165,250,.6)}
+/* ═══ Kids' room card + project sort toggle ═══ */
+.card-kids .proj-label{color:#c7a8ea;background:rgba(199,168,234,.08);border-color:rgba(199,168,234,.24)}
+.card-kids h3{color:#efe3fb}
+.card-kids .card-status{color:#c7a8ea}
+.card-kids .card-link{color:#c7a8ea}
+.card-kids .card-header{background:linear-gradient(180deg,rgba(199,168,234,.07) 0%,rgba(199,168,234,.02) 70%,transparent 100%)}
+.card-kids .card-media{border-top:none}
+.card-kids .card-media img{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.sort-toggle{display:inline-flex;margin-top:28px;padding:4px;border-radius:999px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.08)}
+.sort-toggle button{font:600 11px 'JetBrains Mono',monospace;letter-spacing:.08em;text-transform:uppercase;color:#71717a;background:transparent;border:0;border-radius:999px;padding:8px 16px;cursor:pointer;transition:color .2s,background .2s}
+.sort-toggle button:hover{color:#d4d4d8}
+.sort-toggle button[aria-pressed="true"]{color:#fff;background:rgba(99,102,241,.22);box-shadow:inset 0 0 0 1px rgba(99,102,241,.45)}
+.sort-toggle button:focus-visible{outline:2px solid #6366f1;outline-offset:2px}
 </style>
 </head>
 <body>
@@ -735,12 +748,16 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     <div class="label">Projects</div>
     <h2>What I'm building</h2>
     <p>Each project starts with a question worth answering.</p>
+    <div class="sort-toggle" role="group" aria-label="Sort projects">
+      <button type="button" data-sort="fun" aria-pressed="true">Most fun</button>
+      <button type="button" data-sort="added" aria-pressed="false">Newest</button>
+    </div>
   </div>
 
   <div class="projects-grid">
 
     <!-- ═══ Spotify / Listen ═══ -->
-    <a href="/spotify/" target="_blank" class="project-card card-spotify" data-reveal data-delay="1" data-tilt>
+    <a href="/spotify/" target="_blank" class="project-card card-spotify" data-added="2026-10-17" data-fun="1" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -764,8 +781,35 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
       </div>
     </a>
 
+    <!-- ═══ Kids' Room Planner ═══ -->
+    <a href="/kidsroom/" target="_blank" class="project-card card-kids" data-added="2026-11-08" data-fun="2" data-reveal data-delay="2" data-tilt>
+      <div class="card-sheen"></div>
+      <div class="card-border"></div>
+      <div class="card-header">
+        <span class="proj-label">Project #2</span>
+        <div class="card-question">"My daughter is graduating from her toddler bed. Can we try every paint color, rug and comforter before we buy a single thing?"</div>
+        <div class="card-title-row">
+          <h3>Alice's Room</h3>
+          <span class="card-status"><span class="card-status-dot"></span>Live · 3D</span>
+        </div>
+      </div>
+      <div class="card-media">
+        <img src="images/cards/kidsroom-1.jpg" alt="A 3D dollhouse view of a pink bedroom with a full bed, floral comforter, bookshelf and a woodland-animal rug" loading="lazy">
+      </div>
+      <div class="card-body">
+        <p class="desc">Her real bedroom, rebuilt in 3D from an <strong>iPhone room scan</strong>. Paint the walls, swap bedding and rugs, drag the furniture around, and <strong>walk in through the door</strong> to see what she'll actually see, before a single can of paint gets opened.</p>
+        <div class="card-tech">
+          Measured to the inch from <strong>Apple RoomPlan</strong> · <strong>live clearance labels</strong> flag when a bed blocks the door · real paint chips · <strong>sunlight by time of day</strong> · side-by-side saved versions · runs in the browser on Three.js, no install.
+        </div>
+        <span class="card-link">
+          Step inside
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </span>
+      </div>
+    </a>
+
     <!-- ═══ PokéMath (private) ═══ -->
-    <article class="project-card card-math no-link" data-reveal data-delay="2" data-tilt>
+    <article class="project-card card-math no-link" data-added="2026-10-17" data-fun="3" data-reveal data-delay="2" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -789,7 +833,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </article>
 
     <!-- ═══ Bedtime Virtues ═══ -->
-    <a href="https://virtueforge.vercel.app" target="_blank" class="project-card card-virtues" data-reveal data-delay="1" data-tilt>
+    <a href="https://virtueforge.vercel.app" target="_blank" class="project-card card-virtues" data-added="2026-04-06" data-fun="5" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -825,7 +869,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ The Rudyard Library ═══ -->
-    <a href="https://rudyard.vercel.app" target="_blank" class="project-card card-rudyard" data-reveal data-delay="2" data-tilt>
+    <a href="https://rudyard.vercel.app" target="_blank" class="project-card card-rudyard" data-added="2026-04-09" data-fun="10" data-reveal data-delay="2" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -850,7 +894,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ Mars ═══ -->
-    <a href="/mars" target="_blank" class="project-card card-mars" data-reveal data-delay="1" data-tilt>
+    <a href="/mars" target="_blank" class="project-card card-mars" data-added="2026-09-23" data-fun="4" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -888,7 +932,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ Fantasy Engine ═══ -->
-    <a href="/fantasyengine" target="_blank" class="project-card card-fe" data-reveal data-delay="2" data-tilt>
+    <a href="/fantasyengine" target="_blank" class="project-card card-fe" data-added="2026-08-31" data-fun="6" data-reveal data-delay="2" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -919,7 +963,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ The Tidd Family History ═══ -->
-    <article class="project-card card-family no-link" data-reveal data-delay="1" data-tilt>
+    <article class="project-card card-family no-link" data-added="2026-07-04" data-fun="9" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -954,7 +998,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </article>
 
     <!-- ═══ The Tiger Method ═══ -->
-    <a href="/tiger/" target="_blank" class="project-card card-tiger" data-reveal data-delay="2" data-tilt>
+    <a href="/tiger/" target="_blank" class="project-card card-tiger" data-added="2026-07-03" data-fun="7" data-reveal data-delay="2" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -989,7 +1033,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </a>
 
     <!-- ═══ Startup Battleplan ═══ -->
-    <article class="project-card card-bp no-link" data-reveal data-delay="1" data-tilt>
+    <article class="project-card card-bp no-link" data-added="2026-07-03" data-fun="11" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -1013,7 +1057,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </article>
 
     <!-- ═══ Site Screener (stealth) ═══ -->
-    <article class="project-card card-ss no-link" data-reveal data-delay="2" data-tilt>
+    <article class="project-card card-ss no-link" data-added="2026-07-03" data-fun="12" data-reveal data-delay="2" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -1049,7 +1093,7 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
     </article>
 
     <!-- ═══ Tyler Place Connections ═══ -->
-    <article class="project-card card-tp no-link" data-reveal data-delay="1" data-tilt>
+    <article class="project-card card-tp no-link" data-added="2026-07-03" data-fun="8" data-reveal data-delay="1" data-tilt>
       <div class="card-sheen"></div>
       <div class="card-border"></div>
       <div class="card-header">
@@ -1170,6 +1214,37 @@ footer p{font-size:12px;color:#3f3f46;font-family:'JetBrains Mono',monospace}
 
 <footer><p>&copy; 2026 Jon Tidd. Built with care and curiosity.</p></footer>
 
+<script>
+/* Project sort: "Most fun" (data-fun rank) or "Newest" (data-added = day the card went on the site).
+   Re-numbers the "Project #" labels and the left/right reveal stagger to match the new order. */
+(function(){
+  const grid=document.querySelector('.projects-grid');
+  const btns=[...document.querySelectorAll('.sort-toggle [data-sort]')];
+  if(!grid||!btns.length)return;
+  const cards=[...grid.querySelectorAll(':scope > .project-card')];
+  const fun=c=>+c.dataset.fun||999;
+  const sorters={
+    fun:(a,b)=>fun(a)-fun(b),
+    added:(a,b)=>(b.dataset.added||'').localeCompare(a.dataset.added||'')||fun(a)-fun(b)
+  };
+  function apply(mode){
+    if(!sorters[mode])mode='fun';
+    cards.slice().sort(sorters[mode]).forEach((c,i)=>{
+      grid.appendChild(c);
+      const l=c.querySelector('.proj-label');
+      if(l&&/^Project #/.test(l.textContent))l.textContent='Project #'+(i+1);
+      c.dataset.delay=i%2?'2':'1';
+    });
+    btns.forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.sort===mode)));
+  }
+  btns.forEach(b=>b.addEventListener('click',()=>{
+    apply(b.dataset.sort);
+    try{localStorage.setItem('projectSort',b.dataset.sort)}catch(e){}
+  }));
+  let saved=null;try{saved=localStorage.getItem('projectSort')}catch(e){}
+  apply(saved||'fun');
+})();
+</script>
 <script>
 (function(){
 'use strict';
