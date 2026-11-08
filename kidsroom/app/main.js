@@ -108,8 +108,11 @@ class App {
     this.shell.ceiling.traverse(o => { if (o.isMesh) o.castShadow = true; });
     this.wallMountFrames();
 
-    const saved = this.store.loadWorking();
-    this.state = saved ? S.normalizeState(room, saved) : S.makeDefaultState(room);
+    // Every visit opens on the room as it is today (the "Today" preset, furniture where it was scanned).
+    // Versions A/B and anything saved in the Saved tab are one tap away.
+    this.state = S.makeDefaultState(room);
+    S.applyLayout(room, this.state, 'as_scanned');
+    S.applyPreset(room, this.state, 'Today');
 
     this.editor = new Editor(this);
     this.ui = new UI(this);
