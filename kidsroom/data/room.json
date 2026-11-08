@@ -1,0 +1,700 @@
+{
+  "_version": 2,
+  "_about": "Alice's bedroom, derived from the iPhone RoomPlan scan (room_scan/Project-2610301120.usdz). Units: meters. Y is up, floor at y=0. Room is recentered on its own center and rotated -2.49 deg about Y so all walls are axis-aligned. Yaw = degrees about +Y (three.js rotation.y): local +Z maps to world (sin yaw, 0, cos yaw). Each object's local +Z is its FRONT (the side facing into the room), local X is its width (w), local Z its depth (d). 'Footprint' below means the axis-aligned box of the rotated w x d rectangle. Values marked \"estimated\": true come from the photos, not the scan.",
+  "_orientation": "Compass names are labels only. Standing in the entry doorway (south wall) looking toward the window (north, +Z): the closet and dresser (west, -X) are on your RIGHT, the bookshelf, glider and bed (east, +X) on your LEFT. This matches room_photo_4.jpg; no mirroring is needed in three.js.",
+  "room": {
+    "x_west": -1.645,
+    "x_east": 1.645,
+    "z_south": -1.72,
+    "z_north": 1.719,
+    "ceiling_height": 2.333,
+    "interior_width_x": 3.29,
+    "interior_depth_z": 3.439,
+    "wall_thickness": 0.16,
+    "label": "10'10\" × 11'3\", ceiling 7'8\"",
+    "notes": "Walls are 0.16 m thick (RoomPlan) and sit OUTSIDE these interior bounds. Ceiling is flat white."
+  },
+  "walls": [
+    {
+      "id": "north",
+      "name": "Window wall",
+      "line": "z = 1.719",
+      "inward_normal": [
+        0,
+        0,
+        -1
+      ],
+      "x_from": -1.645,
+      "x_to": 1.645,
+      "openings": [
+        {
+          "id": "window",
+          "type": "window",
+          "center_x": -0.018,
+          "width": 0.962,
+          "sill_height": 0.698,
+          "height": 1.311,
+          "style": "white double-hung, 6-over-6 (each sash 3 lites wide x 2 high), white casing ~0.07 m wide, light-sky glass",
+          "notes": "Navy star curtains hang either side; see 'curtains'."
+        }
+      ]
+    },
+    {
+      "id": "south",
+      "name": "Entry / constellation wall",
+      "line": "z = -1.720",
+      "inward_normal": [
+        0,
+        0,
+        1
+      ],
+      "x_from": -1.645,
+      "x_to": 1.645,
+      "openings": [
+        {
+          "id": "entry_door",
+          "type": "door",
+          "role": "entry door to hallway",
+          "center_x": -1.216,
+          "width": 0.737,
+          "height": 2.079,
+          "style": "white (#F4F2EE) 2-panel ARCHED-top door, brushed-nickel lever, white casing ~0.07 m (the west-side casing only 0.055 m: the jamb is 6 cm from the west wall)",
+          "hinge": "west jamb, x = -1.585, z = -1.72",
+          "swing": "into the room",
+          "render_state": "open 90 degrees: the leaf (~4 cm thick) sits just east of the hinge, about x -1.585..-1.545, from z ≈ -1.70 (casing face) to about -0.98",
+          "clearances": "Open leaf ends 0.26 m short of the dresser's south end (z -0.717). It never reaches the bed."
+        }
+      ],
+      "notes": "This is the wall with the star decals and the 'ALICE' constellation (see finishes.decals). It is the ONLY wall the 'accent wall' paint option refers to."
+    },
+    {
+      "id": "west",
+      "name": "Closet / dresser wall",
+      "line": "x = -1.645",
+      "inward_normal": [
+        1,
+        0,
+        0
+      ],
+      "z_from": -1.72,
+      "z_to": 1.719,
+      "openings": [
+        {
+          "id": "closet",
+          "type": "door",
+          "role": "closet (white bi-fold)",
+          "center_z": 1.158,
+          "width": 0.86,
+          "height": 2.076,
+          "style": "one white bi-fold pair (two 0.43 m leaves), arched-top panels, small round knob, white casing ~0.07 m",
+          "render_state": "closed"
+        }
+      ]
+    },
+    {
+      "id": "east",
+      "name": "Bookshelf / headboard wall",
+      "line": "x = 1.645",
+      "inward_normal": [
+        -1,
+        0,
+        0
+      ],
+      "z_from": -1.72,
+      "z_to": 1.719,
+      "openings": []
+    }
+  ],
+  "furniture": [
+    {
+      "id": "dresser",
+      "scan_id": "Storage0",
+      "label": "6-drawer dresser (dark grey)",
+      "x": -1.4125,
+      "z": -0.078,
+      "yaw": 90,
+      "w": 1.278,
+      "d": 0.465,
+      "h": 0.928,
+      "color": "#5b6067",
+      "style": "slate grey, sleigh-style with curved end posts, 6 drawers (2 columns x 3 rows) with dark round knobs, low raised gallery rail around the top (changing-table topper)"
+    },
+    {
+      "id": "bookshelf",
+      "scan_id": "Storage1",
+      "label": "Tall bookshelf (grey)",
+      "x": 1.44,
+      "z": 0.023,
+      "yaw": -90,
+      "w": 1.114,
+      "d": 0.41,
+      "h": 2.09,
+      "color": "#8c9196",
+      "style": "mid grey, crown cornice on top, 5-6 shelves with colorful book spines"
+    },
+    {
+      "id": "glider",
+      "scan_id": "Sofa1",
+      "label": "Glider chair (light grey)",
+      "x": 1.054,
+      "z": 0.947,
+      "yaw": -111.3,
+      "w": 0.771,
+      "d": 0.908,
+      "h": 1.016,
+      "color": "#b3b7bb",
+      "style": "light grey upholstered glider, white piping, track arms"
+    },
+    {
+      "id": "step_stool",
+      "scan_id": "Chair0",
+      "label": "Step stool",
+      "x": -0.99,
+      "z": 1.5,
+      "yaw": 180,
+      "scan_position": {
+        "x": -0.139,
+        "z": -1.518,
+        "yaw": -1.1
+      },
+      "w": 0.447,
+      "d": 0.394,
+      "h": 0.758,
+      "color": "#b9bcc0",
+      "style": "folding metal step stool: silver tubular frame and handle, two black ribbed treads",
+      "placement_note": "Scanned spot is under the new bed. The v1 suggestion (x -0.75, z -1.52) blocked the entry door, and the 0.39 m gap between the door opening and the bed foot is narrower than the stool. Default is now against the north wall between the closet and the west curtain (on your right when facing the window), 2 cm off the wall."
+    },
+    {
+      "id": "twin_bed",
+      "label": "Grey channel-tufted upholstered platform bed, twin (NEW)",
+      "is_new": true,
+      "x": 0.595,
+      "z": -1.19,
+      "yaw": -90,
+      "w": 1.06,
+      "d": 2.1,
+      "h": 1.17,
+      "color": "#67686A",
+      "ref_image": "references/products/bed_frame_grey_channel_tufted.png",
+      "geometry": {
+        "headboard_end": "local -Z (so at yaw -90 the headboard is on the east wall and the foot points west, at x -0.455)",
+        "headboard_height_from_floor": 1.17,
+        "headboard_thickness": 0.08,
+        "headboard_channels": 8,
+        "headboard_style": "flat top, square corners, no wings, same width as the bed; 8 vertical padded channels separated by fine seams",
+        "leg_height": 0.125,
+        "legs": "black round legs tapering toward the floor, set slightly in from the corners, plus one center support leg under the foot rail",
+        "rail_band_height": 0.09,
+        "deck_top": 0.215,
+        "material": "neutral grey velvet: soft sheen, not matte (e.g. MeshPhysicalMaterial with sheen)",
+        "mattress": {
+          "w": 0.99,
+          "d": 1.91,
+          "thickness": 0.25,
+          "placement": "sits ON the rails (not recessed), pushed against the headboard, ~3.5 cm frame lip on each side"
+        }
+      },
+      "estimated_fields": [
+        "leg_height",
+        "rail_band_height",
+        "deck_top"
+      ],
+      "dimension_note": "The product photo is a full/queen display model with 12 channels. Do NOT copy its channel count or its proportions; a twin is narrower, so the headboard looks taller relative to its width.",
+      "clearances": {
+        "to_bookshelf_south_end_m": 0.126,
+        "bed_foot_to_entry_door_opening_m": 0.39,
+        "to_south_wall_m": 0.0
+      },
+      "size_options": {
+        "twin": {
+          "label": "Twin",
+          "w": 1.06,
+          "mattress_w": 0.99,
+          "headboard_channels": 8,
+          "mattress_in": "39 x 75 in"
+        },
+        "full": {
+          "label": "Full (double)",
+          "w": 1.44,
+          "mattress_w": 1.37,
+          "headboard_channels": 11,
+          "mattress_in": "54 x 75 in",
+          "note": "Same frame style in full: 0.38 m wider, same 2.1 m length. Against the east wall in the default spot, a full bed reaches z -0.28 and runs ~0.25 m into the bookshelf's south end."
+        }
+      },
+      "size_default": "twin"
+    },
+    {
+      "id": "toddler_bed",
+      "scan_id": "Sofa0",
+      "label": "Toddler bed (current; being replaced)",
+      "x": 0.946,
+      "z": -1.326,
+      "yaw": 0,
+      "w": 1.398,
+      "d": 0.787,
+      "h": 0.829,
+      "color": "#8d9297",
+      "style": "grey convertible-crib style: slatted head/foot panels, low slatted front guard rail"
+    },
+    {
+      "id": "storage_cube",
+      "label": "Grey upholstered storage cube",
+      "estimated": true,
+      "not_in_scan": true,
+      "x": 1.455,
+      "z": -0.74,
+      "yaw": -90,
+      "w": 0.38,
+      "d": 0.38,
+      "h": 0.38,
+      "color": "#9a9ea3",
+      "style": "light grey fabric cube ottoman",
+      "placement_note": "Sits between the toddler bed and the bookshelf in room_photo_4.jpg. The new bed occupies this spot, so it starts in the Removed list in the planned layout."
+    }
+  ],
+  "layouts": {
+    "planned": {
+      "description": "DEFAULT on first load and on 'Reset layout'. The new twin bed is in; the toddler bed and storage cube start in the Removed list; the stool is at its new spot.",
+      "present": [
+        "dresser",
+        "bookshelf",
+        "glider",
+        "step_stool",
+        "twin_bed"
+      ],
+      "removed": [
+        "toddler_bed",
+        "storage_cube"
+      ],
+      "positions": "use each item's x/z/yaw above"
+    },
+    "as_scanned": {
+      "description": "The room as it is today: shown by the 'As scanned' button. The toddler bed, storage cube and stool are at their scanned spots; the twin bed is in the Removed list.",
+      "present": [
+        "dresser",
+        "bookshelf",
+        "glider",
+        "step_stool",
+        "toddler_bed",
+        "storage_cube"
+      ],
+      "removed": [
+        "twin_bed"
+      ],
+      "positions": "use each item's x/z/yaw, except step_stool uses scan_position"
+    },
+    "restore_rule": "Restoring a removed item puts it back at its position in the CURRENT layout's position list. If it overlaps something (e.g. the toddler bed restored while the twin bed is present), still restore it, select it, and show a short 'overlaps <item> - drag it somewhere' hint."
+  },
+  "new_items": {
+    "bedding_options": [
+      {
+        "id": "lavender_pompom",
+        "label": "Lavender pom-pom comforter",
+        "ref_image": "references/products/bedding_lavender_pompom.png",
+        "comforter_color": "#D3C6E2",
+        "sheet_color": "#D3C6E2",
+        "pillowcase_color": "#D3C6E2",
+        "pompom_color": "#D3C6E2",
+        "notes": "Solid pale lilac comforter with a thin self-colored piped edge and sparse quilting tack lines. Ball-fringe trim: 1.5-2 cm balls every ~4 cm, hanging right at the hem along the FOOT and the DRAPED long side only (none on the tucked side against the wall). One pillow + one sham with balls on all 4 edges, both within the mattress width. Sheets are the same lilac as the comforter."
+      },
+      {
+        "id": "floral_purple_sheets",
+        "label": "Floral comforter + purple sheets",
+        "ref_image": "references/products/bedding_floral_purple_sheets.png",
+        "texture": "textures/floral_comforter_tile_seamless.jpg",
+        "texture_wrap": "RepeatWrapping (the tile is seamless; do not mirror). One tile ≈ 0.55 m of fabric.",
+        "texture_original": "textures/floral_comforter_tile.jpg (raw crop with a baked fold along the top - not for tiling)",
+        "sheet_color": "#AE96B0",
+        "pillowcase_color": "#AE96B0",
+        "notes": "White watercolor floral comforter (lavender, purple and yellow daisies, small blue flowers, green leaf sprigs, the odd line-drawn bunny) with wavy quilting lines. Comforter is folded back ~25-30% of the bed length so a band of dusty-mauve sheet shows at the head. Twin pillows: one standard pillow (0.66 x 0.48 m) in a mauve case against the headboard and one white floral sham (0.66 x 0.48 m plus a ~4.5 cm flat flange) leaning in front; both centered and within the mattress width (0.99 m)."
+      }
+    ],
+    "comforter_drape": "In bed-local terms: drape over the foot (local +Z) and the open long side (local +X, which is north at yaw -90); local -X is tucked. Better: tuck whichever long side is within 5 cm of a wall. Nothing may clip a wall; keep the drape thin (0.126 m to the bookshelf).",
+    "rug_options": [
+      {
+        "id": "beige_scalloped",
+        "label": "Beige scalloped-edge rug with white dash borders",
+        "ref_image": "references/products/rug_beige_scalloped.png",
+        "draw": {
+          "method": "procedural canvas with alpha (floor shows between scallops)",
+          "field": "#DBD9CA",
+          "edge": "smooth sine-like waves (amplitude ≈ 1/4 of the wave pitch, pitch ≈ 9-10 cm on the real rug), continuing around ROUNDED corners",
+          "binding": "thin piped cord ~1 cm, #C9C2A6, following the wavy edge",
+          "bands_inward_from_edge": [
+            "plain field margin, about one band wide",
+            "outer band of white bars (#F3F1E9)",
+            "plain gap, ~0.8 x band width",
+            "inner band of white bars",
+            "open field"
+          ],
+          "band_width": "≈ 5-6% of the rug's short side",
+          "bars": "each bar spans the full band width and runs perpendicular to the band; thickness ≈ 1/8-1/10 of its length; ~50% duty (pitch ≈ 2 x thickness)",
+          "corners": "in the bands, bars turn into nested concentric L-shapes (mitered corners) instead of stopping"
+        }
+      },
+      {
+        "id": "woodland_unicorn",
+        "label": "Cream woodland-animal rug (unicorn medallion)",
+        "ref_image": "references/products/rug_woodland_unicorn.png",
+        "texture": "textures/rug_woodland_unicorn_topdown.jpg",
+        "texture_px": [
+          1000,
+          1400
+        ],
+        "texture_aspect": "5:7 (portrait)",
+        "fit_rule": "For 5x7 use the full image. For 4x6 and 6x9 (2:3), crop rather than stretch: texture.repeat.x = 0.9333 with texture.offset.x = 0.0333 when texture.center is (0,0). If you set texture.center = (0.5,0.5) (e.g. to turn the image 180 degrees), use offset.x = 0: the repeat is then already centered.",
+        "binding": "draw a thin ~1.5 cm tan binding (#C9B48F) around the edge; the texture is cropped inside the printed field",
+        "fidelity_note": "The texture is a reconstruction: it is partly mirrored (2 owls, 2 raccoons, 2 hedgehogs, 2 peacocks), the deer is missing, and there's a seam near x≈800 px. It reads as the product at a glance but is not an exact copy."
+      },
+      {
+        "id": "navy_shag_current",
+        "label": "Current navy shag",
+        "color": "#1f2547",
+        "size_ft": [
+          4,
+          6
+        ],
+        "center": {
+          "x": 0.0,
+          "z": 0.3
+        },
+        "notes": "Deep shag pile (procedural fibers or a noisy normal map); size and position estimated from room_photo_4.jpg. It starts at its real 4x6; the other sizes show what a bigger one would look like."
+      }
+    ],
+    "rug_orientation_rule": "Rug size [a, b] in feet: a runs along world X, b along world Z (long side toward the window) at yaw 0. The TOP of every rug image faces north (the window), so it reads upright from the entry door. PlaneGeometry rotated -90 degrees about X maps image-top to -Z, so turn the mesh 180 degrees (mesh.rotation.z = Math.PI after the X rotation) or flip the UVs.",
+    "rug_sizes_ft": [
+      [
+        4,
+        6
+      ],
+      [
+        5,
+        7
+      ],
+      [
+        6,
+        9
+      ],
+      [
+        8,
+        10
+      ]
+    ],
+    "rug_default_size_ft": [
+      5,
+      7
+    ],
+    "rug_default_centers": {
+      "4x6": {
+        "x": -0.05,
+        "z": 0.45
+      },
+      "5x7": {
+        "x": -0.05,
+        "z": 0.45
+      },
+      "6x9": {
+        "x": -0.05,
+        "z": 0.19,
+        "note": "runs ~0.5 m under the bed - fine for a rug; stays clear of the floor register"
+      },
+      "8x10": {
+        "x": 0.0,
+        "z": 0.0,
+        "note": "8x10 nearly fills the floor (2.44 x 3.05 m in a 3.29 x 3.44 m room): it runs under the bed, the dresser front and the glider"
+      }
+    },
+    "rug_size_change_rule": "When the size changes, move the rug to that size's default center, unless the user has dragged it, in which case keep their center and clamp so the rug stays fully inside the room. Rugs may go under furniture but never through walls.",
+    "rug_delete_rule": "One rug at a time. 'Delete' on the rug sets Rug = None and lists the rug in Removed; 'Restore' brings back the last selected rug type, size and position.",
+    "rug_state_rules": "Presets and 'Reset layout' clear the dragged flag and put the rug at its size's default center (the shag at its fixed center). Changing the rug type or size with the Rug control keeps a dragged rug's center (clamped into the room); an undragged rug moves to the new default center. The shag can be dragged but not resized. 'As scanned' shows the navy shag at its center. The rug's Restore follows rug_delete_rule, not layouts.restore_rule."
+  },
+  "finishes": {
+    "floor": "honey/red-oak strip hardwood, boards ~2.25 in (5.7 cm) wide in random lengths, warm amber (#C68B4E-ish), glossy",
+    "trim_and_doors": "white (#F4F2EE). Baseboards 0.09 m tall, stopping at door casings; casings ~0.07 m wide.",
+    "ceiling": "flat white",
+    "current_wall_color": [
+      "Current blue",
+      "#D3E0E5"
+    ],
+    "pink_wall_palette": [
+      [
+        "Ballerina PPG1183-1",
+        "#F0DEE0"
+      ],
+      [
+        "Whisper pink",
+        "#F6E3E0"
+      ],
+      [
+        "Ballet slipper",
+        "#F3D1D3"
+      ],
+      [
+        "Blush",
+        "#EDC0C4"
+      ],
+      [
+        "Rose quartz",
+        "#E3A9B2"
+      ],
+      [
+        "Dusty rose",
+        "#CF9198"
+      ],
+      [
+        "Peony",
+        "#EE9FB6"
+      ]
+    ],
+    "paint_scope_options": {
+      "all": "all four walls",
+      "accent_south": "accent on the south (entry / constellation) wall only; other three walls stay the current blue",
+      "others": "north, east and west walls; the south (constellation) wall stays the current blue"
+    },
+    "curtains": {
+      "color": "#1f2547",
+      "pattern": "small scattered silver/white 5-point stars",
+      "type": "grommet blackout panels on a thin dark rod",
+      "rod_height": 2.03,
+      "rod_x_from": -0.75,
+      "rod_x_to": 0.71,
+      "panels": "one each side, ~0.45 m wide gathered, overlapping the window casing slightly",
+      "hem_height": 0.45,
+      "estimated": true
+    },
+    "decals": {
+      "wall": "south",
+      "color": "#1b1b22 (black/navy vinyl)",
+      "stars": "small 4-point stars (3-8 cm) scattered over the WHOLE south wall from y ≈ 0.9 m up to the ceiling, including above the door",
+      "alice": {
+        "center_x": 0.1,
+        "center_y": 1.65,
+        "letter_height": 0.22,
+        "word_width": 0.9,
+        "style": "dotted letters, star dots joined by thin lines, connect-the-dots constellation"
+      },
+      "constellations": "about 6 simple line constellations around ALICE: a triangle above-left, a 'Y' above-right, a Big-Dipper-like shape to the right, two small ones below-left and below-center, a small hook on the left",
+      "estimated": true
+    },
+    "ceiling_fan": {
+      "x": 0.0,
+      "z": 0.0,
+      "estimated": true,
+      "style": "white flush-mount fan, 5 white blades, 1.1 m (44 in) span, frosted globe light kit, two pull chains",
+      "light": "warm (≈2700 K) point light at the globe; use it as the 'warm ceiling fill'. It's the room's only overhead light.",
+      "heights": {
+        "blade_plane_below_ceiling": 0.22,
+        "globe_bottom_below_ceiling": 0.33,
+        "light_center_y": 2.05
+      },
+      "visibility": "Hide the fan (keep its light) whenever the ceiling is hidden: camera above the ceiling or outside the room, and always in Top-down."
+    },
+    "wall_art": {
+      "estimated": true,
+      "toggle_default": true,
+      "items": [
+        {
+          "wall": "east",
+          "z": -1.15,
+          "y": 1.7,
+          "w": 0.7,
+          "h": 0.5,
+          "style": "white frame, lilac mat, colorful illustrated print (above the bed)"
+        },
+        {
+          "wall": "east",
+          "z": 1.05,
+          "y": 1.55,
+          "w": 0.25,
+          "h": 0.3,
+          "style": "black frame, small print (above the glider)"
+        },
+        {
+          "wall": "north",
+          "x": 1.0,
+          "y": 1.6,
+          "w": 0.3,
+          "h": 0.4,
+          "style": "purple canvas, unicorns"
+        },
+        {
+          "wall": "north",
+          "x": -1.1,
+          "y": 1.6,
+          "w": 0.45,
+          "h": 0.6,
+          "style": "black frame, pink/red poster"
+        },
+        {
+          "wall": "west",
+          "z": -0.1,
+          "y": 1.55,
+          "w": 0.3,
+          "h": 0.4,
+          "style": "small poster above the dresser"
+        }
+      ]
+    },
+    "small_fixtures_optional": [
+      {
+        "what": "light switch",
+        "wall": "south",
+        "x": -0.72,
+        "y": 1.2
+      },
+      {
+        "what": "duplex outlet",
+        "wall": "north",
+        "x": -0.66,
+        "y": 0.3
+      },
+      {
+        "what": "floor HVAC register, dark grille 0.25 x 0.10 m",
+        "floor": true,
+        "x": 0.3,
+        "z": 1.62
+      },
+      {
+        "what": "smoke detector, small white disc",
+        "ceiling": true,
+        "x": -1.2,
+        "z": -1.3
+      },
+      {
+        "what": "baby-monitor camera",
+        "z": -0.48,
+        "y": 2.13,
+        "on": "top of the bookshelf, south end",
+        "x": 1.55
+      }
+    ],
+    "ignore": "Blue painter's tape on the door casing and ceiling line is painting prep; toys, stuffed animals and clutter are not modeled.",
+    "paint_notes": {
+      "Ballerina PPG1183-1": "PPG / Glidden PPG1183-1 Ballerina, flat interior latex. #F0DEE0 (RGB 240, 222, 224), LRV 76."
+    }
+  },
+  "presets": {
+    "_rule": "A and B set finishes plus a full (double) bed and take the glider out (to the Removed list); coming from Today they bring the new bed back. Today shows the room as it is now: layouts.as_scanned with the toddler bed, furniture in its scanned spots and original colors. A and B use Ballerina pink (PPG1183-1, #F0DEE0) on all walls. Every preset resets custom curtain, sheet, comforter and rug colors.",
+    "A": {
+      "label": "A: Ballerina walls + beige scalloped rug + lavender bedding, full bed, no glider",
+      "wall_color": "#F0DEE0",
+      "paint_scope": "all",
+      "decals": false,
+      "curtains": true,
+      "bedding": "lavender_pompom",
+      "rug": "beige_scalloped",
+      "rug_size_ft": [
+        5,
+        7
+      ],
+      "wall_art": true,
+      "bed_size": "full",
+      "remove": [
+        "glider"
+      ]
+    },
+    "B": {
+      "label": "B: Ballerina walls + woodland rug + floral bedding, full bed, no glider",
+      "wall_color": "#F0DEE0",
+      "paint_scope": "all",
+      "decals": false,
+      "curtains": true,
+      "bedding": "floral_purple_sheets",
+      "rug": "woodland_unicorn",
+      "rug_size_ft": [
+        5,
+        7
+      ],
+      "wall_art": true,
+      "bed_size": "full",
+      "remove": [
+        "glider"
+      ]
+    },
+    "Today": {
+      "label": "Today: toddler bed, blue walls, navy shag + stars",
+      "wall_color": "#D3E0E5",
+      "paint_scope": "all",
+      "decals": true,
+      "curtains": true,
+      "bedding": "unchanged",
+      "rug": "navy_shag_current",
+      "rug_size_ft": [
+        4,
+        6
+      ],
+      "wall_art": true
+    }
+  },
+  "cameras": {
+    "dollhouse": {
+      "position": [
+        -3.4,
+        4.3,
+        3.8
+      ],
+      "target": [
+        0.15,
+        0.6,
+        -0.3
+      ],
+      "note": "high 3/4 view from the north-west corner: the north and west walls cut away; the bed, constellation wall and bookshelf are in view"
+    },
+    "from_door": {
+      "position": [
+        -1.2,
+        1.5,
+        -1.5
+      ],
+      "target": [
+        0.5,
+        0.7,
+        -0.2
+      ],
+      "note": "eye level just inside the open entry door, looking toward the bed and the window"
+    },
+    "from_window": {
+      "position": [
+        0.0,
+        1.5,
+        1.45
+      ],
+      "target": [
+        0.2,
+        0.9,
+        -1.2
+      ]
+    },
+    "top_down": {
+      "position": [
+        0.0,
+        7.5,
+        -0.01
+      ],
+      "target": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "note": "plan view; camera.up stays +Y; the tiny -Z offset puts the window wall at the top of the screen (west, the closet side, then appears on the screen's RIGHT - not a mirror)"
+    },
+    "fov_deg": 50
+  },
+  "clearances_check": {
+    "_note": "Computed from the positions above (planned layout).",
+    "bed_to_bookshelf_m": 0.126,
+    "bed_foot_to_door_opening_m": 0.39,
+    "open_entry_door_to_dresser_m": 0.26,
+    "step_stool_note": "Stool footprint x -1.2135..-0.7665, z 1.303..1.697: 0.43 m in from the west wall, so the closet bi-fold's folded stack (0.43 m deep) clears it at either jamb by ~1.5 mm; 1.6 cm from the west curtain; 2 cm off the north wall.",
+    "glider_to_bookshelf_m": 0.022
+  },
+  "_conventions": {
+    "overlap": "Overlap tests (restore hint, acceptance check) use the ROTATED w x d rectangles (separating-axis test). Axis-aligned footprint boxes are only for wall clamping and snapping. The glider/bookshelf boxes overlap but the real rectangles are ~2.2 cm apart; that is expected.",
+    "rotation": "Positive yaw (rotation.y) turns an item COUNTER-clockwise seen from above. 'Rotate clockwise' means yaw decreases.",
+    "wall_items": "Wall art and fixture positions: x (north/south walls) or z (east/west walls) and y are WORLD coordinates of the item CENTER; w x h is the outer size; the back sits on the wall's interior plane.",
+    "camera_up": "Never change camera.up; every view uses up = +Y. Top-down sits a hair south of straight-down so the window wall is at the top of the screen.",
+    "portrait": "fov_deg is vertical. When the viewport is portrait (aspect < 1), move the camera back along target->position by about 1/aspect (capped at 2x) so the room stays in frame.",
+    "initial_state": "First load shows preset A with layouts.planned. A preset's 'unchanged' bedding falls back to lavender_pompom when nothing is set."
+  }
+}
