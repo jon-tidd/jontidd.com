@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gulch Japan · A nine-day plan for Jon &amp; Kathleen</title>
+  <meta name="description" content="Research report and planning engine for a nine-day Japan trip for two.">
+  <meta name="robots" content="noindex, nofollow, noarchive, nosnippet">
+  <meta name="referrer" content="no-referrer">
+  <meta name="theme-color" content="#F3EDE3">
+  <link rel="canonical" href="https://jontidd.com/japan/">
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT@0,9..144,300..900,0..100;1,9..144,300..900,0..100&amp;family=Outfit:wght@300..700&amp;display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@700&amp;text=%E6%97%A5%E6%9C%AC%E4%B9%9D%E6%97%A5%E9%96%93%E4%BA%8C%E4%BA%BA%E6%97%85%E3%83%BB&amp;display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#workspace">Skip to the planner</a>
+
+  <header class="hero" id="top">
+    <div class="hero__art" aria-hidden="true">
+      <div class="hero__sun"></div>
+      <div class="hero__waves"></div>
+      <p class="hero__kanji" lang="ja">日本・九日間・二人旅</p>
+    </div>
+    <div class="hero__inner">
+      <p class="hero__eyebrow">For Jon &amp; Kathleen · a ~9-day trip for two</p>
+      <h1 class="hero__brand"><span>Gulch</span> <span>Japan</span></h1>
+      <p class="hero__headline">Four decisions stand between you and Tokyo.</p>
+      <p class="hero__lede">When to go, how to fly, where to sleep and what to do. Read the research, then build the plan together.</p>
+      <div class="hero__cta">
+        <a class="btn btn--primary" href="#plan" data-action="mode" data-mode="plan" data-scroll="1">Open the Planning Engine</a>
+        <a class="btn btn--ghost" href="#report" data-action="mode" data-mode="report" data-scroll="1">Read the Research Report</a>
+      </div>
+    </div>
+  </header>
+
+  <div class="modebar" id="workspace">
+    <a class="modebar__brand" href="#top">Gulch Japan</a>
+    <div class="modebar__tabs" role="tablist" aria-label="Mode">
+      <button type="button" role="tab" id="tab-report" aria-controls="panel-report" aria-selected="false" data-action="mode" data-mode="report">Research Report</button>
+      <button type="button" role="tab" id="tab-plan" aria-controls="panel-plan" aria-selected="false" data-action="mode" data-mode="plan">Planning Engine</button>
+    </div>
+    <button type="button" class="modebar__count" id="star-count" data-action="goto-plan" hidden></button>
+  </div>
+
+  <main>
+    <section class="panel panel--report" id="panel-report" role="tabpanel" aria-labelledby="tab-report" hidden>
+      <div class="report">
+        <nav class="report__toc" id="report-toc" aria-label="Report sections"></nav>
+        <div class="report__body" id="report-body"></div>
+      </div>
+    </section>
+
+    <section class="panel panel--plan" id="panel-plan" role="tabpanel" aria-labelledby="tab-plan" hidden>
+      <section class="questions" id="questions" aria-labelledby="questions-title">
+        <div class="sec-head">
+          <p class="kicker">The big questions</p>
+          <h2 id="questions-title">Four decisions, in order.</h2>
+          <p class="sec-head__lede">Each answer narrows the next. Nothing here is booked; change any of it at any time.</p>
+        </div>
+        <ol class="stepper" id="stepper"></ol>
+        <div class="step" id="step-panel"></div>
+        <div class="step-nav" id="step-nav"></div>
+      </section>
+
+      <section class="atlas" id="atlas" aria-labelledby="atlas-title">
+        <div class="sec-head">
+          <p class="kicker">The atlas</p>
+          <h2 id="atlas-title">Everything on one map.</h2>
+          <p class="sec-head__lede">Star what you want, remove what you do not. Removed items leave the map and can be restored from the tray.</p>
+        </div>
+        <form class="atlas__bar" id="atlas-bar" role="search" aria-label="Filter the atlas"></form>
+        <div class="atlas__split">
+          <div class="atlas__mapwrap">
+            <div class="atlas__map" id="map" role="application" aria-label="Map of Japan with places, activities and stays"></div>
+            <div class="atlas__legend" id="map-legend"></div>
+          </div>
+          <div class="atlas__list" id="atlas-list" aria-live="polite"></div>
+        </div>
+      </section>
+
+      <section class="yourplan" id="your-plan" aria-labelledby="yourplan-title">
+        <div class="yourplan__inner" id="yourplan-body"></div>
+      </section>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p class="footer__brand">Gulch Japan</p>
+      <p>Built from the Gulch vault and public travel pages read on 2026-11-21. Fares and prices are research estimates, not live quotes. Check every date, price and opening time before booking.</p>
+      <p>Map data © OpenStreetMap contributors. Your choices are saved in this browser only.</p>
+    </div>
+  </footer>
+
+  <aside class="drawer" id="detail" aria-label="Details" hidden></aside>
+  <div class="tray" id="tray"></div>
+  <input type="file" id="import-file" accept="application/json,.json" hidden>
+  <div class="sr-only" id="live" role="status" aria-live="polite"></div>
+  <noscript><p class="noscript">This planner needs JavaScript to render the report and the map.</p></noscript>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
