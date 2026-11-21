@@ -8,7 +8,8 @@
     { "source": "/gsi/:path(.*)", "destination": "/GSI/:path", "permanent": false },
     { "source": "/spotify", "destination": "/spotify/", "permanent": true },
     { "source": "/listen", "destination": "/spotify/", "permanent": true },
-    { "source": "/listen/(.*)", "destination": "/spotify/$1", "permanent": true }
+    { "source": "/listen/(.*)", "destination": "/spotify/$1", "permanent": true },
+    { "source": "/japan", "destination": "/japan/", "permanent": true }
   ],
   "headers": [
     {
