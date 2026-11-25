@@ -83,6 +83,11 @@
   .pill { font-family: var(--mono); font-size: 12px; border-radius: 999px; padding: 3px 9px; color: #fff; display: inline-block; margin-top: 8px; }
   .back { all: unset; cursor: pointer; font-family: var(--mono); font-size: 12px; color: var(--accent); }
   .links a { display: inline-block; margin: 4px 14px 0 0; font-size: 15px; }
+  .sens-h { font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: var(--accent); margin: 14px 0 6px; }
+  .sens { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; margin: 0; font-size: 14px; line-height: 1.4; }
+  .sens dt { color: var(--ink-soft); }
+  .sens dd { margin: 0; }
+  .sens .sub { font-family: var(--mono); font-size: 11px; }
   .skeptic { background: var(--panel); border-radius: 8px; padding: 10px 12px; font-size: 15px; line-height: 1.45; }
   .leaflet-container { font-family: var(--serif); background: #000; }
   .leaflet-control-attribution { font-size: 10px; }
@@ -261,7 +266,8 @@
       '<p class="note">Each pin is a spot the scanner found unusually rectilinear compared with its ' +
       "surroundings. Colour is Jon's verdict after looking. Almost all of it is geology; that is " +
       "the expected answer, and the map shows the searching, not a discovery. " +
-      "Blue shading or outlines mark the regions scanned so far.</p><ul class=\"list\">";
+      "Blue shading or outlines mark the regions scanned so far.</p>" + sensitivityHTML() +
+      '<ul class="list">';
     v.slice(0, 200).forEach(function (c) {
       h += '<li><button data-id="' + esc(c.id) + '"><span class="dot" style="background:' +
            colorOf(c.label) + '"></span><span>#' + c.rank + " " + esc(RUNS[c.run] || c.run) +
@@ -273,6 +279,37 @@
     side.className = "";
     side.innerHTML = h;
     side.scrollTop = 0;
+  }
+
+  // What each scanned layer could have found: planted-shape recall at the depth
+  // the short list was reviewed (marshunt/limits.py).  An area figure alone
+  // says nothing about what would have been missed.
+  function sensitivityHTML() {
+    var s = state.data && state.data.sensitivity;
+    if (!s || !s.layers || !s.layers.length) return "";
+    var h = '<h3 class="sens-h">What this search could have found</h3><dl class="sens">';
+    s.layers.forEach(function (L) {
+      var r = L.recall_all, line;
+      if (!r) { line = "not measured"; }
+      else {
+        line = r.k + " of " + r.n + " planted weathered shapes would have reached review" +
+          (L.sensitive ? (L.upper_limit_count_all ? ": fewer than about " + fmt(L.upper_limit_count_all) +
+                          " such structures in this area" : "")
+                       : ": no measurable sensitivity to them");
+        (L.other_strengths || []).forEach(function (o) {
+          line += "; " + o.k + " of " + o.n + " if " + esc(o.strength) +
+                  (o.upper_limit_count ? " (fewer than about " + fmt(o.upper_limit_count) + ")" : "");
+        });
+      }
+      h += "<dt>" + esc(L.name.split(",")[0]) + "<br><span class=\"sub\">" + fmt(L.km2) + " km²</span></dt><dd>" +
+           line + "</dd>";
+    });
+    var nI = 0, nU = 0;
+    state.data.candidates.forEach(function (c) { if (c.label === "interesting") nI++; else if (c.label === "uncertain") nU++; });
+    h += "</dl><p class=\"note\">Limits hold only once every flagged spot is resolved as natural; " +
+         nI + " pins marked interesting and " + nU + " marked maybe are still open. " +
+         "Planted shapes are assumptions about what a ruin would look like.</p>";
+    return h;
   }
 
   function renderDetail(c) {
@@ -303,6 +340,13 @@
     if (c.shadows) {
       ev.push("<dt>Shadows</dt><dd>" + c.shadows.n_shadows + " measured, up to " + c.shadows.max_height_m +
               " m tall</dd>");
+    }
+    if (c.crater_rim && c.crater_rim.on_rim) {
+      ev.push("<dt>Crater</dt><dd>On a crater rim" + (c.crater_rim.catalogue_d_km ? " (catalogued, " +
+              c.crater_rim.catalogue_d_km + " km across)" : " (seen in the image)") + ": the commonest natural source of straight edges</dd>");
+    }
+    if (c.mosaic_seam) {
+      ev.push("<dt>Mosaic seam</dt><dd>Two source images meet at this cell</dd>");
     }
     if (c.persistence != null) {
       ev.push("<dt>Second looks</dt><dd>" + Math.round(c.persistence * 100) + "% of " + c.second_looks +
