@@ -88,6 +88,11 @@
   .sens dt { color: var(--ink-soft); }
   .sens dd { margin: 0; }
   .sens .sub { font-family: var(--mono); font-size: 11px; }
+  .gates { list-style: none; padding: 0; margin: 0; font-size: 14px; line-height: 1.4; }
+  .gates li { display: grid; grid-template-columns: 1.4em 7.5em 1fr; gap: 0 8px; padding: 3px 0; }
+  .gates .g-fail { color: var(--c-natural); } .gates .g-pass { color: var(--c-interesting); } .gates .g-unknown { color: var(--ink-soft); }
+  .gates .gn { color: var(--ink-soft); font-family: var(--mono); font-size: 12px; padding-top: 2px; }
+  .aside { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); }
   .skeptic { background: var(--panel); border-radius: 8px; padding: 10px 12px; font-size: 15px; line-height: 1.45; }
   .leaflet-container { font-family: var(--serif); background: #000; }
   .leaflet-control-attribution { font-size: 10px; }
@@ -144,6 +149,11 @@
     sabaea_peek: "Terra Sabaea, first look",
     moc_corridor: "Reference-image corridor"
   };
+  var GATES = {
+    seam: "Mosaic seam", crater_rim: "Crater rim", persists: "Other images", relief: "Relief",
+    slope: "Slope", lookalikes: "Look-alikes", sceptic: "Sceptic"
+  };
+  var GATE_MARK = { pass: "✓", fail: "✗", unknown: "?" };
   var PARTS = {
     seg_ortho: "straight edges meeting at right angles",
     seg_ortho_3x3: "right-angle edges across the neighbourhood",
@@ -261,7 +271,11 @@
   }
 
   function renderList() {
-    var v = visible().sort(function (a, b) { return (b.final || 0) - (a.final || 0); });
+    // open spots (no failed check) first, then by scan score; set-aside spots after
+    var v = visible().sort(function (a, b) {
+      var sa = a.status === "set aside" ? 1 : 0, sb = b.status === "set aside" ? 1 : 0;
+      return sa - sb || (b.score || 0) - (a.score || 0);
+    });
     var h = filtersHTML() +
       '<p class="note">Each pin is a spot the scanner found unusually rectilinear compared with its ' +
       "surroundings. Colour is Jon's verdict after looking. Almost all of it is geology; that is " +
@@ -272,7 +286,8 @@
       h += '<li><button data-id="' + esc(c.id) + '"><span class="dot" style="background:' +
            colorOf(c.label) + '"></span><span>#' + c.rank + " " + esc(RUNS[c.run] || c.run) +
            '<br><span class="sub">' + ll(c) + '</span></span><span class="sc">' +
-           (c.final != null ? c.final.toFixed(1) : "") + "</span></button></li>";
+           (c.status === "set aside" ? '<span class="aside">set aside</span>' :
+            (c.score != null ? c.score.toFixed(1) : "")) + "</span></button></li>";
     });
     h += "</ul>";
     if (!v.length) h += '<p class="note">Nothing matches these filters.</p>';
@@ -328,9 +343,19 @@
     Object.keys(c.parts || {}).forEach(function (k) {
       h += "<dt>" + c.parts[k].toFixed(1) + "σ</dt><dd>" + esc(PARTS[k] || k) + "</dd>";
     });
-    h += "<dt>score</dt><dd>" + (c.score != null ? c.score.toFixed(1) : "?") +
-         (c.final != null && c.final !== c.score ? " &rarr; " + c.final.toFixed(1) + " after checks" : "") +
-         "</dd></dl>";
+    h += "<dt>score</dt><dd>" + (c.score != null ? c.score.toFixed(1) : "?") + "</dd></dl>";
+    if (c.gates) {
+      // pass/fail checks: failing any one sets the spot aside; passing adds no points
+      h += "<h3>Checks" + (c.status === "set aside" ? " &middot; set aside" : " &middot; still open") +
+           '</h3><ul class="gates">';
+      Object.keys(GATES).forEach(function (k) {
+        var g = c.gates[k];
+        if (!g) return;
+        h += '<li><span class="g-' + g[0] + '">' + GATE_MARK[g[0]] + '</span><span class="gn">' + GATES[k] +
+             "</span><span>" + esc(g[1]) + "</span></li>";
+      });
+      h += "</ul>";
+    }
     var ev = [];
     if (c.dtm) {
       ev.push("<dt>Terrain</dt><dd>" + esc(c.dtm.kind === "hirise_dtm" ? "HiRISE" : c.dtm.kind === "ctx_dtm" ? "CTX" : c.dtm.kind) +
@@ -352,7 +377,7 @@
       ev.push("<dt>Second looks</dt><dd>" + Math.round(c.persistence * 100) + "% of " + c.second_looks +
               " other images agree</dd>");
     }
-    if (ev.length) h += "<h3>Checks</h3><dl>" + ev.join("") + "</dl>";
+    if (ev.length) h += "<h3>Measurements</h3><dl>" + ev.join("") + "</dl>";
     if (c.skeptic) {
       var s = c.skeptic;
       h += "<h3>Sceptic review</h3><div class=\"skeptic\"><b>" + esc(s.landform_class) + "</b> (" +
